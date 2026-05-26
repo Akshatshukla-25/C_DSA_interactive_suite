@@ -1,6 +1,5 @@
 #ifndef DATA_STRUCTURES_H
 #define DATA_STRUCTURES_H
-#define INPUT_EXIT_SIGNAL -111
 #include <stdbool.h>
 #include <stddef.h>
 
