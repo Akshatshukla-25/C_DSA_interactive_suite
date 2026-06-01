@@ -28,6 +28,7 @@ void bst_postorder(const bstNode* head);
 int countnodes(const bstNode* head);
 int tree_height(const bstNode* root);
 void destroy_bst(bstNode* head);
+bstNode* bst_delete(bstNode* root, int value);
 
 // For circular queue
 typedef struct circular_queue
@@ -90,6 +91,7 @@ typedef struct TBTnode
 } TBTnode;
 TBTnode* leftmost(TBTnode* node);
 TBTnode* create_node_tbt(int data);
+void inorder_tbt(TBTnode* node);
 int insert_node_tbt(TBTnode** root_ref, int key);
 void destroy_tbt(TBTnode* node);
 void TBT_demo(void);
