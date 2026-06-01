@@ -230,7 +230,7 @@ Separate Chaining uses sll API from the 'data_structures' folder
 
 * Step-by-step visualization of infix-to-postfix conversion, showing the operator stack and current output at each step
 * Step-by-step visualization of postfix evaluation, showing operand stack updates and intermediate results
-* Includes a parentheses checker with validated input via `safe_input_int()` to ensure well-formed expressions before processing
+* Includes a parentheses checker with validated input via `get_validated_input_parantheses()` to ensure well-formed expressions before processing
 ---
 
 ### Modularity & Header Discipline
