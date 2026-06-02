@@ -1,5 +1,22 @@
 #ifndef DATA_STRUCTURES_H
 #define DATA_STRUCTURES_H
+/*
+ * DATA STRUCTURES INDEX
+ *
+ * This header aggregates all data structures used in the project.
+ * The data structures appear in the following order:
+ *
+ * 1. Arrays
+ * 2. Binary Search Tree (BST)
+ * 3. Circular Queue
+ * 4. Doubly Linked List
+ * 5. Singly Linked List
+ * 6. Threaded Binary Tree (TBT)
+ * 7. Priority Queue
+ *
+ * Refer to the corresponding section below for structure
+ * definitions and function declarations.
+ */
 #define HEAP_CAPACITY 100
 #include <stdbool.h>
 #include <stddef.h>
