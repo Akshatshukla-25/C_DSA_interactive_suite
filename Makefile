@@ -41,7 +41,7 @@ fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE) test_scll$(EXE)
 
 valgrind:
 	for t in $(TEST_BINS); do \
@@ -103,12 +103,17 @@ TBT_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	src/data_structures/tbt.c \
 	tests/test_tbt.c
-  
+
 PRIORITY_QUEUE_SRC = \
 	src/data_structures/array.c \
 	src/utils/safe_input_int.c \
 	src/data_structures/priority_queue.c \
-	tests/test_priority_queue.c 
+	tests/test_priority_queue.c
+
+SCLL_TEST_SRC = \
+	src/data_structures/scll.c \
+	src/utils/safe_input_int.c \
+	tests/test_scll.c
 
 test_tbt:
 	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
@@ -150,8 +155,12 @@ test_priority_queue:
 	$(CC) $(CFLAGS) $(PRIORITY_QUEUE_SRC) -o test_priority_queue$(EXE)
 	./test_priority_queue$(EXE)
 
+test_scll:
+	$(CC) $(CFLAGS) $(SCLL_TEST_SRC) -o test_scll$(EXE)
+	./test_scll$(EXE)
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue
+
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)

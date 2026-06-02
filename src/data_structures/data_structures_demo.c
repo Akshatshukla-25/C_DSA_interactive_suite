@@ -76,8 +76,12 @@ void data_structures_demo(void)
                 while (1)
                 {
                     int circular_variant_choice = 0;
-                    int circular_variant_status = safe_input_int(
-                        &circular_variant_choice, "enter 1 for circular queue demo : ", 1, 1);
+                    int circular_variant_status =
+                        safe_input_int(&circular_variant_choice,
+                                       "\nenter 1 for circular queue demo"
+                                       "\nenter 2 for singly circular linked list demo"
+                                       "\nenter choice : ",
+                                       1, 2);
                     if (circular_variant_status == 0)
                         continue;
                     if (circular_variant_status == INPUT_EXIT_SIGNAL)
@@ -86,7 +90,10 @@ void data_structures_demo(void)
                     {
                         circular_queue_Demo();
                     }
-                    break;
+                    if (circular_variant_choice == 2)
+                    {
+                        scll_Demo();
+                    }
                 }
 
                 break;

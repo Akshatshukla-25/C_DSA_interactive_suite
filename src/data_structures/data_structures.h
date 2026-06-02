@@ -140,4 +140,32 @@ void destroy_pq(priority_queue* pq);
 void display_heap(priority_queue* pq);
 void priority_queue_demo(void);
 
+// For singly circular linked list
+// Invariant: when non-empty, tail->next == head (the ring closes back onto head);
+// when empty, head == tail == NULL and length == 0. head and tail are both tracked and
+// length is cached so getLength is O(1) and positional inserts need no counting pass.
+typedef struct scll_Node
+{
+    int data;
+    struct scll_Node* next;
+} scll_Node;
+typedef struct scll
+{
+    scll_Node* head;
+    scll_Node* tail;
+    int length;
+} scll;
+void scll_init(scll* list);
+int scll_insertAtBeginning(scll* list, int value);
+int scll_insertAtEnd(scll* list, int value);
+int scll_insertAtPosition(scll* list, int value, int position);
+int scll_deleteAtBeginning(scll* list);
+int scll_deleteAtEnd(scll* list);
+int scll_deleteByValue(scll* list, int value);
+int scll_deleteAtPosition(scll* list, int position);
+int scll_search(const scll* list, int key);
+int scll_getLength(const scll* list);
+void scll_printlist(const scll* list);
+void scll_destroy(scll* list);
+void scll_Demo(void);
 #endif
