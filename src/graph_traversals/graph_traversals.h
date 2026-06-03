@@ -19,13 +19,28 @@ void free_graph(Graph* graph);
 
 void dijkstra_demo(void);
 
-// A structure with can store the destination along with weights
+// A structure which can store the destination along with weights
 typedef struct Edge
 {
     int destination;
     int weight;
     struct Edge* next;
 } Edge;
+
+typedef struct
+{
+    int vertex;
+    int distance;
+} PQ_dijkstra_node;
+
+typedef struct
+{
+    int size;
+    PQ_dijkstra_node heap[HEAP_CAPACITY];
+} PQ_dijkstra;
+int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance);
+bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result);
+
 
 // New graph structure which stores the new type of edge node
 typedef struct weightedGraph

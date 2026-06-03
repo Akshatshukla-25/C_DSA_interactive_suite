@@ -3,46 +3,95 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
-int minDistance(int visited[], int dist[], int size)
+int insert_pq_dijkstra(PQ_dijkstra* pq, int vertex, int distance)
 {
-    int minDist = INT_MAX;
-    int u = -1;
-    for (int i = 0; i < size; i++)
+    if (pq == NULL || pq->size == HEAP_CAPACITY)
+        return 0;
+
+    int i = pq->size;
+    pq->heap[i].distance = distance;
+    pq->heap[i].vertex = vertex;
+    pq->size++;
+
+    while (i > 0)
     {
-        if (!visited[i] && dist[i] < minDist)
-        {
-            minDist = dist[i];
-            u = i;
-        }
+        int parent = (i - 1) / 2;
+        if (pq->heap[i].distance >= pq->heap[parent].distance)
+            break;
+
+        PQ_dijkstra_node temp = pq->heap[i];
+        pq->heap[i] = pq->heap[parent];
+        pq->heap[parent] = temp;
+
+        i = parent;
     }
 
-    return u;
+    return 1;
+}
+
+bool extractTop_pq_dijkstra(PQ_dijkstra* pq, PQ_dijkstra_node* result)
+{
+    if (pq == NULL || result == NULL || pq->size == 0)
+        return false;
+
+    int topIndex = 0;
+    PQ_dijkstra_node topElement = pq->heap[topIndex];
+    int lastElementIndex = pq->size - 1;
+
+    pq->heap[topIndex] = pq->heap[lastElementIndex];
+    pq->size--;
+
+    int i = 0;
+
+    while (1)
+    {
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+        int target = i;
+
+        if (left < pq->size && pq->heap[left].distance < pq->heap[target].distance)
+            target = left;
+        if (right < pq->size && pq->heap[right].distance < pq->heap[target].distance)
+            target = right;
+
+        if (target == i)
+            break;
+
+        PQ_dijkstra_node temp = pq->heap[i];
+        pq->heap[i] = pq->heap[target];
+        pq->heap[target] = temp;
+
+        i = target;
+    }
+
+    *result = topElement;
+
+    return true;
 }
 
 void dijkstra(weightedGraph* graph, int start)
 {
     int size = graph->V;
-
-    int visited[size];
     int dist[size];
 
     for (int i = 0; i < size; i++)
-    {
-        visited[i] = 0;
         dist[i] = INT_MAX;
-    }
 
     dist[start] = 0;
 
-    for (int count = 0; count < size - 1; count++)
-    {
-        int u = minDistance(visited, dist, size);
-        visited[u] = 1;
+    PQ_dijkstra pq;
+    pq.size = 0;
+    insert_pq_dijkstra(&pq, start, 0);
 
-        if (u == -1)
-            break;
+    PQ_dijkstra_node currentNode;
+
+    while (extractTop_pq_dijkstra(&pq, &currentNode))
+    {
+        int u = currentNode.vertex;
+
+        if (currentNode.distance > dist[u])
+            continue;
 
         Edge* current = graph->array[u];
 
@@ -50,8 +99,11 @@ void dijkstra(weightedGraph* graph, int start)
         {
             int v = current->destination;
             int currentWeight = current->weight;
-            if (!visited[v] && dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
+            if (dist[u] != INT_MAX && dist[u] + currentWeight < dist[v])
+            {
                 dist[v] = dist[u] + currentWeight;
+                insert_pq_dijkstra(&pq, v, dist[v]);
+            }
 
             current = current->next;
         }
@@ -126,6 +178,7 @@ void add_edge_directed(weightedGraph* graph, int src, int dest, int wt)
     if (src < 0 || src >= graph->V || dest < 0 || dest >= graph->V || wt < 0)
     {
         printf("Invalid edge: %d -> %d\n", src, dest);
+        return;
     }
 
     edge_insertAtEnd(&graph->array[src], dest, wt);
