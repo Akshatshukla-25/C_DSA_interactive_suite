@@ -41,7 +41,7 @@ fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean:
-	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE) test_scll$(EXE) test_simple_queue$(EXE) test_deque$(EXE)
+	$(RM) $(TARGET)$(EXE) test_circ_queue$(EXE) test_bst$(EXE) test_search$(EXE) test_hash_func$(EXE) test_sll$(EXE) test_dll$(EXE) test_array$(EXE) test_stack$(EXE) test_tbt$(EXE) test_priority_queue$(EXE) test_scll$(EXE) test_simple_queue$(EXE) test_deque$(EXE) test_astar$(EXE)
 
 valgrind:
 	for t in $(TEST_BINS); do \
@@ -126,6 +126,12 @@ DEQUE_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	tests/test_deque.c
 
+ASTAR_TEST_SRC = \
+	src/graph_traversals/astar.c \
+	src/graph_traversals/dijkstra.c \
+	src/utils/safe_input_int.c \
+	tests/test_astar.c
+
 test_tbt:
 	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
 	./test_tbt$(EXE)
@@ -178,8 +184,12 @@ test_deque:
 	$(CC) $(CFLAGS) $(DEQUE_TEST_SRC) -o test_deque$(EXE)
 	./test_deque$(EXE)
 
+test_astar:
+	$(CC) $(CFLAGS) $(ASTAR_TEST_SRC) -o test_astar$(EXE)
+	./test_astar$(EXE)
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_simple_queue test_deque
+
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_simple_queue test_deque test_astar
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)

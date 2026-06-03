@@ -41,4 +41,11 @@ int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
 int minDistance(int visited[], int dist[], int size);
 
+// ------------------For A* search algorithm-----------------------
+
+int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]);
+void astar(weightedGraph* graph, int start, int dest, int h[]);
+void astar_demo(void);
+
+
 #endif
