@@ -80,17 +80,26 @@ void postfix_evaluation_Demo(void)
                 if (ch == '+')
                 {
                     result = left_operand + right_operand;
-                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d + %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                    snprintf(action_msg, sizeof(action_msg),
+                             "Popped operands %d and %d, evaluated %d + %d = %d, pushed result "
+                             "back onto stack",
+                             left_operand, right_operand, left_operand, right_operand, result);
                 }
                 else if (ch == '-')
                 {
                     result = left_operand - right_operand;
-                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d - %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                    snprintf(action_msg, sizeof(action_msg),
+                             "Popped operands %d and %d, evaluated %d - %d = %d, pushed result "
+                             "back onto stack",
+                             left_operand, right_operand, left_operand, right_operand, result);
                 }
                 else if (ch == '*')
                 {
                     result = left_operand * right_operand;
-                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d * %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                    snprintf(action_msg, sizeof(action_msg),
+                             "Popped operands %d and %d, evaluated %d * %d = %d, pushed result "
+                             "back onto stack",
+                             left_operand, right_operand, left_operand, right_operand, result);
                 }
                 else if (ch == '/')
                 {
@@ -100,7 +109,10 @@ void postfix_evaluation_Demo(void)
                         return;
                     }
                     result = left_operand / right_operand;
-                    snprintf(action_msg, sizeof(action_msg), "Popped operands %d and %d, evaluated %d / %d = %d, pushed result back onto stack", left_operand, right_operand, left_operand, right_operand, result);
+                    snprintf(action_msg, sizeof(action_msg),
+                             "Popped operands %d and %d, evaluated %d / %d = %d, pushed result "
+                             "back onto stack",
+                             left_operand, right_operand, left_operand, right_operand, result);
                 }
                 push(operands, result);
                 current_result = result;

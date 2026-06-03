@@ -7,7 +7,6 @@
 // printlist, search
 // deleteByValue and reverseList
 
-
 void sll_Demo(void)
 {
     Node* head = NULL;
@@ -147,9 +146,7 @@ start_sll:
         sll_enter_pos_index:
             snprintf(sll_pos_prompt, sizeof(sll_pos_prompt),
                      "enter the position (0 to %d), enter '-1' to exit :- ", sll_getLength(head));
-            sll_pos_status = safe_input_int(&sll_pos_index,
-                                            sll_pos_prompt,
-                                            0, sll_getLength(head));
+            sll_pos_status = safe_input_int(&sll_pos_index, sll_pos_prompt, 0, sll_getLength(head));
 
             if (sll_pos_status == INPUT_EXIT_SIGNAL)
             {
@@ -281,9 +278,8 @@ start_sll:
             snprintf(sll_pos_delete_prompt, sizeof(sll_pos_delete_prompt),
                      "enter the position to delete (0 to %d), enter '-1' to exit :- ",
                      sll_getLength(head) - 1);
-            sll_pos_delete_status = safe_input_int(&sll_pos_delete_index,
-                                                   sll_pos_delete_prompt,
-                                                   0, sll_getLength(head) - 1);
+            sll_pos_delete_status = safe_input_int(&sll_pos_delete_index, sll_pos_delete_prompt, 0,
+                                                   sll_getLength(head) - 1);
 
             if (sll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {

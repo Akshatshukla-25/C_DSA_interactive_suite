@@ -11,10 +11,10 @@ void advanced_sorting_demo(void)
 
         printf("\nAdvanced sorting algorithms demo\n");
 
-        sorting_algo_status = safe_input_int(
-            &sorting_algo_choice,
-            "enter '1' for quick sort, '2' for merge sort, '3' for heap sort, '4' for radix sort '-1' to exit:- ", 1,
-            4);
+        sorting_algo_status = safe_input_int(&sorting_algo_choice,
+                                             "enter '1' for quick sort, '2' for merge sort, '3' "
+                                             "for heap sort, '4' for radix sort '-1' to exit:- ",
+                                             1, 4);
 
         if (sorting_algo_status == INPUT_EXIT_SIGNAL)
         {
@@ -41,7 +41,7 @@ void advanced_sorting_demo(void)
         {
             heap_sort_demo();
         }
-        
+
         else if (sorting_algo_choice == 4)
         {
             radix_sort_demo();

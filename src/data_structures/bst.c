@@ -237,10 +237,11 @@ void binary_search_tree_Demo(void)
             int bst_traversal_choice;
             int bst_traversal_status;
 
-            bst_traversal_status = safe_input_int(&bst_traversal_choice,
-                                      "\nenter '1' for inorder, '2' for preorder and "
-                                      "'3' for postorder, '4' to delete a node and '-1' to exit:- ",
-                                      1, 4);
+            bst_traversal_status =
+                safe_input_int(&bst_traversal_choice,
+                               "\nenter '1' for inorder, '2' for preorder and "
+                               "'3' for postorder, '4' to delete a node and '-1' to exit:- ",
+                               1, 4);
 
             if (bst_traversal_status == INPUT_EXIT_SIGNAL)
             {
@@ -269,9 +270,10 @@ void binary_search_tree_Demo(void)
                 int delete_status;
                 while (1)
                 {
-                    delete_status = safe_input_int(&delete_value,
-                                                "\nenter value to delete, (between 1 and 100), enter '-1' to exit:- ",
-                                                1, 100);
+                    delete_status = safe_input_int(
+                        &delete_value,
+                        "\nenter value to delete, (between 1 and 100), enter '-1' to exit:- ", 1,
+                        100);
                     if (delete_status == INPUT_EXIT_SIGNAL)
                     {
                         destroy_bst(head);

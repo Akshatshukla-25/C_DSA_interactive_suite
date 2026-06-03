@@ -50,7 +50,7 @@ void quadratic_probing_demo(void)
             for (int i = 0; i < length_of_array; i++)
             {
                 int probe_location = (base_hash_location + i * i) % length_of_array;
-                
+
                 if (!arr[probe_location])
                 {
                     arr[probe_location] = value;
@@ -62,7 +62,8 @@ void quadratic_probing_demo(void)
 
             if (!inserted)
             {
-                printf("\nhash table full or quadratic probe failed, old table destroyed, new table created\n");
+                printf("\nhash table full or quadratic probe failed, old table destroyed, new "
+                       "table created\n");
                 break;
             }
         }

@@ -5,7 +5,7 @@
 void test_printStack_empty(void)
 {
     stack* s = createStack();
-    printStack(s); 
+    printStack(s);
     assert(isEmpty(s) == 1);
     destroyStack(s);
     printf("test_printStack_empty passed.\n");

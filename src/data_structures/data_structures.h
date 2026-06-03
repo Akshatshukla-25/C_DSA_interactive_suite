@@ -212,4 +212,3 @@ void display_deque(const deque* dq);
 void deque_demo(void);
 
 #endif
-

@@ -129,13 +129,11 @@ start_dll:
             }
 
         dll_enter_pos_index:
-            snprintf(dll_pos_prompt, sizeof(dll_pos_prompt), 
-                    "enter the position (0 to %d), enter '-1' to exit :- ", 
-                    dll_getLength(head) - 1);
-                    
-            dll_pos_status = safe_input_int(&dll_pos_index,
-                                            dll_pos_prompt,
-                                            0, dll_getLength(head));
+            snprintf(dll_pos_prompt, sizeof(dll_pos_prompt),
+                     "enter the position (0 to %d), enter '-1' to exit :- ",
+                     dll_getLength(head) - 1);
+
+            dll_pos_status = safe_input_int(&dll_pos_index, dll_pos_prompt, 0, dll_getLength(head));
 
             if (dll_pos_status == INPUT_EXIT_SIGNAL)
             {
@@ -238,7 +236,8 @@ start_dll:
             int dll_delete_value;
             dll_delete_status = safe_input_int(
                 &dll_delete_value,
-                "\nenter element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1, 100);
+                "\nenter element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1,
+                100);
 
             if (dll_delete_status == INPUT_EXIT_SIGNAL)
             {
@@ -265,9 +264,8 @@ start_dll:
             snprintf(dll_pos_delete_prompt, sizeof(dll_pos_delete_prompt),
                      "enter the position to delete (0 to %d), enter '-1' to exit :- ",
                      dll_getLength(head) - 1);
-            dll_pos_delete_status = safe_input_int(&dll_pos_delete_index,
-                                                   dll_pos_delete_prompt,
-                                                   0, dll_getLength(head) - 1);
+            dll_pos_delete_status = safe_input_int(&dll_pos_delete_index, dll_pos_delete_prompt, 0,
+                                                   dll_getLength(head) - 1);
 
             if (dll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {

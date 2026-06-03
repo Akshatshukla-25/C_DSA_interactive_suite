@@ -86,7 +86,7 @@ void test_delete_leaf()
     root = bst_delete(root, 5);
 
     assert(countnodes(root) == 2);
-    assert(bst_insert(&root, 5) == 1); 
+    assert(bst_insert(&root, 5) == 1);
 
     destroy_bst(root);
 
@@ -101,10 +101,10 @@ void test_delete_single_child()
     bst_insert(&root, 5);
     bst_insert(&root, 3);
 
-    root = bst_delete(root, 5); 
+    root = bst_delete(root, 5);
 
     assert(countnodes(root) == 2);
-    assert(bst_insert(&root, 5) == 1); 
+    assert(bst_insert(&root, 5) == 1);
 
     destroy_bst(root);
 
@@ -121,10 +121,10 @@ void test_delete_two_children()
     bst_insert(&root, 3);
     bst_insert(&root, 7);
 
-    root = bst_delete(root, 5); 
+    root = bst_delete(root, 5);
 
     assert(countnodes(root) == 4);
-    assert(bst_insert(&root, 5) == 1); 
+    assert(bst_insert(&root, 5) == 1);
 
     destroy_bst(root);
 

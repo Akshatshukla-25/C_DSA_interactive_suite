@@ -218,7 +218,8 @@ void deque_demo(void)
             if (choice == 1)
             {
                 int val;
-                int val_status = safe_input_int(&val, "\nEnter value to insert at front (1 to 100), '-1' to exit: ", 1, 100);
+                int val_status = safe_input_int(
+                    &val, "\nEnter value to insert at front (1 to 100), '-1' to exit: ", 1, 100);
                 if (val_status == INPUT_EXIT_SIGNAL)
                 {
                     printf("\nExiting deque demo\n");
@@ -237,7 +238,8 @@ void deque_demo(void)
             else if (choice == 2)
             {
                 int val;
-                int val_status = safe_input_int(&val, "\nEnter value to insert at rear (1 to 100), '-1' to exit: ", 1, 100);
+                int val_status = safe_input_int(
+                    &val, "\nEnter value to insert at rear (1 to 100), '-1' to exit: ", 1, 100);
                 if (val_status == INPUT_EXIT_SIGNAL)
                 {
                     printf("\nExiting deque demo\n");
