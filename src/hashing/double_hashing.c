@@ -77,8 +77,7 @@ void double_hashing_demo(void)
 
             if (!inserted)
             {
-                printf("\nhash table full or double hashing probe failed, old table destroyed, new "
-                       "table created\n");
+                printf("\nhash table full\n");
                 break;
             }
         }
