@@ -6,6 +6,7 @@ void hashing_algorithms_demo(void);
 int hash_function(int value, int length_of_array);
 void separate_chaining_demo(void);
 void quadratic_probing_demo(void);
+void double_hashing_demo(void);
 
 static const unsigned char PRIMES[] = {
     0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1,

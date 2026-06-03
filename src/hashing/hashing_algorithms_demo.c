@@ -7,9 +7,11 @@ void hashing_algorithms_demo(void)
     while (1)
     {
         int hash_algo_choice;
-        int hash_algo_status =
-            safe_input_int(&hash_algo_choice,
-                           "\n\nenter 1 for linear probing, 2 for separate chaining, and 3 for quadratic probing :- ", 1, 3);
+        int hash_algo_status = safe_input_int(&hash_algo_choice,
+                                              "\n\nenter 1 for linear probing, 2 for separate "
+                                              "chaining, 3 for quadratic probing, and 4 for double "
+                                              "hashing :- ",
+                                              1, 4);
 
         if (hash_algo_status == INPUT_EXIT_SIGNAL)
         {
@@ -30,9 +32,13 @@ void hashing_algorithms_demo(void)
             case 2:
                 separate_chaining_demo();
                 break;
-                
+
             case 3:
                 quadratic_probing_demo();
+                break;
+
+            case 4:
+                double_hashing_demo();
                 break;
         }
     }
