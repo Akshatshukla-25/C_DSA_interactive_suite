@@ -53,7 +53,6 @@ weightedGraph* create_weightedGraph(int V);
 void add_edge_directed(weightedGraph* graph, int src, int dest, int wt);
 int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
-int minDistance(int visited[], int dist[], int size);
 
 // ------------------For A* search algorithm-----------------------
 
@@ -68,5 +67,8 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
 
 void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[]);
 void greedy_best_first_search_demo(void);
+
+// ------------------For Bellman-ford-----------------------
+void bellman_ford_demo(void);
 
 #endif
