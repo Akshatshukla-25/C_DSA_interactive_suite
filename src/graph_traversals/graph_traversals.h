@@ -69,8 +69,26 @@ void floyd_warshall_demo(void);
 
 // ------------------For Greedy Best-First Search-----------------------
 
-int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, int h[], int parent[], int traversal_order[], int* traversal_len);
+int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest,
+                                   int h[], int parent[],
+                                   int traversal_order[],
+                                   int* traversal_len);
+
 void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[]);
 void greedy_best_first_search_demo(void);
+
+// ------------------For Kruskal's MST Algorithm------------------------
+
+typedef struct KruskalEdge
+{
+    int src;
+    int dest;
+    int weight;
+} KruskalEdge;
+
+void kruskal_mst(KruskalEdge* edges, int V, int E,
+                 KruskalEdge* mst_edges, int* mst_edge_count);
+
+void kruskal_demo(void);
 
 #endif
