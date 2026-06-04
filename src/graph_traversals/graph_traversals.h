@@ -62,5 +62,9 @@ int astar_solve(weightedGraph* graph, int start, int dest, int h[], int parent[]
 void astar(weightedGraph* graph, int start, int dest, int h[]);
 void astar_demo(void);
 
+// Floyd-Warshall algorithm prototypes
+void floyd_warshall(int** graph, int V, int** dist, int** next);
+void print_floyd_warshall_solution(int** dist, int** next, int V);
+void floyd_warshall_demo(void);
 
 #endif

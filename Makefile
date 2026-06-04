@@ -41,7 +41,7 @@ fmt:
 	find . \( -name "*.c" -o -name "*.h" \) -not -path "*/build/*" | xargs clang-format -i
 
 clean:
-	$(RM) $(TARGET)$(EXE) $(TEST_BINS)
+	$(RM) $(TARGET)$(EXE) $(foreach bin,$(TEST_BINS),$(bin)$(EXE))
 
 valgrind:
 	for t in $(TEST_BINS); do \
@@ -136,6 +136,11 @@ AVL_TEST_SRC = \
 	src/utils/safe_input_int.c \
 	tests/test_avl.c
 
+FLOYD_WARSHALL_TEST_SRC = \
+	src/graph_traversals/floyd_warshall.c \
+	src/utils/safe_input_int.c \
+	tests/test_floyd_warshall.c
+
 test_tbt:
 	$(CC) $(CFLAGS) $(TBT_TEST_SRC) -o test_tbt$(EXE)
 	./test_tbt$(EXE)
@@ -193,13 +198,15 @@ test_astar:
 	./test_astar$(EXE)
 
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_simple_queue test_deque test_astar
 test_avl:
 	$(CC) $(CFLAGS) $(AVL_TEST_SRC) -o test_avl$(EXE)
 	./test_avl$(EXE)
 
+test_floyd_warshall:
+	$(CC) $(CFLAGS) $(FLOYD_WARSHALL_TEST_SRC) -o test_floyd_warshall$(EXE)
+	./test_floyd_warshall$(EXE)
 
-TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_simple_queue test_deque test_avl
+TEST_BINS=test_circ_queue test_bst test_search test_hash_func test_sll test_dll test_array test_stack test_tbt test_priority_queue test_scll test_simple_queue test_deque test_astar test_avl test_floyd_warshall
 test: $(TEST_BINS)
 
 .PHONY: $(TARGET) $(TEST_BINS)

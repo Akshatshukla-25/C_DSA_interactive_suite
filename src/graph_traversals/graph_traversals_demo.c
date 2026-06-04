@@ -8,7 +8,7 @@ void graph_traversals_demo(void)
     {
         int graph_traversal_choice;
         int graph_traversal_status = safe_input_int(
-            &graph_traversal_choice, "\nenter 1 for bfs, 2 for dfs, 3 for dijkstra and 4 for astar : ", 1, 4);
+            &graph_traversal_choice, "\nenter 1 for bfs, 2 for dfs, 3 for dijkstra, 4 for astar and 5 for floyd-warshall : ", 1, 5);
 
         if (graph_traversal_status == INPUT_EXIT_SIGNAL)
         {
@@ -34,6 +34,9 @@ void graph_traversals_demo(void)
                 break;
             case 4:
                 astar_demo();
+                break;
+            case 5:
+                floyd_warshall_demo();
                 break;
         }
     }
