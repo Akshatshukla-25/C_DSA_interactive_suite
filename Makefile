@@ -15,7 +15,8 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/hashing \
 	-Isrc/utils \
 	-Isrc/trees \
-	-Isrc/error_correction_algorithms
+	-Isrc/error_correction_algorithms \
+	-Isrc/job_scheduling
 
 SRC_DIRS = \
 	src/data_structures \
@@ -27,7 +28,8 @@ SRC_DIRS = \
 	src/hashing \
 	src/utils \
 	src/trees \
-	src/error_correction_algorithms
+	src/error_correction_algorithms \
+	src/job_scheduling
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
