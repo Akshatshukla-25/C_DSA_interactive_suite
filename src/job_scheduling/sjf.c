@@ -14,6 +14,8 @@ void sjf_demo(void)
         return;
     }
 
+    GanttSegment segments[JS_MAX_SEGMENTS];
+    int segment_count = 0;
     int done[10] = {0};
     int completed = 0;
     int current_time = 0;
@@ -38,22 +40,18 @@ void sjf_demo(void)
 
         if (chosen == -1)
         {
-            // no job has arrived yet, idle forward to the next arrival
-            int next_arrival = -1;
-
-            for (int i = 0; i < n; i++)
-            {
-                if (!done[i] && (next_arrival == -1 || procs[i].arrival < next_arrival))
-                {
-                    next_arrival = procs[i].arrival;
-                }
-            }
-
-            current_time = next_arrival;
+            // no job has arrived yet, idle one tick and try again
+            js_add_segment(segments, &segment_count, -1, current_time);
+            current_time++;
             continue;
         }
 
-        current_time += procs[chosen].burst;
+        for (int t = 0; t < procs[chosen].burst; t++)
+        {
+            js_add_segment(segments, &segment_count, procs[chosen].id, current_time);
+            current_time++;
+        }
+
         procs[chosen].completion = current_time;
         procs[chosen].turnaround = procs[chosen].completion - procs[chosen].arrival;
         procs[chosen].waiting = procs[chosen].turnaround - procs[chosen].burst;
@@ -62,4 +60,5 @@ void sjf_demo(void)
     }
 
     js_print_result(procs, n);
+    js_print_gantt(segments, segment_count);
 }

@@ -113,15 +113,71 @@ void js_print_result(const Process* procs, int n)
     printf("average turnaround time : %.2f\n", (double)total_turnaround / n);
 }
 
+void js_add_segment(GanttSegment* segments, int* count, int id, int time)
+{
+    // extend the previous segment when the CPU keeps running the same process,
+    // so a run of identical ticks collapses into a single bar
+    if (*count > 0 && segments[*count - 1].id == id && segments[*count - 1].end == time)
+    {
+        segments[*count - 1].end = time + 1;
+        return;
+    }
+
+    segments[*count].id = id;
+    segments[*count].start = time;
+    segments[*count].end = time + 1;
+    (*count)++;
+}
+
+void js_print_gantt(const GanttSegment* segments, int count)
+{
+    printf("\nGantt chart:\n");
+
+    printf("|");
+    for (int i = 0; i < count; i++)
+    {
+        if (segments[i].id == -1)
+        {
+            printf(" idle |");
+        }
+        else
+        {
+            printf(" P%d |", segments[i].id);
+        }
+    }
+    printf("\n");
+
+    // time axis: each boundary number sits under its bar separator. The gap
+    // before a number is the bar width minus the width of the number printed
+    // just before it, so multi-digit times stay aligned with the '|' above.
+    int prev_width = printf("%d", segments[0].start);
+
+    for (int i = 0; i < count; i++)
+    {
+        int bar_width = segments[i].id == -1 ? 7 : 5;
+        int gap = bar_width - prev_width;
+
+        for (int s = 0; s < gap; s++)
+        {
+            printf(" ");
+        }
+
+        prev_width = printf("%d", segments[i].end);
+    }
+    printf("\n");
+}
+
 void job_scheduling_demo(void)
 {
     while (1)
     {
         int sched_choice;
-        int sched_status = safe_input_int(&sched_choice,
-                                          "\n\nenter 1 for FCFS, 2 for SJF (non-preemptive), 3 for "
-                                          "priority (non-preemptive), 4 for round robin : ",
-                                          1, 4);
+        int sched_status =
+            safe_input_int(&sched_choice,
+                           "\n\nenter 1 for FCFS, 2 for SJF (non-preemptive), 3 for SRTF "
+                           "(preemptive SJF), 4 for priority (non-preemptive), 5 for priority "
+                           "(preemptive), 6 for round robin : ",
+                           1, 6);
 
         if (sched_status == INPUT_EXIT_SIGNAL)
         {
@@ -145,10 +201,18 @@ void job_scheduling_demo(void)
                 break;
 
             case 3:
-                priority_scheduling_demo();
+                srtf_demo();
                 break;
 
             case 4:
+                priority_scheduling_demo();
+                break;
+
+            case 5:
+                preemptive_priority_demo();
+                break;
+
+            case 6:
                 round_robin_demo();
                 break;
         }

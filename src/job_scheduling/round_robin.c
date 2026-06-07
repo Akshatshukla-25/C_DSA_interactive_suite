@@ -35,6 +35,9 @@ void round_robin_demo(void)
         break;
     }
 
+    GanttSegment segments[JS_MAX_SEGMENTS];
+    int segment_count = 0;
+
     // circular ready queue: at most n processes are queued at once, so n + 1
     // slots are always enough no matter how many times a job is requeued.
     int queue[11];
@@ -71,7 +74,7 @@ void round_robin_demo(void)
     {
         if (head == tail)
         {
-            // CPU idle: jump to the next arrival and enqueue it
+            // CPU idle: record idle ticks up to the next arrival, then enqueue it
             int next_arrival = -1;
             int next_index = -1;
 
@@ -85,7 +88,12 @@ void round_robin_demo(void)
                 }
             }
 
-            current_time = next_arrival;
+            while (current_time < next_arrival)
+            {
+                js_add_segment(segments, &segment_count, -1, current_time);
+                current_time++;
+            }
+
             queue[tail] = next_index;
             tail = (tail + 1) % capacity;
             in_queue[next_index] = 1;
@@ -96,9 +104,14 @@ void round_robin_demo(void)
         head = (head + 1) % capacity;
 
         int slice = procs[idx].remaining < quantum ? procs[idx].remaining : quantum;
-        int slice_end = current_time + slice;
+
+        for (int t = 0; t < slice; t++)
+        {
+            js_add_segment(segments, &segment_count, procs[idx].id, current_time);
+            current_time++;
+        }
+
         procs[idx].remaining -= slice;
-        current_time = slice_end;
 
         // any process that arrived during this slice joins the ready queue
         for (int i = 0; i < n; i++)
@@ -127,4 +140,5 @@ void round_robin_demo(void)
     }
 
     js_print_result(procs, n);
+    js_print_gantt(segments, segment_count);
 }

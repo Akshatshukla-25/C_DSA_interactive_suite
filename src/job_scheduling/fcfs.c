@@ -36,20 +36,30 @@ void fcfs_demo(void)
         }
     }
 
+    GanttSegment segments[JS_MAX_SEGMENTS];
+    int segment_count = 0;
     int current_time = 0;
 
     for (int i = 0; i < n; i++)
     {
-        if (current_time < procs[i].arrival)
+        // idle until this process arrives
+        while (current_time < procs[i].arrival)
         {
-            current_time = procs[i].arrival;
+            js_add_segment(segments, &segment_count, -1, current_time);
+            current_time++;
         }
 
-        current_time += procs[i].burst;
+        for (int t = 0; t < procs[i].burst; t++)
+        {
+            js_add_segment(segments, &segment_count, procs[i].id, current_time);
+            current_time++;
+        }
+
         procs[i].completion = current_time;
         procs[i].turnaround = procs[i].completion - procs[i].arrival;
         procs[i].waiting = procs[i].turnaround - procs[i].burst;
     }
 
     js_print_result(procs, n);
+    js_print_gantt(segments, segment_count);
 }
