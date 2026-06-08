@@ -15,7 +15,8 @@ void error_correction_algorithms_demo(void)
             "\nEnter 1 for checksum (sender)"
             "\nEnter 2 for checksum (receiver)"
             "\nEnter 3 for CRC"
-            "\nEnter -1 to exit: ", 1, 3);
+            "\nEnter 4 for LRC"
+            "\nEnter -1 to exit: ", 1, 4);
 
         if (ECA_status == INPUT_EXIT_SIGNAL)
         {
@@ -41,6 +42,10 @@ void error_correction_algorithms_demo(void)
             
             case 3:
                 crc_demo();
+                break;
+
+            case 4:
+                lrc_demo();
                 break;
 
             default:
