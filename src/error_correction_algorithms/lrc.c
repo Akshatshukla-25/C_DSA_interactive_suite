@@ -18,14 +18,16 @@ void lrc_demo(void)
 {
     int rows;
     printf("\n=== LRC (Longitudinal Redundancy Check) ===\n");
-    
+
     // Fix 1: Use safe_input_int() instead of scanf()
     int result = safe_input_int(&rows, "Enter number of data words (1-20): ", 1, LRC_MAX_ROWS);
-    if (result == -111) {
+    if (result == -111)
+    {
         printf("Exiting LRC demo...\n");
         return;
     }
-    if (result == 0) {
+    if (result == 0)
+    {
         printf("Invalid input. Returning to main menu.\n");
         return;
     }
@@ -39,20 +41,22 @@ void lrc_demo(void)
         // Fix 2: Use fgets() instead of scanf() for strings
         printf("  Word %d: ", i + 1);
         fgets(data[i], sizeof(data[i]), stdin);
-        
+
         // Remove trailing newline
         int len = strlen(data[i]);
-        if (len > 0 && data[i][len-1] == '\n') {
-            data[i][len-1] = '\0';
+        if (len > 0 && data[i][len - 1] == '\n')
+        {
+            data[i][len - 1] = '\0';
             len--;
         }
 
         /* validate: only '0' and '1' allowed */
-        if (len == 0) {
+        if (len == 0)
+        {
             printf("Error: word cannot be empty.\n");
             return;
         }
-        
+
         for (int j = 0; j < len; j++)
         {
             if (data[i][j] != '0' && data[i][j] != '1')
@@ -102,8 +106,8 @@ void lrc_demo(void)
     {
         int ones = 0;
         for (int i = 0; i < rows; i++)
-            if (data[i][j] == '1') ones++;
-        printf("  Col %2d : %d one(s) -> parity bit = %c\n",
-               j + 1, ones, lrc[j]);
+            if (data[i][j] == '1')
+                ones++;
+        printf("  Col %2d : %d one(s) -> parity bit = %c\n", j + 1, ones, lrc[j]);
     }
 }

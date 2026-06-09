@@ -1,5 +1,5 @@
-#include "safe_input.h"
 #include "error_correction_algorithms.h"
+#include "safe_input.h"
 #include <stdio.h>
 
 /* New functions come here */
@@ -11,21 +11,20 @@ void error_correction_algorithms_demo(void)
         int ECA_choice;
 
         /* Change the prompt and the range accordingly when new functions get added */
-        int ECA_status = safe_input_int(
-            &ECA_choice,
-            "\nEnter 1 for Checksum (Sender)"
-            "\nEnter 2 for Checksum (Receiver verification)"
-            "\nEnter 3 for CRC (Sender)"
-            "\nEnter 4 for CRC (Receiver verification)"
-            "\nEnter 5 for LRC (Sender)"
-            "\nEnter 6 for LRC (Receiver verification)"
-            "\nEnter 7 for Parity Bit"
-            "\nEnter 8 for VRC (Sender)"
-            "\nEnter 9 for VRC (Receiver verification)"
-            "\nEnter 10 for Hamming Code (Sender)"
-            "\nEnter 11 for Hamming Code (Receiver verification)"
-            "\nEnter -1 to exit: ",
-            1, 11);
+        int ECA_status = safe_input_int(&ECA_choice,
+                                        "\nEnter 1 for Checksum (Sender)"
+                                        "\nEnter 2 for Checksum (Receiver verification)"
+                                        "\nEnter 3 for CRC (Sender)"
+                                        "\nEnter 4 for CRC (Receiver verification)"
+                                        "\nEnter 5 for LRC (Sender)"
+                                        "\nEnter 6 for LRC (Receiver verification)"
+                                        "\nEnter 7 for Parity Bit"
+                                        "\nEnter 8 for VRC (Sender)"
+                                        "\nEnter 9 for VRC (Receiver verification)"
+                                        "\nEnter 10 for Hamming Code (Sender)"
+                                        "\nEnter 11 for Hamming Code (Receiver verification)"
+                                        "\nEnter -1 to exit: ",
+                                        1, 11);
 
         if (ECA_status == INPUT_EXIT_SIGNAL)
         {

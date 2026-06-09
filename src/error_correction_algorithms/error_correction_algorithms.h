@@ -29,10 +29,10 @@ void vrc_demo(void);
 void vrc_receiver_demo(void);
 
 /* Parity Bit */
-int generateEvenParity(const char *data);
-int generateOddParity(const char *data);
-int verifyEvenParity(const char *receivedData);
-int verifyOddParity(const char *receivedData);
+int generateEvenParity(const char* data);
+int generateOddParity(const char* data);
+int verifyEvenParity(const char* receivedData);
+int verifyOddParity(const char* receivedData);
 void parity_bit_demo(void);
 
 /* Hamming Code */
@@ -41,8 +41,8 @@ void hamming_receiver_demo(void);
 
 /* Shared checksum helpers (implemented in checksum.c) */
 void checksum_print_binary(int value, int bits);
-int checksum_read_binary(char *buff, size_t size, const char *prompt);
+int checksum_read_binary(char* buff, size_t size, const char* prompt);
 int checksum_add(int sum, int word, int k);
-int checksum_block_sum(const char *data, int len, int k);
+int checksum_block_sum(const char* data, int len, int k);
 
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */

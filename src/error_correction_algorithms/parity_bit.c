@@ -1,11 +1,11 @@
 #include "error_correction_algorithms.h"
 #include "safe_input.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
 /* Helper to validate if a string is a non-empty binary string */
-static bool validate_binary_string(const char *data)
+static bool validate_binary_string(const char* data)
 {
     if (!data || strlen(data) == 0)
     {
@@ -24,7 +24,7 @@ static bool validate_binary_string(const char *data)
 }
 
 /* Helper to count number of 1s */
-static int count_ones(const char *data)
+static int count_ones(const char* data)
 {
     int count = 0;
 
@@ -40,7 +40,7 @@ static int count_ones(const char *data)
 }
 
 /* Even parity generator */
-int generateEvenParity(const char *data)
+int generateEvenParity(const char* data)
 {
     if (!validate_binary_string(data))
     {
@@ -52,7 +52,7 @@ int generateEvenParity(const char *data)
 }
 
 /* Odd parity generator */
-int generateOddParity(const char *data)
+int generateOddParity(const char* data)
 {
     if (!validate_binary_string(data))
     {
@@ -64,7 +64,7 @@ int generateOddParity(const char *data)
 }
 
 /* Even parity verification */
-int verifyEvenParity(const char *receivedData)
+int verifyEvenParity(const char* receivedData)
 {
     if (!validate_binary_string(receivedData))
     {
@@ -76,7 +76,7 @@ int verifyEvenParity(const char *receivedData)
 }
 
 /* Odd parity verification */
-int verifyOddParity(const char *receivedData)
+int verifyOddParity(const char* receivedData)
 {
     if (!validate_binary_string(receivedData))
     {
@@ -101,10 +101,7 @@ void parity_bit_demo(void)
     while (1)
     {
         int data_status =
-            checksum_read_binary(
-                data,
-                sizeof(data),
-                "\nEnter binary data or 'X' to exit:- ");
+            checksum_read_binary(data, sizeof(data), "\nEnter binary data or 'X' to exit:- ");
 
         if (data_status == INPUT_EXIT_SIGNAL)
         {
@@ -123,13 +120,12 @@ void parity_bit_demo(void)
     /* PARITY CHOICE */
     while (1)
     {
-        int status = safe_input_int(
-            &choice,
-            "\nSelect Parity Mode:\n"
-            "1. Even Parity\n"
-            "2. Odd Parity\n"
-            "Enter choice: ",
-            1, 2);
+        int status = safe_input_int(&choice,
+                                    "\nSelect Parity Mode:\n"
+                                    "1. Even Parity\n"
+                                    "2. Odd Parity\n"
+                                    "Enter choice: ",
+                                    1, 2);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -158,10 +154,7 @@ void parity_bit_demo(void)
         printf("\nMode        : Odd Parity\n");
     }
 
-    printf("Original Data: %s (Length: %zu, 1s count: %d)\n",
-           data,
-           strlen(data),
-           count_ones(data));
+    printf("Original Data: %s (Length: %zu, 1s count: %d)\n", data, strlen(data), count_ones(data));
 
     printf("Parity Bit   : %d\n", parity_bit);
     printf("Transmitted  : %s%d\n", data, parity_bit);
@@ -169,11 +162,8 @@ void parity_bit_demo(void)
     /* RECEIVER INPUT */
     while (1)
     {
-        int recv_status =
-            checksum_read_binary(
-                received,
-                sizeof(received),
-                "\nEnter received binary string or 'X' to exit:- ");
+        int recv_status = checksum_read_binary(received, sizeof(received),
+                                               "\nEnter received binary string or 'X' to exit:- ");
 
         if (recv_status == INPUT_EXIT_SIGNAL)
         {

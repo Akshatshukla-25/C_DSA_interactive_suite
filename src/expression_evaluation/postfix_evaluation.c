@@ -1,8 +1,8 @@
+#include "cross_platform.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
-#include "cross_platform.h"
 
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'

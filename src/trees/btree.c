@@ -1,5 +1,5 @@
-#include "trees.h"
 #include "safe_input.h"
+#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -33,7 +33,7 @@ btreeNode* btree_create_node(int is_leaf)
     if (node == NULL)
         return NULL;
     node->num_keys = 0;
-    node->is_leaf  = is_leaf;
+    node->is_leaf = is_leaf;
     for (int i = 0; i < 2 * BTREE_MAX_DEGREE; i++)
         node->children[i] = NULL;
     return node;
@@ -82,7 +82,7 @@ static void btree_split_child(btreeNode* parent, int i, btreeNode* child, int t)
 
     shift_keys_right(parent, i);
 
-    parent->keys[i]  = child->keys[t - 1];
+    parent->keys[i] = child->keys[t - 1];
     parent->num_keys = parent->num_keys + 1;
 }
 
@@ -96,8 +96,8 @@ static void btree_insert_nonfull(btreeNode* node, int key, int t)
         while (pos < node->num_keys && node->keys[pos] < key)
             pos++;
         shift_keys_right(node, pos);
-        node->keys[pos]  = key;
-        node->num_keys   = node->num_keys + 1;
+        node->keys[pos] = key;
+        node->num_keys = node->num_keys + 1;
     }
     else
     {
@@ -125,7 +125,7 @@ int btree_insert(btreeNode** root_ref, int key, int t)
         *root_ref = btree_create_node(1);
         if (*root_ref == NULL)
             return -1;
-        (*root_ref)->keys[0]  = key;
+        (*root_ref)->keys[0] = key;
         (*root_ref)->num_keys = 1;
         return 1;
     }
@@ -163,7 +163,7 @@ void btree_traverse(const btreeNode* root)
 
 static void btree_borrow_from_prev(btreeNode* node, int idx)
 {
-    btreeNode* child   = node->children[idx];
+    btreeNode* child = node->children[idx];
     btreeNode* sibling = node->children[idx - 1];
 
     shift_keys_right(child, 0);
@@ -183,7 +183,7 @@ static void btree_borrow_from_prev(btreeNode* node, int idx)
 
 static void btree_borrow_from_next(btreeNode* node, int idx)
 {
-    btreeNode* child   = node->children[idx];
+    btreeNode* child = node->children[idx];
     btreeNode* sibling = node->children[idx + 1];
 
     child->keys[child->num_keys] = node->keys[idx];
@@ -204,7 +204,7 @@ static void btree_borrow_from_next(btreeNode* node, int idx)
 
 static void btree_merge(btreeNode* node, int idx, int t)
 {
-    btreeNode* child   = node->children[idx];
+    btreeNode* child = node->children[idx];
     btreeNode* sibling = node->children[idx + 1];
 
     child->keys[t - 1] = node->keys[idx];
@@ -218,13 +218,13 @@ static void btree_merge(btreeNode* node, int idx, int t)
             child->children[t + i] = sibling->children[i];
     }
 
-        shift_keys_left(node, idx);
-        shift_children_left(node, idx + 1);
+    shift_keys_left(node, idx);
+    shift_children_left(node, idx + 1);
 
-        child->num_keys += sibling->num_keys + 1;
-        node->num_keys--;
+    child->num_keys += sibling->num_keys + 1;
+    node->num_keys--;
 
-        free(sibling);
+    free(sibling);
 }
 
 static void btree_fill(btreeNode* node, int idx, int t)
@@ -254,10 +254,10 @@ btreeNode* btree_delete(btreeNode* root, int key, int t)
     if (idx < root->num_keys && root->keys[idx] == key)
     {
         if (root->is_leaf)
-            {
-                shift_keys_left(root, idx);
-                root->num_keys--;
-            }
+        {
+            shift_keys_left(root, idx);
+            root->num_keys--;
+        }
         else
         {
             if (root->children[idx]->num_keys >= t)
@@ -265,16 +265,17 @@ btreeNode* btree_delete(btreeNode* root, int key, int t)
                 btreeNode* cur = root->children[idx];
                 while (!cur->is_leaf)
                     cur = cur->children[cur->num_keys];
-                root->keys[idx]      = cur->keys[cur->num_keys - 1];
-                root->children[idx]  = btree_delete(root->children[idx], cur->keys[cur->num_keys - 1], t);
+                root->keys[idx] = cur->keys[cur->num_keys - 1];
+                root->children[idx] =
+                    btree_delete(root->children[idx], cur->keys[cur->num_keys - 1], t);
             }
             else if (root->children[idx + 1]->num_keys >= t)
             {
                 btreeNode* cur = root->children[idx + 1];
                 while (!cur->is_leaf)
                     cur = cur->children[0];
-                root->keys[idx]          = cur->keys[0];
-                root->children[idx + 1]  = btree_delete(root->children[idx + 1], cur->keys[0], t);
+                root->keys[idx] = cur->keys[0];
+                root->children[idx + 1] = btree_delete(root->children[idx + 1], cur->keys[0], t);
             }
             else
             {
@@ -306,7 +307,7 @@ btreeNode* btree_delete(btreeNode* root, int key, int t)
         free(old_root);
     }
 
-return root;
+    return root;
 }
 
 void btree_destroy(btreeNode* root)
@@ -327,8 +328,8 @@ void btree_demo(void)
     while (1)
     {
         btreeNode* root = NULL;
-        int        t;
-        int        t_status;
+        int t;
+        int t_status;
 
         printf("\n");
         t_status = safe_input_int(&t,
@@ -362,7 +363,7 @@ void btree_demo(void)
         if (total_keys_status == 0)
             continue;
 
-        int i         = 1;
+        int i = 1;
         int remaining = total_keys;
         while (remaining > 0)
         {

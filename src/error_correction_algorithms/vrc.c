@@ -9,11 +9,9 @@ void vrc_demo(void)
     {
         char data[CHECKSUM_MAX_BITS + 1];
 
-        int data_status =
-            checksum_read_binary(data,
-                                 sizeof(data),
-                                 "\n\nVRC Demo\n"
-                                 "enter binary data or 'X' to exit:- ");
+        int data_status = checksum_read_binary(data, sizeof(data),
+                                               "\n\nVRC Demo\n"
+                                               "enter binary data or 'X' to exit:- ");
 
         if (data_status == INPUT_EXIT_SIGNAL)
         {

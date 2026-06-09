@@ -3,7 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 
-void test_parity_invalid_inputs(void) {
+void test_parity_invalid_inputs(void)
+{
     // NULL input
     assert(generateEvenParity(NULL) == -1);
     assert(generateOddParity(NULL) == -1);
@@ -21,11 +22,12 @@ void test_parity_invalid_inputs(void) {
     assert(generateOddParity("abc") == -1);
     assert(verifyEvenParity("10 1") == -1);
     assert(verifyOddParity("101a") == -1);
-    
+
     printf("test_parity_invalid_inputs passed\n");
 }
 
-void test_parity_generation(void) {
+void test_parity_generation(void)
+{
     // Even number of 1s (0 ones) -> even parity bit is 0, odd parity bit is 1
     assert(generateEvenParity("0") == 0);
     assert(generateOddParity("0") == 1);
@@ -52,12 +54,13 @@ void test_parity_generation(void) {
     printf("test_parity_generation passed\n");
 }
 
-void test_parity_verification_and_errors(void) {
+void test_parity_verification_and_errors(void)
+{
     // We simulate transmission and verification
-    const char *data1 = "1101001111"; // 7 ones
+    const char* data1 = "1101001111";        // 7 ones
     int p_even1 = generateEvenParity(data1); // Should be 1
     int p_odd1 = generateOddParity(data1);   // Should be 0
-    
+
     assert(p_even1 == 1);
     assert(p_odd1 == 0);
 
@@ -80,7 +83,8 @@ void test_parity_verification_and_errors(void) {
 
     // Flip parity bit
     strcpy(corrupt_even, transmitted_even1);
-    corrupt_even[strlen(corrupt_even) - 1] = (corrupt_even[strlen(corrupt_even) - 1] == '1') ? '0' : '1';
+    corrupt_even[strlen(corrupt_even) - 1] =
+        (corrupt_even[strlen(corrupt_even) - 1] == '1') ? '0' : '1';
     assert(verifyEvenParity(corrupt_even) == 0); // Should detect error
 
     // Odd parity corruptions
@@ -92,16 +96,19 @@ void test_parity_verification_and_errors(void) {
     printf("test_parity_verification_and_errors passed\n");
 }
 
-void test_parity_multiple_lengths(void) {
+void test_parity_multiple_lengths(void)
+{
     // Test multiple lengths
     char data[200];
-    for (int len = 1; len < 150; len++) {
+    for (int len = 1; len < 150; len++)
+    {
         // fill with '1's
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++)
+        {
             data[i] = '1';
         }
         data[len] = '\0';
-        
+
         int p_even = generateEvenParity(data);
         int expected_even = (len % 2 == 0) ? 0 : 1;
         assert(p_even == expected_even);
@@ -113,7 +120,8 @@ void test_parity_multiple_lengths(void) {
     printf("test_parity_multiple_lengths passed\n");
 }
 
-int main(void) {
+int main(void)
+{
     test_parity_invalid_inputs();
     test_parity_generation();
     test_parity_verification_and_errors();

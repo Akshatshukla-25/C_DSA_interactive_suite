@@ -12,11 +12,8 @@ void lrc_receiver_demo(void)
 
     printf("\n=== LRC Receiver Verification ===\n");
 
-    int result = safe_input_int(
-        &rows,
-        "Enter number of received data words (1-20): ",
-        1,
-        LRC_MAX_ROWS);
+    int result =
+        safe_input_int(&rows, "Enter number of received data words (1-20): ", 1, LRC_MAX_ROWS);
 
     if (result == -111)
     {
@@ -57,8 +54,7 @@ void lrc_receiver_demo(void)
 
         for (int j = 0; j < len; j++)
         {
-            if (data[i][j] != '0' &&
-                data[i][j] != '1')
+            if (data[i][j] != '0' && data[i][j] != '1')
             {
                 printf("Error: word must contain only 0s and 1s.\n");
                 return;
@@ -80,14 +76,11 @@ void lrc_receiver_demo(void)
 
     printf("Enter received LRC: ");
 
-    fgets(received_lrc,
-          sizeof(received_lrc),
-          stdin);
+    fgets(received_lrc, sizeof(received_lrc), stdin);
 
     int lrc_len = (int)strlen(received_lrc);
 
-    if (lrc_len > 0 &&
-        received_lrc[lrc_len - 1] == '\n')
+    if (lrc_len > 0 && received_lrc[lrc_len - 1] == '\n')
     {
         received_lrc[lrc_len - 1] = '\0';
         lrc_len--;
@@ -113,20 +106,16 @@ void lrc_receiver_demo(void)
             }
         }
 
-        computed_lrc[j] =
-            (ones % 2 == 0) ? '0' : '1';
+        computed_lrc[j] = (ones % 2 == 0) ? '0' : '1';
     }
 
     computed_lrc[cols] = '\0';
 
-    printf("\nReceived LRC : %s\n",
-           received_lrc);
+    printf("\nReceived LRC : %s\n", received_lrc);
 
-    printf("Computed LRC : %s\n",
-           computed_lrc);
+    printf("Computed LRC : %s\n", computed_lrc);
 
-    if (strcmp(received_lrc,
-               computed_lrc) == 0)
+    if (strcmp(received_lrc, computed_lrc) == 0)
     {
         printf("\n[SUCCESS] No error detected. Data accepted.\n");
     }

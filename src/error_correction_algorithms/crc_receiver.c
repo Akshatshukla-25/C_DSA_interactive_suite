@@ -3,14 +3,13 @@
 #include <stdio.h>
 #include <string.h>
 
-static void crc_xor_operation(char *dividend, const char *divisor, int pos)
+static void crc_xor_operation(char* dividend, const char* divisor, int pos)
 {
     int n = (int)strlen(divisor);
 
     for (int i = 0; i < n; i++)
     {
-        dividend[pos + i] =
-            (dividend[pos + i] == divisor[i]) ? '0' : '1';
+        dividend[pos + i] = (dividend[pos + i] == divisor[i]) ? '0' : '1';
     }
 }
 
@@ -21,11 +20,9 @@ void crc_receiver_demo(void)
         char received_codeword[(CHECKSUM_MAX_BITS * 2) + 1];
 
         int codeword_status =
-            checksum_read_binary(
-                received_codeword,
-                sizeof(received_codeword),
-                "\n\nCRC Receiver Verification\n"
-                "Enter transmitted codeword (data + CRC bits) or 'X' to exit:- ");
+            checksum_read_binary(received_codeword, sizeof(received_codeword),
+                                 "\n\nCRC Receiver Verification\n"
+                                 "Enter transmitted codeword (data + CRC bits) or 'X' to exit:- ");
 
         if (codeword_status == INPUT_EXIT_SIGNAL)
         {
@@ -40,11 +37,8 @@ void crc_receiver_demo(void)
 
         char generator[CHECKSUM_MAX_BITS + 1];
 
-        int generator_status =
-            checksum_read_binary(
-                generator,
-                sizeof(generator),
-                "Enter generator polynomial or 'X' to exit:- ");
+        int generator_status = checksum_read_binary(generator, sizeof(generator),
+                                                    "Enter generator polynomial or 'X' to exit:- ");
 
         if (generator_status == INPUT_EXIT_SIGNAL)
         {
@@ -85,9 +79,7 @@ void crc_receiver_demo(void)
 
         char remainder[CHECKSUM_MAX_BITS + 1];
 
-        strcpy(
-            remainder,
-            &dividend[dividend_len - (generator_len - 1)]);
+        strcpy(remainder, &dividend[dividend_len - (generator_len - 1)]);
 
         printf("\nComputed Remainder : %s\n", remainder);
 

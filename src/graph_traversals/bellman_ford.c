@@ -9,23 +9,23 @@ void bellman_ford(weightedGraph* graph, int start)
 
     int dist[size];
 
-    for(int i = 0 ; i < size ; i++)
+    for (int i = 0; i < size; i++)
         dist[i] = INT_MAX;
 
     dist[start] = 0;
 
-    for(int count = 0 ; count < size-1 ; count++)
+    for (int count = 0; count < size - 1; count++)
     {
-        for(int u = 0 ; u < size ; u++)
+        for (int u = 0; u < size; u++)
         {
             Edge* current = graph->array[u];
 
-            while(current != NULL)
+            while (current != NULL)
             {
                 int v = current->destination;
                 int weight = current->weight;
 
-                if(dist[u] != INT_MAX && dist[u] + weight < dist[v])
+                if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
                     dist[v] = dist[u] + weight;
 
                 current = current->next;
@@ -34,14 +34,14 @@ void bellman_ford(weightedGraph* graph, int start)
     }
 
     // Negative edge cycle detector
-    for(int u = 0 ; u < size ; u++)
+    for (int u = 0; u < size; u++)
     {
         Edge* current = graph->array[u];
-        while(current != NULL)
+        while (current != NULL)
         {
             int v = current->destination;
             int weight = current->weight;
-            if(dist[u] != INT_MAX && dist[u] + weight < dist[v])
+            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
             {
                 printf("Negative edge cycle detected. Graph is not suitable for bellman ford.\n");
                 return;
@@ -55,12 +55,12 @@ void bellman_ford(weightedGraph* graph, int start)
     printf("Start -> Vertex  \t  Distance\n");
     printf("---------------  \t  --------\n");
 
-    for(int i = 0 ; i < size ; i++)
+    for (int i = 0; i < size; i++)
     {
-        if(dist[i] == INT_MAX)
-            printf("    %d -> %d  \t            INF   \n",start,i);
+        if (dist[i] == INT_MAX)
+            printf("    %d -> %d  \t            INF   \n", start, i);
         else
-            printf("    %d -> %d  \t             %d   \n",start,i,dist[i]);
+            printf("    %d -> %d  \t             %d   \n", start, i, dist[i]);
     }
 }
 
