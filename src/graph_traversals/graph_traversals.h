@@ -58,6 +58,7 @@ weightedGraph* create_weightedGraph(int V);
 void add_edge_directed(weightedGraph* graph, int src, int dest, int wt);
 int edge_insertAtEnd(Edge** head, int dest, int weight);
 void free_weightedGraph(weightedGraph* graph);
+void print_weightedGraph(const weightedGraph* graph);
 
 // ------------------For A* search algorithm-----------------------
 
