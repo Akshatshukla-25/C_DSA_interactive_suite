@@ -59,6 +59,14 @@ void crc_receiver_demo(void)
             continue;
         }
 
+        int codeword_len = (int)strlen(received_codeword);
+        if (codeword_len < generator_len)
+        {
+            printf("\nError: codeword length (%d) must be at least as long as the generator polynomial (%d).\n", 
+                   codeword_len, generator_len);
+            continue;
+        }
+
         char dividend[(CHECKSUM_MAX_BITS * 2) + 1];
         strcpy(dividend, received_codeword);
 
