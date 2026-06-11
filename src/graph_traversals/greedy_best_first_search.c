@@ -13,9 +13,14 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
 {
     int size = graph->V;
     int* visited = calloc(size, sizeof(int));
+    int found = 0;
+
     if (!visited)
+        goto cleanup;
+
+    for (int i = 0; i < size; i++)
     {
-        return 0;
+        parent[i] = -1;
     }
 
     // Reuse the shared graph priority queue: a min-heap keyed on the node's
@@ -24,14 +29,11 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
     PQ_graph pq;
     init_pq_graph(&pq, 10);
 
-    for (int i = 0; i < size; i++)
-    {
-        parent[i] = -1;
-    }
+    if (!pq.heap)
+        goto cleanup;
 
     insert_pq_graph(&pq, start, h[start]);
 
-    int found = 0;
     *traversal_len = 0;
 
     PQ_graph_node popped;
@@ -70,6 +72,9 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
     }
 
     free_pq_graph(&pq);
+
+cleanup:
+    free(visited);
     return found;
 }
 
