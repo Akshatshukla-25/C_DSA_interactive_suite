@@ -81,4 +81,8 @@ void greedy_best_first_search_demo(void);
 // ------------------For Bellman-ford-----------------------
 void bellman_ford_demo(void);
 
+// ------------------For MST (Prim's)-----------------------
+int prim_mst(weightedGraph* graph, int start_node);
+void prim_demo(void);
+
 #endif
