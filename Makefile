@@ -257,7 +257,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_priority_queue test_scll test_simple_queue \
             test_deque test_astar test_avl \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
-            test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit
+test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit
 
 test_bplus_tree: $(TEST_DIR)/test_bplus_tree$(EXE)
 	$(TEST_DIR)/test_bplus_tree$(EXE)
@@ -277,5 +277,12 @@ $(TEST_DIR)/test_parity_bit$(EXE): \
 	$(CC) $(CFLAGS) $^ -o $@
 
 test: $(TEST_BINS)
+
+test_parity_bit: $(TEST_DIR)/test_parity_bit$(EXE)
+	$(TEST_DIR)/test_parity_bit$(EXE)
+
+$(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/test_parity_bit.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@
 
 .PHONY: run fmt clean valgrind
