@@ -1,7 +1,7 @@
 #ifndef DYNAMIC_PROGRAMMING_H
 #define DYNAMIC_PROGRAMMING_H
 
-void dp_demo(void);
+void dynamic_programming_demo(void);
 
 void knapsack_demo(void);
 int knapsack(int W, int wt[], int val[], int n);

@@ -2,7 +2,7 @@
 #include "safe_input.h"
 #include <stdio.h>
 
-void dp_demo(void)
+void dynamic_programming_demo(void)
 {
     int dp_status, dp_choice;
     while (1)

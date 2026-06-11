@@ -87,7 +87,7 @@ int main()
                 job_scheduling_demo();
                 break;
             case 11:
-                dp_demo();
+                dynamic_programming_demo();
                 break;
         }
     }
