@@ -10,6 +10,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/searching_algorithms \
 	-Isrc/graph_traversals \
 	-Isrc/hashing \
+	-Isrc/dynamic_programming \
 	-Isrc/utils
 
 SRCS = \
@@ -20,6 +21,7 @@ SRCS = \
 	src/searching_algorithms/*.c \
 	src/graph_traversals/*.c \
 	src/hashing/*.c \
+	src/dynamic_programming/*.c \
 	src/utils/*.c
 
 ifeq ($(OS),Windows_NT)
