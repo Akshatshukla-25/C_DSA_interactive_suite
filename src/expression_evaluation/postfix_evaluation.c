@@ -1,8 +1,8 @@
+#include "cross_platform.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
-#include <unistd.h>
 
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
@@ -129,16 +129,25 @@ void postfix_evaluation_Demo(void)
             }
 
             i++;
-            sleep(1);
+            sleep_seconds(1);
+        }
+
+        if (isEmpty(operands))
+        {
+            printf("\n[Error] Invalid or empty expression provided.\n");
+            destroyStack(operands);
+            continue;
         }
 
         int final_result = pop(operands);
 
         if (!isEmpty(operands))
         {
+            printf("\n[Error] Malformed expression: Too many operands.\n");
             destroyStack(operands);
-            return;
+            continue;
         }
+
         destroyStack(operands);
         printf("\n===================================\n");
         printf("Final Evaluated Result : %d\n", final_result);

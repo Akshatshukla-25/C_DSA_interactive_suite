@@ -1,13 +1,16 @@
 #include "advanced_sorting.h"
 #include "data_structures.h"
+#include "dynamic_programming.h"
+#include "error_correction_algorithms.h"
 #include "expression.h"
 #include "graph_traversals.h"
 #include "hash.h"
+#include "job_scheduling.h"
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
-#include "stack.h"
-#include "dynamic_programming.h"
+#include "string_algorithms.h"
+#include "trees.h"
 #include <stdio.h>
 
 void data_structures_demo(void);
@@ -30,11 +33,16 @@ int main()
             "click 3 for sorting algorithms (the n^2 family) demo\n"
             "click 4 for advanced sorting algorithms demo\n"
             "click 5 for searching algorithms demo\n"
-            "click 6 for graph traversals (bfs / dfs / dijkstra / astar / greedy bfs / bellman ford) demo\n"
+            "click 6 for graph algorithms demo (traversal, shortest path, MST, and "
+            "visualization)\n"
             "click 7 for hashing algorithms demo\n"
-            "click 8 for dynamic programming demo\n"
+            "click 8 for trees demo\n"
+            "click 9 for error correction algorithms demo\n"
+            "click 10 for job scheduling (FCFS / SJF / priority / round robin / SRTF) demo\n"
+            "click 11 for dynamic programming demo\n"
+            "click 12 for string/pattern matching algorithms demo\n"
             "enter choice : ",
-            1, 8 // limits
+            1, 12 // limits
         );
 
         if (status == -111)
@@ -71,7 +79,19 @@ int main()
                 hashing_algorithms_demo();
                 break;
             case 8:
+                trees_demo();
+                break;
+            case 9:
+                error_correction_algorithms_demo();
+                break;
+            case 10:
+                job_scheduling_demo();
+                break;
+            case 11:
                 dynamic_programming_demo();
+                break;
+            case 12:
+                string_algorithms_demo();
                 break;
         }
     }

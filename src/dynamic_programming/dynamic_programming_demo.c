@@ -8,16 +8,15 @@ void dynamic_programming_demo(void)
     while (1)
     {
         dp_status = safe_input_int(&dp_choice,
-                                   "\n--- Dynamic Programming Algorithms ---"
-                                   "\nenter 1 for Fibonacci (coming soon)"
-                                   "\nenter 2 for 0/1 Knapsack (coming soon)"
-                                   "\nenter 3 for Longest Common Subsequence (coming soon)"
+                                   "\nenter 1 for 0/1 Knapsack demo"
+                                   "\nenter 2 for Longest Common Subsequence (LCS) demo"
+                                   "\nenter 3 for Fibonacci sequence demo"
                                    "\nenter choice : ",
                                    1, 3);
 
         if (dp_status == INPUT_EXIT_SIGNAL)
         {
-            printf("\nExiting dynamic_programming_demo....\n");
+            printf("\nExiting Dynamic Programming demo....\n");
             return;
         }
 
@@ -27,13 +26,13 @@ void dynamic_programming_demo(void)
         switch (dp_choice)
         {
             case 1:
-                printf("\nFibonacci algorithm demo is coming soon!\n");
+                knapsack_demo();
                 break;
             case 2:
-                printf("\n0/1 Knapsack algorithm demo is coming soon!\n");
+                lcs_demo();
                 break;
             case 3:
-                printf("\nLongest Common Subsequence algorithm demo is coming soon!\n");
+                fibonacci_demo();
                 break;
         }
     }

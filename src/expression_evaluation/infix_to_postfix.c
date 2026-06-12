@@ -1,10 +1,9 @@
-
+#include "cross_platform.h"
 #include "safe_input.h"
 #include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt
 // support '^ or %' operators maximum expression length is 50 characters
@@ -150,7 +149,7 @@ void infix_to_postfix_Demo(void)
             printf("----------------------------------\n");
 
             i++;
-            sleep(1);
+            sleep_seconds(1);
         }
 
         while (!isEmpty(operators))

@@ -1,35 +1,39 @@
 #include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, int h[], int parent[],
                                    int traversal_order[], int* traversal_len)
 {
     int size = graph->V;
     int* visited = calloc(size, sizeof(int));
-    if (!visited)
-    {
-        return 0;
-    }
+    int found = 0;
 
-    // Reuse the shared graph priority queue: a min-heap keyed on the node's
-    // "distance" field, which here carries the heuristic h. Duplicate entries
-    // are handled lazily via the visited[] check on pop.
-    PQ_graph pq;
-    pq.size = 0;
+    if (!visited)
+        goto cleanup;
 
     for (int i = 0; i < size; i++)
     {
         parent[i] = -1;
     }
 
+    // Reuse the shared graph priority queue: a min-heap keyed on the node's
+    // "distance" field, which here carries the heuristic h. Duplicate entries
+    // are handled lazily via the visited[] check on pop.
+    PQ_graph pq;
+    init_pq_graph(&pq, 10);
+
+    if (!pq.heap)
+        goto cleanup;
+
     insert_pq_graph(&pq, start, h[start]);
 
-    int found = 0;
     *traversal_len = 0;
 
     PQ_graph_node popped;
@@ -67,10 +71,16 @@ int greedy_best_first_search_solve(weightedGraph* graph, int start, int dest, in
         }
     }
 
+    free_pq_graph(&pq);
+
+cleanup:
     free(visited);
     return found;
 }
 
+// note: the time measured by clock() covers the search computation only (the
+// greedy_best_first_search_solve call); it excludes path reconstruction and
+// printing. it is for demonstration only and not a measure of efficiency.
 void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[])
 {
     int size = graph->V;
@@ -86,8 +96,17 @@ void greedy_best_first_search(weightedGraph* graph, int start, int dest, int h[]
         return;
     }
 
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
     int found = greedy_best_first_search_solve(graph, start, dest, h, parent, traversal_order,
                                                &traversal_len);
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
+    printf("\ntotal CPU time taken for greedy best-first search:- %f seconds\n", total_t);
+    add_to_history("Greedy Best-First Search", size, total_t);
 
     printf("Traversal Order: ");
     for (int i = 0; i < traversal_len; i++)

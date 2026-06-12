@@ -1,10 +1,17 @@
 #include "data_structures.h"
+#include "graph_io.h"
 #include "graph_traversals.h"
+#include "history_logger.h"
+#include "returnMallocVal.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
+// note: the time measured by clock() includes the traversal computation and the printing of each
+// visited node. the CPU time is for demonstration only and must not be treated as a measure of the
+// algorithm's efficiency.
 void bfs(Graph* graph, int start)
 {
     int size = graph->V;
@@ -19,7 +26,7 @@ void bfs(Graph* graph, int start)
         return;
     }
 
-    circular_queue nodes;
+    Queue nodes;
 
     if (!init_circ_queue(size + 1, &nodes))
     {
@@ -27,14 +34,23 @@ void bfs(Graph* graph, int start)
         return;
     }
 
+    clock_t start_t, end_t;
+    double total_t;
+
+    start_t = clock();
+
     visited[start] = 1;
-    enqueue(&nodes, start);
+    enqueue(&nodes, returnMallocInt(start));
 
     while (1)
     {
-        int curr = dequeue(&nodes);
-        if (curr == -1)
+        int* curr_ptr = dequeue(&nodes);
+
+        if (curr_ptr == NULL)
             break;
+
+        int curr = *curr_ptr;
+        free(curr_ptr);
 
         printf("%d->", curr);
 
@@ -43,16 +59,25 @@ void bfs(Graph* graph, int start)
         while (temp)
         {
             int v = temp->data;
+
             if (!visited[v])
             {
                 visited[v] = 1;
-                enqueue(&nodes, v);
+                enqueue(&nodes, returnMallocInt(v));
             }
+
             temp = temp->next;
         }
     }
 
+    end_t = clock();
+    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+
     printf("end\n");
+    printf("\ntotal CPU time taken for BFS traversal:- %f seconds\n", total_t);
+
+    add_to_history("BFS", size, total_t);
+
     destroy_circ_queue(&nodes);
 }
 
@@ -124,52 +149,23 @@ void bfs_demo(void)
     int edges;
     int graph_capacity;
     int starting_node;
+    int input_method;
     Graph* graph = NULL;
 
     while (1)
     {
-        int graph_capacity_status = safe_input_int(&graph_capacity,
-                                                   "\nenter the number of vertices in the graph, "
-                                                   "(between 1 and 10), enter '-1' to exit : ",
-                                                   1, 10);
+        int method_status = safe_input_int(&input_method,
+                                           "\nenter 1 to build the graph manually, 2 to load it "
+                                           "from a CSV file, enter '-1' to exit : ",
+                                           1, 2);
 
-        if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+        if (method_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting bfs demo.....\n");
-            free_graph(graph);
             return;
         }
 
-        if (graph_capacity_status == 0)
-        {
-            continue;
-        }
-
-        graph = create_graph(graph_capacity);
-
-        if (!graph)
-        {
-            printf("\nmemory allocation failed\n");
-            free_graph(graph);
-            return;
-        }
-
-        break;
-    }
-
-    while (1)
-    {
-        int edges_capacity_status = safe_input_int(
-            &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 1, 100);
-
-        if (edges_capacity_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting bfs demo\n");
-            free_graph(graph);
-            return;
-        }
-
-        if (edges_capacity_status == 0)
+        if (method_status == 0)
         {
             continue;
         }
@@ -177,43 +173,142 @@ void bfs_demo(void)
         break;
     }
 
-    printf("\nenter edges (src dest) (from 0 to vertices-1, enter '-1' to exit):\n");
-
-    for (int i = 0; i < edges; i++)
+    if (input_method == 2)
     {
-        int src_status;
-        int dest_status;
-        int src;
-        int dest;
-
-    retry:
-        src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
-
-        if (src_status == INPUT_EXIT_SIGNAL)
+        while (1)
         {
-            printf("\nExiting bfs demo\n");
-            free_graph(graph);
-            return;
-        }
-        if (src_status == 0)
-        {
-            goto retry;
+            char path[256];
+            printf("\nenter the path to the CSV file, enter '-1' to exit : ");
+            fflush(stdout);
+
+            if (!fgets(path, sizeof(path), stdin))
+            {
+                printf("\ninput ended unexpectedly\n");
+                clearerr(stdin);
+                return;
+            }
+
+            size_t len = strlen(path);
+            while (len > 0 && (path[len - 1] == '\n' || path[len - 1] == '\r'))
+                path[--len] = '\0';
+
+            if (strcmp(path, "-1") == 0)
+            {
+                printf("\nExiting bfs demo.....\n");
+                return;
+            }
+
+            if (len == 0)
+            {
+                continue;
+            }
+
+            graph = load_graph_from_csv(path);
+
+            if (!graph)
+            {
+                // error already reported by the loader, let the user retry
+                continue;
+            }
+
+            break;
         }
 
-        dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
-
-        if (dest_status == INPUT_EXIT_SIGNAL)
+        graph_capacity = graph->V;
+    }
+    else
+    {
+        while (1)
         {
-            printf("\nExiting bfs demo\n");
-            free_graph(graph);
-            return;
-        }
-        if (dest_status == 0)
-        {
-            goto retry;
+            int graph_capacity_status =
+                safe_input_int(&graph_capacity,
+                               "\nenter the number of vertices in the graph, "
+                               "(between 1 and 10), enter '-1' to exit : ",
+                               1, 10);
+
+            if (graph_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting bfs demo.....\n");
+                free_graph(graph);
+                return;
+            }
+
+            if (graph_capacity_status == 0)
+            {
+                continue;
+            }
+
+            graph = create_graph(graph_capacity);
+
+            if (!graph)
+            {
+                printf("\nmemory allocation failed\n");
+                free_graph(graph);
+                return;
+            }
+
+            break;
         }
 
-        add_edge_undirected(graph, src, dest);
+        while (1)
+        {
+            int edges_capacity_status = safe_input_int(
+                &edges, "\nenter number of edges (between 1 and 100), enter '-1' to exit :", 1,
+                100);
+
+            if (edges_capacity_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting bfs demo\n");
+                free_graph(graph);
+                return;
+            }
+
+            if (edges_capacity_status == 0)
+            {
+                continue;
+            }
+
+            break;
+        }
+
+        printf("\nenter edges (src dest) (from 0 to vertices-1, enter '-1' to exit):\n");
+
+        for (int i = 0; i < edges; i++)
+        {
+            int src_status;
+            int dest_status;
+            int src;
+            int dest;
+
+        retry:
+            src_status = safe_input_int(&src, "src: ", 0, graph_capacity - 1);
+
+            if (src_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting bfs demo\n");
+                free_graph(graph);
+                return;
+            }
+            if (src_status == 0)
+            {
+                goto retry;
+            }
+
+            dest_status = safe_input_int(&dest, "dest: ", 0, graph_capacity - 1);
+
+            if (dest_status == INPUT_EXIT_SIGNAL)
+            {
+                printf("\nExiting bfs demo\n");
+                free_graph(graph);
+                return;
+            }
+            if (dest_status == 0)
+            {
+                goto retry;
+            }
+
+            add_edge_undirected(graph, src, dest);
+        }
     }
 
     while (1)
@@ -268,6 +363,7 @@ void topological_sort_kahn(Graph* graph)
     for (int u = 0; u < size; u++)
     {
         Node* temp = graph->array[u];
+
         while (temp)
         {
             in_degree[temp->data]++;
@@ -276,7 +372,7 @@ void topological_sort_kahn(Graph* graph)
     }
 
     /* Step 2: Enqueue all vertices with in-degree 0 */
-    circular_queue q;
+    Queue q;
 
     if (!init_circ_queue(size + 1, &q))
     {
@@ -287,7 +383,7 @@ void topological_sort_kahn(Graph* graph)
     for (int i = 0; i < size; i++)
     {
         if (in_degree[i] == 0)
-            enqueue(&q, i);
+            enqueue(&q, returnMallocInt(i));
     }
 
     /* Step 3: Process the queue (Kahn's BFS) */
@@ -297,20 +393,28 @@ void topological_sort_kahn(Graph* graph)
 
     while (1)
     {
-        int u = dequeue(&q);
-        if (u == -1)
+        int* u_ptr = dequeue(&q);
+
+        if (u_ptr == NULL)
             break;
+
+        int u = *u_ptr;
+        free(u_ptr);
 
         printf("%d ", u);
         processed++;
 
         Node* temp = graph->array[u];
+
         while (temp)
         {
             int v = temp->data;
+
             in_degree[v]--;
+
             if (in_degree[v] == 0)
-                enqueue(&q, v);
+                enqueue(&q, returnMallocInt(v));
+
             temp = temp->next;
         }
     }
@@ -372,8 +476,8 @@ void topological_sort_demo(void)
     while (1)
     {
         int edges_capacity_status = safe_input_int(
-            &edges, "\nenter number of directed edges (between 1 and 100), enter '-1' to exit :",
-            1, 100);
+            &edges, "\nenter number of directed edges (between 1 and 100), enter '-1' to exit :", 1,
+            100);
 
         if (edges_capacity_status == INPUT_EXIT_SIGNAL)
         {
