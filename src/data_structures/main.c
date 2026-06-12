@@ -9,7 +9,7 @@
 #include "safe_input.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
-#include "stack.h"
+#include "string_algorithms.h"
 #include "trees.h"
 #include <stdio.h>
 
@@ -40,8 +40,9 @@ int main()
             "click 9 for error correction algorithms demo\n"
             "click 10 for job scheduling (FCFS / SJF / priority / round robin / SRTF) demo\n"
             "click 11 for dynamic programming demo\n"
+            "click 12 for string/pattern matching algorithms demo\n"
             "enter choice : ",
-            1, 11 // limits
+            1, 12 // limits
         );
 
         if (status == -111)
@@ -88,6 +89,9 @@ int main()
                 break;
             case 11:
                 dynamic_programming_demo();
+                break;
+            case 12:
+                string_algorithms_demo();
                 break;
         }
     }
