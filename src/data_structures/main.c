@@ -1,4 +1,5 @@
 #include "advanced_sorting.h"
+#include "backtracking.h"
 #include "data_structures.h"
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
@@ -41,8 +42,9 @@ int main()
             "click 10 for job scheduling (FCFS / SJF / priority / round robin / SRTF) demo\n"
             "click 11 for dynamic programming demo\n"
             "click 12 for string/pattern matching algorithms demo\n"
+            "click 13 for backtracking algorithms demo\n"
             "enter choice : ",
-            1, 12 // limits
+            1, 13 // limits
         );
 
         if (status == -111)
@@ -92,6 +94,9 @@ int main()
                 break;
             case 12:
                 string_algorithms_demo();
+                break;
+            case 13:
+                backtracking_demo();
                 break;
         }
     }
