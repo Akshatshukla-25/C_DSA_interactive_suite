@@ -13,8 +13,9 @@ void backtracking_demo(void)
                                    "\nenter 2 for Sudoku solver"
                                    "\nenter 3 for Rat in a Maze"
                                    "\nenter 4 for Graph Coloring"
+                                   "\nenter 5 for Knight's Tour"
                                    "\nenter choice : ",
-                                   1, 4);
+                                   1, 5);
 
         if (bt_status == INPUT_EXIT_SIGNAL)
         {
@@ -38,6 +39,9 @@ void backtracking_demo(void)
                 break;
             case 4:
                 graph_coloring_demo();
+                break;
+            case 5:
+                knights_tour_demo();
                 break;
         }
     }
