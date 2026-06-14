@@ -3,6 +3,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #else
+#define _DEFAULT_SOURCE
 #include <unistd.h>
 #endif
 
