@@ -89,8 +89,18 @@ void print_floyd_warshall_solution(int** dist, int** next, int V);
 void floyd_warshall_demo(void);
 
 // ------------------For MST (Kruskal's)-----------------------
+typedef struct DSU
+{
+    int* parent;
+    int* rank;
+    int n;
+} DSU;
 int kruskal_mst(weightedGraph* graph);
 void kruskal_demo(void);
+DSU* create_dsu(int n);
+int find_dsu(DSU* dsu, int i);
+void union_dsu(DSU* dsu, int i, int j);
+void free_dsu(DSU* dsu);
 
 // ------------------For MST (Prim's)-----------------------
 int prim_mst(weightedGraph* graph, int start_node);
