@@ -1,10 +1,10 @@
 #define _DEFAULT_SOURCE
 #include "backtracking.h"
+#include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "cross_platform.h"
 
 #include "clear_screen.h"
 #ifdef _WIN32

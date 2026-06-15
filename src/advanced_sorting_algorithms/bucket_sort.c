@@ -129,9 +129,9 @@ void bucket_sort_demo(void)
     {
         printf("\n\nBucket sort demo");
         int bucket_sort_status = safe_input_int(&length_of_array,
-                                               "\nenter the number of elements in the array "
-                                               "(between 1 and 100), enter '-1' to exit:- ",
-                                               1, 100);
+                                                "\nenter the number of elements in the array "
+                                                "(between 1 and 100), enter '-1' to exit:- ",
+                                                1, 100);
 
         if (bucket_sort_status == 0)
         {

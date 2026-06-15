@@ -6,7 +6,6 @@
 #include <string.h>
 #include <time.h>
 
-
 /*DSU*/
 
 DSU* create_dsu(int n)
@@ -75,7 +74,6 @@ void free_dsu(DSU* dsu)
         free(dsu);
     }
 }
-
 
 /**
  * KruskalEdge - Structure to represent a weighted edge for Kruskal's algorithm.

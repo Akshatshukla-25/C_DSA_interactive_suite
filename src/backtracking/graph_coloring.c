@@ -1,132 +1,128 @@
 #include "backtracking.h"
-#include "cross_platform.h"
+#include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
+#include <time.h>
 
 #include "clear_screen.h"
 #ifdef _WIN32
-    #include <windows.h>
+#include <windows.h>
 #endif
 
 #define MAX_V 10
 
-typedef struct {
+typedef struct
+{
     const char* name;
     int num_vertices;
     int matrix[MAX_V][MAX_V];
 } GraphTopology;
 
-static const char* color_names[] = { "NONE", "RED", "GREEN", "BLUE", "YELLOW", "MAGENTA" };
-static const char* color_ansi[] = { 
-    "\033[90m",          // Gray (Unassigned)
-    "\033[38;5;196;1m",   // Bright Red
-    "\033[38;5;46;1m",    // Bright Green
-    "\033[38;5;21;1m",    // Bright Blue
-    "\033[38;5;226;1m",   // Bright Yellow
-    "\033[38;5;201;1m"    // Bright Magenta
+static const char* color_names[] = {"NONE", "RED", "GREEN", "BLUE", "YELLOW", "MAGENTA"};
+static const char* color_ansi[] = {
+    "\033[90m",         // Gray (Unassigned)
+    "\033[38;5;196;1m", // Bright Red
+    "\033[38;5;46;1m",  // Bright Green
+    "\033[38;5;21;1m",  // Bright Blue
+    "\033[38;5;226;1m", // Bright Yellow
+    "\033[38;5;201;1m"  // Bright Magenta
 };
 
 // ANSI reset
 #define ANSI_COLOR_RESET "\033[0m"
 
 // Graph Drawing Templates (escaped backslashes for C string literals)
-static const char* c5_template =
-"             %s\n"
-"            /        \\\\\n"
-"           /          \\\\\n"
-"         %s          %s\n"
-"          |            |\n"
-"          |            |\n"
-"         %s----------%s\n";
+static const char* c5_template = "             %s\n"
+                                 "            /        \\\\\n"
+                                 "           /          \\\\\n"
+                                 "         %s          %s\n"
+                                 "          |            |\n"
+                                 "          |            |\n"
+                                 "         %s----------%s\n";
 
-static const char* k33_template =
-"       %s ------------------ %s\n"
-"         \\\\   \\\\    \\\\      /    /   /\n"
-"          \\\\   \\\\    \\\\    /    /   /\n"
-"           %s -----\\\\--/----- %s\n"
-"          /   /    /    \\\\    \\\\   \\\\\n"
-"         /   /    /      \\\\    \\\\   \\\\\n"
-"       %s ------------------ %s\n";
+static const char* k33_template = "       %s ------------------ %s\n"
+                                  "         \\\\   \\\\    \\\\      /    /   /\n"
+                                  "          \\\\   \\\\    \\\\    /    /   /\n"
+                                  "           %s -----\\\\--/----- %s\n"
+                                  "          /   /    /    \\\\    \\\\   \\\\\n"
+                                  "         /   /    /      \\\\    \\\\   \\\\\n"
+                                  "       %s ------------------ %s\n";
 
-static const char* k4_template =
-"       %s ------------------ %s\n"
-"        |   \\\\              /   |\n"
-"        |    \\\\            /    |\n"
-"        |     \\\\          /     |\n"
-"        |      \\\\        /      |\n"
-"        |       \\\\      /       |\n"
-"        |        \\\\    /        |\n"
-"        |         \\\\  /         |\n"
-"        |          \\\\/          |\n"
-"        |          /\\\\          |\n"
-"        |         /  \\\\         |\n"
-"        |        /    \\\\        |\n"
-"        |       /      \\\\       |\n"
-"        |      /        \\\\      |\n"
-"        |     /          \\\\     |\n"
-"        |    /            \\\\    |\n"
-"        |   /              \\\\   |\n"
-"       %s ------------------ %s\n";
+static const char* k4_template = "       %s ------------------ %s\n"
+                                 "        |   \\\\              /   |\n"
+                                 "        |    \\\\            /    |\n"
+                                 "        |     \\\\          /     |\n"
+                                 "        |      \\\\        /      |\n"
+                                 "        |       \\\\      /       |\n"
+                                 "        |        \\\\    /        |\n"
+                                 "        |         \\\\  /         |\n"
+                                 "        |          \\\\/          |\n"
+                                 "        |          /\\\\          |\n"
+                                 "        |         /  \\\\         |\n"
+                                 "        |        /    \\\\        |\n"
+                                 "        |       /      \\\\       |\n"
+                                 "        |      /        \\\\      |\n"
+                                 "        |     /          \\\\     |\n"
+                                 "        |    /            \\\\    |\n"
+                                 "        |   /              \\\\   |\n"
+                                 "       %s ------------------ %s\n";
 
-static const char* k5_template =
-"                  %s\n"
-"                / /  \\\\ \\\n"
-"              /  /    \\\\  \\\n"
-"            /   /      \\\\   \\\n"
-"         %s -------------- %s\n"
-"          | \\\\ \\\\          / / |\n"
-"          |  \\\\  \\\\      /  /  |\n"
-"          |   \\\\   \\\\  /   /   |\n"
-"          |     \\\\  X  /      |\n"
-"          |    /  /  \\\\  \\\\    |\n"
-"          |  /  /      \\\\  \\\\  |\n"
-"          | / /          \\\\ \\\\ |\n"
-"         %s -------------- %s\n";
+static const char* k5_template = "                  %s\n"
+                                 "                / /  \\\\ \\\n"
+                                 "              /  /    \\\\  \\\n"
+                                 "            /   /      \\\\   \\\n"
+                                 "         %s -------------- %s\n"
+                                 "          | \\\\ \\\\          / / |\n"
+                                 "          |  \\\\  \\\\      /  /  |\n"
+                                 "          |   \\\\   \\\\  /   /   |\n"
+                                 "          |     \\\\  X  /      |\n"
+                                 "          |    /  /  \\\\  \\\\    |\n"
+                                 "          |  /  /      \\\\  \\\\  |\n"
+                                 "          | / /          \\\\ \\\\ |\n"
+                                 "         %s -------------- %s\n";
 
-static const char* w5_template =
-"       %s ------------------ %s\n"
-"        |   \\\\              /   |\n"
-"        |    \\\\            /    |\n"
-"        |     \\\\          /     |\n"
-"        |      \\\\        /      |\n"
-"        |       \\\\      /       |\n"
-"        |        \\\\    /        |\n"
-"        |         %s           |\n"
-"        |        /    \\\\        |\n"
-"        |       /      \\\\       |\n"
-"        |      /        \\\\      |\n"
-"        |     /          \\\\     |\n"
-"        |    /            \\\\    |\n"
-"        |   /              \\\\   |\n"
-"       %s ------------------ %s\n";
+static const char* w5_template = "       %s ------------------ %s\n"
+                                 "        |   \\\\              /   |\n"
+                                 "        |    \\\\            /    |\n"
+                                 "        |     \\\\          /     |\n"
+                                 "        |      \\\\        /      |\n"
+                                 "        |       \\\\      /       |\n"
+                                 "        |        \\\\    /        |\n"
+                                 "        |         %s           |\n"
+                                 "        |        /    \\\\        |\n"
+                                 "        |       /      \\\\       |\n"
+                                 "        |      /        \\\\      |\n"
+                                 "        |     /          \\\\     |\n"
+                                 "        |    /            \\\\    |\n"
+                                 "        |   /              \\\\   |\n"
+                                 "       %s ------------------ %s\n";
 
-static const char* petersen_template =
-"                    %s\n"
-"                   / | \\\\\n"
-"                  /  |  \\\\\n"
-"                /   %s   \\\\\n"
-"              /    /   \\\\   \\\\\n"
-"           %s    /       \\\\    %s\n"
-"            |  %s ------- %s  |\n"
-"            |   \\\\  \\\\     /  /   |\n"
-"            |    \\\\   \\\\ /   /    |\n"
-"            |     \\\\   X   /     |\n"
-"            |    /   / \\\\   \\\\    |\n"
-"            |   /  /     \\\\  \\\\   |\n"
-"            |  %s ------- %s  |\n"
-"           %s                %s\n"
-"             \\\\              /\n"
-"               \\\\----------/\n";
+static const char* petersen_template = "                    %s\n"
+                                       "                   / | \\\\\n"
+                                       "                  /  |  \\\\\n"
+                                       "                /   %s   \\\\\n"
+                                       "              /    /   \\\\   \\\\\n"
+                                       "           %s    /       \\\\    %s\n"
+                                       "            |  %s ------- %s  |\n"
+                                       "            |   \\\\  \\\\     /  /   |\n"
+                                       "            |    \\\\   \\\\ /   /    |\n"
+                                       "            |     \\\\   X   /     |\n"
+                                       "            |    /   / \\\\   \\\\    |\n"
+                                       "            |   /  /     \\\\  \\\\   |\n"
+                                       "            |  %s ------- %s  |\n"
+                                       "           %s                %s\n"
+                                       "             \\\\              /\n"
+                                       "               \\\\----------/\n";
 
 static void get_vertex_label(int v, int color_code, char* buffer, size_t size, int is_current)
 {
     const char* label_color = color_ansi[color_code];
     const char* border_start = is_current ? "\033[38;5;226;1m[\033[0m" : " ";
     const char* border_end = is_current ? "\033[38;5;226;1m]\033[0m" : " ";
-    snprintf(buffer, size, "%s%s●(V%d)%s" ANSI_COLOR_RESET, border_start, label_color, v, border_end);
+    snprintf(buffer, size, "%s%s●(V%d)%s" ANSI_COLOR_RESET, border_start, label_color, v,
+             border_end);
 }
 
 static void print_drawn_graph(const GraphTopology* graph, int colors[MAX_V], int current_vertex)
@@ -160,16 +156,19 @@ static void print_drawn_graph(const GraphTopology* graph, int colors[MAX_V], int
     }
     else if (strcmp(graph->name, "Petersen Graph") == 0)
     {
-        printf(petersen_template, labels[0], labels[5], labels[4], labels[1], labels[9], labels[6], labels[8], labels[7], labels[3], labels[2]);
+        printf(petersen_template, labels[0], labels[5], labels[4], labels[1], labels[9], labels[6],
+               labels[8], labels[7], labels[3], labels[2]);
     }
     printf("\n");
 }
 
-static void print_graph_state(const GraphTopology* graph, int colors[MAX_V], int current_vertex, const char* status_msg, int delay_time)
+static void print_graph_state(const GraphTopology* graph, int colors[MAX_V], int current_vertex,
+                              const char* status_msg, int delay_time)
 {
     clear_screen();
     printf("\n=== GRAPH COLORING BACKTRACKING VISUALIZER ===\n\n");
-    printf("Topology: \033[38;5;208;1m%s\033[0m (%d vertices)\n\n", graph->name, graph->num_vertices);
+    printf("Topology: \033[38;5;208;1m%s\033[0m (%d vertices)\n\n", graph->name,
+           graph->num_vertices);
 
     // Print Adjacency Matrix representation
     printf("Adjacency Matrix:\n");
@@ -237,12 +236,14 @@ static int is_safe(int v, const GraphTopology* graph, int colors[MAX_V], int c)
     return 1;
 }
 
-static int solve_graph_coloring_util(const GraphTopology* graph, int m, int colors[MAX_V], int v, int delay_time)
+static int solve_graph_coloring_util(const GraphTopology* graph, int m, int colors[MAX_V], int v,
+                                     int delay_time)
 {
     // Base Case: All vertices are colored
     if (v == graph->num_vertices)
     {
-        print_graph_state(graph, colors, -1, "🎉 SUCCESS: All vertices colored successfully!", delay_time);
+        print_graph_state(graph, colors, -1, "🎉 SUCCESS: All vertices colored successfully!",
+                          delay_time);
         return 1;
     }
 
@@ -250,13 +251,17 @@ static int solve_graph_coloring_util(const GraphTopology* graph, int m, int colo
     for (int c = 1; c <= m; c++)
     {
         char status_msg[128];
-        snprintf(status_msg, sizeof(status_msg), "Trying to assign color %s%s" ANSI_COLOR_RESET " to V%d", color_ansi[c], color_names[c], v);
+        snprintf(status_msg, sizeof(status_msg),
+                 "Trying to assign color %s%s" ANSI_COLOR_RESET " to V%d", color_ansi[c],
+                 color_names[c], v);
         print_graph_state(graph, colors, v, status_msg, delay_time);
 
         if (is_safe(v, graph, colors, c))
         {
             colors[v] = c;
-            snprintf(status_msg, sizeof(status_msg), "Safe! Assigned color %s%s" ANSI_COLOR_RESET " to V%d. Recursing...", color_ansi[c], color_names[c], v);
+            snprintf(status_msg, sizeof(status_msg),
+                     "Safe! Assigned color %s%s" ANSI_COLOR_RESET " to V%d. Recursing...",
+                     color_ansi[c], color_names[c], v);
             print_graph_state(graph, colors, v, status_msg, delay_time);
 
             if (solve_graph_coloring_util(graph, m, colors, v + 1, delay_time))
@@ -266,12 +271,15 @@ static int solve_graph_coloring_util(const GraphTopology* graph, int m, int colo
 
             // Backtrack
             colors[v] = 0;
-            snprintf(status_msg, sizeof(status_msg), "Conflict down the line! Backtracking... unassigning V%d", v);
+            snprintf(status_msg, sizeof(status_msg),
+                     "Conflict down the line! Backtracking... unassigning V%d", v);
             print_graph_state(graph, colors, v, status_msg, delay_time);
         }
         else
         {
-            snprintf(status_msg, sizeof(status_msg), "Conflict! Cannot assign %s%s" ANSI_COLOR_RESET " to V%d (adjacent conflict)", color_ansi[c], color_names[c], v);
+            snprintf(status_msg, sizeof(status_msg),
+                     "Conflict! Cannot assign %s%s" ANSI_COLOR_RESET " to V%d (adjacent conflict)",
+                     color_ansi[c], color_names[c], v);
             print_graph_state(graph, colors, v, status_msg, delay_time);
         }
     }
@@ -289,72 +297,36 @@ void graph_coloring_demo(void)
 
     // Predefined Graph Topologies
     GraphTopology topologies[] = {
-        {
-            "Cycle Graph C5", 5,
-            {
-                {0, 1, 0, 0, 1},
-                {1, 0, 1, 0, 0},
-                {0, 1, 0, 1, 0},
-                {0, 0, 1, 0, 1},
-                {1, 0, 0, 1, 0}
-            }
-        },
-        {
-            "Bipartite Graph K3,3", 6,
-            {
-                {0, 0, 0, 1, 1, 1},
-                {0, 0, 0, 1, 1, 1},
-                {0, 0, 0, 1, 1, 1},
-                {1, 1, 1, 0, 0, 0},
-                {1, 1, 1, 0, 0, 0},
-                {1, 1, 1, 0, 0, 0}
-            }
-        },
-        {
-            "Complete Graph K4", 4,
-            {
-                {0, 1, 1, 1},
-                {1, 0, 1, 1},
-                {1, 1, 0, 1},
-                {1, 1, 1, 0}
-            }
-        },
-        {
-            "Complete Graph K5", 5,
-            {
-                {0, 1, 1, 1, 1},
-                {1, 0, 1, 1, 1},
-                {1, 1, 0, 1, 1},
-                {1, 1, 1, 0, 1},
-                {1, 1, 1, 1, 0}
-            }
-        },
-        {
-            "Wheel Graph W5", 5,
-            {
-                {0, 1, 1, 1, 1},
-                {1, 0, 1, 0, 1},
-                {1, 1, 0, 1, 0},
-                {1, 0, 1, 0, 1},
-                {1, 1, 0, 1, 0}
-            }
-        },
-        {
-            "Petersen Graph", 10,
-            {
-                {0, 1, 0, 0, 1, 1, 0, 0, 0, 0},
-                {1, 0, 1, 0, 0, 0, 1, 0, 0, 0},
-                {0, 1, 0, 1, 0, 0, 0, 1, 0, 0},
-                {0, 0, 1, 0, 1, 0, 0, 0, 1, 0},
-                {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 0, 0, 0, 1, 1, 0},
-                {0, 1, 0, 0, 0, 0, 0, 0, 1, 1},
-                {0, 0, 1, 0, 0, 1, 0, 0, 0, 1},
-                {0, 0, 0, 1, 0, 1, 1, 0, 0, 0},
-                {0, 0, 0, 0, 1, 0, 1, 1, 0, 0}
-            }
-        }
-    };
+        {"Cycle Graph C5",
+         5,
+         {{0, 1, 0, 0, 1}, {1, 0, 1, 0, 0}, {0, 1, 0, 1, 0}, {0, 0, 1, 0, 1}, {1, 0, 0, 1, 0}}},
+        {"Bipartite Graph K3,3",
+         6,
+         {{0, 0, 0, 1, 1, 1},
+          {0, 0, 0, 1, 1, 1},
+          {0, 0, 0, 1, 1, 1},
+          {1, 1, 1, 0, 0, 0},
+          {1, 1, 1, 0, 0, 0},
+          {1, 1, 1, 0, 0, 0}}},
+        {"Complete Graph K4", 4, {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}}},
+        {"Complete Graph K5",
+         5,
+         {{0, 1, 1, 1, 1}, {1, 0, 1, 1, 1}, {1, 1, 0, 1, 1}, {1, 1, 1, 0, 1}, {1, 1, 1, 1, 0}}},
+        {"Wheel Graph W5",
+         5,
+         {{0, 1, 1, 1, 1}, {1, 0, 1, 0, 1}, {1, 1, 0, 1, 0}, {1, 0, 1, 0, 1}, {1, 1, 0, 1, 0}}},
+        {"Petersen Graph",
+         10,
+         {{0, 1, 0, 0, 1, 1, 0, 0, 0, 0},
+          {1, 0, 1, 0, 0, 0, 1, 0, 0, 0},
+          {0, 1, 0, 1, 0, 0, 0, 1, 0, 0},
+          {0, 0, 1, 0, 1, 0, 0, 0, 1, 0},
+          {1, 0, 0, 1, 0, 0, 0, 0, 0, 1},
+          {1, 0, 0, 0, 0, 0, 0, 1, 1, 0},
+          {0, 1, 0, 0, 0, 0, 0, 0, 1, 1},
+          {0, 0, 1, 0, 0, 1, 0, 0, 0, 1},
+          {0, 0, 0, 1, 0, 1, 1, 0, 0, 0},
+          {0, 0, 0, 0, 1, 0, 1, 1, 0, 0}}}};
     int num_topologies = sizeof(topologies) / sizeof(topologies[0]);
 
     while (1)
@@ -365,7 +337,8 @@ void graph_coloring_demo(void)
         {
             printf("%d. %s (%d vertices)\n", i + 1, topologies[i].name, topologies[i].num_vertices);
         }
-        int status = safe_input_int(&graph_choice, "Select topology (1-6), or -1 to exit: ", 1, num_topologies);
+        int status = safe_input_int(&graph_choice, "Select topology (1-6), or -1 to exit: ", 1,
+                                    num_topologies);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -382,7 +355,8 @@ void graph_coloring_demo(void)
         const GraphTopology* selected_graph = &topologies[graph_choice - 1];
 
         int M;
-        status = safe_input_int(&M, "\nEnter the number of colors M (between 1 and 5), or -1 to exit: ", 1, 5);
+        status = safe_input_int(
+            &M, "\nEnter the number of colors M (between 1 and 5), or -1 to exit: ", 1, 5);
         if (status == INPUT_EXIT_SIGNAL)
         {
 #ifdef _WIN32

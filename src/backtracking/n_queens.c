@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cross_platform.h"
+#include "cross_platform_timer.h"
 
 #include "clear_screen.h"
 

@@ -1,5 +1,5 @@
 #include "backtracking.h"
-#include "cross_platform.h"
+#include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>

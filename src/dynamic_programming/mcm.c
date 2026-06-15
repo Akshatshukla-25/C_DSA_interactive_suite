@@ -1,10 +1,10 @@
 #include "dynamic_programming.h"
 #include "history_logger.h"
 #include "safe_input.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <limits.h>
 
 void print_parenthesization(int i, int j, int n, int* bracket, char* name)
 {
@@ -126,9 +126,9 @@ void mcm_demo(void)
     {
         printf("\n\nMatrix Chain Multiplication demo");
         int mcm_status = safe_input_int(&num_matrices,
-                                       "\nenter the number of matrices "
-                                       "(between 1 and 15), enter '-1' to exit:- ",
-                                       1, 15);
+                                        "\nenter the number of matrices "
+                                        "(between 1 and 15), enter '-1' to exit:- ",
+                                        1, 15);
 
         if (mcm_status == 0)
         {
@@ -159,7 +159,8 @@ void mcm_demo(void)
             }
             else
             {
-                printf("enter dimension p%d (column count of matrix A%d, between 1 and 500):- ", i, i);
+                printf("enter dimension p%d (column count of matrix A%d, between 1 and 500):- ", i,
+                       i);
             }
 
             int dim_status = safe_input_int(&p[i], NULL, 1, 500);
