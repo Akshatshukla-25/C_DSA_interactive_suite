@@ -293,7 +293,7 @@ void prim_demo(void)
             }
 
         retry_w:
-            status = safe_input_int(&w, "  Weight: ", 0, INT_MAX);
+            status = safe_input_int(&w, "  Weight: ", 0, INT_MAX - 1);
             if (status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting Prim's demo.....\n");
