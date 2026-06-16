@@ -88,7 +88,7 @@ void data_structures_demo(void)
                                        "\nenter 3 for doubly circular  linked list demo"
                                        "\nenter 4 for double-ended queue (deque) demo"
                                        "\nenter choice : ",
-                                       1, 3);
+                                       1, 4);
                     if (circular_variant_status == 0)
                         continue;
                     if (circular_variant_status == INPUT_EXIT_SIGNAL)

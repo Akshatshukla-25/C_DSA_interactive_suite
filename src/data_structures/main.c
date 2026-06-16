@@ -42,8 +42,11 @@ void run_legacy_menu(){
                 "click 8 for trees demo\n"
                 "click 9 for error correction algorithms demo\n"
                 "click 10 for job scheduling (FCFS / SJF / priority / round robin) demo\n"
+                "click 11 for backtracking algorithms demo\n"
+                "click 12 for dynamic programming algorithms demo\n"
+                "click 13 for string algorithms demo\n"
                 "enter choice : ",
-                1, 10 // limits
+                1, 13 // limits
             );
     
             if (status == -111)
@@ -87,6 +90,15 @@ void run_legacy_menu(){
                     break;
                 case 10:
                     job_scheduling_demo();
+                    break;
+                case 11:
+                    backtracking_demo();
+                    break;
+                case 12:
+                    dynamic_programming_demo();
+                    break;
+                case 13:
+                    string_algorithms_demo();
                     break;
             }
         }
