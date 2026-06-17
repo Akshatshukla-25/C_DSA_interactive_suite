@@ -14,7 +14,12 @@
 static int initial_grid[N][N] = {{1, 5, 3, 4, 6, 0}, {4, 6, 2, 0, 1, 3}, {2, 4, 5, 6, 3, 1},
                                  {0, 1, 6, 2, 4, 5}, {5, 3, 4, 1, 2, 6}, {6, 0, 1, 3, 5, 4}};
 
-static void print_sudoku_board(int grid[N][N])
+static int original_grid[N][N];
+
+static int placements = 0;
+static int backtracks = 0;
+
+static void print_sudoku_board(int grid[N][N], int original_grid[N][N])
 {
     clear_screen();
     printf("\n--- Sudoku Solver Visualization (6x6) ---\n\n");
@@ -22,7 +27,7 @@ static void print_sudoku_board(int grid[N][N])
     {
         if (row % 2 == 0 && row != 0)
         {
-            printf("-----------------\n");
+            printf("---------------------------\n");
         }
         for (int col = 0; col < N; col++)
         {
@@ -34,9 +39,13 @@ static void print_sudoku_board(int grid[N][N])
             {
                 printf(". ");
             }
+            else if (original_grid[row][col] != 0)
+            {
+                printf("[%d] ", grid[row][col]);
+            }
             else
             {
-                printf("%d ", grid[row][col]);
+                printf(" %d  ", grid[row][col]);
             }
         }
         printf("\n");
@@ -109,7 +118,8 @@ static bool solve_sudoku_util(int grid[N][N], int row, int col)
         if (is_safe_sudoku(grid, row, col, num))
         {
             grid[row][col] = num;
-            print_sudoku_board(grid);
+            placements++;
+            print_sudoku_board(grid, original_grid);
 
             // Checking for next possibility with next column
             if (solve_sudoku_util(grid, row, col + 1))
@@ -120,7 +130,8 @@ static bool solve_sudoku_util(int grid[N][N], int row, int col)
 
         // Backtrack: assumption was wrong
         grid[row][col] = 0;
-        print_sudoku_board(grid);
+        backtracks++;
+        print_sudoku_board(grid, original_grid);
     }
     return false;
 }
@@ -150,16 +161,21 @@ void sudoku_demo(void)
             for (int j = 0; j < N; j++)
             {
                 grid[i][j] = initial_grid[i][j];
+                original_grid[i][j] = initial_grid[i][j];
             }
         }
 
+        placements = 0;
+        backtracks = 0;
         printf("\nStarting Sudoku Solver...\n");
         sleep_seconds(1);
-        print_sudoku_board(grid);
+        print_sudoku_board(grid, original_grid);
 
         if (solve_sudoku_util(grid, 0, 0))
         {
             printf("\nSudoku solved successfully!\n");
+            printf("Total placements: %d\n", placements);
+            printf("Backtracks: %d\n", backtracks);
         }
         else
         {
