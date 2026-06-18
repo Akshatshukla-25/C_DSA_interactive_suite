@@ -1,6 +1,7 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include "stack.h"
+#include "expression.h"
 #include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -9,12 +10,6 @@
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
 // and on succesful evaluation returns '0' maximum expression length is 50 characters
 
-static int isOperator(char ch)
-{
-    if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
-        return 1;
-    return 0;
-}
 
 void postfix_evaluation_Demo(void)
 {

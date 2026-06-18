@@ -1,6 +1,7 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include "stack.h"
+#include "expression.h"
 #include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
@@ -19,7 +20,7 @@ int precedence(char ch)
         return -1;
 }
 
-static int isOperator(char ch)
+int isOperator(char ch)
 {
     if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
         return 1;

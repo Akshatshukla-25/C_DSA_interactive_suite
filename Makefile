@@ -111,7 +111,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
             test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
             test_prim test_kruskal test_floyd_warshall test_mcm \
-            test_string_algorithms
+            test_string_algorithms test_expression_evaluation
 
 test: $(TEST_BINS)
 
@@ -332,6 +332,21 @@ test_parity_bit: $(TEST_DIR)/test_parity_bit$(EXE)
 	$(TEST_DIR)/test_parity_bit$(EXE)
 
 $(TEST_DIR)/test_parity_bit$(EXE): $(OBJ_DIR)/src/error_correction_algorithms/parity_bit.o $(OBJ_DIR)/src/error_correction_algorithms/checksum.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/test_parity_bit.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)                                                                                                                                                                                                                                                                                         
+
+test_expression_evaluation: $(TEST_DIR)/test_expression_evaluation$(EXE)
+	$(TEST_DIR)/test_expression_evaluation$(EXE)
+
+$(TEST_DIR)/test_expression_evaluation$(EXE): \
+	$(OBJ_DIR)/src/expression_evaluation/stack.o \
+	$(OBJ_DIR)/src/expression_evaluation/infix_to_postfix.o \
+	$(OBJ_DIR)/src/expression_evaluation/safe_input_infix.o \
+	$(OBJ_DIR)/src/data_structures/sll.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o \
+	$(OBJ_DIR)/src/utils/clear_screen.o \
+	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
+	tests/test_expression_evaluation.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
