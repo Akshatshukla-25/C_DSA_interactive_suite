@@ -122,6 +122,7 @@ static Entry ENTRIES[] = {
     {"Infix to Postfix", infix_to_postfix_Demo, 0, 0, 1},
     {"Postfix Evaluation", postfix_evaluation_Demo, 0, 0, 1},
     {"Parentheses Checker", parantheses_checker_demo, 0, 0, 1},
+    {"Infix to Prefix", infix_to_prefix_demo, 0, 0, 1},
 
     {"error_correction_algorithms", NULL, 1, 1, 0},
     {"Checksum (Sender)", checksum_demo, 0, 0, 1},
