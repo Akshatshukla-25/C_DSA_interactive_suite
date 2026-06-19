@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 typedef enum
 {
@@ -323,7 +324,7 @@ void dining_philosophers_demo(void)
 
     while (1)
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\n\033[1;36m=== DINING PHILOSOPHERS PROBLEM SIMULATOR ===\033[0m\n");
         printf("This simulation models the classic Dining Philosophers synchronization challenge.\n");
 
@@ -424,7 +425,7 @@ void dining_philosophers_demo(void)
                     break;
                 }
 
-                clear_screen();
+                if (!is_instant()) { clear_screen(); }
                 printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1, steps);
                 display_table_state(chopsticks, phil_states, strategy);
 
@@ -452,7 +453,7 @@ void dining_philosophers_demo(void)
         }
         else if (choice == 3)
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
             printf("\n\033[1;36m=== Choose Deadlock Prevention Strategy ===\033[0m\n");
             printf("1. Naive (Philosophers pick left then right; allows deadlock)\n");
             printf("2. Asymmetric (Even philosophers pick left first; odd pick right first; prevents deadlock)\n");

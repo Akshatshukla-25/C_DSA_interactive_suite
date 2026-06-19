@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 #define d 256
 
@@ -83,11 +84,11 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         t = (d * t + (unsigned char)text[i]) % q;
     }
 
-    sleep_seconds(2);
+    dynamic_sleep();
 
     for (i = 0; i <= n - m; i++)
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\nStep %d\n", step++);
         printf("Current Index : %d\n", i);
         printf("Text Window   : '");
@@ -105,7 +106,7 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         if (p == t)
         {
             printf("Action        : Hashes MATCH! Checking characters...\n");
-            sleep_seconds(1);
+            dynamic_sleep();
 
             for (j = 0; j < m; j++)
             {
@@ -130,7 +131,7 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         }
 
         printf("----------------------------------\n");
-        sleep_seconds(2);
+        dynamic_sleep();
         if (i < n - m)
         {
             t = (d * (t - (unsigned char)text[i] * h) + (unsigned char)text[i + m]) % q;
@@ -139,7 +140,7 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         }
     }
 
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n==================================\n");
     printf("Rabin-Karp Search Complete\n");
     printf("==================================\n");

@@ -317,10 +317,12 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
     $(OBJ_DIR)/src/utils/safe_input_string.o \
     $(OBJ_DIR)/src/utils/history_logger.o \
     $(OBJ_DIR)/src/utils/clear_screen.o \
+	$(OBJ_DIR)/src/utils/safe_input_int.o \
     $(OBJ_DIR)/src/utils/cross_platform_timer.o \
+	$(OBJ_DIR)/src/utils/config.o \
     tests/test_string_algorithms.c
 	@$(call MKDIR_P,$(TEST_DIR))
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_bplus_tree: $(TEST_DIR)/test_bplus_tree$(EXE)
 	$(TEST_DIR)/test_bplus_tree$(EXE)
@@ -347,6 +349,7 @@ $(TEST_DIR)/test_expression_evaluation$(EXE): \
 	$(OBJ_DIR)/src/utils/safe_input_int.o \
 	$(OBJ_DIR)/src/utils/clear_screen.o \
 	$(OBJ_DIR)/src/utils/cross_platform_timer.o \
+	$(OBJ_DIR)/src/utils/config.o \
 	tests/test_expression_evaluation.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)

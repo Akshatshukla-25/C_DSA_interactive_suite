@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../utils/config.h"
 
 #include "clear_screen.h"
 
@@ -15,7 +16,7 @@ static int initial_maze[N][N] = {{1, 1, 1, 1, 0, 1}, {1, 0, 0, 1, 0, 1}, {1, 1, 
 
 static void print_maze_state(int maze[N][N], int solution[N][N])
 {
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n--- Rat in a Maze Visualization (6x6) ---\n\n");
     for (int i = 0; i < N; i++)
     {
@@ -40,7 +41,7 @@ static void print_maze_state(int maze[N][N], int solution[N][N])
         printf("\n");
     }
     printf("\n");
-    sleep_seconds(1);
+    dynamic_sleep();
 }
 
 // Function to check if x, y is valid index for N*N maze
@@ -142,7 +143,7 @@ void rat_in_maze_demo(void)
         }
 
         printf("\nStarting Rat in a Maze Solver...\n");
-        sleep_seconds(1);
+        dynamic_sleep();
         print_maze_state(maze, solution);
 
         if (solve_maze_util(maze, 0, 0, solution))

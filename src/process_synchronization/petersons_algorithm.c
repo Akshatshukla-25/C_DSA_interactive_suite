@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 static char logs[3][128] = {"", "", ""};
 
@@ -170,6 +171,11 @@ static void step_process(int i, int* flag, int* turn, int* pc)
 
 void petersons_algorithm_demo(void)
 {
+    if (!is_instant()) { clear_screen(); }
+    printf(
+        "\nPeterson's Algorithm simulation is not implemented yet (Structural baseline active).\n");
+    printf("Press Enter to continue...");
+    getchar();
     int flag[2] = {0, 0};
     int turn = 0;
     int pc[2] = {0, 0};

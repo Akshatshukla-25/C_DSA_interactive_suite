@@ -4,6 +4,7 @@
 #include "stack.h"
 #include <stdio.h>
 #include <string.h>
+#include "../utils/config.h"
 
 int check_parantheses(char* s)
 {
@@ -12,7 +13,7 @@ int check_parantheses(char* s)
     stack* parantheses = createStack();
     while (s[i] != '\0')
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\nStep    : %d\n", step++);
         printf("Char    : %c\n", s[i]);
         if (s[i] == '(' || s[i] == '[' || s[i] == '{')
@@ -101,7 +102,7 @@ int check_parantheses(char* s)
         }
         printf("-----------------------------------\n");
         i++;
-        sleep_seconds(2);
+        dynamic_sleep();
     }
     int result = isEmpty(parantheses);
     if (!result)

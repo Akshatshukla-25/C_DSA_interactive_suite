@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../utils/config.h"
 
 #include "clear_screen.h"
 
@@ -21,7 +22,7 @@ static int backtracks = 0;
 
 static void print_sudoku_board(int grid[N][N], int original_grid[N][N])
 {
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n--- Sudoku Solver Visualization (6x6) ---\n\n");
     for (int row = 0; row < N; row++)
     {
@@ -51,7 +52,7 @@ static void print_sudoku_board(int grid[N][N], int original_grid[N][N])
         printf("\n");
     }
     printf("\n");
-    sleep_seconds(1);
+    dynamic_sleep();
 }
 
 static bool is_safe_sudoku(int grid[N][N], int row, int col, int num)
@@ -168,7 +169,7 @@ void sudoku_demo(void)
         placements = 0;
         backtracks = 0;
         printf("\nStarting Sudoku Solver...\n");
-        sleep_seconds(1);
+        dynamic_sleep();
         print_sudoku_board(grid, original_grid);
 
         if (solve_sudoku_util(grid, 0, 0))

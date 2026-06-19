@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "../utils/config.h"
 
 #include "clear_screen.h"
 #ifdef _WIN32
@@ -33,7 +34,7 @@ static int compare_candidates(const void* a, const void* b)
 
 static void print_board(int N, int board[8][8], int knight_x, int knight_y)
 {
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n=== KNIGHT'S TOUR BACKTRACKING VISUALIZER ===\n\n");
     for (int i = 0; i < N; i++)
     {

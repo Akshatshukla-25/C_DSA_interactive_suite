@@ -21,6 +21,7 @@
 #include "string_algorithms.h"
 #include "trees.h"
 #include "tui.h"
+#include "../utils/config.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -52,6 +53,10 @@ typedef struct
  */
 static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
+    {"Animation speed (s)", NULL, 1, 1, 0},
+    {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
+
+
     {"data_structures", NULL, 1, 1, 0},
     {"Linear Data Structures", NULL, 1, 0, 0},
     {"Singly Linked List", sll_Demo, 0, 0, 1},

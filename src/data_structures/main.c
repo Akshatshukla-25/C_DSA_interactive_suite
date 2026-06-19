@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "advanced_sorting.h"
 #include "backtracking.h"
 #include "data_structures.h"
@@ -47,8 +48,9 @@ void run_legacy_menu()
             "click 12 for dynamic programming algorithms demo\n"
             "click 13 for string algorithms demo\n"
             "click 14 for process synchronization algorithms demo\n"
+            "click 15 for setting animation speed\n"
             "enter choice : ",
-            1, 14 // limits
+            1, 15 // limits
         );
 
         if (status == -111)
@@ -104,6 +106,9 @@ void run_legacy_menu()
                 break;
             case 14:
                 process_synchronization_demo();
+                break;
+            case 15:
+                settings_menu_demo();
                 break;
         }
     }

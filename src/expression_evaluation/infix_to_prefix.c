@@ -6,21 +6,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-
-// static int precedence(char ch)
-// {
-//     if (ch == '*' || ch == '/')
-//         return 2;
-//     else if (ch == '+' || ch == '-')
-//         return 1;
-
-//     return -1;
-// }
-
-// static int isOperator(char ch)
-// {
-//     return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
-// }
+#include "../utils/config.h"
 
 static void reverse_string(char* str)
 {
@@ -94,14 +80,14 @@ void infix_to_prefix_demo(void)
         reverse_string(reversed_expr);
         swap_parentheses(reversed_expr);
 
-        sleep_seconds(2);
+        dynamic_sleep();
 
         int i = 0;
         int pf_idx = 0;
 
         while (reversed_expr[i] != '\0')
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
 
             char ch = reversed_expr[i];
             const char* action_msg = NULL;
@@ -164,12 +150,12 @@ void infix_to_prefix_demo(void)
 
             i++;
 
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         while (!isEmpty(operators))
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
 
             char op = pop(operators);
 
@@ -186,7 +172,7 @@ void infix_to_prefix_demo(void)
 
             printf("----------------------------------\n");
 
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         strcpy(prefix_expr, postfix_expr);
@@ -198,7 +184,7 @@ void infix_to_prefix_demo(void)
         printf("Final Prefix      : %s\n", prefix_expr);
         printf("==================================\n\n");
 
-        sleep_seconds(2);
+        dynamic_sleep();
 
         destroyStack(operators);
     }

@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 void kmp_search(char* text, char* pattern)
 {
@@ -139,13 +140,13 @@ void kmp_visualization(char* text, char* pattern)
 
     int* lps = (int*)malloc(m * sizeof(int));
     compute_lps_array_visual(pattern, m, lps);
-    sleep_seconds(3);
+    dynamic_sleep();
 
     int i = 0;
     int j = 0;
     while (i < n)
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\nStep %d\n", step++);
         printf("Text Index    : %d\n", i);
         printf("Pattern Index : %d\n", j);
@@ -164,7 +165,7 @@ void kmp_visualization(char* text, char* pattern)
             i++;
             printf("Next State    : i=%d, j=%d\n", i, j);
             printf("----------------------------------\n");
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         if (j == m)
@@ -174,7 +175,7 @@ void kmp_visualization(char* text, char* pattern)
             printf("LPS Jump      : j = lps[%d] = %d\n", j - 1, lps[j - 1]);
             found++;
             j = lps[j - 1];
-            sleep_seconds(2);
+            dynamic_sleep();
         }
         else if (i < n && pattern[j] != text[i])
         {
@@ -191,12 +192,12 @@ void kmp_visualization(char* text, char* pattern)
             }
 
             printf("----------------------------------\n");
-            sleep_seconds(2);
+            dynamic_sleep();
         }
     }
 
     free(lps);
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n==================================\n");
     printf("KMP Search Complete\n");
     printf("==================================\n");
