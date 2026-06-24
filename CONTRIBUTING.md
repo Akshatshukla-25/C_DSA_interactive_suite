@@ -25,7 +25,7 @@ Thank you for taking the time to contribute! This project is open to learners, s
 This project is Linux native. Which means it is made, maintained on Linux and works the best on Linux, however, you can definitely develop and run/use this application on windows through WSL(Windows Subsystem for Linux). WSL will work in VScode too so you can rest assured, just be familiar with WSL before contributing to this project. You can also use a VM, but WSL is sufficient as per the project requirements.
 
 I have created a special discord server to resolve your issues and doubts regarding the project and contribution. There we can discuss everything about the project as well as your technical/conceptual doubts. 
-Here is the link - https://discord.gg/MWv949G8h
+Here is the link - https://discord.gg/RxepKBWBX
 
 ### AI usage policy
 

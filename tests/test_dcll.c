@@ -16,8 +16,7 @@ static int ring_count(const dcll* list, int* invariant_ok)
     }
 
     // Both forward and backward ring invariants must hold.
-    *invariant_ok = (list->tail->next == list->head) &&
-                    (list->head->prev == list->tail);
+    *invariant_ok = (list->tail->next == list->head) && (list->head->prev == list->tail);
 
     int count = 0;
     const dcll_Node* cur = list->head;

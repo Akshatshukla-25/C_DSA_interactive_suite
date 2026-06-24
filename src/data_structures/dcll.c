@@ -334,7 +334,7 @@ void dcll_destroy(dcll* list)
     list->length = 0;
 }
 
-void dcll_Demo(void)
+void dcll_demo(void)
 {
     dcll list;
     dcll_init(&list);

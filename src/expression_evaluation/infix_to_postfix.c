@@ -1,10 +1,12 @@
+#include "clear_screen.h"
 #include "cross_platform_timer.h"
+#include "expression.h"
 #include "safe_input.h"
 #include "stack.h"
-#include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include "../utils/config.h"
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt
 // support '^ or %' operators maximum expression length is 50 characters
@@ -19,14 +21,14 @@ int precedence(char ch)
         return -1;
 }
 
-static int isOperator(char ch)
+int isOperator(char ch)
 {
     if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
         return 1;
     return 0;
 }
 
-void infix_to_postfix_Demo(void)
+void infix_to_postfix_demo(void)
 {
     char infix_expr[50];
     char postfix_expr[50];
@@ -64,7 +66,7 @@ void infix_to_postfix_Demo(void)
 
         while (infix_expr[i] != '\0')
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
             char ch = infix_expr[i];
             const char* action_msg = NULL;
             char op;
@@ -151,12 +153,12 @@ void infix_to_postfix_Demo(void)
             printf("----------------------------------\n");
 
             i++;
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         while (!isEmpty(operators))
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
             char op = pop(operators);
 
             postfix_expr[pf_idx++] = op;
@@ -182,6 +184,6 @@ void infix_to_postfix_Demo(void)
         printf("Final Postfix Expression : %s\n", postfix_expr);
         printf("==================================\n\n");
 
-        sleep_seconds(2);
+        dynamic_sleep();
     }
 }

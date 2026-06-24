@@ -1,8 +1,8 @@
 #include "cross_platform_timer.h"
 
 #ifdef _WIN32
-#include <windows.h>
 #include <io.h>
+#include <windows.h>
 #else
 #define _DEFAULT_SOURCE
 #include <unistd.h>

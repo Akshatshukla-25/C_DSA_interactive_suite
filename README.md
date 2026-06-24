@@ -63,13 +63,27 @@ sudo pacman -S ncurses
 ```
 > **Note:** The TUI is supported on Unix/Linux systems. On Windows, the project automatically falls back to the legacy CLI interface.
 
-### Build
+### Build (Makefile)
 ```bash
 make
 ```
 This generates a single executable:
 * `dsa` (Linux / macOS)
 * `dsa.exe` (Windows)
+
+### Build (CMake)
+Alternatively, you can compile the application and tests using CMake:
+```bash
+mkdir build && cd build
+cmake ..
+make
+```
+
+To execute all unit tests using CTest:
+```bash
+ctest --output-on-failure
+```
+
 
 
 ```bash
@@ -90,6 +104,44 @@ Runs all tests
 make clean
 ```
 Removes executables and generated object files.
+
+---
+
+## Architectural Breakdown: Docker & The Build System
+
+### Why Docker?
+
+Docker acts as a cross-platform wrapper around the build system. Contributors on Windows, macOS, and Linux can use the same isolated Ubuntu environment without manually configuring compiler toolchains, build dependencies, or platform-specific settings.
+
+### Container Build Chain
+
+The current build flow is:
+
+```text
+Docker Container
+      ↓
+   Makefile
+      ↓
+GCC Compilation
+      ↓
+dsa Executable
+```
+
+The Docker image installs the required build tools and executes the project's Makefile, ensuring consistent builds across different operating systems.
+
+### Relationship Between Docker, Makefile, and CMake
+
+Each component serves a different purpose:
+
+- Docker provides a reproducible Linux build environment.
+- The Makefile defines the primary build workflow used by the project today.
+- CMakeLists.txt provides an alternative build system that can generate platform-specific build files while supporting testing and future expansion.
+
+These tools are complementary rather than competing solutions.
+
+### Future-Proofing With CMake
+
+The project currently uses a Makefile as its primary build system while also providing CMake support. As the project grows and introduces additional dependencies, CMake can simplify dependency management, testing integration, and cross-platform development while continuing to work inside the Docker environment.
 
 ---
 

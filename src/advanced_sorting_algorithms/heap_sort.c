@@ -2,6 +2,7 @@
 #include "data_structures.h" // priority_queue API (pq_init, insert, extractTop, destroy_pq)
 #include "history_logger.h"
 #include "safe_input.h"
+#include "sorting_visualizer.h"
 #include <stdio.h>
 #include <time.h>
 
@@ -28,13 +29,17 @@ void heap_sort(int arr[], int n)
     int inserted = 0;
     for (int i = 0; i < n; i++)
     {
+        visualize_sort(arr, n, i, -1, -1, "Heap Sort: Inserting elements into Min-Heap");
         if (insert(pq, arr[i]) == 0) // heap full (HEAP_CAPACITY reached)
             break;
         inserted++;
     }
 
     for (int i = 0; i < inserted; i++)
+    {
         extractTop(pq, &arr[i]); // min first -> ascending order
+        visualize_sort(arr, n, i, -1, -1, "Heap Sort: Extracting min elements back to array");
+    }
 
     destroy_pq(pq);
 }

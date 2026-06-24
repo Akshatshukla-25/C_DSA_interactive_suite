@@ -15,7 +15,7 @@
 // is never reused. This "false overflow" is exactly the limitation the circular queue avoids
 // by wrapping front/rear modulo N; the two implementations sit side-by-side for comparison.
 
-void simple_queue_Demo(void)
+void simple_queue_demo(void)
 {
 
     while (1)

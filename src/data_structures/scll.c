@@ -319,7 +319,7 @@ void scll_destroy(scll* list)
     list->length = 0;
 }
 
-void scll_Demo(void)
+void scll_demo(void)
 {
     scll list;
     scll_init(&list);

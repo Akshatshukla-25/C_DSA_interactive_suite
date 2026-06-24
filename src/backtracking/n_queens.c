@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include "../utils/config.h"
 
 #include "cross_platform_timer.h"
 
@@ -12,7 +14,7 @@
 
 static void print_board(int N, char board[MAX_N][MAX_N])
 {
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n--- N-Queens Visualization ---\n\n");
     for (int i = 0; i < N; i++)
     {
@@ -23,7 +25,7 @@ static void print_board(int N, char board[MAX_N][MAX_N])
         printf("\n");
     }
     printf("\n");
-    sleep_seconds(1);
+    dynamic_sleep();
 }
 
 static bool is_safe(int N, char board[MAX_N][MAX_N], int row, int col)
@@ -100,7 +102,7 @@ void n_queens_demo(void)
                 board[i][j] = '.';
 
         printf("\nStarting N-Queens Solver...\n");
-        sleep_seconds(1);
+        dynamic_sleep();
 
         if (solve_n_queens_util(N, board, 0) == false)
         {
@@ -111,4 +113,12 @@ void n_queens_demo(void)
             printf("\nSolution found successfully!\n");
         }
     }
+}
+// --- TEST WRAPPER ---
+bool run_n_queens_test(int n) {
+    char board[MAX_N][MAX_N];
+    for (int i = 0; i < MAX_N; i++)
+        for (int j = 0; j < MAX_N; j++)
+            board[i][j] = '.';
+    return solve_n_queens_util(n, board, 0);
 }

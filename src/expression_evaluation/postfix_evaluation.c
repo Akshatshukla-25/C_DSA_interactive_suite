@@ -1,22 +1,17 @@
+#include "clear_screen.h"
 #include "cross_platform_timer.h"
+#include "expression.h"
 #include "safe_input.h"
 #include "stack.h"
-#include "clear_screen.h"
 #include <ctype.h>
 #include <stdio.h>
+#include "../utils/config.h"
 
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
 // and on succesful evaluation returns '0' maximum expression length is 50 characters
 
-static int isOperator(char ch)
-{
-    if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
-        return 1;
-    return 0;
-}
-
-void postfix_evaluation_Demo(void)
+void postfix_evaluation_demo(void)
 {
     char postfix_expr[50];
     while (1)
@@ -47,7 +42,7 @@ void postfix_evaluation_Demo(void)
         int current_result = 0;
         while (postfix_expr[i] != '\0')
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
             action_msg[0] = '\0';
             char ch = postfix_expr[i];
             if (isdigit(ch))
@@ -131,7 +126,7 @@ void postfix_evaluation_Demo(void)
             }
 
             i++;
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         if (isEmpty(operands))

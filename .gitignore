@@ -3,3 +3,4 @@ dsa
 /test_*
 output/benchmark_history.csv
 /object_files/
+/build/

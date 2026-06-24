@@ -199,7 +199,7 @@ bstNode* bst_delete(bstNode* root, int value)
     return root;
 }
 
-void binary_search_tree_Demo(void)
+void binary_search_tree_demo(void)
 {
 
     while (1)

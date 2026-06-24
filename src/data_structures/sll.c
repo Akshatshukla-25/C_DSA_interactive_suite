@@ -7,7 +7,7 @@
 // printlist, search
 // deleteByValue and reverseList
 
-void sll_Demo(void)
+void sll_demo(void)
 {
     Node* head = NULL;
     int sll_element_count;
@@ -264,14 +264,17 @@ start_sll:
                 continue;
             }
 
-            int status=sll_deleteByValue(&head, sll_delete_value);
-            if(status==-2){
+            int status = sll_deleteByValue(&head, sll_delete_value);
+            if (status == -2)
+            {
                 printf("\nList is empty.Nothing to delete.");
             }
-            else if(status==-1){
+            else if (status == -1)
+            {
                 printf("\nelement not found");
             }
-            else{
+            else
+            {
                 printf("\nsll after deletion - ");
                 sll_printlist(head);
             }

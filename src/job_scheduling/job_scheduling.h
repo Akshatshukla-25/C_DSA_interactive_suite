@@ -37,6 +37,13 @@ void priority_scheduling_demo(void);
 void preemptive_priority_demo(void);
 void round_robin_demo(void);
 
+#ifdef TEST_MOCK_SCHEDULING
+#define js_read_processes mock_js_read_processes
+#define js_print_result mock_js_print_result
+#define js_print_gantt mock_js_print_gantt
+#define add_to_history mock_add_to_history
+#endif
+
 // Prompts for the process count and then each process's arrival and burst time
 // (and priority when need_priority is non-zero), filling procs and *n. Returns
 // 1 once a valid set has been read, or 0 if the user asked to exit (-1).

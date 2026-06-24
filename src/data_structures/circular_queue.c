@@ -9,7 +9,7 @@
 
 // dequeue returns -1 when circular queue is empty and value when operation is succesful
 
-void circular_queue_Demo(void)
+void circular_queue_demo(void)
 {
 
     while (1)

@@ -27,12 +27,12 @@ void expression_evaluation_demo(void)
 
         if (expr_eval_choice == 1)
         {
-            infix_to_postfix_Demo();
+            infix_to_postfix_demo();
             continue;
         }
         else if (expr_eval_choice == 2)
         {
-            postfix_evaluation_Demo();
+            postfix_evaluation_demo();
             continue;
         }
         else if (expr_eval_choice == 3)

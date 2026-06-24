@@ -64,7 +64,8 @@ void selection_sort(int arr[], int length_of_array)
 
         for (int j = i + 1; j < length_of_array; j++)
         {
-            visualize_sort(arr, length_of_array, j, min_index, i, "Selection Sort: Comparing elements");
+            visualize_sort(arr, length_of_array, j, min_index, i,
+                           "Selection Sort: Comparing elements");
             if (arr[j] < arr[min_index])
             {
                 min_index = j;
@@ -76,7 +77,8 @@ void selection_sort(int arr[], int length_of_array)
             int temp = arr[min_index];
             arr[min_index] = arr[i];
             arr[i] = temp;
-            visualize_sort(arr, length_of_array, i, min_index, -1, "Selection Sort: Swapping elements");
+            visualize_sort(arr, length_of_array, i, min_index, -1,
+                           "Selection Sort: Swapping elements");
         }
 
         // printf("after iteration no %d - ", i + 1);

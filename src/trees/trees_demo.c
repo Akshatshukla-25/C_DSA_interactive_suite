@@ -30,7 +30,7 @@ void trees_demo(void)
         switch (tree_choice)
         {
             case 1:
-                binary_search_tree_Demo();
+                binary_search_tree_demo();
                 break;
 
             case 2:

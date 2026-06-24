@@ -50,7 +50,7 @@ void data_structures_demo(void)
 
                     if (linear_ds_choice == 1)
                     {
-                        sll_Demo();
+                        sll_demo();
                         continue;
                     }
                     if (linear_ds_choice == 2)
@@ -70,7 +70,7 @@ void data_structures_demo(void)
                     }
                     if (linear_ds_choice == 5)
                     {
-                        simple_queue_Demo();
+                        simple_queue_demo();
                         continue;
                     }
                 }
@@ -95,15 +95,15 @@ void data_structures_demo(void)
                         break;
                     if (circular_variant_choice == 1)
                     {
-                        circular_queue_Demo();
+                        circular_queue_demo();
                     }
                     if (circular_variant_choice == 2)
                     {
-                        scll_Demo();
+                        scll_demo();
                     }
                     if (circular_variant_choice == 3)
                     {
-                        dcll_Demo();
+                        dcll_demo();
                     }
                     if (circular_variant_choice == 4)
                     {

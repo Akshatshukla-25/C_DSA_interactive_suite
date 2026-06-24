@@ -62,7 +62,7 @@ int sll_deleteAtBeginning(Node** head_ref);
 int sll_deleteAtEnd(Node** head_ref);
 int sll_deleteByValue(Node** head_ref, int value);
 int sll_insertAtBeginning(Node** head_ref, int value);
-void sll_Demo(void);
+void sll_demo(void);
 int sll_search(const Node* head, int key);
 int sll_reverseList(Node** head_ref);
 void delete_sll(Node* head);
@@ -119,7 +119,7 @@ int scll_search(const scll* list, int key);
 int scll_getLength(const scll* list);
 void scll_printlist(const scll* list);
 void scll_destroy(scll* list);
-void scll_Demo(void);
+void scll_demo(void);
 
 // Universal non-speacial queue structure
 typedef struct Queue
@@ -136,7 +136,7 @@ void destroy_circ_queue(Queue* queue_ptr);
 int enqueue(Queue* queue_ptr, void* value);
 void* dequeue(Queue* queue_ptr);
 void display_circ_queue(Queue* queue_ptr);
-void circular_queue_Demo(void);
+void circular_queue_demo(void);
 
 // For simple (linear) queue
 int init_simple_queue(int N, Queue* queue_ptr);
@@ -144,7 +144,7 @@ void destroy_simple_queue(Queue* queue_ptr);
 int enqueue_simple(Queue* queue_ptr, void* value);
 void* dequeue_simple(Queue* queue_ptr);
 void display_simple_queue(const Queue* queue_ptr);
-void simple_queue_Demo(void);
+void simple_queue_demo(void);
 
 // For Double-Ended Queue (Deque)
 int init_deque(int N, Queue* dq);
@@ -160,15 +160,14 @@ bool deque_is_full(const Queue* dq);
 void display_deque(const Queue* dq);
 void deque_demo(void);
 
-
-// For Doubly cirular linked list 
+// For Doubly cirular linked list
 
 typedef struct dcll_Node
 {
     int data;
-    struct dcll_Node * next;
-    struct dcll_Node * prev;
-}dcll_Node;
+    struct dcll_Node* next;
+    struct dcll_Node* prev;
+} dcll_Node;
 
 typedef struct dcll
 {
@@ -189,8 +188,24 @@ int dcll_search(const dcll* list, int key);
 int dcll_getLength(const dcll* list);
 void dcll_printlist(const dcll* list);
 void dcll_destroy(dcll* list);
-void dcll_Demo(void);
+void dcll_demo(void);
+// ==========================================
+// Segment Tree (Dynamic Implementation)
+// ==========================================
 
+typedef struct {
+    int* tree;               
+    int size;                
+    int original_array_size; 
+} SegmentTree;
 
+SegmentTree* create_segment_tree(int arr[], int n);
+void destroy_segment_tree(SegmentTree* st);
+void build_tree(SegmentTree* st, int arr[], int node, int start, int end);
+void update_point(SegmentTree* st, int node, int start, int end, int idx, int val);
+int query_range(SegmentTree* st, int node, int start, int end, int l, int r);
 
+void preorder_traversal(SegmentTree* st, int node, int start, int end);
+void inorder_traversal(SegmentTree* st, int node, int start, int end);
+void postorder_traversal(SegmentTree* st, int node, int start, int end);
 #endif

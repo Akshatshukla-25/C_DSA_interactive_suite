@@ -2,9 +2,11 @@
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 #include "clear_screen.h"
 #ifdef _WIN32
@@ -165,7 +167,7 @@ static void print_drawn_graph(const GraphTopology* graph, int colors[MAX_V], int
 static void print_graph_state(const GraphTopology* graph, int colors[MAX_V], int current_vertex,
                               const char* status_msg, int delay_time)
 {
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n=== GRAPH COLORING BACKTRACKING VISUALIZER ===\n\n");
     printf("Topology: \033[38;5;208;1m%s\033[0m (%d vertices)\n\n", graph->name,
            graph->num_vertices);
@@ -388,4 +390,11 @@ void graph_coloring_demo(void)
         }
         printf("Time taken: %f seconds\n", total_t);
     }
+}
+// --- TEST WRAPPER ---
+bool run_graph_coloring_test(int colors_allowed) {
+    // Inject a K4 graph directly to bypass the menu selection
+    GraphTopology k4 = {"Test K4", 4, {{0, 1, 1, 1}, {1, 0, 1, 1}, {1, 1, 0, 1}, {1, 1, 1, 0}}};
+    int colors[MAX_V] = {0};
+    return solve_graph_coloring_util(&k4, colors_allowed, colors, 0, 0) == 1;
 }

@@ -1,6 +1,7 @@
 #include "advanced_sorting.h"
 #include "history_logger.h"
 #include "safe_input.h"
+#include "sorting_visualizer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -42,6 +43,7 @@ static void counting_sort(int arr[], int n, int exp)
     for (int i = 0; i < n; i++)
     {
         arr[i] = output[i];
+        visualize_sort(arr, n, i, -1, -1, "Radix Sort: Copying elements back after digit-sorting");
     }
 
     free(output);

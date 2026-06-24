@@ -1,33 +1,40 @@
-
 // #include <math.h>
 #include <ncurses.h>
 // #include <stdlib.h>
 #include <string.h>
 // #include <locale.h>
 
-#include "tui.h"
-#include "data_structures.h"
-#include "backtracking.h"
-#include "dynamic_programming.h"
-#include "sorting_algorithms_n2.h"
-#include "searching_algorithms.h"
-#include "job_scheduling.h"
-#include "hash.h"
-#include "graph_traversals.h"
-#include "error_correction_algorithms.h"
-#include "trees.h"
 #include "advanced_sorting.h"
+#include "backtracking.h"
+#include "data_structures.h"
+#include "dynamic_programming.h"
+#include "error_correction_algorithms.h"
 #include "expression.h"
-#include "string_algorithms.h"
+#include "graph_traversals.h"
+#include "hash.h"
+#include "job_scheduling.h"
+#include "process_synchronization.h"
 #include "safe_input.h"
 #include "display_header.h"
+#include "searching_algorithms.h"
+#include "sorting_algorithms_n2.h"
+#include "string_algorithms.h"
+#include "trees.h"
+#include "tui.h"
+#include "../utils/config.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
 
 // for non void return type demos
-static void linear_search_demo_wrapper(void) {(void)linear_search_demo(); }
-static void binary_search_demo_wrapper(void) {(void)binary_search_demo(); }
+static void linear_search_demo_wrapper(void)
+{
+    (void)linear_search_demo();
+}
+static void binary_search_demo_wrapper(void)
+{
+    (void)binary_search_demo();
+}
 
 typedef struct
 {
@@ -46,17 +53,21 @@ typedef struct
  */
 static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
+    {"Animation speed (s)", NULL, 1, 1, 0},
+    {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
+
+
     {"data_structures", NULL, 1, 1, 0},
     {"Linear Data Structures", NULL, 1, 0, 0},
-    {"Singly Linked List", sll_Demo, 0, 0, 1},
+    {"Singly Linked List", sll_demo, 0, 0, 1},
     {"Doubly Linked List", dll_demo, 0, 0, 1},
     {"Array", array_demo, 0, 0, 1},
     {"Priority Queue", priority_queue_demo, 0, 0, 1},
-    {"Linear Queue", simple_queue_Demo, 0, 0, 1},
+    {"Linear Queue", simple_queue_demo, 0, 0, 1},
     {"Circular Data Structures", NULL, 1, 0, 0},
-    {"Circular Queue", circular_queue_Demo, 0, 0, 1},
-    {"Singly Circular Linked List", scll_Demo, 0, 0, 1},
-    {"Doubly Circular Linked List", dcll_Demo, 0, 0, 1},
+    {"Circular Queue", circular_queue_demo, 0, 0, 1},
+    {"Singly Circular Linked List", scll_demo, 0, 0, 1},
+    {"Doubly Circular Linked List", dcll_demo, 0, 0, 1},
     {"Double-ended Queue", deque_demo, 0, 0, 1},
 
     {"Backtracking", NULL, 1, 1, 0},
@@ -73,7 +84,7 @@ static Entry ENTRIES[] = {
     {"matrix Chain", mcm_demo, 0, 0, 1},
 
     {"trees", NULL, 1, 1, 0},
-    {"Binary Search Tree", binary_search_tree_Demo, 0, 0, 1},
+    {"Binary Search Tree", binary_search_tree_demo, 0, 0, 1},
     {"AVL Tree", avl_demo, 0, 0, 1},
     {"Threaded Binary Tree", TBT_demo, 0, 0, 1},
     {"Trie", trie_demo, 0, 0, 1},
@@ -120,9 +131,10 @@ static Entry ENTRIES[] = {
     {"Quadratic Probing", quadratic_probing_demo, 0, 0, 1},
 
     {"expression_evaluation", NULL, 1, 1, 0},
-    {"Infix to Postfix", infix_to_postfix_Demo, 0, 0, 1},
-    {"Postfix Evaluation", postfix_evaluation_Demo, 0, 0, 1},
+    {"Infix to Postfix", infix_to_postfix_demo, 0, 0, 1},
+    {"Postfix Evaluation", postfix_evaluation_demo, 0, 0, 1},
     {"Parentheses Checker", parantheses_checker_demo, 0, 0, 1},
+    {"Infix to Prefix", infix_to_prefix_demo, 0, 0, 1},
 
     {"error_correction_algorithms", NULL, 1, 1, 0},
     {"Checksum (Sender)", checksum_demo, 0, 0, 1},
@@ -144,6 +156,11 @@ static Entry ENTRIES[] = {
     {"Priority (Non-Preemptive)", priority_scheduling_demo, 0, 0, 1},
     {"Preemptive Priority", preemptive_priority_demo, 0, 0, 1},
     {"Round Robin", round_robin_demo, 0, 0, 1},
+
+    {"process_synchronization", NULL, 1, 1, 0},
+    {"Producer-Consumer", producer_consumer_demo, 0, 0, 1},
+    {"Dining Philosophers", dining_philosophers_demo, 0, 0, 1},
+    {"Peterson's Algorithm", petersons_algorithm_demo, 0, 0, 1},
 
     {"string_algorithms", NULL, 1, 1, 0},
     {"Naive String Matching", naive_string_matching_demo, 0, 0, 1},

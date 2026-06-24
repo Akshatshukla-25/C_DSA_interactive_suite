@@ -1,11 +1,12 @@
-#include "history_logger.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include "string_algorithms.h"
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "../utils/config.h"
 
 #define d 256
 
@@ -59,6 +60,8 @@ void rabin_karp_search(char* text, char* pattern, int q)
                 t = (t + q);
         }
     }
+    printf("Total Patterns Found: %d\n", found);
+    printf("Total Collisions: %d\n", collisions);
 }
 
 void rabin_karp_visualization(char* text, char* pattern, int q)
@@ -66,8 +69,8 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
     int m = strlen(pattern);
     int n = strlen(text);
     int i, j;
-    int p = 0; 
-    int t = 0; 
+    int p = 0;
+    int t = 0;
     int h = 1;
     int found = 0;
     int collisions = 0;
@@ -83,21 +86,21 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         t = (d * t + (unsigned char)text[i]) % q;
     }
 
-    sleep_seconds(2);
+    dynamic_sleep();
 
     for (i = 0; i <= n - m; i++)
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\nStep %d\n", step++);
         printf("Current Index : %d\n", i);
         printf("Text Window   : '");
-        for (int k = 0; k < m; k++) 
+        for (int k = 0; k < m; k++)
         {
             printf("%c", text[i + k]);
         }
         printf("'\n");
         printf("Pattern       : '%s'\n", pattern);
-        
+
         printf("Window Hash   : %d\n", t);
         printf("Pattern Hash  : %d\n", p);
         printf("----------------------------------\n");
@@ -105,14 +108,15 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         if (p == t)
         {
             printf("Action        : Hashes MATCH! Checking characters...\n");
-            sleep_seconds(1);
-            
+            dynamic_sleep();
+
             for (j = 0; j < m; j++)
             {
                 if (text[i + j] != pattern[j])
                 {
                     collisions++;
-                    printf("Result        : 🔴 Mismatch at char '%c'. Spurious hit (collision)!\n", text[i + j]);
+                    printf("Result        : 🔴 Mismatch at char '%c'. Spurious hit (collision)!\n",
+                           text[i + j]);
                     break;
                 }
             }
@@ -127,9 +131,9 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         {
             printf("Action        : Hashes mismatch. Rolling to next window...\n");
         }
-        
+
         printf("----------------------------------\n");
-        sleep_seconds(2);
+        dynamic_sleep();
         if (i < n - m)
         {
             t = (d * (t - (unsigned char)text[i] * h) + (unsigned char)text[i + m]) % q;
@@ -138,7 +142,7 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         }
     }
 
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n==================================\n");
     printf("Rabin-Karp Search Complete\n");
     printf("==================================\n");
@@ -164,14 +168,16 @@ void rabin_karp_demo(void)
 
         printf("\nRabin-Karp Algorithm Demo\n");
 
-        int status_T = safe_input_string(text, "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
+        int status_T =
+            safe_input_string(text, "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_T == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");
             return;
         }
 
-        int status_P = safe_input_string(pattern, "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
+        int status_P =
+            safe_input_string(pattern, "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_P == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");

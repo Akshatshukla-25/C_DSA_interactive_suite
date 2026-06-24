@@ -6,21 +6,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-
-static int precedence(char ch)
-{
-    if (ch == '*' || ch == '/')
-        return 2;
-    else if (ch == '+' || ch == '-')
-        return 1;
-
-    return -1;
-}
-
-static int isOperator(char ch)
-{
-    return (ch == '+' || ch == '-' || ch == '*' || ch == '/');
-}
+#include "../utils/config.h"
 
 static void reverse_string(char* str)
 {
@@ -94,15 +80,14 @@ void infix_to_prefix_demo(void)
         reverse_string(reversed_expr);
         swap_parentheses(reversed_expr);
 
-
-        sleep_seconds(2);
+        dynamic_sleep();
 
         int i = 0;
         int pf_idx = 0;
 
         while (reversed_expr[i] != '\0')
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
 
             char ch = reversed_expr[i];
             const char* action_msg = NULL;
@@ -113,10 +98,7 @@ void infix_to_prefix_demo(void)
                 postfix_expr[pf_idx++] = ch;
                 postfix_expr[pf_idx] = '\0';
 
-                snprintf(opbuf,
-                         sizeof(opbuf),
-                         "Added operand '%c' to postfix expression",
-                         ch);
+                snprintf(opbuf, sizeof(opbuf), "Added operand '%c' to postfix expression", ch);
 
                 action_msg = opbuf;
             }
@@ -142,8 +124,7 @@ void infix_to_prefix_demo(void)
             }
             else if (isOperator(ch))
             {
-                while (!isEmpty(operators) &&
-                       peek(operators) != '(' &&
+                while (!isEmpty(operators) && peek(operators) != '(' &&
                        precedence(peek(operators)) > precedence(ch))
                 {
                     postfix_expr[pf_idx++] = pop(operators);
@@ -152,10 +133,7 @@ void infix_to_prefix_demo(void)
 
                 push(operators, ch);
 
-                snprintf(opbuf,
-                         sizeof(opbuf),
-                         "Processed operator '%c'",
-                         ch);
+                snprintf(opbuf, sizeof(opbuf), "Processed operator '%c'", ch);
 
                 action_msg = opbuf;
             }
@@ -172,12 +150,12 @@ void infix_to_prefix_demo(void)
 
             i++;
 
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         while (!isEmpty(operators))
         {
-            clear_screen();
+            if (!is_instant()) { clear_screen(); }
 
             char op = pop(operators);
 
@@ -186,8 +164,7 @@ void infix_to_prefix_demo(void)
 
             printf("\nStep %d\n", step++);
             printf("Character : End\n");
-            printf("Action    : Popped remaining operator '%c' from stack\n",
-                   op);
+            printf("Action    : Popped remaining operator '%c' from stack\n", op);
             printf("Postfix   : %s\n", postfix_expr);
             printf("Stack     : ");
 
@@ -195,7 +172,7 @@ void infix_to_prefix_demo(void)
 
             printf("----------------------------------\n");
 
-            sleep_seconds(2);
+            dynamic_sleep();
         }
 
         strcpy(prefix_expr, postfix_expr);
@@ -207,7 +184,7 @@ void infix_to_prefix_demo(void)
         printf("Final Prefix      : %s\n", prefix_expr);
         printf("==================================\n\n");
 
-        sleep_seconds(2);
+        dynamic_sleep();
 
         destroyStack(operators);
     }

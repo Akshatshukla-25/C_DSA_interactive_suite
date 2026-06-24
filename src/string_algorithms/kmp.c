@@ -1,26 +1,28 @@
-#include "history_logger.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
+#include "history_logger.h"
 #include "safe_input.h"
 #include "string_algorithms.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+#include "../utils/config.h"
 
 void kmp_search(char* text, char* pattern)
 {
-    if (!text || !pattern) return;
-    
+    if (!text || !pattern)
+        return;
+
     int n = strlen(text);
     int m = strlen(pattern);
 
-    if (m == 0 || n == 0 || m > n) 
+    if (m == 0 || n == 0 || m > n)
         return;
 
     int* lps = (int*)malloc(m * sizeof(int));
-    if (!lps) return;
+    if (!lps)
+        return;
 
     // Compute LPS
     int length = 0;
@@ -82,7 +84,6 @@ void kmp_search(char* text, char* pattern)
     free(lps);
 }
 
-
 static void compute_lps_array_visual(char* pattern, int m, int* lps)
 {
     int length = 0;
@@ -110,7 +111,7 @@ static void compute_lps_array_visual(char* pattern, int m, int* lps)
             }
         }
     }
-    
+
     printf("\n--- Prefix-Function (LPS Array) ---\n");
     printf("Pattern: ");
     for (int j = 0; j < m; j++)
@@ -139,19 +140,19 @@ void kmp_visualization(char* text, char* pattern)
 
     int* lps = (int*)malloc(m * sizeof(int));
     compute_lps_array_visual(pattern, m, lps);
-    sleep_seconds(3);
+    dynamic_sleep();
 
     int i = 0;
     int j = 0;
     while (i < n)
     {
-        clear_screen();
+        if (!is_instant()) { clear_screen(); }
         printf("\nStep %d\n", step++);
         printf("Text Index    : %d\n", i);
         printf("Pattern Index : %d\n", j);
         if (i < n)
         {
-             printf("Text Char     : %c\n", text[i]);
+            printf("Text Char     : %c\n", text[i]);
         }
         if (j < m)
         {
@@ -164,9 +165,9 @@ void kmp_visualization(char* text, char* pattern)
             i++;
             printf("Next State    : i=%d, j=%d\n", i, j);
             printf("----------------------------------\n");
-            sleep_seconds(2);
+            dynamic_sleep();
         }
-        
+
         if (j == m)
         {
             matches[match_count++] = i - j;
@@ -174,46 +175,46 @@ void kmp_visualization(char* text, char* pattern)
             printf("LPS Jump      : j = lps[%d] = %d\n", j - 1, lps[j - 1]);
             found++;
             j = lps[j - 1];
-            sleep_seconds(2);
+            dynamic_sleep();
         }
         else if (i < n && pattern[j] != text[i])
         {
-           printf("Action        : Mismatch detected\n");
-           if (j != 0)
-           {
-              printf("LPS Jump      : j = lps[%d] = %d\n", j - 1, lps[j - 1]);
-              j = lps[j - 1];
+            printf("Action        : Mismatch detected\n");
+            if (j != 0)
+            {
+                printf("LPS Jump      : j = lps[%d] = %d\n", j - 1, lps[j - 1]);
+                j = lps[j - 1];
             }
             else
             {
-               printf("Action        : Move text pointer forward\n");
-               i++;
+                printf("Action        : Move text pointer forward\n");
+                i++;
             }
 
             printf("----------------------------------\n");
-            sleep_seconds(2);
+            dynamic_sleep();
         }
     }
 
     free(lps);
-    clear_screen();
+    if (!is_instant()) { clear_screen(); }
     printf("\n==================================\n");
     printf("KMP Search Complete\n");
     printf("==================================\n");
     if (found == 0)
     {
-       printf("\nPattern not found in the text.\n");
+        printf("\nPattern not found in the text.\n");
     }
     else
     {
-       printf("\nMatches Found:\n\n");
+        printf("\nMatches Found:\n\n");
 
-       for (int k = 0; k < match_count; k++)
-       {
-          printf("Pattern found at index %d\n", matches[k]);
-       }
+        for (int k = 0; k < match_count; k++)
+        {
+            printf("Pattern found at index %d\n", matches[k]);
+        }
 
-       printf("\nTotal occurrences found: %d\n", found);
+        printf("\nTotal occurrences found: %d\n", found);
     }
 
     printf("==================================\n");
@@ -228,14 +229,16 @@ void kmp_demo(void)
 
         printf("\nKnuth-Morris-Pratt (KMP) Demo\n");
 
-        int status_T = safe_input_string(text, "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
+        int status_T =
+            safe_input_string(text, "Enter text (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_T == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");
             return;
         }
 
-        int status_P = safe_input_string(pattern, "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
+        int status_P =
+            safe_input_string(pattern, "Enter pattern (no spaces, max 99 chars), or 'X' to exit: ");
         if (status_P == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting demo...\n");

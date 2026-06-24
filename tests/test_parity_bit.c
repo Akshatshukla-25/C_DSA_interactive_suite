@@ -67,8 +67,8 @@ void test_parity_verification_and_errors(void)
     // Append parity bit to form received data
     char transmitted_even1[32];
     char transmitted_odd1[32];
-    sprintf(transmitted_even1, "%s%d", data1, p_even1);
-    sprintf(transmitted_odd1, "%s%d", data1, p_odd1);
+    snprintf(transmitted_even1, sizeof(transmitted_even1), "%s%d", data1, p_even1);
+    snprintf(transmitted_odd1, sizeof(transmitted_odd1), "%s%d", data1, p_odd1);
 
     // Verify correct transmission
     assert(verifyEvenParity(transmitted_even1) == 1);

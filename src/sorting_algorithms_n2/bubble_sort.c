@@ -77,7 +77,8 @@ void bubble_sort_optimized(int arr[], int length_of_array)
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
                 swapped = 1;
-                visualize_sort(arr, length_of_array, j, j + 1, -1, "Bubble Sort: Swapping elements");
+                visualize_sort(arr, length_of_array, j, j + 1, -1,
+                               "Bubble Sort: Swapping elements");
             }
         }
 
