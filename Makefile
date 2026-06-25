@@ -114,7 +114,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_prim test_kruskal test_floyd_warshall test_mcm \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
-            test_dining_philosophers test_petersons test_producer_consumer
+            test_dining_philosophers test_petersons test_producer_consumer \
             test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort
 
 test: $(TEST_BINS)
@@ -425,6 +425,9 @@ $(TEST_DIR)/test_petersons$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchroniz
 test_producer_consumer: $(TEST_DIR)/test_producer_consumer$(EXE)
 	$(TEST_DIR)/test_producer_consumer$(EXE)
 $(TEST_DIR)/test_producer_consumer$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/producer_consumer.o,$(OBJS)) tests/process_synchronization/test_producer_consumer.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
 test_dijkstra: $(TEST_DIR)/test_dijkstra$(EXE)
 	$(TEST_DIR)/test_dijkstra$(EXE)
 $(TEST_DIR)/test_dijkstra$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dijkstra.o,$(OBJS)) tests/graph_traversals/test_dijkstra.c
