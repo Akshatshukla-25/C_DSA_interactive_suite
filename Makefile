@@ -118,7 +118,47 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_benchmark_sorting test_benchmark_searching test_benchmark_graphs test_benchmark_mst
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
+TEST_BINS += test_benchmark_sorting
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_searching.c),)
+TEST_BINS += test_benchmark_searching
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_graphs.c),)
+TEST_BINS += test_benchmark_graphs
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_mst.c),)
+TEST_BINS += test_benchmark_mst
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_scheduling.c),)
+TEST_BINS += test_benchmark_scheduling
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_strings.c),)
+TEST_BINS += test_benchmark_strings
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_dp.c),)
+TEST_BINS += test_benchmark_dp
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_hashing.c),)
+TEST_BINS += test_benchmark_hashing
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_trees.c),)
+TEST_BINS += test_benchmark_trees
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_backtracking.c),)
+TEST_BINS += test_benchmark_backtracking
+endif
 
 test: $(TEST_BINS)
 
