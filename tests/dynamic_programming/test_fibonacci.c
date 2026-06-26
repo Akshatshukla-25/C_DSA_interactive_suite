@@ -1,8 +1,8 @@
+#include "dynamic_programming.h"
+#include "mock_printf.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "dynamic_programming.h"
-#include "mock_printf.h"
 
 // Define overrides to suppress history logging prints
 #define printf mock_printf
@@ -24,14 +24,16 @@ void test_fibonacci_recursive_memoized()
 {
     int n = 10;
     long long* memo = malloc((n + 1) * sizeof(long long));
-    for (int i = 0; i <= n; i++) memo[i] = -1;
-    
+    for (int i = 0; i <= n; i++)
+        memo[i] = -1;
+
     assert(fibonacci_recursive(n, memo) == 55);
     free(memo);
 
     n = 45;
     memo = malloc((n + 1) * sizeof(long long));
-    for (int i = 0; i <= n; i++) memo[i] = -1;
+    for (int i = 0; i <= n; i++)
+        memo[i] = -1;
     assert(fibonacci_recursive(n, memo) == 1134903170LL);
     free(memo);
 }

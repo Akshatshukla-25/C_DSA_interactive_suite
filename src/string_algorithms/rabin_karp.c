@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "history_logger.h"
@@ -6,7 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#include "../utils/config.h"
 
 #define d 256
 
@@ -90,7 +90,10 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
 
     for (i = 0; i <= n - m; i++)
     {
-        if (!is_instant()) { clear_screen(); }
+        if (!is_instant())
+        {
+            clear_screen();
+        }
         printf("\nStep %d\n", step++);
         printf("Current Index : %d\n", i);
         printf("Text Window   : '");
@@ -142,7 +145,10 @@ void rabin_karp_visualization(char* text, char* pattern, int q)
         }
     }
 
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n==================================\n");
     printf("Rabin-Karp Search Complete\n");
     printf("==================================\n");

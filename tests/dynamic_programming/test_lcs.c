@@ -1,9 +1,9 @@
+#include "dynamic_programming.h"
+#include "mock_printf.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dynamic_programming.h"
-#include "mock_printf.h"
 
 // Define overrides to suppress history logging and DP table prints
 #define printf mock_printf

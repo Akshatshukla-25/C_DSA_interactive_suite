@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "expression.h"
@@ -6,7 +7,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "../utils/config.h"
 
 static void reverse_string(char* str)
 {
@@ -87,7 +87,10 @@ void infix_to_prefix_demo(void)
 
         while (reversed_expr[i] != '\0')
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
 
             char ch = reversed_expr[i];
             const char* action_msg = NULL;
@@ -155,7 +158,10 @@ void infix_to_prefix_demo(void)
 
         while (!isEmpty(operators))
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
 
             char op = pop(operators);
 

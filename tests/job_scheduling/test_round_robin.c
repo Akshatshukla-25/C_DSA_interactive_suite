@@ -1,9 +1,9 @@
 #define TEST_MOCK_SCHEDULING
+#include "../../src/job_scheduling/job_scheduling.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../src/job_scheduling/job_scheduling.h"
 
 // Globals to feed input and collect output
 static Process g_input_procs[10];
@@ -68,19 +68,19 @@ void test_round_robin_basic()
     // Initialize input processes
     g_input_count = 3;
     g_mock_quantum = 2;
-    
+
     // Process 1: id=1, arrival=0, burst=4
     g_input_procs[0].id = 1;
     g_input_procs[0].arrival = 0;
     g_input_procs[0].burst = 4;
     g_input_procs[0].priority = 0;
-    
+
     // Process 2: id=2, arrival=1, burst=5
     g_input_procs[1].id = 2;
     g_input_procs[1].arrival = 1;
     g_input_procs[1].burst = 5;
     g_input_procs[1].priority = 0;
-    
+
     // Process 3: id=3, arrival=2, burst=2
     g_input_procs[2].id = 3;
     g_input_procs[2].arrival = 2;
@@ -92,7 +92,7 @@ void test_round_robin_basic()
 
     // Assert results
     assert(g_output_count == 3);
-    
+
     // Round Robin execution order:
     // P1: [0-2] remaining=2
     // P2: [2-4] remaining=3

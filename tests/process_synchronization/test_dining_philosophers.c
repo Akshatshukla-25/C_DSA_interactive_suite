@@ -5,8 +5,8 @@
 
 // Include headers first so their declarations are parsed correctly
 #include "../../src/utils/clear_screen.h"
-#include "../../src/utils/cross_platform_timer.h"
 #include "../../src/utils/config.h"
+#include "../../src/utils/cross_platform_timer.h"
 
 // Define overrides for non-interactive test execution
 #define TEST_MOCK_SYNC
@@ -44,8 +44,8 @@ void test_dining_philosophers_naive_deadlock()
     PhilosopherState phil_states[5] = {THINKING, THINKING, THINKING, THINKING, THINKING};
     int strategy = 0; // Naive
 
-    // Simulating the deadlock situation by making each philosopher acquire their left chopstick first.
-    // In Naive: picking up left first.
+    // Simulating the deadlock situation by making each philosopher acquire their left chopstick
+    // first. In Naive: picking up left first.
     for (int i = 0; i < 5; i++)
     {
         phil_states[i] = HUNGRY;
@@ -59,12 +59,15 @@ void test_dining_philosophers_naive_deadlock()
     int chopsticks_held_count = 0;
     for (int p = 0; p < 5; p++)
     {
-        if (phil_states[p] == HUNGRY) hungry_count++;
-        if (phil_states[p] == EATING) eating_count++;
+        if (phil_states[p] == HUNGRY)
+            hungry_count++;
+        if (phil_states[p] == EATING)
+            eating_count++;
     }
     for (int c = 0; c < 5; c++)
     {
-        if (chopsticks[c] != -1) chopsticks_held_count++;
+        if (chopsticks[c] != -1)
+            chopsticks_held_count++;
     }
 
     assert(hungry_count == 5);

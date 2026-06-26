@@ -1,10 +1,9 @@
+#include "../utils/config.h"
 #include "backtracking.h"
 #include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include "../utils/config.h"
 
 #include "cross_platform_timer.h"
 
@@ -14,7 +13,10 @@
 
 static void print_board(int N, char board[MAX_N][MAX_N])
 {
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n--- N-Queens Visualization ---\n\n");
     for (int i = 0; i < N; i++)
     {
@@ -115,7 +117,8 @@ void n_queens_demo(void)
     }
 }
 // --- TEST WRAPPER ---
-bool run_n_queens_test(int n) {
+bool run_n_queens_test(int n)
+{
     char board[MAX_N][MAX_N];
     for (int i = 0; i < MAX_N; i++)
         for (int j = 0; j < MAX_N; j++)

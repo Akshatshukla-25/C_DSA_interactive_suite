@@ -14,7 +14,8 @@ int mock_printf(const char* format, ...)
 {
     va_list args;
     va_start(args, format);
-    g_printf_len += vsnprintf(g_printf_buf + g_printf_len, sizeof(g_printf_buf) - g_printf_len, format, args);
+    g_printf_len +=
+        vsnprintf(g_printf_buf + g_printf_len, sizeof(g_printf_buf) - g_printf_len, format, args);
     va_end(args);
     return 0;
 }

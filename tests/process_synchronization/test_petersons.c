@@ -4,8 +4,8 @@
 #include <string.h>
 
 #include "../../src/utils/clear_screen.h"
-#include "../../src/utils/cross_platform_timer.h"
 #include "../../src/utils/config.h"
+#include "../../src/utils/cross_platform_timer.h"
 
 #define TEST_MOCK_SYNC
 #define is_instant() 1

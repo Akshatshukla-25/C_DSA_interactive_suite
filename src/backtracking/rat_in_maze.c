@@ -1,10 +1,10 @@
+#include "../utils/config.h"
 #include "backtracking.h"
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../utils/config.h"
 
 #include "clear_screen.h"
 
@@ -16,7 +16,10 @@ static int initial_maze[N][N] = {{1, 1, 1, 1, 0, 1}, {1, 0, 0, 1, 0, 1}, {1, 1, 
 
 static void print_maze_state(int maze[N][N], int solution[N][N])
 {
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n--- Rat in a Maze Visualization (6x6) ---\n\n");
     for (int i = 0; i < N; i++)
     {
@@ -157,7 +160,8 @@ void rat_in_maze_demo(void)
     }
 }
 // --- TEST WRAPPER ---
-bool run_rat_in_maze_test(int test_maze[6][6]) {
+bool run_rat_in_maze_test(int test_maze[6][6])
+{
     int solution[6][6] = {0};
     return solve_maze_util(test_maze, 0, 0, solution);
 }

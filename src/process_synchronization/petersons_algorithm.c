@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "history_logger.h"
@@ -7,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../utils/config.h"
 
 static char logs[3][128] = {"", "", ""};
 
@@ -23,12 +23,24 @@ static void print_cell_p0(int step, int active)
     const char* label = "";
     switch (step)
     {
-        case 0: label = "l1: Non-Critical Sec"; break;
-        case 1: label = "l2: readyA := true"; break;
-        case 2: label = "l3: turn := B"; break;
-        case 3: label = "l4: await(!readyB||t=A)"; break;
-        case 4: label = "l5: Critical Section"; break;
-        case 5: label = "l6: readyA := false"; break;
+        case 0:
+            label = "l1: Non-Critical Sec";
+            break;
+        case 1:
+            label = "l2: readyA := true";
+            break;
+        case 2:
+            label = "l3: turn := B";
+            break;
+        case 3:
+            label = "l4: await(!readyB||t=A)";
+            break;
+        case 4:
+            label = "l5: Critical Section";
+            break;
+        case 5:
+            label = "l6: readyA := false";
+            break;
     }
 
     if (active)
@@ -51,12 +63,24 @@ static void print_cell_p1(int step, int active)
     const char* label = "";
     switch (step)
     {
-        case 0: label = "m1: Non-Critical Sec"; break;
-        case 1: label = "m2: readyB := true"; break;
-        case 2: label = "m3: turn := A"; break;
-        case 3: label = "m4: await(!readyA||t=B)"; break;
-        case 4: label = "m5: Critical Section"; break;
-        case 5: label = "m6: readyB := false"; break;
+        case 0:
+            label = "m1: Non-Critical Sec";
+            break;
+        case 1:
+            label = "m2: readyB := true";
+            break;
+        case 2:
+            label = "m3: turn := A";
+            break;
+        case 3:
+            label = "m4: await(!readyA||t=B)";
+            break;
+        case 4:
+            label = "m5: Critical Section";
+            break;
+        case 5:
+            label = "m6: readyB := false";
+            break;
     }
 
     if (active)
@@ -133,7 +157,8 @@ static void step_process(int i, int* flag, int* turn, int* pc)
         case 1: // l2/m2: ready := true
             flag[i] = 1;
             pc[i] = 2;
-            snprintf(msg, sizeof(msg), "P%d set flag[%d] = 1 (ready%s = true).", i, i, i == 0 ? "A" : "B");
+            snprintf(msg, sizeof(msg), "P%d set flag[%d] = 1 (ready%s = true).", i, i,
+                     i == 0 ? "A" : "B");
             add_log(msg);
             break;
         case 2: // l3/m3: turn := other
@@ -163,7 +188,8 @@ static void step_process(int i, int* flag, int* turn, int* pc)
         case 5: // l6/m6: ready := false
             flag[i] = 0;
             pc[i] = 0;
-            snprintf(msg, sizeof(msg), "P%d reset flag[%d] = 0 (ready%s = false).", i, i, i == 0 ? "A" : "B");
+            snprintf(msg, sizeof(msg), "P%d reset flag[%d] = 0 (ready%s = false).", i, i,
+                     i == 0 ? "A" : "B");
             add_log(msg);
             break;
     }
@@ -171,7 +197,10 @@ static void step_process(int i, int* flag, int* turn, int* pc)
 
 void petersons_algorithm_demo(void)
 {
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf(
         "\nPeterson's Algorithm simulation is not implemented yet (Structural baseline active).\n");
     printf("Press Enter to continue...");
@@ -249,14 +278,16 @@ void petersons_algorithm_demo(void)
             printf("\nEnter number of simulation steps to run automatically (1 to 20): ");
             int steps;
             int step_status = safe_input_int(&steps, "", 1, 20);
-            if (step_status != 1) continue;
+            if (step_status != 1)
+                continue;
 
             srand((unsigned int)time(NULL));
 
             for (int s = 0; s < steps; s++)
             {
                 clear_screen();
-                printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1, steps);
+                printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1,
+                       steps);
                 display_state_card(flag, turn, pc);
 
                 printf("\n\033[1;35mRecent Activity Logs:\033[0m\n");
@@ -288,7 +319,8 @@ void petersons_algorithm_demo(void)
             turn = 0;
             pc[0] = 0;
             pc[1] = 0;
-            for (int i = 0; i < 3; i++) strcpy(logs[i], "");
+            for (int i = 0; i < 3; i++)
+                strcpy(logs[i], "");
             add_log("Simulation table reset successfully.");
             printf("\nSimulation state has been reset!\n");
             sleep_seconds(0.8f);

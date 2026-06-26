@@ -10,7 +10,6 @@ void rat_in_maze_demo(void);
 void graph_coloring_demo(void);
 void knights_tour_demo(void);
 
-
 // Test Wrappers
 bool run_n_queens_test(int n);
 bool run_sudoku_test(int test_grid[6][6]);

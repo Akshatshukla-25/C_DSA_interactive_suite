@@ -4,31 +4,31 @@
 #include <stdio.h>
 
 // Global static variables to hold the state
-static int current_delay_seconds = 2; 
+static int current_delay_seconds = 2;
 static const char* speed_name = "Normal (2.0s)";
 
 void set_animation_speed(int choice)
 {
     switch (choice)
     {
-        case 1: 
-            current_delay_seconds = 3; 
+        case 1:
+            current_delay_seconds = 3;
             speed_name = "Slow (3.0s)";
             break;
-        case 2: 
-            current_delay_seconds = 2; 
+        case 2:
+            current_delay_seconds = 2;
             speed_name = "Normal (2.0s)";
             break;
-        case 3: 
-            current_delay_seconds = 1; 
+        case 3:
+            current_delay_seconds = 1;
             speed_name = "Fast (1.0s)";
             break;
-        case 4: 
-            current_delay_seconds = 0; 
+        case 4:
+            current_delay_seconds = 0;
             speed_name = "Instant (0.0s)";
             break;
-        default: 
-            current_delay_seconds = 2; 
+        default:
+            current_delay_seconds = 2;
             speed_name = "Normal (2.0s)";
             break;
     }
@@ -55,7 +55,7 @@ void dynamic_sleep(void)
 void settings_menu_demo(void)
 {
     int speed_choice;
-    
+
     printf("\n===================================\n");
     printf("  Global Animation Speed Settings\n");
     printf("===================================\n");
@@ -65,11 +65,13 @@ void settings_menu_demo(void)
     printf("2. Normal (2.0s)\n");
     printf("3. Fast (1.0s)\n");
     printf("4. Instant (0.0s - Skip animations)\n");
-    
+
     int status = safe_input_int(&speed_choice, "Choice: ", 1, 4);
-    
-    if (status == INPUT_EXIT_SIGNAL) return;
-    if (status == 1) {
+
+    if (status == INPUT_EXIT_SIGNAL)
+        return;
+    if (status == 1)
+    {
         set_animation_speed(speed_choice);
         printf("\n[Success] ");
         print_current_speed();

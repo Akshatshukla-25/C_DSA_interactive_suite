@@ -1,6 +1,6 @@
 #include "sorting_visualizer.h"
-#include "cross_platform_timer.h"
 #include "config.h"
+#include "cross_platform_timer.h"
 #include <stdio.h>
 
 #ifdef _WIN32

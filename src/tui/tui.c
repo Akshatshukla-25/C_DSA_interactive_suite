@@ -4,9 +4,11 @@
 #include <string.h>
 // #include <locale.h>
 
+#include "../utils/config.h"
 #include "advanced_sorting.h"
 #include "backtracking.h"
 #include "data_structures.h"
+#include "display_header.h"
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
 #include "expression.h"
@@ -15,13 +17,11 @@
 #include "job_scheduling.h"
 #include "process_synchronization.h"
 #include "safe_input.h"
-#include "display_header.h"
 #include "searching_algorithms.h"
 #include "sorting_algorithms_n2.h"
 #include "string_algorithms.h"
 #include "trees.h"
 #include "tui.h"
-#include "../utils/config.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -55,7 +55,6 @@ static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
     {"Animation speed (s)", NULL, 1, 1, 0},
     {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
-
 
     {"data_structures", NULL, 1, 1, 0},
     {"Linear Data Structures", NULL, 1, 0, 0},

@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "history_logger.h"
@@ -6,7 +7,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../utils/config.h"
 
 #define BUFFER_SIZE 5
 
@@ -64,7 +64,10 @@ void producer_consumer_demo(void)
 
     while (1)
     {
-        if (!is_instant()) { clear_screen(); }
+        if (!is_instant())
+        {
+            clear_screen();
+        }
         printf("\n\033[1;36m=== PRODUCER-CONSUMER PROBLEM SIMULATOR ===\033[0m\n");
         printf("This demo visualizes the behavior of Producer and Consumer processes\n");
         printf("synchronizing over a bounded circular buffer using Semaphores.\n");
@@ -190,7 +193,10 @@ void producer_consumer_demo(void)
 
             for (int s = 0; s < steps; s++)
             {
-                if (!is_instant()) { clear_screen(); }
+                if (!is_instant())
+                {
+                    clear_screen();
+                }
                 printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1,
                        steps);
                 display_buffer_state(buffer, in, out, mutex, empty, full, prod_blocked,

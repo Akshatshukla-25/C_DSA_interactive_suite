@@ -1,12 +1,12 @@
 #define _DEFAULT_SOURCE
+#include "../utils/config.h"
 #include "backtracking.h"
 #include "cross_platform_timer.h"
 #include "safe_input.h"
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../utils/config.h"
 
 #include "clear_screen.h"
 #ifdef _WIN32
@@ -35,7 +35,10 @@ static int compare_candidates(const void* a, const void* b)
 
 static void print_board(int N, int board[8][8], int knight_x, int knight_y)
 {
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n=== KNIGHT'S TOUR BACKTRACKING VISUALIZER ===\n\n");
     for (int i = 0; i < N; i++)
     {
@@ -227,7 +230,8 @@ void knights_tour_demo(void)
     }
 }
 // --- TEST WRAPPER ---
-bool run_knights_tour_test(int n) {
+bool run_knights_tour_test(int n)
+{
     int board[8][8];
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)

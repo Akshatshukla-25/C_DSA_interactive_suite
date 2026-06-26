@@ -1,9 +1,9 @@
 #define TEST_MOCK_SCHEDULING
+#include "../../src/job_scheduling/job_scheduling.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../src/job_scheduling/job_scheduling.h"
 
 // Globals to feed input and collect output
 static Process g_input_procs[10];
@@ -55,19 +55,19 @@ void test_sjf_basic()
 {
     // Initialize input processes
     g_input_count = 4;
-    
+
     // Process 1: id=1, arrival=0, burst=6
     g_input_procs[0].id = 1;
     g_input_procs[0].arrival = 0;
     g_input_procs[0].burst = 6;
     g_input_procs[0].priority = 0;
-    
+
     // Process 2: id=2, arrival=2, burst=2
     g_input_procs[1].id = 2;
     g_input_procs[1].arrival = 2;
     g_input_procs[1].burst = 2;
     g_input_procs[1].priority = 0;
-    
+
     // Process 3: id=3, arrival=4, burst=1
     g_input_procs[2].id = 3;
     g_input_procs[2].arrival = 4;
@@ -85,7 +85,7 @@ void test_sjf_basic()
 
     // Assert results
     assert(g_output_count == 4);
-    
+
     // SJF execution order should be P1, P3, P2, P4
     // P1: starts at 0, finishes at 6. Wait = 0, Turnaround = 6
     // P3: starts at 6, finishes at 7. Wait = 2, Turnaround = 3

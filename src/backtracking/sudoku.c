@@ -1,11 +1,11 @@
+#include "../utils/config.h"
 #include "backtracking.h"
+#include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "../utils/config.h"
-#include "clear_screen.h"
 
 #define N 6
 
@@ -21,7 +21,10 @@ static int backtracks = 0;
 
 static void print_sudoku_board(int grid[N][N], int original_grid[N][N])
 {
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n--- Sudoku Solver Visualization (6x6) ---\n\n");
     for (int row = 0; row < N; row++)
     {
@@ -184,17 +187,22 @@ void sudoku_demo(void)
     }
 }
 // --- TEST WRAPPER ---
-bool run_sudoku_test(int test_grid[6][6]) {
+bool run_sudoku_test(int test_grid[6][6])
+{
     // 1. Validate the initial board before attempting to solve!
-    for (int r = 0; r < 6; r++) {
-        for (int c = 0; c < 6; c++) {
-            if (test_grid[r][c] != 0) {
+    for (int r = 0; r < 6; r++)
+    {
+        for (int c = 0; c < 6; c++)
+        {
+            if (test_grid[r][c] != 0)
+            {
                 int temp = test_grid[r][c];
                 test_grid[r][c] = 0; // Temporarily clear it
                 // Check if this pre-filled number is actually legal
-                if (!is_safe_sudoku(test_grid, r, c, temp)) {
+                if (!is_safe_sudoku(test_grid, r, c, temp))
+                {
                     test_grid[r][c] = temp; // Put it back
-                    return false; // Reject: The initial board violates Sudoku rules!
+                    return false;           // Reject: The initial board violates Sudoku rules!
                 }
                 test_grid[r][c] = temp; // Put it back
             }

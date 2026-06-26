@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "expression.h"
@@ -6,7 +7,6 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include "../utils/config.h"
 
 // rn this program only has support for four operators - +-/* and parantheses. this program doesnt
 // support '^ or %' operators maximum expression length is 50 characters
@@ -66,7 +66,10 @@ void infix_to_postfix_demo(void)
 
         while (infix_expr[i] != '\0')
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
             char ch = infix_expr[i];
             const char* action_msg = NULL;
             char op;
@@ -158,7 +161,10 @@ void infix_to_postfix_demo(void)
 
         while (!isEmpty(operators))
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
             char op = pop(operators);
 
             postfix_expr[pf_idx++] = op;

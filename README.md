@@ -23,17 +23,22 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 
 ## Demos
 
-## Infix to Postfix and Postfix evaluation (step by step)
+## Backtracking algos (Knight's tour)
 
-[![asciinema demo](https://asciinema.org/a/jOr0YxJx25MnjKVK.svg)](https://asciinema.org/a/jOr0YxJx25MnjKVK)
+[![asciinema demo](https://asciinema.org/a/G5D8YBvcIbZM2fzF.svg)](https://asciinema.org/a/G5D8YBvcIbZM2fzF)
 
-## Hashing algorithms (step-by-step)
+## Sorting algos (Bubble sort)
 
-[![asciinema demo](https://asciinema.org/a/jmMx2LTJSQJX8Re4.svg)](https://asciinema.org/a/jmMx2LTJSQJX8Re4)
+[![asciinema demo](https://asciinema.org/a/J8CHAuyJAIyOduYY.svg)](https://asciinema.org/a/J8CHAuyJAIyOduYY)
 
-## Binary Search Tree (step-by-step)
+## Expression Evaluation complete
 
-[![asciinema demo](https://asciinema.org/a/nmJbUTDtEnjjGk5k.svg)](https://asciinema.org/a/nmJbUTDtEnjjGk5k?speed=1.5)
+[![asciinema demo](https://asciinema.org/a/xDm8zlxD6VzzFZFR.svg)](https://asciinema.org/a/xDm8zlxD6VzzFZFR)
+
+## String algos (Robin Karp)
+
+[![asciinema demo](https://asciinema.org/a/d2BU9AVDS94GVovS.svg)](https://asciinema.org/a/d2BU9AVDS94GVovS)
+
 
 ---
 

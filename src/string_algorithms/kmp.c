@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "history_logger.h"
@@ -7,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../utils/config.h"
 
 void kmp_search(char* text, char* pattern)
 {
@@ -146,7 +146,10 @@ void kmp_visualization(char* text, char* pattern)
     int j = 0;
     while (i < n)
     {
-        if (!is_instant()) { clear_screen(); }
+        if (!is_instant())
+        {
+            clear_screen();
+        }
         printf("\nStep %d\n", step++);
         printf("Text Index    : %d\n", i);
         printf("Pattern Index : %d\n", j);
@@ -197,7 +200,10 @@ void kmp_visualization(char* text, char* pattern)
     }
 
     free(lps);
-    if (!is_instant()) { clear_screen(); }
+    if (!is_instant())
+    {
+        clear_screen();
+    }
     printf("\n==================================\n");
     printf("KMP Search Complete\n");
     printf("==================================\n");

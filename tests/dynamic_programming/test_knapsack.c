@@ -1,9 +1,9 @@
+#include "dynamic_programming.h"
+#include "mock_printf.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "dynamic_programming.h"
-#include "mock_printf.h"
 
 // Define overrides to suppress history logging and DP table prints
 #define printf mock_printf
@@ -44,7 +44,8 @@ void test_knapsack_subset_fit()
     int wt[] = {1, 2, 3, 5};
     int val[] = {1, 6, 18, 22};
     int n = 4;
-    int W = 5; // Best: item 2 (wt 2, val 6) and item 3 (wt 3, val 18) total wt 5, val 24. (Item 4 is wt 5 val 22)
+    int W = 5; // Best: item 2 (wt 2, val 6) and item 3 (wt 3, val 18) total wt 5, val 24. (Item 4
+               // is wt 5 val 22)
 
     assert(knapsack(W, wt, val, n) == 24);
 }

@@ -1,9 +1,9 @@
 #define TEST_MOCK_SCHEDULING
+#include "../../src/job_scheduling/job_scheduling.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../src/job_scheduling/job_scheduling.h"
 
 // Globals to feed input and collect output
 static Process g_input_procs[10];
@@ -55,19 +55,19 @@ void test_srtf_basic()
 {
     // Initialize input processes
     g_input_count = 4;
-    
+
     // Process 1: id=1, arrival=0, burst=8
     g_input_procs[0].id = 1;
     g_input_procs[0].arrival = 0;
     g_input_procs[0].burst = 8;
     g_input_procs[0].priority = 0;
-    
+
     // Process 2: id=2, arrival=1, burst=4
     g_input_procs[1].id = 2;
     g_input_procs[1].arrival = 1;
     g_input_procs[1].burst = 4;
     g_input_procs[1].priority = 0;
-    
+
     // Process 3: id=3, arrival=2, burst=9
     g_input_procs[2].id = 3;
     g_input_procs[2].arrival = 2;
@@ -85,7 +85,7 @@ void test_srtf_basic()
 
     // Assert results
     assert(g_output_count == 4);
-    
+
     // SRTF execution order:
     // [0-1]: P1 (P1 remaining becomes 7)
     // [1-5]: P2 runs to completion (P2 finishes at 5)

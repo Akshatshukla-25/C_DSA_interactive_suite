@@ -4,7 +4,8 @@
 
 void clear_screen(void)
 {
-    if (!is_terminal_interactive()) {
+    if (!is_terminal_interactive())
+    {
         return;
     }
 #ifdef _WIN32
@@ -13,4 +14,3 @@ void clear_screen(void)
     system("clear");
 #endif
 }
-

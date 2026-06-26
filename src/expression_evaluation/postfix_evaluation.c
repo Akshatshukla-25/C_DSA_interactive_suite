@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "expression.h"
@@ -5,7 +6,6 @@
 #include "stack.h"
 #include <ctype.h>
 #include <stdio.h>
-#include "../utils/config.h"
 
 // if postfix expression attempts to divide by zero or the stack doesnt get emptied at the end of
 // main while loop, it indicates malformed postfix expression and program exits with error code '-1'
@@ -42,7 +42,10 @@ void postfix_evaluation_demo(void)
         int current_result = 0;
         while (postfix_expr[i] != '\0')
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
             action_msg[0] = '\0';
             char ch = postfix_expr[i];
             if (isdigit(ch))

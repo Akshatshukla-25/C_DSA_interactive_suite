@@ -1,9 +1,9 @@
 #define TEST_MOCK_SCHEDULING
+#include "../../src/job_scheduling/job_scheduling.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../src/job_scheduling/job_scheduling.h"
 
 // Globals to feed input and collect output
 static Process g_input_procs[10];
@@ -55,19 +55,19 @@ void test_preemptive_priority_basic()
 {
     // Initialize input processes
     g_input_count = 3;
-    
+
     // Process 1: id=1, arrival=0, burst=4, priority=3
     g_input_procs[0].id = 1;
     g_input_procs[0].arrival = 0;
     g_input_procs[0].burst = 4;
     g_input_procs[0].priority = 3;
-    
+
     // Process 2: id=2, arrival=1, burst=2, priority=1
     g_input_procs[1].id = 2;
     g_input_procs[1].arrival = 1;
     g_input_procs[1].burst = 2;
     g_input_procs[1].priority = 1;
-    
+
     // Process 3: id=3, arrival=2, burst=2, priority=2
     g_input_procs[2].id = 3;
     g_input_procs[2].arrival = 2;
@@ -79,7 +79,7 @@ void test_preemptive_priority_basic()
 
     // Assert results
     assert(g_output_count == 3);
-    
+
     // Trace:
     // P1 runs [0-1) (remaining=3)
     // P2 preempts and runs [1-3) (completed)
@@ -114,13 +114,13 @@ void test_preemptive_priority_ties_and_idle()
 {
     // Initialize input processes
     g_input_count = 2;
-    
+
     // Process 1: id=1, arrival=2, burst=2, priority=1
     g_input_procs[0].id = 1;
     g_input_procs[0].arrival = 2;
     g_input_procs[0].burst = 2;
     g_input_procs[0].priority = 1;
-    
+
     // Process 2: id=2, arrival=3, burst=2, priority=1
     g_input_procs[1].id = 2;
     g_input_procs[1].arrival = 3;
@@ -130,12 +130,12 @@ void test_preemptive_priority_ties_and_idle()
     preemptive_priority_demo();
 
     assert(g_output_count == 2);
-    
+
     // Trace:
     // Time [0-2): Idle
     // Time 2: P1 arrives and runs [2-3) (remaining=1)
-    // Time 3: P2 arrives (priority=1, same as P1). P1 has earlier arrival, so P1 continues. P1 runs [3-4) (completed)
-    // Time 4: P2 runs [4-6) (completed)
+    // Time 3: P2 arrives (priority=1, same as P1). P1 has earlier arrival, so P1 continues. P1 runs
+    // [3-4) (completed) Time 4: P2 runs [4-6) (completed)
 
     for (int i = 0; i < g_output_count; i++)
     {

@@ -193,10 +193,11 @@ void dcll_demo(void);
 // Segment Tree (Dynamic Implementation)
 // ==========================================
 
-typedef struct {
-    int* tree;               
-    int size;                
-    int original_array_size; 
+typedef struct
+{
+    int* tree;
+    int size;
+    int original_array_size;
 } SegmentTree;
 
 SegmentTree* create_segment_tree(int arr[], int n);

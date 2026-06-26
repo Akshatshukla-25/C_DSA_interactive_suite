@@ -1,3 +1,4 @@
+#include "../utils/config.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
 #include "history_logger.h"
@@ -7,7 +8,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../utils/config.h"
 
 typedef enum
 {
@@ -61,7 +61,8 @@ static void get_chopstick_str(int id, const int* chopsticks, char* buf)
     }
 }
 
-static void display_table_state(const int* chopsticks, const PhilosopherState* phil_states, int strategy)
+static void display_table_state(const int* chopsticks, const PhilosopherState* phil_states,
+                                int strategy)
 {
     char box0[64], box1[64], box2[64], box3[64], box4[64];
     char c0[64], c1[64], c2[64], c3[64], c4[64];
@@ -79,9 +80,12 @@ static void display_table_state(const int* chopsticks, const PhilosopherState* p
     get_chopstick_str(4, chopsticks, c4);
 
     const char* strategy_name = "Unknown";
-    if (strategy == 0) strategy_name = "Naive (Allows Deadlock)";
-    else if (strategy == 1) strategy_name = "Asymmetric (Odd/Even ID)";
-    else if (strategy == 2) strategy_name = "Arbitrator (State Check)";
+    if (strategy == 0)
+        strategy_name = "Naive (Allows Deadlock)";
+    else if (strategy == 1)
+        strategy_name = "Asymmetric (Odd/Even ID)";
+    else if (strategy == 2)
+        strategy_name = "Arbitrator (State Check)";
 
     printf("\n\033[1;34m┌────────────────────────────────────────────────────────┐\033[0m");
     printf("\n\033[1;34m│               DINING PHILOSOPHERS TABLE                │\033[0m");
@@ -111,8 +115,7 @@ static void test_arbitrator(int i, int* chopsticks, PhilosopherState* phil_state
 {
     int left_neighbor = (i + 4) % 5;
     int right_neighbor = (i + 1) % 5;
-    if (phil_states[i] == HUNGRY &&
-        phil_states[left_neighbor] != EATING &&
+    if (phil_states[i] == HUNGRY && phil_states[left_neighbor] != EATING &&
         phil_states[right_neighbor] != EATING)
     {
         phil_states[i] = EATING;
@@ -120,7 +123,8 @@ static void test_arbitrator(int i, int* chopsticks, PhilosopherState* phil_state
         chopsticks[right_neighbor] = i;
 
         char msg[128];
-        snprintf(msg, sizeof(msg), "Arbitrator: P%d acquired chopsticks %d & %d. Starts EATING!", i, i, right_neighbor);
+        snprintf(msg, sizeof(msg), "Arbitrator: P%d acquired chopsticks %d & %d. Starts EATING!", i,
+                 i, right_neighbor);
         add_log(msg);
     }
 }
@@ -140,12 +144,14 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
             {
                 chopsticks[right] = i;
                 phil_states[i] = EATING;
-                snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
+                snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉",
+                         i, right);
                 add_log(msg);
             }
             else
             {
-                snprintf(msg, sizeof(msg), "P%d holds Left C%d; Right C%d is busy (held by P%d).", i, left, right, chopsticks[right]);
+                snprintf(msg, sizeof(msg), "P%d holds Left C%d; Right C%d is busy (held by P%d).",
+                         i, left, right, chopsticks[right]);
                 add_log(msg);
             }
         }
@@ -160,7 +166,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
             {
                 chopsticks[right] = i;
                 phil_states[i] = EATING;
-                snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
+                snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉",
+                         i, right);
                 add_log(msg);
             }
             else
@@ -171,7 +178,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
         }
         else
         {
-            snprintf(msg, sizeof(msg), "P%d cannot acquire Left Chopstick %d (held by P%d).", i, left, chopsticks[left]);
+            snprintf(msg, sizeof(msg), "P%d cannot acquire Left Chopstick %d (held by P%d).", i,
+                     left, chopsticks[left]);
             add_log(msg);
         }
     }
@@ -185,12 +193,14 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
                 {
                     chopsticks[right] = i;
                     phil_states[i] = EATING;
-                    snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
+                    snprintf(msg, sizeof(msg),
+                             "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
                     add_log(msg);
                 }
                 else
                 {
-                    snprintf(msg, sizeof(msg), "P%d holds Left C%d; Right C%d is held by P%d.", i, left, right, chopsticks[right]);
+                    snprintf(msg, sizeof(msg), "P%d holds Left C%d; Right C%d is held by P%d.", i,
+                             left, right, chopsticks[right]);
                     add_log(msg);
                 }
             }
@@ -204,7 +214,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
                 {
                     chopsticks[right] = i;
                     phil_states[i] = EATING;
-                    snprintf(msg, sizeof(msg), "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
+                    snprintf(msg, sizeof(msg),
+                             "P%d acquired Right Chopstick %d and is now EATING! 🎉", i, right);
                     add_log(msg);
                 }
                 else
@@ -215,7 +226,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
             }
             else
             {
-                snprintf(msg, sizeof(msg), "P%d cannot acquire Left Chopstick %d (held by P%d).", i, left, chopsticks[left]);
+                snprintf(msg, sizeof(msg), "P%d cannot acquire Left Chopstick %d (held by P%d).", i,
+                         left, chopsticks[left]);
                 add_log(msg);
             }
         }
@@ -227,12 +239,14 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
                 {
                     chopsticks[left] = i;
                     phil_states[i] = EATING;
-                    snprintf(msg, sizeof(msg), "P%d acquired Left Chopstick %d and is now EATING! 🎉", i, left);
+                    snprintf(msg, sizeof(msg),
+                             "P%d acquired Left Chopstick %d and is now EATING! 🎉", i, left);
                     add_log(msg);
                 }
                 else
                 {
-                    snprintf(msg, sizeof(msg), "P%d holds Right C%d; Left C%d is held by P%d.", i, right, left, chopsticks[left]);
+                    snprintf(msg, sizeof(msg), "P%d holds Right C%d; Left C%d is held by P%d.", i,
+                             right, left, chopsticks[left]);
                     add_log(msg);
                 }
             }
@@ -246,7 +260,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
                 {
                     chopsticks[left] = i;
                     phil_states[i] = EATING;
-                    snprintf(msg, sizeof(msg), "P%d acquired Left Chopstick %d and is now EATING! 🎉", i, left);
+                    snprintf(msg, sizeof(msg),
+                             "P%d acquired Left Chopstick %d and is now EATING! 🎉", i, left);
                     add_log(msg);
                 }
                 else
@@ -257,7 +272,8 @@ static void attempt_eat(int i, int strategy, int* chopsticks, PhilosopherState* 
             }
             else
             {
-                snprintf(msg, sizeof(msg), "P%d cannot acquire Right Chopstick %d (held by P%d).", i, right, chopsticks[right]);
+                snprintf(msg, sizeof(msg), "P%d cannot acquire Right Chopstick %d (held by P%d).",
+                         i, right, chopsticks[right]);
                 add_log(msg);
             }
         }
@@ -290,7 +306,8 @@ static void trigger_philosopher(int i, int strategy, int* chopsticks, Philosophe
             chopsticks[i] = -1;
             chopsticks[(i + 1) % 5] = -1;
             phil_states[i] = THINKING;
-            snprintf(msg, sizeof(msg), "P%d released chopsticks %d & %d, now THINKING.", i, i, (i + 1) % 5);
+            snprintf(msg, sizeof(msg), "P%d released chopsticks %d & %d, now THINKING.", i, i,
+                     (i + 1) % 5);
             add_log(msg);
         }
     }
@@ -324,9 +341,13 @@ void dining_philosophers_demo(void)
 
     while (1)
     {
-        if (!is_instant()) { clear_screen(); }
+        if (!is_instant())
+        {
+            clear_screen();
+        }
         printf("\n\033[1;36m=== DINING PHILOSOPHERS PROBLEM SIMULATOR ===\033[0m\n");
-        printf("This simulation models the classic Dining Philosophers synchronization challenge.\n");
+        printf(
+            "This simulation models the classic Dining Philosophers synchronization challenge.\n");
 
         display_table_state(chopsticks, phil_states, strategy);
 
@@ -336,21 +357,27 @@ void dining_philosophers_demo(void)
         int chopsticks_held_count = 0;
         for (int p = 0; p < 5; p++)
         {
-            if (phil_states[p] == HUNGRY) hungry_count++;
-            if (phil_states[p] == EATING) eating_count++;
+            if (phil_states[p] == HUNGRY)
+                hungry_count++;
+            if (phil_states[p] == EATING)
+                eating_count++;
         }
         for (int c = 0; c < 5; c++)
         {
-            if (chopsticks[c] != -1) chopsticks_held_count++;
+            if (chopsticks[c] != -1)
+                chopsticks_held_count++;
         }
 
         int is_deadlocked = (hungry_count == 5 && eating_count == 0 && chopsticks_held_count == 5);
         if (is_deadlocked)
         {
             printf("\n\033[1;31m⚠️ DEADLOCK DETECTED!\033[0m\n");
-            printf("\033[1;31m- All 5 philosophers are HUNGRY and holding exactly 1 chopstick.\033[0m\n");
-            printf("\033[1;31m- Circular wait condition is met. No philosopher can progress.\033[0m\n");
-            printf("\033[1;33mTip: Change strategy (Option 3) or reset simulation (Option 4) to resolve.\033[0m\n");
+            printf("\033[1;31m- All 5 philosophers are HUNGRY and holding exactly 1 "
+                   "chopstick.\033[0m\n");
+            printf("\033[1;31m- Circular wait condition is met. No philosopher can "
+                   "progress.\033[0m\n");
+            printf("\033[1;33mTip: Change strategy (Option 3) or reset simulation (Option 4) to "
+                   "resolve.\033[0m\n");
         }
 
         printf("\n\033[1;35mRecent Activity Logs:\033[0m\n");
@@ -400,7 +427,8 @@ void dining_philosophers_demo(void)
             printf("\nEnter number of simulation steps to run automatically (1 to 20): ");
             int steps;
             int step_status = safe_input_int(&steps, "", 1, 20);
-            if (step_status != 1) continue;
+            if (step_status != 1)
+                continue;
 
             srand((unsigned int)time(NULL));
 
@@ -412,12 +440,15 @@ void dining_philosophers_demo(void)
                 chopsticks_held_count = 0;
                 for (int p = 0; p < 5; p++)
                 {
-                    if (phil_states[p] == HUNGRY) hungry_count++;
-                    if (phil_states[p] == EATING) eating_count++;
+                    if (phil_states[p] == HUNGRY)
+                        hungry_count++;
+                    if (phil_states[p] == EATING)
+                        eating_count++;
                 }
                 for (int c = 0; c < 5; c++)
                 {
-                    if (chopsticks[c] != -1) chopsticks_held_count++;
+                    if (chopsticks[c] != -1)
+                        chopsticks_held_count++;
                 }
                 if (hungry_count == 5 && eating_count == 0 && chopsticks_held_count == 5)
                 {
@@ -425,8 +456,12 @@ void dining_philosophers_demo(void)
                     break;
                 }
 
-                if (!is_instant()) { clear_screen(); }
-                printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1, steps);
+                if (!is_instant())
+                {
+                    clear_screen();
+                }
+                printf("\n\033[1;36m=== Auto-Simulation (Step %d of %d) ===\033[0m\n", s + 1,
+                       steps);
                 display_table_state(chopsticks, phil_states, strategy);
 
                 printf("\n\033[1;35mRecent Activity Logs:\033[0m\n");
@@ -453,11 +488,16 @@ void dining_philosophers_demo(void)
         }
         else if (choice == 3)
         {
-            if (!is_instant()) { clear_screen(); }
+            if (!is_instant())
+            {
+                clear_screen();
+            }
             printf("\n\033[1;36m=== Choose Deadlock Prevention Strategy ===\033[0m\n");
             printf("1. Naive (Philosophers pick left then right; allows deadlock)\n");
-            printf("2. Asymmetric (Even philosophers pick left first; odd pick right first; prevents deadlock)\n");
-            printf("3. Arbitrator (Philosophers only acquire chopsticks if both are free; prevents deadlock)\n");
+            printf("2. Asymmetric (Even philosophers pick left first; odd pick right first; "
+                   "prevents deadlock)\n");
+            printf("3. Arbitrator (Philosophers only acquire chopsticks if both are free; prevents "
+                   "deadlock)\n");
             printf("\nEnter strategy (1-3): ");
 
             int strat_choice;
@@ -466,17 +506,23 @@ void dining_philosophers_demo(void)
             {
                 strategy = strat_choice - 1;
                 // Reset table on strategy change
-                for (int c = 0; c < 5; c++) chopsticks[c] = -1;
-                for (int p = 0; p < 5; p++) phil_states[p] = THINKING;
-                for (int i = 0; i < 3; i++) strcpy(logs[i], "");
+                for (int c = 0; c < 5; c++)
+                    chopsticks[c] = -1;
+                for (int p = 0; p < 5; p++)
+                    phil_states[p] = THINKING;
+                for (int i = 0; i < 3; i++)
+                    strcpy(logs[i], "");
                 add_log("Strategy changed. Simulation table reset.");
             }
         }
         else if (choice == 4)
         {
-            for (int c = 0; c < 5; c++) chopsticks[c] = -1;
-            for (int p = 0; p < 5; p++) phil_states[p] = THINKING;
-            for (int i = 0; i < 3; i++) strcpy(logs[i], "");
+            for (int c = 0; c < 5; c++)
+                chopsticks[c] = -1;
+            for (int p = 0; p < 5; p++)
+                phil_states[p] = THINKING;
+            for (int i = 0; i < 3; i++)
+                strcpy(logs[i], "");
             add_log("Simulation table reset successfully.");
             printf("\nSimulation state has been reset!\n");
             sleep_seconds(0.8f);

@@ -81,7 +81,8 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
             arr[arr_idx] = buckets[i]->data;
             if (is_top_level)
             {
-                visualize_sort(arr, total_len, arr_idx, -1, -1, "Bucket Sort: Gathering elements back to main array");
+                visualize_sort(arr, total_len, arr_idx, -1, -1,
+                               "Bucket Sort: Gathering elements back to main array");
             }
             arr_idx++;
             delete_sll(buckets[i]);
@@ -121,7 +122,9 @@ static void bucket_sort_internal(int arr[], int n, int is_top_level, int total_l
                 arr[arr_idx] = temp_arr[temp_idx_gather];
                 if (is_top_level)
                 {
-                    visualize_sort(arr, total_len, arr_idx, -1, -1, "Bucket Sort: Gathering sorted bucket elements back to main array");
+                    visualize_sort(
+                        arr, total_len, arr_idx, -1, -1,
+                        "Bucket Sort: Gathering sorted bucket elements back to main array");
                 }
                 arr_idx++;
             }

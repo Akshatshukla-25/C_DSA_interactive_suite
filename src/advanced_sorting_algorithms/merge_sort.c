@@ -38,7 +38,8 @@ static void merge(int arr[], int left, int mid, int right, int total_len)
 
     while (i < left_length && j < right_length) // merging of two sorted halves back into arr
     {
-        visualize_sort(arr, total_len, left + i, mid + 1 + j, -1, "Merge Sort: Comparing elements from subarrays");
+        visualize_sort(arr, total_len, left + i, mid + 1 + j, -1,
+                       "Merge Sort: Comparing elements from subarrays");
         if (left_array[i] <= right_array[j])
         {
             arr[k++] = left_array[i++];
@@ -58,7 +59,8 @@ static void merge(int arr[], int left, int mid, int right, int total_len)
     while (j < right_length) // if left array was completed but right was not
     {
         arr[k++] = right_array[j++];
-        visualize_sort(arr, total_len, k - 1, -1, -1, "Merge Sort: Writing remaining right element");
+        visualize_sort(arr, total_len, k - 1, -1, -1,
+                       "Merge Sort: Writing remaining right element");
     }
 
     free(left_array);

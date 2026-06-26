@@ -419,7 +419,7 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref)
 int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
 {
     if (*head_ref == NULL)
-        return -2; 
+        return -2;
 
     if ((*head_ref)->next == NULL && (*head_ref)->data == key)
     {
@@ -451,8 +451,8 @@ int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
         }
         temp = temp->next;
     }
-    
-    return -1; 
+
+    return -1;
 }
 
 void delete_dll(doubly_ll_Node* head)
