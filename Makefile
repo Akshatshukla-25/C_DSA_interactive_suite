@@ -111,7 +111,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_deque test_astar test_avl \
             test_greedy_bfs test_sorting_n2 test_advanced_sorting \
             test_history_logger test_shell_sort test_trie test_btree test_bplus_tree test_parity_bit \
-            test_prim test_kruskal test_floyd_warshall test_mcm \
+            test_prim test_kruskal test_floyd_warshall test_mcm test_fibonacci test_knapsack test_lcs \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
@@ -123,6 +123,27 @@ test_mcm: $(TEST_DIR)/test_mcm$(EXE)
 	$(TEST_DIR)/test_mcm$(EXE)
 
 $(TEST_DIR)/test_mcm$(EXE): $(OBJ_DIR)/src/dynamic_programming/mcm.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_mcm.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_fibonacci: $(TEST_DIR)/test_fibonacci$(EXE)
+	$(TEST_DIR)/test_fibonacci$(EXE)
+
+$(TEST_DIR)/test_fibonacci$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_fibonacci.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_knapsack: $(TEST_DIR)/test_knapsack$(EXE)
+	$(TEST_DIR)/test_knapsack$(EXE)
+
+$(TEST_DIR)/test_knapsack$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_knapsack.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_lcs: $(TEST_DIR)/test_lcs$(EXE)
+	$(TEST_DIR)/test_lcs$(EXE)
+
+$(TEST_DIR)/test_lcs$(EXE): $(OBJ_DIR)/src/utils/mock_printf.o $(OBJ_DIR)/src/utils/safe_input_int.o $(OBJ_DIR)/src/utils/safe_input_string.o $(OBJ_DIR)/src/utils/history_logger.o tests/dynamic_programming/test_lcs.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
