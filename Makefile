@@ -114,6 +114,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_prim test_kruskal test_floyd_warshall test_mcm \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
+            test_dining_philosophers test_petersons test_producer_consumer \
             test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort
 
 test: $(TEST_BINS)
@@ -406,6 +407,24 @@ $(TEST_DIR)/test_priority_scheduling$(EXE): $(filter-out $(OBJ_DIR)/src/job_sche
 test_preemptive_priority: $(TEST_DIR)/test_preemptive_priority$(EXE)
 	$(TEST_DIR)/test_preemptive_priority$(EXE)
 $(TEST_DIR)/test_preemptive_priority$(EXE): $(filter-out $(OBJ_DIR)/src/job_scheduling/preemptive_priority.o,$(OBJS)) tests/job_scheduling/test_preemptive_priority.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dining_philosophers: $(TEST_DIR)/test_dining_philosophers$(EXE)
+	$(TEST_DIR)/test_dining_philosophers$(EXE)
+$(TEST_DIR)/test_dining_philosophers$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/dining_philosophers.o,$(OBJS)) tests/process_synchronization/test_dining_philosophers.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_petersons: $(TEST_DIR)/test_petersons$(EXE)
+	$(TEST_DIR)/test_petersons$(EXE)
+$(TEST_DIR)/test_petersons$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/petersons_algorithm.o,$(OBJS)) tests/process_synchronization/test_petersons.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_producer_consumer: $(TEST_DIR)/test_producer_consumer$(EXE)
+	$(TEST_DIR)/test_producer_consumer$(EXE)
+$(TEST_DIR)/test_producer_consumer$(EXE): $(filter-out $(OBJ_DIR)/src/process_synchronization/producer_consumer.o,$(OBJS)) tests/process_synchronization/test_producer_consumer.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
