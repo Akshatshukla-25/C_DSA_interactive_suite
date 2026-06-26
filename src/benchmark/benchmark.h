@@ -28,4 +28,10 @@ size_t benchmark_get_peak_memory(void);
  */
 int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size, double time_seconds, size_t memory_kb);
 
+/**
+ * Interactive benchmark menu interface.
+ * Allows selecting the category of algorithms to benchmark and the input size N.
+ */
+void benchmark_menu_demo(void);
+
 #endif // BENCHMARK_H
