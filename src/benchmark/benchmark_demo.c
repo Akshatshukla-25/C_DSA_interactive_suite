@@ -49,8 +49,7 @@ void benchmark_menu_demo(void)
                 run_sorting_benchmark(n);
                 break;
             case 2:
-                printf("\nSearching benchmark selected for N = %d\n", n);
-                printf("Benchmark module not implemented yet. Implementing in PR 4.\n");
+                run_searching_benchmark(n);
                 break;
             case 3:
                 printf("\nGraph Shortest Path benchmark selected for N = %d\n", n);

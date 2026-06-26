@@ -38,4 +38,8 @@ void benchmark_menu_demo(void);
  * Runs benchmarks for sorting algorithms with input size N.
  */
 void run_sorting_benchmark(int n);
+/**
+ * Runs benchmarks for searching algorithms with input size N.
+ */
+void run_searching_benchmark(int n);
 #endif // BENCHMARK_H
