@@ -95,7 +95,7 @@ void linear_probing_demo(void)
                 if (hash_location == start)
                 {
                     array_full = true;
-                    printf("\nhash table full, old table destroyed, new table created\n");
+                    printf("\nhash table full\n");
                     break;
                 }
             } while (arr[hash_location]);
