@@ -137,6 +137,7 @@ void dijkstra(weightedGraph* graph, int start)
     if (!insert_pq_graph(&pq, start, 0))
     {
         printf("Malloc failed\n");
+        free_pq_graph(&pq);
         return;
     }
 
@@ -161,6 +162,7 @@ void dijkstra(weightedGraph* graph, int start)
                 if (!insert_pq_graph(&pq, v, dist[v]))
                 {
                     printf("Malloc Failed\n");
+                    free_pq_graph(&pq);
                     return;
                 }
             }
