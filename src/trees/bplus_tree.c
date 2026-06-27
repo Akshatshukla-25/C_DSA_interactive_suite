@@ -611,16 +611,22 @@ void bplus_tree_demo(void)
                         break;
                     if (s == 0)
                         continue;
+                    bool cancelled = false;
                     while (1)
                     {
                         int s2 = safe_input_int(
                             &val, "Enter corresponding value (positive integer): ", 1, 10000);
                         if (s2 == INPUT_EXIT_SIGNAL)
+                        {
+                            cancelled = true;
                             break;
+                        }
                         if (s2 == 0)
                             continue;
                         break;
                     }
+                    if (cancelled)
+                        break;
                     if (bplus_tree_insert(tree, key, val))
                         printf("Successfully inserted [%d: %d]\n", key, val);
                     else
