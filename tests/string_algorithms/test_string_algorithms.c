@@ -1,6 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -15,6 +16,8 @@ void z_algorithm_search(char* text, char* pattern);
 void aho_corasick_search(char* text, char** patterns, int k);
 void suffix_array_search(char* text, char* pattern);
 void suffix_tree_search(char* text, char* pattern);
+char* bwt_encode(char* text, int* src_idx);
+char* bwt_decode(char* bwt);
 
 static int count_matches_ac(char* text, char** patterns, int k)
 {
@@ -174,11 +177,41 @@ void test_aho_corasick()
     printf("Aho-Corasick tests passed\n");
 }
 
+void test_bwt()
+{
+    char text[] = "banana";
+    int src_idx = -1;
+    char* encoded = bwt_encode(text, &src_idx);
+    assert(encoded != NULL);
+    assert(strcmp(encoded, "annb$aa") == 0);
+
+    char* decoded = bwt_decode(encoded);
+    assert(decoded != NULL);
+    assert(strcmp(decoded, "banana$") == 0);
+
+    free(encoded);
+    free(decoded);
+
+    /* non-ASCII BWT test */
+    char text2[] = {'a', (char)0xC3, 'b', 0};
+    encoded = bwt_encode(text2, NULL);
+    assert(encoded != NULL);
+    decoded = bwt_decode(encoded);
+    assert(decoded != NULL);
+    assert(strcmp(decoded, "a\xC3\x62$") == 0); // "a" + 0xC3 + "b" + "$"
+
+    free(encoded);
+    free(decoded);
+
+    printf("BWT tests passed\n");
+}
+
 int main()
 {
     test_basic_matches();
     test_non_ascii_bytes();
     test_aho_corasick();
+    test_bwt();
     printf("All string algorithms tests passed\n");
     return 0;
 }

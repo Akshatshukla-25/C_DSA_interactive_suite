@@ -35,4 +35,9 @@ void suffix_tree_search(char* text, char* pattern);
 void suffix_tree_visualization(char* text, char* pattern);
 void suffix_tree_demo(void);
 
+char* bwt_encode(char* text, int* src_idx);
+char* bwt_decode(char* bwt);
+void bwt_visualization(char* text);
+void bwt_demo(void);
+
 #endif // STRING_ALGORITHMS_H

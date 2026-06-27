@@ -16,8 +16,9 @@ void string_algorithms_demo(void)
                                 "\nenter 6 for Aho-Corasick demo"
                                 "\nenter 7 for Suffix Array demo"
                                 "\nenter 8 for Suffix Tree demo"
+                                "\nenter 9 for Burrows-Wheeler Transform demo"
                                 "\nenter choice : ",
-                                1, 8);
+                                1, 9);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -53,6 +54,9 @@ void string_algorithms_demo(void)
                 break;
             case 8:
                 suffix_tree_demo();
+                break;
+            case 9:
+                bwt_demo();
                 break;
         }
     }
