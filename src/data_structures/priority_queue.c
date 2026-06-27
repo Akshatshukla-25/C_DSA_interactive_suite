@@ -202,7 +202,7 @@ void priority_queue_demo(void)
             int pq_choice_status = safe_input_int(&pq_choice,
                                                   "\nEnter 1 to insert, 2 to remove and extract "
                                                   "top, 3 to peek at top, -1 to exit demo: ",
-                                                  1, 3);
+                                                  -1, 3);
 
             if (pq_choice_status == INPUT_EXIT_SIGNAL)
             {

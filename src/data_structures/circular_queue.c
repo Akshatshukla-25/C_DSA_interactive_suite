@@ -18,9 +18,9 @@ void circular_queue_demo(void)
         int queue_capacity_value;
         int queue_capacity_status =
             safe_input_int(&queue_capacity_value,
-                           "\n\nenter capacity number (N) of circular queue, (between 1 and 100), "
+                           "\n\nenter capacity number (N) of circular queue, (between 2 and 100), "
                            "enter '-1' to exit:- ",
-                           1, 100);
+                           2, 100);
 
         if (queue_capacity_status == INPUT_EXIT_SIGNAL)
         {
