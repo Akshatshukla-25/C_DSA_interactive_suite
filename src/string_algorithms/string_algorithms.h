@@ -31,4 +31,8 @@ void suffix_array_search(char* text, char* pattern);
 void suffix_array_visualization(char* text, char* pattern);
 void suffix_array_demo(void);
 
+void suffix_tree_search(char* text, char* pattern);
+void suffix_tree_visualization(char* text, char* pattern);
+void suffix_tree_demo(void);
+
 #endif // STRING_ALGORITHMS_H
