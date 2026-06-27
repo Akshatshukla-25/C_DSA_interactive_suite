@@ -11,8 +11,9 @@ void string_algorithms_demo(void)
                                 "\nenter 1 for Naive String Matching demo"
                                 "\nenter 2 for Knuth-Morris-Pratt (KMP) demo"
                                 "\nenter 3 for Rabin-Karp demo"
+                                "\nenter 4 for Boyer-Moore demo"
                                 "\nenter choice : ",
-                                1, 3);
+                                1, 4);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -33,6 +34,9 @@ void string_algorithms_demo(void)
                 break;
             case 3:
                 rabin_karp_demo();
+                break;
+            case 4:
+                boyer_moore_demo();
                 break;
         }
     }

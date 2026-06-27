@@ -475,6 +475,7 @@ $(TEST_DIR)/test_string_algorithms$(EXE): \
     $(OBJ_DIR)/src/string_algorithms/naive_string_matching.o \
     $(OBJ_DIR)/src/string_algorithms/kmp.o \
     $(OBJ_DIR)/src/string_algorithms/rabin_karp.o \
+    $(OBJ_DIR)/src/string_algorithms/boyer_moore.o \
     $(OBJ_DIR)/src/utils/safe_input_string.o \
     $(OBJ_DIR)/src/utils/history_logger.o \
     $(OBJ_DIR)/src/utils/clear_screen.o \
