@@ -1,4 +1,5 @@
 #include "backtracking.h"
+#include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
 
@@ -29,18 +30,23 @@ void backtracking_demo(void)
         switch (bt_choice)
         {
             case 1:
+                display_header("N-Queens Problem");
                 n_queens_demo();
                 break;
             case 2:
+                display_header("Sudoku Solver");
                 sudoku_demo();
                 break;
             case 3:
+                display_header("Rat in a Maze");
                 rat_in_maze_demo();
                 break;
             case 4:
+                display_header("Graph Coloring");
                 graph_coloring_demo();
                 break;
             case 5:
+                display_header("Knight's Tour");
                 knights_tour_demo();
                 break;
         }
