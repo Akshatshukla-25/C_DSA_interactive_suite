@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "safe_input.h"
 #include "sorting_algorithms_n2.h"
 #include <stdio.h>
@@ -27,15 +28,19 @@ void sorting_algorithms_n2_demo(void)
         switch (sorting_algo_choice)
         {
             case 1:
+                display_header("Bubble Sort");
                 bubble_sort_optimized_demo();
                 break;
             case 2:
+                display_header("Insertion Sort");
                 insertion_sort_demo();
                 break;
             case 3:
+                display_header("Selection Sort");
                 selection_sort_demo();
                 break;
             case 4:
+                display_header("Shell Sort");
                 shell_sort_demo();
                 break;
         }
