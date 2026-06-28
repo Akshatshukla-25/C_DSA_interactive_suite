@@ -1,12 +1,6 @@
-#include "stack.h"
 #include "data_structures.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-struct stack
-{
-    Node* top;
-};
 
 int push(stack* s, int value)
 {
