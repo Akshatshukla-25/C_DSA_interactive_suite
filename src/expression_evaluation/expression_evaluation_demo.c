@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "expression.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -27,21 +28,25 @@ void expression_evaluation_demo(void)
 
         if (expr_eval_choice == 1)
         {
+            display_header("Infix to Postfix");
             infix_to_postfix_demo();
             continue;
         }
         else if (expr_eval_choice == 2)
         {
+            display_header("Postfix Evaluation");
             postfix_evaluation_demo();
             continue;
         }
         else if (expr_eval_choice == 3)
         {
+            display_header("Parentheses Checker");
             parantheses_checker_demo();
             continue;
         }
         else if (expr_eval_choice == 4)
         {
+            display_header("Infix to Prefix");
             infix_to_prefix_demo();
             continue;
         }
