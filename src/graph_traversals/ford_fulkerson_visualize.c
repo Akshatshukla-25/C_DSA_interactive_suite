@@ -208,7 +208,8 @@ static void visualize_ford_fulkerson(weightedGraph* graph, int source, int sink)
     free(visited);
 }
 
-static bool bfs_augmenting_path_vis(weightedGraph* graph, int** residual, int source, int sink, int* parent, const char* phase)
+static bool bfs_augmenting_path_vis(weightedGraph* graph, int** residual, int source, int sink,
+                                    int* parent, const char* phase)
 {
     int V = graph->V;
     bool* visited = calloc(V, sizeof(bool));
@@ -270,10 +271,12 @@ static void visualize_edmonds_karp(weightedGraph* graph, int source, int sink)
 
     while (1)
     {
-        for (int i = 0; i < V; i++) parent[i] = -1;
+        for (int i = 0; i < V; i++)
+            parent[i] = -1;
 
         print_flow_state(graph, residual, source, sink, NULL, -1, "Edmonds-Karp searching path");
-        if (!bfs_augmenting_path_vis(graph, residual, source, sink, parent, "Edmonds-Karp Path Found"))
+        if (!bfs_augmenting_path_vis(graph, residual, source, sink, parent,
+                                     "Edmonds-Karp Path Found"))
         {
             break;
         }
@@ -288,7 +291,8 @@ static void visualize_edmonds_karp(weightedGraph* graph, int source, int sink)
             }
         }
 
-        print_flow_state(graph, residual, source, sink, parent, -1, "Edmonds-Karp (Bottleneck calculated)");
+        print_flow_state(graph, residual, source, sink, parent, -1,
+                         "Edmonds-Karp (Bottleneck calculated)");
 
         for (int v = sink; v != source; v = parent[v])
         {
@@ -296,9 +300,10 @@ static void visualize_edmonds_karp(weightedGraph* graph, int source, int sink)
             residual[u][v] -= path_flow;
             residual[v][u] += path_flow;
         }
-        
+
         max_flow += path_flow;
-        print_flow_state(graph, residual, source, sink, parent, -1, "Edmonds-Karp (Flow augmented)");
+        print_flow_state(graph, residual, source, sink, parent, -1,
+                         "Edmonds-Karp (Flow augmented)");
     }
 
     clear_screen();
@@ -309,12 +314,14 @@ static void visualize_edmonds_karp(weightedGraph* graph, int source, int sink)
     fflush(stdout);
     getchar();
 
-    for (int i = 0; i < V; i++) free(residual[i]);
+    for (int i = 0; i < V; i++)
+        free(residual[i]);
     free(residual);
     free(parent);
 }
 
-static void print_dinic_state(weightedGraph* graph, int** residual, int source, int sink, int* level, int* parent, int curr_v, const char* phase)
+static void print_dinic_state(weightedGraph* graph, int** residual, int source, int sink,
+                              int* level, int* parent, int curr_v, const char* phase)
 {
     clear_screen();
     printf("\n=== Dinic's Algorithm Visualizer (%s) ===\n\n", phase);
@@ -345,15 +352,17 @@ static void print_dinic_state(weightedGraph* graph, int** residual, int source, 
             int v = temp->destination;
             int capacity = temp->weight;
             int current_flow = capacity - residual[u][v];
-            
+
             bool is_level_edge = (level[u] != -1 && level[v] != -1 && level[v] == level[u] + 1);
             if (u == curr_v || v == curr_v)
             {
-                printf("  \033[1;31m%d -> %d: Flow = %d / %d\033[0m\n", u, v, current_flow, capacity);
+                printf("  \033[1;31m%d -> %d: Flow = %d / %d\033[0m\n", u, v, current_flow,
+                       capacity);
             }
             else if (is_level_edge && residual[u][v] > 0)
             {
-                printf("  \033[1;32m%d -> %d: Flow = %d / %d (Level Graph Edge)\033[0m\n", u, v, current_flow, capacity);
+                printf("  \033[1;32m%d -> %d: Flow = %d / %d (Level Graph Edge)\033[0m\n", u, v,
+                       current_flow, capacity);
             }
             else
             {
@@ -363,11 +372,13 @@ static void print_dinic_state(weightedGraph* graph, int** residual, int source, 
         }
     }
     printf("\n");
-    
+
     printf("Residual Capacity Matrix:\n    ");
-    for (int i = 0; i < V; i++) printf(" %2d ", i);
+    for (int i = 0; i < V; i++)
+        printf(" %2d ", i);
     printf("\n    ");
-    for (int i = 0; i < V; i++) printf("----");
+    for (int i = 0; i < V; i++)
+        printf("----");
     printf("\n");
     for (int i = 0; i < V; i++)
     {
@@ -399,7 +410,8 @@ static void print_dinic_state(weightedGraph* graph, int** residual, int source, 
         for (int i = path_len - 1; i >= 0; i--)
         {
             printf("%d", path[i]);
-            if (i > 0) printf(" -> ");
+            if (i > 0)
+                printf(" -> ");
         }
         printf("\n");
     }
@@ -411,7 +423,8 @@ static void print_dinic_state(weightedGraph* graph, int** residual, int source, 
 static bool dinic_bfs_vis(weightedGraph* graph, int** residual, int source, int sink, int* level)
 {
     int V = graph->V;
-    for (int i = 0; i < V; i++) level[i] = -1;
+    for (int i = 0; i < V; i++)
+        level[i] = -1;
     level[source] = 0;
 
     int* queue = malloc(sizeof(int) * V);
@@ -421,7 +434,8 @@ static bool dinic_bfs_vis(weightedGraph* graph, int** residual, int source, int 
     while (head < tail)
     {
         int u = queue[head++];
-        print_dinic_state(graph, residual, source, sink, level, NULL, u, "Dinic BFS (Building Level Graph)");
+        print_dinic_state(graph, residual, source, sink, level, NULL, u,
+                          "Dinic BFS (Building Level Graph)");
         for (int v = 0; v < V; v++)
         {
             if (level[v] < 0 && residual[u][v] > 0)
@@ -437,13 +451,15 @@ static bool dinic_bfs_vis(weightedGraph* graph, int** residual, int source, int 
     return reachable;
 }
 
-static int dinic_dfs_vis(weightedGraph* graph, int** residual, int u, int sink, int flow, int* level, int* start, int source, int* parent)
+static int dinic_dfs_vis(weightedGraph* graph, int** residual, int u, int sink, int flow,
+                         int* level, int* start, int source, int* parent)
 {
     if (u == sink)
         return flow;
 
     int V = graph->V;
-    print_dinic_state(graph, residual, source, sink, level, parent, u, "Dinic DFS (Finding blocking path)");
+    print_dinic_state(graph, residual, source, sink, level, parent, u,
+                      "Dinic DFS (Finding blocking path)");
 
     for (; start[u] < V; start[u]++)
     {
@@ -452,7 +468,8 @@ static int dinic_dfs_vis(weightedGraph* graph, int** residual, int u, int sink, 
         {
             parent[v] = u;
             int curr_flow = flow < residual[u][v] ? flow : residual[u][v];
-            int temp_flow = dinic_dfs_vis(graph, residual, v, sink, curr_flow, level, start, source, parent);
+            int temp_flow =
+                dinic_dfs_vis(graph, residual, v, sink, curr_flow, level, start, source, parent);
             if (temp_flow > 0)
             {
                 residual[u][v] -= temp_flow;
@@ -493,12 +510,15 @@ static void visualize_dinic(weightedGraph* graph, int source, int sink)
         memset(start, 0, sizeof(int) * V);
         while (1)
         {
-            for (int i = 0; i < V; i++) parent[i] = -1;
-            int flow = dinic_dfs_vis(graph, residual, source, sink, INT_MAX, level, start, source, parent);
+            for (int i = 0; i < V; i++)
+                parent[i] = -1;
+            int flow =
+                dinic_dfs_vis(graph, residual, source, sink, INT_MAX, level, start, source, parent);
             if (flow == 0)
                 break;
             max_flow += flow;
-            print_dinic_state(graph, residual, source, sink, level, parent, -1, "Dinic (Augmented blocking flow)");
+            print_dinic_state(graph, residual, source, sink, level, parent, -1,
+                              "Dinic (Augmented blocking flow)");
         }
     }
 
@@ -510,7 +530,8 @@ static void visualize_dinic(weightedGraph* graph, int source, int sink)
     fflush(stdout);
     getchar();
 
-    for (int i = 0; i < V; i++) free(residual[i]);
+    for (int i = 0; i < V; i++)
+        free(residual[i]);
     free(residual);
     free(level);
     free(start);
