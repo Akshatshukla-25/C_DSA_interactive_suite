@@ -251,7 +251,7 @@ void petersons_algorithm_demo(void)
         fflush(stdout);
 
         int choice;
-        int status = safe_input_int(&choice, "", -1, 4);
+        int status = safe_input_int(&choice, "", 1, 4);
         if (status == INPUT_EXIT_SIGNAL || choice == -1)
         {
             break;
