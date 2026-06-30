@@ -317,7 +317,7 @@ $(TEST_DIR)/test_deque$(EXE): $(OBJ_DIR)/src/data_structures/deque.o $(OBJ_DIR)/
 test_segment_tree: $(TEST_DIR)/test_segment_tree$(EXE)
 	$(TEST_DIR)/test_segment_tree$(EXE)
 
-$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/data_structures/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/data_structures/test_segment_tree.c
+$(TEST_DIR)/test_segment_tree$(EXE): $(OBJ_DIR)/src/trees/segment_tree.o $(OBJ_DIR)/src/utils/safe_input_int.o tests/trees/test_segment_tree.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
