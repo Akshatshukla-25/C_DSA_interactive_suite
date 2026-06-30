@@ -1,5 +1,5 @@
-#include "../../src/graph_traversals/bipartite_matching.c"
-#include "graph_traversals.h"
+#include "../../src/advanced_graph_algorithms/bipartite_matching.c"
+#include "advanced_graph_algorithms.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

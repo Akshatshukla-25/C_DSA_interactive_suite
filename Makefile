@@ -12,6 +12,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/advanced_sorting_algorithms \
 	-Isrc/searching_algorithms \
 	-Isrc/graph_traversals \
+	-Isrc/advanced_graph_algorithms \
 	-Isrc/hashing \
 	-Isrc/utils \
 	-Isrc/trees \
@@ -33,6 +34,7 @@ SRC_DIRS = \
 	src/advanced_sorting_algorithms \
 	src/searching_algorithms \
 	src/graph_traversals \
+	src/advanced_graph_algorithms \
 	src/hashing \
 	src/utils \
 	src/trees \
@@ -623,43 +625,43 @@ $(TEST_DIR)/test_topological_sort$(EXE): $(filter-out $(OBJ_DIR)/src/graph_trave
 
 test_scc: $(TEST_DIR)/test_scc$(EXE)
 	$(TEST_DIR)/test_scc$(EXE)
-$(TEST_DIR)/test_scc$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/scc.o,$(OBJS)) tests/graph_traversals/test_scc.c
+$(TEST_DIR)/test_scc$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/scc.o,$(OBJS)) tests/advanced_graph_algorithms/test_scc.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_ford_fulkerson: $(TEST_DIR)/test_ford_fulkerson$(EXE)
 	$(TEST_DIR)/test_ford_fulkerson$(EXE)
-$(TEST_DIR)/test_ford_fulkerson$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/ford_fulkerson.o,$(OBJS)) tests/graph_traversals/test_ford_fulkerson.c
+$(TEST_DIR)/test_ford_fulkerson$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/ford_fulkerson.o,$(OBJS)) tests/advanced_graph_algorithms/test_ford_fulkerson.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_edmonds_karp: $(TEST_DIR)/test_edmonds_karp$(EXE)
 	$(TEST_DIR)/test_edmonds_karp$(EXE)
-$(TEST_DIR)/test_edmonds_karp$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/edmonds_karp.o,$(OBJS)) tests/graph_traversals/test_edmonds_karp.c
+$(TEST_DIR)/test_edmonds_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/edmonds_karp.o,$(OBJS)) tests/advanced_graph_algorithms/test_edmonds_karp.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_dinic: $(TEST_DIR)/test_dinic$(EXE)
 	$(TEST_DIR)/test_dinic$(EXE)
-$(TEST_DIR)/test_dinic$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dinic.o,$(OBJS)) tests/graph_traversals/test_dinic.c
+$(TEST_DIR)/test_dinic$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/dinic.o,$(OBJS)) tests/advanced_graph_algorithms/test_dinic.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_bipartite_matching: $(TEST_DIR)/test_bipartite_matching$(EXE)
 	$(TEST_DIR)/test_bipartite_matching$(EXE)
-$(TEST_DIR)/test_bipartite_matching$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/bipartite_matching.o,$(OBJS)) tests/graph_traversals/test_bipartite_matching.c
+$(TEST_DIR)/test_bipartite_matching$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/bipartite_matching.o,$(OBJS)) tests/advanced_graph_algorithms/test_bipartite_matching.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_hopcroft_karp: $(TEST_DIR)/test_hopcroft_karp$(EXE)
 	$(TEST_DIR)/test_hopcroft_karp$(EXE)
-$(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/hopcroft_karp.o,$(OBJS)) tests/graph_traversals/test_hopcroft_karp.c
+$(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/hopcroft_karp.o,$(OBJS)) tests/advanced_graph_algorithms/test_hopcroft_karp.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 test_eulerian_path: $(TEST_DIR)/test_eulerian_path$(EXE)
 	$(TEST_DIR)/test_eulerian_path$(EXE)
-$(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/eulerian_path.o,$(OBJS)) tests/graph_traversals/test_eulerian_path.c
+$(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/advanced_graph_algorithms/eulerian_path.o,$(OBJS)) tests/advanced_graph_algorithms/test_eulerian_path.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

@@ -1,5 +1,5 @@
-#include "../../src/graph_traversals/scc.c"
-#include "graph_traversals.h"
+#include "../../src/advanced_graph_algorithms/scc.c"
+#include "advanced_graph_algorithms.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

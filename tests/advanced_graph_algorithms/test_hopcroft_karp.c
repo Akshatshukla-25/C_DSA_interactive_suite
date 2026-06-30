@@ -1,5 +1,5 @@
-#include "../../src/graph_traversals/hopcroft_karp.c"
-#include "graph_traversals.h"
+#include "../../src/advanced_graph_algorithms/hopcroft_karp.c"
+#include "advanced_graph_algorithms.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

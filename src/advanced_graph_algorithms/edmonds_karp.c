@@ -1,4 +1,4 @@
-#include "graph_traversals.h"
+#include "advanced_graph_algorithms.h"
 #include <limits.h>
 #include <stdlib.h>
 #include <string.h>

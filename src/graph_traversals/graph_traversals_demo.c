@@ -1,3 +1,4 @@
+#include "advanced_graph_algorithms.h"
 #include "display_header.h"
 #include "graph_traversals.h"
 #include "safe_input.h"

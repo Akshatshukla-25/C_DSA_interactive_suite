@@ -1,4 +1,5 @@
 #define _GNU_SOURCE
+#include "advanced_graph_algorithms.h"
 #include "benchmark.h"
 #include "graph_traversals.h"
 #include <stdio.h>

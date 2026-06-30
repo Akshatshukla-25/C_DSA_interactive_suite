@@ -1,5 +1,5 @@
-#include "../../src/graph_traversals/eulerian_path.c"
-#include "graph_traversals.h"
+#include "../../src/advanced_graph_algorithms/eulerian_path.c"
+#include "advanced_graph_algorithms.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
