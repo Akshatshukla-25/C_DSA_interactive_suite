@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static bool bipartite_color(Graph* graph, int* color)
+bool bipartite_color(Graph* graph, int* color)
 {
     int V = graph->V;
     for (int i = 0; i < V; i++)
