@@ -120,7 +120,7 @@ TEST_BINS = test_circ_queue test_bst test_search test_hash_func \
             test_string_algorithms test_expression_evaluation \
             test_fcfs test_sjf test_srtf test_round_robin test_priority_scheduling test_preemptive_priority \
             test_dining_philosophers test_petersons test_producer_consumer \
-            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark
+            test_dijkstra test_bellman_ford test_bfs test_dfs test_topological_sort test_benchmark test_scc test_ford_fulkerson test_edmonds_karp test_dinic test_bipartite_matching test_hopcroft_karp test_eulerian_path
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_sorting.c),)
 TEST_BINS += test_benchmark_sorting
@@ -132,6 +132,10 @@ endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_graphs.c),)
 TEST_BINS += test_benchmark_graphs
+endif
+
+ifneq ($(wildcard tests/benchmark/test_benchmark_flow.c),)
+TEST_BINS += test_benchmark_flow
 endif
 
 ifneq ($(wildcard tests/benchmark/test_benchmark_mst.c),)
@@ -391,6 +395,13 @@ $(TEST_DIR)/test_benchmark_graphs$(EXE): $(OBJS) tests/benchmark/test_benchmark_
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
+test_benchmark_flow: $(TEST_DIR)/test_benchmark_flow$(EXE)
+	$(TEST_DIR)/test_benchmark_flow$(EXE)
+
+$(TEST_DIR)/test_benchmark_flow$(EXE): $(OBJS) tests/benchmark/test_benchmark_flow.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
 test_benchmark_mst: $(TEST_DIR)/test_benchmark_mst$(EXE)
 	$(TEST_DIR)/test_benchmark_mst$(EXE)
 
@@ -607,6 +618,48 @@ $(TEST_DIR)/test_dfs$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dfs.o,$
 test_topological_sort: $(TEST_DIR)/test_topological_sort$(EXE)
 	$(TEST_DIR)/test_topological_sort$(EXE)
 $(TEST_DIR)/test_topological_sort$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/topological_sort.o,$(OBJS)) tests/graph_traversals/test_topological_sort.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_scc: $(TEST_DIR)/test_scc$(EXE)
+	$(TEST_DIR)/test_scc$(EXE)
+$(TEST_DIR)/test_scc$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/scc.o,$(OBJS)) tests/graph_traversals/test_scc.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_ford_fulkerson: $(TEST_DIR)/test_ford_fulkerson$(EXE)
+	$(TEST_DIR)/test_ford_fulkerson$(EXE)
+$(TEST_DIR)/test_ford_fulkerson$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/ford_fulkerson.o,$(OBJS)) tests/graph_traversals/test_ford_fulkerson.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_edmonds_karp: $(TEST_DIR)/test_edmonds_karp$(EXE)
+	$(TEST_DIR)/test_edmonds_karp$(EXE)
+$(TEST_DIR)/test_edmonds_karp$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/edmonds_karp.o,$(OBJS)) tests/graph_traversals/test_edmonds_karp.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_dinic: $(TEST_DIR)/test_dinic$(EXE)
+	$(TEST_DIR)/test_dinic$(EXE)
+$(TEST_DIR)/test_dinic$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/dinic.o,$(OBJS)) tests/graph_traversals/test_dinic.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_bipartite_matching: $(TEST_DIR)/test_bipartite_matching$(EXE)
+	$(TEST_DIR)/test_bipartite_matching$(EXE)
+$(TEST_DIR)/test_bipartite_matching$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/bipartite_matching.o,$(OBJS)) tests/graph_traversals/test_bipartite_matching.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_hopcroft_karp: $(TEST_DIR)/test_hopcroft_karp$(EXE)
+	$(TEST_DIR)/test_hopcroft_karp$(EXE)
+$(TEST_DIR)/test_hopcroft_karp$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/hopcroft_karp.o,$(OBJS)) tests/graph_traversals/test_hopcroft_karp.c
+	@$(call MKDIR_P,$(TEST_DIR))
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+test_eulerian_path: $(TEST_DIR)/test_eulerian_path$(EXE)
+	$(TEST_DIR)/test_eulerian_path$(EXE)
+$(TEST_DIR)/test_eulerian_path$(EXE): $(filter-out $(OBJ_DIR)/src/graph_traversals/eulerian_path.o,$(OBJS)) tests/graph_traversals/test_eulerian_path.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
