@@ -152,4 +152,26 @@ bool dary_heap_decrease_key(DAryHeap* heap, int index, int new_key);
 bool dary_heap_get_min(DAryHeap* heap, int* min_key, int* min_val);
 int dary_heap_find_index(DAryHeap* heap, int key);
 
+/*
+ * =========================================================================
+ *                                  Treap
+ * =========================================================================
+ */
+
+typedef struct TreapNode
+{
+    int key;
+    int value;
+    int priority;
+    struct TreapNode* left;
+    struct TreapNode* right;
+} TreapNode;
+
+TreapNode* create_treap_node(int key, int value, int priority);
+void destroy_treap(TreapNode* root);
+TreapNode* treap_insert(TreapNode* root, int key, int value, int priority);
+TreapNode* treap_delete(TreapNode* root, int key);
+TreapNode* treap_find_node(TreapNode* root, int key);
+TreapNode* treap_get_min(TreapNode* root);
+
 #endif /* ADVANCED_HEAPS_H */
