@@ -124,4 +124,32 @@ bool min_max_heap_get_max(MinMaxHeap* heap, int* max_key, int* max_val);
 bool min_max_heap_extract_min(MinMaxHeap* heap, int* min_key, int* min_val);
 bool min_max_heap_extract_max(MinMaxHeap* heap, int* max_key, int* max_val);
 
+/*
+ * =========================================================================
+ *                              d-Ary Heap
+ * =========================================================================
+ */
+
+typedef struct
+{
+    int key;
+    int value;
+} DAryHeapNode;
+
+typedef struct
+{
+    DAryHeapNode* arr;
+    int capacity;
+    int size;
+    int d;
+} DAryHeap;
+
+DAryHeap* create_dary_heap(int capacity, int d);
+void destroy_dary_heap(DAryHeap* heap);
+bool dary_heap_insert(DAryHeap* heap, int key, int value);
+bool dary_heap_extract_min(DAryHeap* heap, int* min_key, int* min_val);
+bool dary_heap_decrease_key(DAryHeap* heap, int index, int new_key);
+bool dary_heap_get_min(DAryHeap* heap, int* min_key, int* min_val);
+int dary_heap_find_index(DAryHeap* heap, int key);
+
 #endif /* ADVANCED_HEAPS_H */
