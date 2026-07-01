@@ -174,4 +174,13 @@ TreapNode* treap_delete(TreapNode* root, int key);
 TreapNode* treap_find_node(TreapNode* root, int key);
 TreapNode* treap_get_min(TreapNode* root);
 
+void advanced_heaps_demo(void);
+void run_binomial_demo(void);
+void run_fibonacci_demo(void);
+void run_leftist_demo(void);
+void run_skew_demo(void);
+void run_min_max_demo(void);
+void run_dary_demo(void);
+void run_treap_demo(void);
+
 #endif /* ADVANCED_HEAPS_H */
