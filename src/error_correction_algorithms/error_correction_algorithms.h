@@ -51,4 +51,8 @@ void crc_xor_operation(char* dividend, const char* divisor, int pos);
 void crc_generate(const char* data, const char* generator, char* remainder_out, char* codeword_out);
 int crc_verify(const char* codeword, const char* generator, char* remainder_out);
 
+/* Hamming Logic */
+void hamming_generate(const char* data, char* codeword_out);
+int hamming_verify(const char* received_codeword, char* corrected_codeword_out, char* data_out);
+
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */
