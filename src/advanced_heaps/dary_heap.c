@@ -312,5 +312,3 @@ void run_dary_demo(void)
     }
     destroy_dary_heap(heap);
 }
-
-
