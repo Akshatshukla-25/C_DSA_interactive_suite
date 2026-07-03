@@ -292,7 +292,7 @@ void run_dary_demo(void)
             int target_key, new_key;
             if (safe_input_int(&target_key, "Enter key to search for: ", -100000, 100000) != 1)
                 continue;
-            int idx = dary_heap_find_by_value(heap, target_key);
+            int idx = dary_heap_find_index(heap, target_key);
             if (idx == -1)
             {
                 printf("\nKey not found!\n");
@@ -312,3 +312,5 @@ void run_dary_demo(void)
     }
     destroy_dary_heap(heap);
 }
+
+
