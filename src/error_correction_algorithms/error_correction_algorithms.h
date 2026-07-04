@@ -47,5 +47,11 @@ int checksum_block_sum(const char* data, int len, int k);
 int checksum_bits_to_int(const char* bits, int k);
 
 void crc_xor_operation(char* dividend, const char* divisor, int pos);
+void crc_generate(const char* data, const char* generator, char* remainder_out, char* codeword_out);
+int crc_verify(const char* codeword, const char* generator, char* remainder_out);
+
+/* LRC Logic */
+void lrc_calculate(const char* const* words, int num_words, int word_len, char* lrc_out);
+int lrc_verify(const char* const* words, int num_words, int word_len, const char* received_lrc);
 
 #endif /* ERROR_CORRECTION_ALGORITHMS_H */
