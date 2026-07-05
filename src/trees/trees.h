@@ -171,6 +171,23 @@ void fenwick_range_update(FenwickTree* ft, int l, int r, int delta);
 int fenwick_point_query(int* BIT, int idx);
 int fenwick_range_query(FenwickTree* ft, int l, int r);
 void fenwick_tree_demo(void);
+// For Splay Tree (Self-Adjusting Binary Search Tree)
+typedef struct splayNode
+{
+    int key;
+    struct splayNode* left;
+    struct splayNode* right;
+} splayNode;
+
+splayNode* splay_create_node(int key);
+splayNode* splay_tree_splay(splayNode* root, int key);
+splayNode* splay_tree_search(splayNode* root, int key);
+splayNode* splay_tree_insert(splayNode* root, int key);
+splayNode* splay_tree_delete(splayNode* root, int key);
+void splay_tree_preorder(splayNode* root);
+void destroy_splay_tree(splayNode* root);
+void splay_tree_demo(void);
+
 // For Red-Black Tree (Self-Balancing BST)
 typedef enum
 {
