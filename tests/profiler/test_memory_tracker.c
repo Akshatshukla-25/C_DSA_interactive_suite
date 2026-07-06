@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// clang-format off
 #include "memory_tracker.h"
 #include "memory_visualizer.h"
+// clang-format on
 
 void test_basic_allocation(void)
 {
