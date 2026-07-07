@@ -1,58 +1,83 @@
-
 #include <stdio.h>
+#include <string.h>
+#include "../help/help.h" // Include our help module header
 
-// this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out
-// of range)
-//  and -111 on exit signal ie when user gives input as '-1'
-
+// this function return 1 on successful insertion, 0 on failure (invalid input or EOF or number out of range)
+// and -111 on exit signal ie when user gives input as '-1'
 int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 {
-
     int c;
-    if (prompt)
-    {
-        printf("%s", prompt);
-        fflush(stdout);
-    }
-    int value;       // will be used to store integer part of input
-    char extra_char; // will be used to store/detect characters in the input buffer after number
+    char buffer[100]; // Buffer to read raw user input as a string first
 
-    if (scanf("%d", &value) != 1)
+    while (1)
     {
-        printf("That's not a number. Please try again: \n");
-        goto clear_buffer;
-    }
-    if (scanf("%c", &extra_char) == 1 && extra_char != '\n')
-    {
-        printf("Only a number please (no extra characters). Try again: \n");
-        goto clear_buffer;
-    }
-    if (value == -1)
-    {
-        *input = -1;
-        return -111; // special exit code indicating user entered '-1' ie a signal to exit.
-    }
-    if (value < min_val || value > max_val)
-    {
-        printf("only enter values between %d and %d.\n", min_val, max_val);
-        printf("press 'ENTER' to try again :- ");
-        goto clear_buffer;
-    }
+        if (prompt)
+        {
+            printf("%s", prompt);
+            fflush(stdout);
+        }
 
-    *input = value;
-    return 1; // represents successful insertion of value into the given variable
+        // Read input as a string safely
+        if (scanf("%99s", buffer) != 1)
+        {
+            goto clear_buffer;
+        }
+
+        // Clear the rest of the line from input buffer
+        while ((c = getchar()) != '\n' && c != EOF)
+            ;
+
+        // 1. Intercept "help" command
+        if (strcmp(buffer, "help") == 0)
+        {
+            launch_help_page(); // Summon the manual
+            continue;           // Reprint the exact same prompt seamlessly!
+        }
+
+        int value;
+        char extra_char;
+
+        // 2. Parse the integer from our string buffer
+        // Checks if it's a number, and ensures no trailing junk characters exist
+        int parsed_items = sscanf(buffer, "%d%c", &value, &extra_char);
+
+        if (parsed_items < 1)
+        {
+            printf("That's not a number. Please try again: \n");
+            continue;
+        }
+        if (parsed_items > 1)
+        {
+            printf("Only a number please (no extra characters). Try again: \n");
+            continue;
+        }
+        if (value == -1)
+        {
+            *input = -1;
+            return -111; // special exit code indicating user entered '-1'
+        }
+        if (value < min_val || value > max_val)
+        {
+            printf("only enter values between %d and %d.\n", min_val, max_val);
+            printf("press 'ENTER' to try again :- ");
+            // Pause so they can read the error
+            while ((c = getchar()) != '\n' && c != EOF)
+                ;
+            continue;
+        }
+
+        *input = value;
+        return 1; // Successful insertion
+    }
 
 clear_buffer:
     while ((c = getchar()) != '\n' && c != EOF)
-        ; // clears buffer for next attempt
+        ; 
     if (c == EOF)
-    { // if EOF is encountered
-
+    { 
         clearerr(stdin);
-        fflush(stdin);
         printf("input ended unexpectedly\n");
         return 0;
     }
-    return 0; // failure to take input, due to invalid input (characters, special characters or out
-              // of range)
+    return 0; 
 }

@@ -6,6 +6,7 @@ TEST_DIR = test_binaries
 VGFLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1
 
 CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
+    -Isrc/help \
 	-Isrc/data_structures \
 	-Isrc/expression_evaluation \
 	-Isrc/sorting_algorithms_n2 \
@@ -31,6 +32,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 # LDFLAGS = -lncurses
 
 SRC_DIRS = \
+    src/help \
 	src/data_structures \
 	src/expression_evaluation \
 	src/sorting_algorithms_n2 \
