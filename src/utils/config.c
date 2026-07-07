@@ -3,6 +3,21 @@
 #include "safe_input.h"
 #include <stdio.h>
 
+#ifdef _WIN32
+#include <io.h>
+#else
+#include <unistd.h>
+#endif
+
+int is_terminal_interactive(void)
+{
+#ifdef _WIN32
+    return _isatty(1);
+#else
+    return isatty(1);
+#endif
+}
+
 // Global static variables to hold the state
 static int current_delay_seconds = 2;
 static const char* speed_name = "Normal (2.0s)";
