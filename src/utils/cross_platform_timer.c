@@ -1,7 +1,6 @@
 #include "cross_platform_timer.h"
 
 #ifdef _WIN32
-#include <io.h>
 #include <windows.h>
 #else
 #define _DEFAULT_SOURCE
@@ -14,14 +13,5 @@ void sleep_seconds(float seconds)
     Sleep(seconds * 1000);
 #else
     usleep(seconds * 1000000);
-#endif
-}
-
-int is_terminal_interactive(void)
-{
-#ifdef _WIN32
-    return _isatty(1);
-#else
-    return isatty(1);
 #endif
 }
