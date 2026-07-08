@@ -81,7 +81,7 @@ void visualize_sort(const int arr[], int n, int active_idx1, int active_idx2, in
         long long denominator = (long long)max_val - min_val;
         if (denominator <= 0)
         {
-            width = 10;
+            width = 1;
         }
         else
         {
