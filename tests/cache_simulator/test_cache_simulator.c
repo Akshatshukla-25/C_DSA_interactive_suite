@@ -222,6 +222,73 @@ void test_opt_basic()
     printf("OPT basic cache tests passed\n");
 }
 
+void test_clock_basic()
+{
+    Cache cache;
+    cache_init(&cache, 3);
+
+    // Access 1, 2, 3: Misses
+    assert(!cache_access_clock(&cache, 1, false)); // U: [1, 0, 0]
+    assert(!cache_access_clock(&cache, 2, false)); // U: [1, 1, 0]
+    assert(!cache_access_clock(&cache, 3, false)); // U: [1, 1, 1]
+
+    // Access 1: Hit (reference_bit = 1)
+    assert(cache_access_clock(&cache, 1, false));
+
+    // Access 4: Miss. Evict loop:
+    // Hand is at 0 (page 1). reference_bit == 1 -> set to 0, advance.
+    // Hand is at 1 (page 2). reference_bit == 1 -> set to 0, advance.
+    // Hand is at 2 (page 3). reference_bit == 1 -> set to 0, advance.
+    // Loop again: Hand is at 0 (page 1). reference_bit == 0 -> replace!
+    // Hand advances to 1 (page 2).
+    assert(!cache_access_clock(&cache, 4, false));
+
+    // 1 should no longer be in cache (evicted)
+    bool found_1 = false;
+    for (int i = 0; i < 3; i++)
+    {
+        if (cache.blocks[i].page_id == 1)
+            found_1 = true;
+    }
+    assert(!found_1);
+
+    printf("Clock basic cache tests passed\n");
+}
+
+void test_enhanced_clock_basic()
+{
+    Cache cache;
+    cache_init(&cache, 3);
+
+    // Access 1 (read), 2 (write), 3 (read): Misses
+    assert(!cache_access_enhanced_clock(&cache, 1, false)); // (1, 0)
+    assert(!cache_access_enhanced_clock(&cache, 2, true));  // (1, 1)
+    assert(!cache_access_enhanced_clock(&cache, 3, false)); // (1, 0)
+
+    // Clear reference bit of 2 to make it (0, 1)
+    cache.blocks[1].reference_bit = 0;
+    // Clear reference bit of 3 to make it (0, 0)
+    cache.blocks[2].reference_bit = 0;
+
+    // Current states (page, U, M): 1: (1, 0), 2: (0, 1), 3: (0, 0).
+    // Clock hand is at 0 (page 1).
+    // Access 4: Miss.
+    // Step 1: Scan for Class 0 (0, 0). We start from hand 0 (page 1 is (1,0)).
+    // Page 2 is (0,1). Page 3 is (0,0) -> Match!
+    // Evict page 3. Hand becomes (2 + 1) % 3 = 0.
+    assert(!cache_access_enhanced_clock(&cache, 4, false));
+
+    bool found_3 = false;
+    for (int i = 0; i < 3; i++)
+    {
+        if (cache.blocks[i].page_id == 3)
+            found_3 = true;
+    }
+    assert(!found_3);
+
+    printf("Enhanced Clock basic cache tests passed\n");
+}
+
 int main()
 {
     test_fifo_basic();
@@ -229,6 +296,8 @@ int main()
     test_mru_basic();
     test_lfu_basic();
     test_opt_basic();
+    test_clock_basic();
+    test_enhanced_clock_basic();
     printf("All cache simulator tests passed\n");
     return 0;
 }
