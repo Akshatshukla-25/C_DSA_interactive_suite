@@ -139,7 +139,7 @@ void js_print_gantt(const GanttSegment* segments, int count)
 {
     if (count <= 0)
     {
-        printf("\nNo scheduling segments to display.\n");
+        printf("\nGantt chart: (no segments to display)\n");
         return;
     }
 
