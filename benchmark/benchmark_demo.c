@@ -24,8 +24,9 @@ void benchmark_menu_demo(void)
                                     "click 10 for Backtracking Algorithms benchmark\n"
                                     "click 11 for Network Flow Algorithms benchmark\n"
                                     "click 12 for Advanced Heaps benchmark\n"
+                                    "click 13 for Cache Replacement Simulator benchmark\n"
                                     "enter choice : ",
-                                    1, 12);
+                                    1, 13);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -86,6 +87,9 @@ void benchmark_menu_demo(void)
                 break;
             case 12:
                 run_heaps_benchmark(n);
+                break;
+            case 13:
+                run_cache_benchmark(n);
                 break;
         }
     }

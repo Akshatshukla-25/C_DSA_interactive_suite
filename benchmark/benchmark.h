@@ -117,6 +117,7 @@ void run_flow_benchmark(int v);
  * Runs benchmarks for Advanced Heaps with input size N.
  */
 void run_heaps_benchmark(int n);
+void run_cache_benchmark(int n);
 
 double benchmark_mean(const double* values, int count);
 double benchmark_stddev(const double* values, int count, double mean);
