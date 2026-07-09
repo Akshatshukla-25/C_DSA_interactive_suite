@@ -25,6 +25,10 @@ void free_huffman_tree(HuffmanNode* root);
 void print_huffman_tree_visual(const HuffmanNode* root, const char* prefix, bool is_left);
 void print_huffman_dictionary(const HuffmanNode* root, const char codes[256][256]);
 
+// LZW Compression Algorithms
+int lzw_encode(const char* input, int* output, int out_max);
+int lzw_decode(const int* input, int in_len, char* output, int out_max);
+
 // Main Demo Menu
 void compression_demo(void);
 
