@@ -796,7 +796,7 @@ $(TEST_DIR)/test_memory_tracker$(EXE): $(OBJS) tests/memory_profiler/test_memory
 test_cache_simulator: $(TEST_DIR)/test_cache_simulator$(EXE)
 	$(TEST_DIR)/test_cache_simulator$(EXE)
 
-$(TEST_DIR)/test_cache_simulator$(EXE): $(OBJ_DIR)/src/cache_simulator/cache.o tests/cache_simulator/test_cache_simulator.c
+$(TEST_DIR)/test_cache_simulator$(EXE): $(OBJ_DIR)/src/cache_simulator/cache.o $(OBJ_DIR)/src/cache_simulator/fifo.o $(OBJ_DIR)/src/cache_simulator/lru.o $(OBJ_DIR)/src/cache_simulator/mru.o $(OBJ_DIR)/src/cache_simulator/lfu.o $(OBJ_DIR)/src/cache_simulator/opt.o $(OBJ_DIR)/src/cache_simulator/clock.o tests/cache_simulator/test_cache_simulator.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 

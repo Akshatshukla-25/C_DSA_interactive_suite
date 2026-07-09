@@ -65,52 +65,38 @@ void cache_simulator_demo(void)
             token = strtok(NULL, ", ");
         }
 
-        printf(
-            "\nSimulating %s Cache Replacement:\n",
-            algo_choice == 1
-                ? "FIFO"
-                : (algo_choice == 2
-                       ? "LRU"
-                       : (algo_choice == 3
-                              ? "MRU"
-                              : (algo_choice == 4
-                                     ? "LFU"
-                                     : (algo_choice == 5
-                                            ? "OPT"
-                                            : (algo_choice == 6 ? "Clock" : "Enhanced Clock"))))));
+        const char* algo_names[] = {"",    "FIFO", "LRU",   "MRU",
+                                    "LFU", "OPT",  "Clock", "Enhanced Clock"};
+        printf("\nSimulating %s Cache Replacement:\n", algo_names[algo_choice]);
         printf("------------------------------------\n");
 
         for (int i = 0; i < ref_len; i++)
         {
             int page_id = ref_arr[i];
             bool is_hit = false;
-            if (algo_choice == 1)
+            switch (algo_choice)
             {
-                is_hit = cache_access_fifo(&cache, page_id, false);
-            }
-            else if (algo_choice == 2)
-            {
-                is_hit = cache_access_lru(&cache, page_id, false);
-            }
-            else if (algo_choice == 3)
-            {
-                is_hit = cache_access_mru(&cache, page_id, false);
-            }
-            else if (algo_choice == 4)
-            {
-                is_hit = cache_access_lfu(&cache, page_id, false);
-            }
-            else if (algo_choice == 5)
-            {
-                is_hit = cache_access_opt(&cache, page_id, ref_arr, ref_len, i, false);
-            }
-            else if (algo_choice == 6)
-            {
-                is_hit = cache_access_clock(&cache, page_id, false);
-            }
-            else
-            {
-                is_hit = cache_access_enhanced_clock(&cache, page_id, false);
+                case 1:
+                    is_hit = cache_access_fifo(&cache, page_id, false);
+                    break;
+                case 2:
+                    is_hit = cache_access_lru(&cache, page_id, false);
+                    break;
+                case 3:
+                    is_hit = cache_access_mru(&cache, page_id, false);
+                    break;
+                case 4:
+                    is_hit = cache_access_lfu(&cache, page_id, false);
+                    break;
+                case 5:
+                    is_hit = cache_access_opt(&cache, page_id, ref_arr, ref_len, i, false);
+                    break;
+                case 6:
+                    is_hit = cache_access_clock(&cache, page_id, false);
+                    break;
+                case 7:
+                    is_hit = cache_access_enhanced_clock(&cache, page_id, false);
+                    break;
             }
             printf("Access page %d -> %s\n", page_id, is_hit ? "🟢 HIT " : "🔴 MISS");
             cache_visualize(&cache, cache.last_accessed_slot, is_hit);
