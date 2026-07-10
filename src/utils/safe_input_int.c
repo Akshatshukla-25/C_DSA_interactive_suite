@@ -21,6 +21,10 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
         // Read input safely and detect EOF
         if (fgets(buffer, sizeof(buffer), stdin) == NULL)
         {
+            if (feof(stdin))
+            {
+                clearerr(stdin);
+            }
             printf("input ended unexpectedly\n");
             return 0;
         }
