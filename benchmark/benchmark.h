@@ -1,15 +1,4 @@
-#ifndef BENCHMARK_H
-#define BENCHMARK_H
-
 #include <stddef.h>
-
-#ifdef _WIN32
-#include <stdio.h>
-int _fileno(FILE*);
-#endif
-
-#define BENCHMARK_SEED 12345
-#define BENCHMARK_DEFAULT_ITERATIONS 5
 
 #define RUN_BENCHMARK(times_arr, peak_mem_var, ...)                                                \
     do                                                                                             \
