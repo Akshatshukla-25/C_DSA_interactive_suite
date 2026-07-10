@@ -154,6 +154,67 @@ static void run_huffman_demo(void)
     getchar();
 }
 
+static void run_lzw_demo(void)
+{
+    display_header("Lempel-Ziv-Welch (LZW) Coding");
+
+    char input[256];
+    int input_status = safe_input_string(
+        input, "Enter a string to compress (e.g., TOBEORNOTTOBEORTOBEORNOT), or 'X' to exit: ");
+    if (input_status == INPUT_EXIT_SIGNAL)
+    {
+        return;
+    }
+
+    int original_len = strlen(input);
+    if (original_len == 0)
+    {
+        printf("\nError: Empty string provided.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    int compressed[512];
+    int comp_len = lzw_encode(input, compressed, sizeof(compressed) / sizeof(compressed[0]));
+    if (comp_len < 0)
+    {
+        printf("\nError during LZW compression.\n");
+        printf("\nPress [ENTER] to continue...");
+        getchar();
+        return;
+    }
+
+    char decompressed[256];
+    int decomp_len = lzw_decode(compressed, comp_len, decompressed, sizeof(decompressed));
+
+    // Display results
+    printf("\n--- LZW Compression Summary ---\n");
+    printf("Original String   : \"%s\" (%d bytes / %d bits)\n", input, original_len,
+           original_len * 8);
+    printf("Compressed Codes  : [ ");
+    for (int i = 0; i < comp_len; i++)
+    {
+        printf("%d ", compressed[i]);
+    }
+    printf("] (%d codes / %d bits at 12-bits per code)\n", comp_len, comp_len * 12);
+
+    double ratio = (1.0 - ((double)(comp_len * 12) / 8.0) / original_len) * 100.0;
+    printf("Compression Ratio : %.2f%%\n", ratio);
+
+    if (decomp_len >= 0 && strcmp(input, decompressed) == 0)
+    {
+        printf("Round-trip Check  : 🟢 PASSED (Successfully decompressed back to original)\n");
+    }
+    else
+    {
+        printf("Round-trip Check  : 🔴 FAILED (Decompression mismatch)\n");
+    }
+
+    printf("\nPress [ENTER] to continue...");
+    getchar();
+}
+
 void compression_demo(void)
 {
     while (1)
@@ -165,8 +226,9 @@ void compression_demo(void)
                                     "\nSelect Compression Algorithm:\n"
                                     "1. Run-Length Encoding (RLE)\n"
                                     "2. Huffman Coding\n"
-                                    "Enter choice (1 to 2), or '-1' to exit: ",
-                                    1, 2);
+                                    "3. Lempel-Ziv-Welch (LZW)\n"
+                                    "Enter choice (1 to 3), or '-1' to exit: ",
+                                    1, 3);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -184,6 +246,9 @@ void compression_demo(void)
                 break;
             case 2:
                 run_huffman_demo();
+                break;
+            case 3:
+                run_lzw_demo();
                 break;
             default:
                 break;

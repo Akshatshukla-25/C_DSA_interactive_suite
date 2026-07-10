@@ -1,6 +1,7 @@
 #include "compression.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void test_rle_basic(void)
@@ -119,11 +120,48 @@ static void test_huffman_visualizer(void)
     printf("Huffman visualizer tests passed\n");
 }
 
+static void test_lzw_basic(void)
+{
+    const char* input = "TOBEORNOTTOBEORTOBEORNOT";
+    int compressed[512];
+    int comp_len = lzw_encode(input, compressed, sizeof(compressed) / sizeof(compressed[0]));
+    assert(comp_len > 0);
+
+    char decompressed[256];
+    int decomp_len = lzw_decode(compressed, comp_len, decompressed, sizeof(decompressed));
+    assert(decomp_len > 0);
+    assert(strcmp(decompressed, input) == 0);
+
+    // Test dictionary reset on very long repetitive stream
+    char* long_input = malloc(10000);
+    for (int i = 0; i < 9990; i++)
+    {
+        long_input[i] = (char)('A' + (i % 26));
+    }
+    long_input[9990] = '\0';
+
+    int* long_compressed = malloc(sizeof(int) * 10000);
+    int long_comp_len = lzw_encode(long_input, long_compressed, 10000);
+    assert(long_comp_len > 0);
+
+    char* long_decompressed = malloc(10000);
+    int long_decomp_len = lzw_decode(long_compressed, long_comp_len, long_decompressed, 10000);
+    assert(long_decomp_len > 0);
+    assert(strcmp(long_decompressed, long_input) == 0);
+
+    free(long_input);
+    free(long_compressed);
+    free(long_decompressed);
+
+    printf("LZW basic and dictionary reset tests passed\n");
+}
+
 int main(void)
 {
     test_rle_basic();
     test_huffman_basic();
     test_huffman_visualizer();
+    test_lzw_basic();
     printf("All compression tests passed\n");
     return 0;
 }
