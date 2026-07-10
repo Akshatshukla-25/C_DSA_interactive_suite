@@ -8,6 +8,7 @@
 #include "backtracking.h"
 #include "benchmark.h"
 #include "cache.h"
+#include "compression.h"
 #include "config.h"
 #include "dcll.h"
 #include "display_header.h"
@@ -72,8 +73,9 @@ void run_legacy_menu()
             "click 18 for advanced heaps & priority queues suite demo\n"
             "click 19 for interactive algorithm step-debugger demo\n"
             "click 20 for cache replacement simulator demo\n"
+            "click 21 for interactive string compression & encoding suite demo\n"
             "enter choice : ",
-            1, 20 // limits
+            1, 21 // limits
         );
 
         if (status == -111)
@@ -149,6 +151,9 @@ void run_legacy_menu()
                 break;
             case 20:
                 cache_simulator_demo();
+                break;
+            case 21:
+                compression_demo();
                 break;
         }
     }
