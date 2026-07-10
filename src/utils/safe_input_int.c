@@ -1,4 +1,4 @@
-#include "../help/help.h" // Include our help module header
+#include "help.h" // Include our help module header
 #include <stdio.h>
 #include <string.h>
 

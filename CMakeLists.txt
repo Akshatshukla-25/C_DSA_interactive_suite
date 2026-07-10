@@ -14,7 +14,7 @@ endif()
 
 # Source directories
 set(SRC_DIRS
-    src/help
+    help
     src/data_structures
     src/expression_evaluation
     src/sorting_algorithms_n2
