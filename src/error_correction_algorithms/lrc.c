@@ -71,18 +71,8 @@ void lrc_demo(void)
             return;
         }
 
-        int len = strlen(data[i]);
-        if (len > 0 && data[i][len - 1] == '\n')
-        {
-            data[i][len - 1] = '\0';
-            len--;
-        }
-        else
-        {
-            int c;
-            while ((c = getchar()) != '\n' && c != EOF)
-                ;
-        }
+        trim_newline(data[i]);
+        int len = (int)strlen(data[i]);
 
         if (len == 0)
         {

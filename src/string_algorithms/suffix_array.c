@@ -210,7 +210,7 @@ void suffix_array_demo(void)
     printf("Enter a string to generate its Suffix Array (e.g., banana): ");
     if (fgets(txt, sizeof(txt), stdin) != NULL)
     {
-        txt[strcspn(txt, "\n")] = 0; // Remove newline
+        trim_newline(txt);
 
         int n = (int)strlen(txt);
         if (n <= 0)

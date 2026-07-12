@@ -24,11 +24,12 @@ CFLAGS = -Wall -Wextra -Werror -std=c11 -g \
 	-Isrc/string_algorithms \
 	-Isrc/backtracking \
 	-Isrc/process_synchronization \
-	-Imemory_profiler \
-	-Isrc/debugger \
-	-Ibenchmark \
+	-Ifeatures/memory_profiler \
+	-Ifeatures/debugger \
+	-Ifeatures/benchmark \
 	-Isrc/cache_simulator \
-	-Isrc/compression
+	-Isrc/compression \
+	-Idemos/data_structures
 	# -Itui
 
 # LDFLAGS = -lncurses
@@ -52,11 +53,12 @@ SRC_DIRS = \
 	src/string_algorithms \
 	src/backtracking \
 	src/process_synchronization \
-	memory_profiler \
-	src/debugger \
-	benchmark \
+	features/memory_profiler \
+	features/debugger \
+	features/benchmark \
 	src/cache_simulator \
-	src/compression
+	src/compression \
+	demos/data_structures
 
 # SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 # OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
@@ -829,10 +831,14 @@ test_%: $(TEST_DIR)/test_%$(EXE)
 $(TEST_DIR)/test_%$(EXE): $(OBJS) tests/advanced_heaps/test_%.c
 	@$(call MKDIR_P,$(TEST_DIR))
 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
-
-.PHONY: run fmt clean valgrind asan ubsan sanitize test-mem docker-test
+ 
+.PHONY: run fmt clean valgrind asan ubsan sanitize test-mem docker-build-dev docker-test
 
 # Docker automation targets
+docker-build-dev:
+	docker build --target dev -t c-dsa-suite:dev .
+
 docker-test:
 	docker build --target dev -t c-dsa-suite:dev .
 	docker run -it --rm c-dsa-suite:dev make test
+

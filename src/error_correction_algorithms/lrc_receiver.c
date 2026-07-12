@@ -55,6 +55,8 @@ void lrc_receiver_demo(void)
             while ((c = getchar()) != '\n' && c != EOF)
                 ;
         }
+        trim_newline(data[i]);
+        len = (int)strlen(data[i]);
 
         if (len == 0)
         {
@@ -111,6 +113,8 @@ void lrc_receiver_demo(void)
         while ((c = getchar()) != '\n' && c != EOF)
             ;
     }
+    trim_newline(received_lrc);
+    lrc_len = (int)strlen(received_lrc);
 
     if (lrc_len != cols)
     {

@@ -24,7 +24,7 @@ int validate_postfix_expr(char* buff, size_t size, const char* prompt)
         return 0;
     }
 
-    buff[strcspn(buff, "\n")] = '\0';
+    trim_newline(buff);
 
     if (buff[0] == '\0')
     {
