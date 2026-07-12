@@ -17,10 +17,10 @@ int validate_infix_expr(char* buff, size_t size, const char* prompt)
     if (!fgets(buff, size, stdin))
     { // return code 0 represents EOF
         clearerr(stdin);
-        printf("\ninput ended unexpectedly");
+        printf("\ninput ended unexpectedly\n");
         return 0;
     }
-    buff[strcspn(buff, "\n")] = '\0';
+    trim_newline(buff);
     if (buff[0] == 'X' && buff[1] == '\0')
     { // when user enters 'X'
         return INPUT_EXIT_SIGNAL;

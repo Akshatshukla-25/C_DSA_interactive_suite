@@ -1,4 +1,5 @@
 #include "help.h" // Include our help module header
+#include "safe_input.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -29,7 +30,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
         }
 
         // Remove trailing newline, if present
-        buffer[strcspn(buffer, "\n")] = '\0';
+        trim_newline(buffer);
 
         // 1. Intercept "help" command
         if (strcmp(buffer, "help") == 0)
@@ -43,23 +44,31 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 
         // 2. Parse the integer from our string buffer
         // Checks if it's a number, and ensures no trailing junk characters exist
-        int parsed_items = sscanf(buffer, "%d%c", &value, &extra_char);
+        if (sscanf(buffer, "%d%c", &value, &extra_char) == 1)
+        {
+            // Successfully read an integer and nothing else (except maybe exit check)
+        }
+        else
+        {
+            // If they just typed -1, but it wasn't parsed as 1 item (shouldn't happen, but let's
+            // check)
+            if (strcmp(buffer, "-1") == 0)
+            {
+                return -111; // Return exit signal
+            }
+            printf("Invalid input. Only enter numerical values.\n");
+            printf("press 'ENTER' to try again :- ");
+            // Clear rest of the line
+            while ((c = getchar()) != '\n' && c != EOF)
+                ;
+            continue;
+        }
 
-        if (parsed_items < 1)
-        {
-            printf("That's not a number. Please try again: \n");
-            continue;
-        }
-        if (parsed_items > 1)
-        {
-            printf("Only a number please (no extra characters). Try again: \n");
-            continue;
-        }
         if (value == -1)
         {
-            *input = -1;
-            return -111; // special exit code indicating user entered '-1'
+            return -111; // return -111 to caller, signaling exit
         }
+
         if (value < min_val || value > max_val)
         {
             printf("only enter values between %d and %d.\n", min_val, max_val);
@@ -72,5 +81,16 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
 
         *input = value;
         return 1; // Successful insertion
+    }
+}
+
+void trim_newline(char* str)
+{
+    if (str == NULL)
+        return;
+    size_t len = strlen(str);
+    while (len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r'))
+    {
+        str[--len] = '\0';
     }
 }

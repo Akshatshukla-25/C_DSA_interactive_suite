@@ -129,10 +129,10 @@ int get_validated_input_parantheses(char* buff, size_t size, const char* prompt)
     if (!fgets(buff, size, stdin))
     {
         clearerr(stdin);
-        printf("\ninput ended unexpectedly");
+        printf("\ninput ended unexpectedly\n");
         return 0;
     }
-    buff[strcspn(buff, "\n")] = '\0';
+    trim_newline(buff);
 
     if (buff[0] == 'X' && buff[1] == '\0')
     {
