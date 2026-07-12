@@ -1,5 +1,5 @@
-#include "safe_input.h"
 #include "help.h"
+#include "safe_input.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -65,7 +65,8 @@ int validate_postfix_expr(char* buff, size_t size, const char* prompt)
 
             else
             {
-                printf("\ninvalid character : %c", c); // character other than alphanumeric and +,-,*,/
+                printf("\ninvalid character : %c",
+                       c); // character other than alphanumeric and +,-,*,/
                 return 0;
             }
 

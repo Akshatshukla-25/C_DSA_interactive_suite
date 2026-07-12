@@ -1,5 +1,5 @@
-#include "help.h"
 #include "display_header.h"
+#include "help.h"
 #include "safe_input.h"
 #include <stdio.h>
 
@@ -34,7 +34,8 @@ void help_expression_evaluation_menu(void)
                 printf("POSTFIX EVALUATION:\n");
                 printf("    Uses a Stack to hold operands. When parsing:\n");
                 printf("    • If operand is encountered, push it onto Stack.\n");
-                printf("    • If operator is encountered, pop the required operands (e.g., 2 for binary operators),\n");
+                printf("    • If operator is encountered, pop the required operands (e.g., 2 for "
+                       "binary operators),\n");
                 printf("      evaluate the result, and push the result back onto Stack.\n");
                 printf("    • The final result will be the single value left on Stack.\n\n");
                 printf("=================================================================\n");
