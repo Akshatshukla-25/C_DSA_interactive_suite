@@ -84,6 +84,7 @@ else
 endif
 
 SRCS = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+SRCS := $(filter-out src/utils/io_utility.c,$(SRCS))
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRCS))
 HELP_OBJS = $(OBJ_DIR)/help/help.o $(OBJ_DIR)/help/help_data_structures.o $(OBJ_DIR)/help/help_sorting_searching.o $(OBJ_DIR)/help/help_graphs_trees.o $(OBJ_DIR)/help/help_advanced_topics.o
 
