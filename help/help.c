@@ -1,4 +1,5 @@
 #include "help.h"
+#include "clear_screen.h"
 #include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -70,5 +71,5 @@ void launch_help_page(void)
 
     in_help = 0;
     // Clear screen again to restore the clean look of the app menu
-    printf("\033[H\033[2J");
+    clear_screen();
 }
