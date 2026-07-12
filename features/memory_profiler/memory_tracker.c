@@ -47,7 +47,8 @@ static void add_block(void* addr, size_t size, const char* file, int line)
 #ifndef _WIN32
     block->backtrace_size = backtrace(block->backtrace_buffer, MAX_BACKTRACE_FRAMES);
 #else
-    block->backtrace_size = CaptureStackBackTrace(1, MAX_BACKTRACE_FRAMES, block->backtrace_buffer, NULL);
+    block->backtrace_size =
+        CaptureStackBackTrace(1, MAX_BACKTRACE_FRAMES, block->backtrace_buffer, NULL);
 #endif
 
     block->next = head;
