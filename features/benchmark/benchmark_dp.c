@@ -47,6 +47,13 @@ static int knapsack_dp(int W, const int wt[], const int val[], int n)
     for (int i = 0; i <= n; i++)
     {
         dp[i] = malloc((W + 1) * sizeof(int));
+        if (!dp[i])
+        {
+            for (int j = 0; j < i; j++)
+                free(dp[j]);
+            free(dp);
+            return 0;
+        }
     }
     for (int i = 0; i <= n; i++)
     {
@@ -93,6 +100,13 @@ static int lcs_dp(const char* X, const char* Y, int m, int n)
     for (int i = 0; i <= m; i++)
     {
         dp[i] = malloc((n + 1) * sizeof(int));
+        if (!dp[i])
+        {
+            for (int j = 0; j < i; j++)
+                free(dp[j]);
+            free(dp);
+            return 0;
+        }
     }
     for (int i = 0; i <= m; i++)
     {
@@ -140,6 +154,13 @@ static int mcm_dp(const int p[], int n)
     for (int i = 0; i < n; i++)
     {
         m[i] = calloc(n, sizeof(int));
+        if (!m[i])
+        {
+            for (int j = 0; j < i; j++)
+                free(m[j]);
+            free(m);
+            return 0;
+        }
     }
     for (int l = 2; l < n; l++)
     {
