@@ -6,16 +6,8 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <io.h>
-#define dup _dup
-#define dup2 _dup2
-#define fileno _fileno
-#define DEV_NULL "NUL"
-#else
 #include <unistd.h>
 #define DEV_NULL "/dev/null"
-#endif
 
 static int compare_ints(const void* a, const void* b)
 {
