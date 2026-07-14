@@ -2,24 +2,17 @@
 #include "backtracking.h"
 #include "clear_screen.h"
 #include "cross_platform_timer.h"
-#include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 #define N 6
 
-// A 6x6 Sudoku puzzle with some missing numbers to demonstrate backtracking.
-// It is small enough to run quickly even with the 1-second animation delay.
-static int initial_grid[N][N] = {{1, 5, 3, 4, 6, 0}, {4, 6, 2, 0, 1, 3}, {2, 4, 5, 6, 3, 1},
-                                 {0, 1, 6, 2, 4, 5}, {5, 3, 4, 1, 2, 6}, {6, 0, 1, 3, 5, 4}};
+int placements = 0;
+int backtracks = 0;
+int original_grid_copy[N][N];
 
-static int original_grid[N][N];
-
-static int placements = 0;
-static int backtracks = 0;
-
-static void print_sudoku_board(int grid[N][N], int original_grid[N][N])
+void print_sudoku_board(int grid[N][N], int original_grid[N][N])
 {
     if (!is_instant())
     {
@@ -95,7 +88,7 @@ static bool is_safe_sudoku(int grid[N][N], int row, int col, int num)
     return true;
 }
 
-static bool solve_sudoku_util(int grid[N][N], int row, int col)
+bool solve_sudoku_util(int grid[N][N], int row, int col)
 {
     // If we have reached the Nth row, the board is completely filled
     if (row == N)
@@ -122,7 +115,7 @@ static bool solve_sudoku_util(int grid[N][N], int row, int col)
         {
             grid[row][col] = num;
             placements++;
-            print_sudoku_board(grid, original_grid);
+            print_sudoku_board(grid, original_grid_copy);
 
             // Checking for next possibility with next column
             if (solve_sudoku_util(grid, row, col + 1))
@@ -133,62 +126,23 @@ static bool solve_sudoku_util(int grid[N][N], int row, int col)
             // Backtrack: this placement led to a dead end, undo it.
             grid[row][col] = 0;
             backtracks++;
-            print_sudoku_board(grid, original_grid);
+            print_sudoku_board(grid, original_grid_copy);
         }
     }
     return false;
 }
 
-void sudoku_demo(void)
-{
-    while (1)
-    {
-        int choice;
-        // safe_input_int prevents crashes from ANY invalid value (letters, symbols, out of range)
-        int status = safe_input_int(
-            &choice, "\nEnter 1 to solve the predefined 6x6 Sudoku puzzle, or -1 to exit: ", 1, 1);
-
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Sudoku Solver...\n");
-            return;
-        }
-        if (status == 0)
-        {
-            continue; // Force retry on failure
-        }
-
-        int grid[N][N];
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < N; j++)
-            {
-                grid[i][j] = initial_grid[i][j];
-                original_grid[i][j] = initial_grid[i][j];
-            }
-        }
-
-        placements = 0;
-        backtracks = 0;
-        printf("\nStarting Sudoku Solver...\n");
-        dynamic_sleep();
-        print_sudoku_board(grid, original_grid);
-
-        if (solve_sudoku_util(grid, 0, 0))
-        {
-            printf("\nSudoku solved successfully!\n");
-            printf("Total placements: %d\n", placements);
-            printf("Backtracks: %d\n", backtracks);
-        }
-        else
-        {
-            printf("\nNo solution exists for this Sudoku.\n");
-        }
-    }
-}
 // --- TEST WRAPPER ---
 bool run_sudoku_test(int test_grid[6][6])
 {
+    for (int r = 0; r < 6; r++)
+    {
+        for (int c = 0; c < 6; c++)
+        {
+            original_grid_copy[r][c] = test_grid[r][c];
+        }
+    }
+
     // 1. Validate the initial board before attempting to solve!
     for (int r = 0; r < 6; r++)
     {

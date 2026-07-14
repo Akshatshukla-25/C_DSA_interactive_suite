@@ -40,6 +40,7 @@ set(SRC_DIRS
     demos/data_structures
     demos/trees
     demos/sorting_algorithms_n2
+    demos/backtracking
 )
 
 # Header search paths

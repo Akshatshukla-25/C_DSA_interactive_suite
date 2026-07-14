@@ -1,13 +1,11 @@
 #include "../utils/config.h"
 #include "backtracking.h"
-#include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "cross_platform_timer.h"
-
 #include "clear_screen.h"
+#include "cross_platform_timer.h"
 
 #define MAX_N 8
 
@@ -52,7 +50,7 @@ static bool is_safe(int N, char board[MAX_N][MAX_N], int row, int col)
     return true;
 }
 
-static bool solve_n_queens_util(int N, char board[MAX_N][MAX_N], int col)
+bool solve_n_queens_util(int N, char board[MAX_N][MAX_N], int col)
 {
     // Base case: If all queens are placed
     if (col >= N)
@@ -81,41 +79,6 @@ static bool solve_n_queens_util(int N, char board[MAX_N][MAX_N], int col)
     return false;
 }
 
-void n_queens_demo(void)
-{
-    while (1)
-    {
-        int N;
-        int status = safe_input_int(
-            &N, "\nEnter the board size N (between 4 and 8), or -1 to exit: ", 4, MAX_N);
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting N-Queens Solver...\n");
-            return;
-        }
-        if (status == 0)
-        {
-            continue;
-        }
-
-        char board[MAX_N][MAX_N];
-        for (int i = 0; i < MAX_N; i++)
-            for (int j = 0; j < MAX_N; j++)
-                board[i][j] = '.';
-
-        printf("\nStarting N-Queens Solver...\n");
-        dynamic_sleep();
-
-        if (solve_n_queens_util(N, board, 0) == false)
-        {
-            printf("\nSolution does not exist for N=%d\n", N);
-        }
-        else
-        {
-            printf("\nSolution found successfully!\n");
-        }
-    }
-}
 // --- TEST WRAPPER ---
 bool run_n_queens_test(int n)
 {

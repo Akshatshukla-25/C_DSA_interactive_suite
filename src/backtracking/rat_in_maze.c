@@ -1,7 +1,6 @@
 #include "../utils/config.h"
 #include "backtracking.h"
 #include "cross_platform_timer.h"
-#include "safe_input.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,11 +9,7 @@
 
 #define N 6
 
-// 1 represents an open path, 0 represents a wall
-static int initial_maze[N][N] = {{1, 1, 1, 1, 0, 1}, {1, 0, 0, 1, 0, 1}, {1, 1, 1, 1, 1, 1},
-                                 {0, 1, 0, 0, 0, 1}, {1, 1, 0, 1, 1, 1}, {1, 0, 0, 1, 0, 1}};
-
-static void print_maze_state(int maze[N][N], int solution[N][N])
+void print_maze_state(int maze[N][N], int solution[N][N])
 {
     if (!is_instant())
     {
@@ -58,7 +53,7 @@ static bool is_safe_rat(int maze[N][N], int x, int y)
     return false;
 }
 
-static bool solve_maze_util(int maze[N][N], int x, int y, int solution[N][N])
+bool solve_maze_util(int maze[N][N], int x, int y, int solution[N][N])
 {
     // If (x, y is goal) return true
     if (x == N - 1 && y == N - 1 && maze[x][y] == 1)
@@ -114,51 +109,6 @@ static bool solve_maze_util(int maze[N][N], int x, int y, int solution[N][N])
     return false;
 }
 
-void rat_in_maze_demo(void)
-{
-    while (1)
-    {
-        int choice;
-        int status = safe_input_int(
-            &choice, "\nEnter 1 to solve the predefined 6x6 Rat in a Maze, or -1 to exit: ", 1, 1);
-
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting Rat in a Maze...\n");
-            return;
-        }
-        if (status == 0)
-        {
-            continue;
-        }
-
-        int maze[N][N];
-        int solution[N][N];
-
-        // Initialize maze and empty solution matrix
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < N; j++)
-            {
-                maze[i][j] = initial_maze[i][j];
-                solution[i][j] = 0;
-            }
-        }
-
-        printf("\nStarting Rat in a Maze Solver...\n");
-        dynamic_sleep();
-        print_maze_state(maze, solution);
-
-        if (solve_maze_util(maze, 0, 0, solution))
-        {
-            printf("\nSolution found successfully!\n");
-        }
-        else
-        {
-            printf("\nNo solution exists for this maze.\n");
-        }
-    }
-}
 // --- TEST WRAPPER ---
 bool run_rat_in_maze_test(int test_maze[6][6])
 {
