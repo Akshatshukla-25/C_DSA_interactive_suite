@@ -6,14 +6,7 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <io.h>
-#define dup _dup
-#define dup2 _dup2
-#define fileno _fileno
-#else
 #include <unistd.h>
-#endif
 
 static void generate_random_string(char* str, int len)
 {
@@ -68,11 +61,7 @@ void run_strings_benchmark(int n)
         // Redirect stdout
         fflush(stdout);
         int stdout_dup = dup(1);
-#ifdef _WIN32
-        FILE* fnull = fopen("NUL", "w");
-#else
         FILE* fnull = fopen("/dev/null", "w");
-#endif
         if (fnull != NULL && stdout_dup >= 0)
         {
             dup2(fileno(fnull), 1);

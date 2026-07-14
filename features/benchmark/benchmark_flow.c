@@ -7,14 +7,7 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef _WIN32
-#include <io.h>
-#define dup _dup
-#define dup2 _dup2
-#define fileno _fileno
-#else
 #include <unistd.h>
-#endif
 
 static weightedGraph* generate_flow_network(int V, double edge_density)
 {
@@ -96,11 +89,7 @@ void run_flow_benchmark(int v)
 
             fflush(stdout);
             int stdout_dup = dup(1);
-#ifdef _WIN32
-            FILE* fnull = fopen("NUL", "w");
-#else
             FILE* fnull = fopen("/dev/null", "w");
-#endif
             if (fnull != NULL && stdout_dup >= 0)
             {
                 dup2(fileno(fnull), 1);

@@ -10,47 +10,22 @@
 int benchmark_iterations = 5;
 BenchmarkFormat benchmark_output_format = FORMAT_CSV;
 
-#ifdef _WIN32
-#include <direct.h>
-#include <psapi.h>
-#include <windows.h>
-
-#define make_dir(path) _mkdir(path)
-#else
 #include <sys/resource.h>
 #include <sys/stat.h>
 #define make_dir(path) mkdir(path, 0777)
-#endif
 
 double benchmark_get_time(void)
 {
-#ifdef _WIN32
-    LARGE_INTEGER count, freq;
-    if (QueryPerformanceCounter(&count) && QueryPerformanceFrequency(&freq) && freq.QuadPart > 0)
-    {
-        return (double)count.QuadPart / (double)freq.QuadPart;
-    }
-    return 0.0;
-#else
     struct timespec ts;
     if (clock_gettime(CLOCK_MONOTONIC, &ts) == 0)
     {
         return (double)ts.tv_sec + (double)ts.tv_nsec / 1e9;
     }
     return 0.0;
-#endif
 }
 
 size_t benchmark_get_peak_memory(void)
 {
-#ifdef _WIN32
-    PROCESS_MEMORY_COUNTERS pmc;
-    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
-    {
-        return (size_t)(pmc.PeakWorkingSetSize / 1024);
-    }
-    return 0;
-#else
     struct rusage r_usage;
     if (getrusage(RUSAGE_SELF, &r_usage) == 0)
     {
@@ -63,7 +38,6 @@ size_t benchmark_get_peak_memory(void)
 #endif
     }
     return 0;
-#endif
 }
 
 int benchmark_export_csv(const char* category_name, const char* algo_name, int input_size,
