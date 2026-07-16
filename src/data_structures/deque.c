@@ -150,14 +150,14 @@ void* deque_delete_rear(Queue* dq)
 
 int deque_get_front(const Queue* dq)
 {
-    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq) || dq->arr[dq->front] == NULL)
         return -1;
     return *(int*)dq->arr[dq->front];
 }
 
 int deque_get_rear(const Queue* dq)
 {
-    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq))
+    if (dq == NULL || dq->arr == NULL || deque_is_empty(dq) || dq->arr[dq->rear] == NULL)
         return -1;
     return *(int*)dq->arr[dq->rear];
 }
@@ -173,7 +173,14 @@ void display_deque(const Queue* dq)
     int i = dq->front;
     while (1)
     {
-        printf("%d", *(int*)dq->arr[i]);
+        if (dq->arr[i] == NULL)
+        {
+            printf("NULL");
+        }
+        else
+        {
+            printf("%d", *(int*)dq->arr[i]);
+        }
         if (i == dq->rear)
             break;
         printf("<->");
