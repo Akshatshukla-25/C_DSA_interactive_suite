@@ -7,7 +7,7 @@
 // methods implemented are - insertAtBeginning, insertAtEnd, printlist, search, deleteAtBeginning,
 // deleteAtEnd, deleteByValue, insertAtPosition, deleteAtPosition and reverselist
 
-int dll_insertAtBeginning(doubly_ll_Node** head_ref, int value)
+int dll_insertAtBeginning(doubly_ll_Node** head_ref, void* value)
 {
     doubly_ll_Node* newnode = malloc(sizeof(doubly_ll_Node));
     if (newnode == NULL)
@@ -27,7 +27,7 @@ int dll_insertAtBeginning(doubly_ll_Node** head_ref, int value)
     return 1;
 }
 
-int dll_insertAtEnd(doubly_ll_Node** head_ref, int value)
+int dll_insertAtEnd(doubly_ll_Node** head_ref, void* value)
 {
     doubly_ll_Node* newnode = malloc(sizeof(doubly_ll_Node));
     if (newnode == NULL)
@@ -51,25 +51,44 @@ int dll_insertAtEnd(doubly_ll_Node** head_ref, int value)
     return 1;
 }
 
-void dll_printlist(const doubly_ll_Node* head)
+void dll_printlist(const doubly_ll_Node* head, void (*print_element)(const void*))
 {
     printf("\nHEAD<-> ");
     while (head != NULL)
     {
-        printf("%d <->", head->data);
+        if (print_element != NULL)
+        {
+            print_element(head->data);
+        }
+        else
+        {
+            printf("%p", head->data);
+        }
+        printf(" <->");
         head = head->next;
     }
     printf("NULL");
 }
 
-int dll_search(const doubly_ll_Node* head, int key)
+int dll_search(const doubly_ll_Node* head, const void* key,
+               int (*compare)(const void*, const void*))
 {
     int index = 0;
     while (head != NULL)
     {
-        if (head->data == key)
+        if (compare != NULL)
         {
-            return index; // if value found returns index number
+            if (compare(head->data, key) == 0)
+            {
+                return index; // if value found returns index number
+            }
+        }
+        else
+        {
+            if (head->data == key)
+            {
+                return index;
+            }
         }
         head = head->next;
         index++;
@@ -77,66 +96,95 @@ int dll_search(const doubly_ll_Node* head, int key)
     return -1; // otherwise returns -1
 }
 
-int dll_deleteAtBeginning(doubly_ll_Node** head_ref)
+int dll_deleteAtBeginning(doubly_ll_Node** head_ref, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
         return -1;
-    if ((*head_ref)->next == NULL)
+    doubly_ll_Node* temp = *head_ref;
+    if (temp->next == NULL)
     {
-        free(*head_ref);
+        if (free_data != NULL)
+        {
+            free_data(temp->data);
+        }
+        free(temp);
         *head_ref = NULL;
         return 1;
     }
-    doubly_ll_Node* secondnode = (*head_ref)->next;
-    free(*head_ref);
+    doubly_ll_Node* secondnode = temp->next;
+    if (free_data != NULL)
+    {
+        free_data(temp->data);
+    }
+    free(temp);
     secondnode->prev = NULL;
     *head_ref = secondnode;
     return 1;
 }
 
-int dll_deleteAtEnd(doubly_ll_Node** head_ref)
+int dll_deleteAtEnd(doubly_ll_Node** head_ref, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
         return -1;
-    if ((*head_ref)->next == NULL)
+    doubly_ll_Node* temp = *head_ref;
+    if (temp->next == NULL)
     {
-        free(*head_ref);
+        if (free_data != NULL)
+        {
+            free_data(temp->data);
+        }
+        free(temp);
         *head_ref = NULL;
         return 1;
     }
-    doubly_ll_Node* temp = *head_ref;
     while (temp->next != NULL)
     {
         temp = temp->next;
     }
     doubly_ll_Node* secondlast = temp->prev;
+    if (free_data != NULL)
+    {
+        free_data(temp->data);
+    }
     free(temp);
     secondlast->next = NULL;
     return 1;
 }
 
-int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
+int dll_deleteByValue(doubly_ll_Node** head_ref, const void* key,
+                      int (*compare)(const void*, const void*), void (*free_data)(void*))
 {
     if (*head_ref == NULL)
         return -2;
 
-    if ((*head_ref)->next == NULL && (*head_ref)->data == key)
-    {
-        free(*head_ref);
-        *head_ref = NULL;
-        return 1;
-    }
     doubly_ll_Node* temp = *head_ref;
     while (temp != NULL)
     {
-        if (temp->data == key)
+        int match = 0;
+        if (compare != NULL)
+        {
+            match = (compare(temp->data, key) == 0);
+        }
+        else
+        {
+            match = (temp->data == key);
+        }
+
+        if (match)
         {
             doubly_ll_Node* beforekey = temp->prev;
             doubly_ll_Node* afterkey = temp->next;
             if (beforekey == NULL)
             {
                 *head_ref = temp->next;
-                (*head_ref)->prev = NULL;
+                if (*head_ref != NULL)
+                {
+                    (*head_ref)->prev = NULL;
+                }
+                if (free_data != NULL)
+                {
+                    free_data(temp->data);
+                }
                 free(temp);
                 return 1;
             }
@@ -144,6 +192,10 @@ int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
             if (afterkey != NULL)
             {
                 afterkey->prev = beforekey;
+            }
+            if (free_data != NULL)
+            {
+                free_data(temp->data);
             }
             free(temp);
             return 1;
@@ -154,11 +206,15 @@ int dll_deleteByValue(doubly_ll_Node** head_ref, int key)
     return -1;
 }
 
-void delete_dll(doubly_ll_Node* head)
+void delete_dll(doubly_ll_Node* head, void (*free_data)(void*))
 {
     while (head != NULL)
     {
         doubly_ll_Node* upcoming = head->next;
+        if (free_data != NULL)
+        {
+            free_data(head->data);
+        }
         free(head);
         head = upcoming;
     }
@@ -209,7 +265,7 @@ int dll_getLength(const doubly_ll_Node* head)
 
 // Insert at a specific position (0-indexed)
 // Returns 1 on success, -1 on malloc failure, -2 on invalid position
-int dll_insertAtPosition(doubly_ll_Node** head_ref, int value, int position)
+int dll_insertAtPosition(doubly_ll_Node** head_ref, void* value, int position)
 {
     int length = dll_getLength(*head_ref);
 
@@ -260,7 +316,7 @@ int dll_insertAtPosition(doubly_ll_Node** head_ref, int value, int position)
 
 // Delete at a specific position (0-indexed)
 // Returns 1 on success, -1 on empty list, -2 on invalid position
-int dll_deleteAtPosition(doubly_ll_Node** head_ref, int position)
+int dll_deleteAtPosition(doubly_ll_Node** head_ref, int position, void (*free_data)(void*))
 {
     if (*head_ref == NULL)
     {
@@ -287,6 +343,10 @@ int dll_deleteAtPosition(doubly_ll_Node** head_ref, int position)
         {
             *head_ref = NULL;
         }
+        if (free_data != NULL)
+        {
+            free_data(temp->data);
+        }
         free(temp);
         return 1;
     }
@@ -302,6 +362,10 @@ int dll_deleteAtPosition(doubly_ll_Node** head_ref, int position)
         temp->next->prev = prevnode;
     }
     prevnode->next = temp->next;
+    if (free_data != NULL)
+    {
+        free_data(temp->data);
+    }
     free(temp);
     return 1;
 }

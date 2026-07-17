@@ -1,6 +1,20 @@
 #include "dll.h"
 #include "safe_input.h"
 #include <stdio.h>
+#include <stdlib.h>
+
+static void print_int(const void* data)
+{
+    if (data != NULL)
+    {
+        printf("%d", *(const int*)data);
+    }
+}
+
+static int compare_ints(const void* a, const void* b)
+{
+    return *(const int*)a - *(const int*)b;
+}
 
 void dll_demo(void)
 {
@@ -16,7 +30,7 @@ start_dll:
     if (dll_length_status == INPUT_EXIT_SIGNAL)
     {
         printf("\nExiting dll demo.\n");
-        delete_dll(head);
+        delete_dll(head, free);
         return;
     }
     if (dll_length_status == 0)
@@ -41,7 +55,7 @@ start_dll:
         if (dll_position_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting dll demo.\n");
-            delete_dll(head);
+            delete_dll(head, free);
             return;
         }
         if (dll_position_status == 0)
@@ -63,20 +77,28 @@ start_dll:
             if (dll_end_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
             if (dll_end_status == 0)
             {
                 goto dll_enter_end_value;
             }
-            int status = dll_insertAtBeginning(&head, dll_end_value);
-            if (status == -1)
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
             {
                 printf("\nmalloc allocation failure. try again\n");
                 goto dll_enter_end_value;
             }
-            dll_printlist(head);
+            *val = dll_end_value;
+            int status = dll_insertAtBeginning(&head, val);
+            if (status == -1)
+            {
+                free(val);
+                printf("\nmalloc allocation failure. try again\n");
+                goto dll_enter_end_value;
+            }
+            dll_printlist(head, print_int);
         }
         else if (dll_position_choice == 1)
         { // enter element at end
@@ -92,20 +114,28 @@ start_dll:
             if (dll_start_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
             if (dll_start_status == 0)
             {
                 goto dll_enter_start_value;
             }
-            int status = dll_insertAtEnd(&head, dll_start_value);
-            if (status == -1)
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
             {
                 printf("\nmalloc allocation failure. try again\n");
                 goto dll_enter_start_value;
             }
-            dll_printlist(head);
+            *val = dll_start_value;
+            int status = dll_insertAtEnd(&head, val);
+            if (status == -1)
+            {
+                free(val);
+                printf("\nmalloc allocation failure. try again\n");
+                goto dll_enter_start_value;
+            }
+            dll_printlist(head, print_int);
         }
         else if (dll_position_choice == 2)
         {
@@ -123,7 +153,7 @@ start_dll:
             if (dll_pos_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
 
@@ -142,7 +172,7 @@ start_dll:
             if (dll_pos_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
 
@@ -151,18 +181,27 @@ start_dll:
                 goto dll_enter_pos_index;
             }
 
-            int status = dll_insertAtPosition(&head, dll_pos_value, dll_pos_index);
+            int* val = malloc(sizeof(int));
+            if (val == NULL)
+            {
+                printf("\nmalloc allocation failure. try again\n");
+                goto dll_enter_pos_value;
+            }
+            *val = dll_pos_value;
+            int status = dll_insertAtPosition(&head, val, dll_pos_index);
             if (status == -1)
             {
+                free(val);
                 printf("\nmalloc allocation failure. try again\n");
                 goto dll_enter_pos_value;
             }
             else if (status == -2)
             {
+                free(val);
                 printf("\ninvalid position. try again\n");
                 goto dll_enter_pos_index;
             }
-            dll_printlist(head);
+            dll_printlist(head, print_int);
         }
         dll_element_count--;
     }
@@ -180,10 +219,10 @@ start_dll:
             break;
         case 1:
             printf("\nreversed list is:- ");
-            dll_printlist(head);
+            dll_printlist(head, print_int);
             printf("\nthe restored list is:- ");
             dll_reverselist(&head);
-            dll_printlist(head);
+            dll_printlist(head, print_int);
     }
 
     // searching elements in the dll
@@ -207,7 +246,7 @@ start_dll:
             continue;
         }
 
-        int index = dll_search(head, dll_search_value);
+        int index = dll_search(head, &dll_search_value, compare_ints);
         printf("\nentered number found at index %d", index);
     }
 
@@ -227,7 +266,7 @@ start_dll:
         if (dll_delete_status == INPUT_EXIT_SIGNAL)
         {
             printf("\nExiting dll demo.\n");
-            delete_dll(head);
+            delete_dll(head, free);
             return;
         }
         if (dll_delete_status == 0)
@@ -246,7 +285,7 @@ start_dll:
             if (dll_delete_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
             if (dll_delete_status == 0)
@@ -254,11 +293,11 @@ start_dll:
                 continue;
             }
 
-            int status = dll_deleteByValue(&head, dll_delete_value);
+            int status = dll_deleteByValue(&head, &dll_delete_value, compare_ints, free);
             if (status == 1)
             {
                 printf("\ndll after deletion - ");
-                dll_printlist(head);
+                dll_printlist(head, print_int);
             }
             else if (status == -1)
             {
@@ -285,7 +324,7 @@ start_dll:
             if (dll_pos_delete_status == INPUT_EXIT_SIGNAL)
             {
                 printf("\nExiting dll demo.\n");
-                delete_dll(head);
+                delete_dll(head, free);
                 return;
             }
 
@@ -294,7 +333,7 @@ start_dll:
                 goto dll_delete_pos_input;
             }
 
-            int status = dll_deleteAtPosition(&head, dll_pos_delete_index);
+            int status = dll_deleteAtPosition(&head, dll_pos_delete_index, free);
             if (status == -1)
             {
                 printf("\nList is empty\n");
@@ -306,7 +345,7 @@ start_dll:
             else
             {
                 printf("\ndll after deletion - ");
-                dll_printlist(head);
+                dll_printlist(head, print_int);
             }
         }
     }
