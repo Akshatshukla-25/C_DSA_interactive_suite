@@ -42,7 +42,8 @@ int scll_deleteAtEnd(scll* list, void (*free_data)(void*));
 
 // Delete the first occurrence of a value from a singly circular linked list. Returns 1 on success,
 // -1 if not found, -2 if empty list.
-int scll_deleteByValue(scll* list, const void* value, int (*compare)(const void*, const void*), void (*free_data)(void*));
+int scll_deleteByValue(scll* list, const void* value, int (*compare)(const void*, const void*),
+                       void (*free_data)(void*));
 
 // Delete a node at a specific position in a singly circular linked list. Returns 1 on success, -1
 // if the list is empty, -2 on invalid position.

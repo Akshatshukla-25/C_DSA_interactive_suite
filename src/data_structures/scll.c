@@ -195,7 +195,8 @@ int scll_deleteAtEnd(scll* list, void (*free_data)(void*))
     return 1;
 }
 
-int scll_deleteByValue(scll* list, const void* value, int (*compare)(const void*, const void*), void (*free_data)(void*))
+int scll_deleteByValue(scll* list, const void* value, int (*compare)(const void*, const void*),
+                       void (*free_data)(void*))
 {
     if (list->head == NULL)
     {

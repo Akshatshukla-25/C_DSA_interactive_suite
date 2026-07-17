@@ -77,7 +77,7 @@ void test_insert_begin_end()
     int* val20 = malloc(sizeof(int));
     *val20 = 20;
     assert(scll_insertAtEnd(&list, val20) == 1);
-    
+
     int* val5 = malloc(sizeof(int));
     *val5 = 5;
     assert(scll_insertAtBeginning(&list, val5) == 1);
@@ -264,7 +264,8 @@ void test_edge_cases()
     assert(scll_deleteAtEnd(&list, free) == -1);
     int key10 = 10;
     assert(scll_deleteByValue(&list, &key10, compare_ints, free) == -2);
-    assert(scll_deleteAtPosition(&list, 0, free) == -1); // empty list -> -1 (not an invalid-position -2)
+    assert(scll_deleteAtPosition(&list, 0, free) ==
+           -1); // empty list -> -1 (not an invalid-position -2)
     assert(scll_search(&list, &key10, compare_ints) == -1);
     assert(scll_getLength(&list) == 0);
 
