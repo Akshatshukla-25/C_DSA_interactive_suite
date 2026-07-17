@@ -20,7 +20,8 @@ int dll_insertAtEnd(doubly_ll_Node** head_ref, void* value);
 void dll_printlist(const doubly_ll_Node* head, void (*print_element)(const void*));
 
 // Search for a key in a doubly linked list. Returns The index of the key or -1 if not found.
-int dll_search(const doubly_ll_Node* head, const void* key, int (*compare)(const void*, const void*));
+int dll_search(const doubly_ll_Node* head, const void* key,
+               int (*compare)(const void*, const void*));
 
 // Delete the first element from a doubly linked list. Returns 1 on success, -1 if the list is
 // empty.
@@ -31,7 +32,8 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref, void (*free_data)(void*));
 
 // Delete the first occurrence of a key from a doubly linked list. Returns 1 on success, -1 if not
 // found, -2 if empty list.
-int dll_deleteByValue(doubly_ll_Node** head_ref, const void* key, int (*compare)(const void*, const void*), void (*free_data)(void*));
+int dll_deleteByValue(doubly_ll_Node** head_ref, const void* key,
+                      int (*compare)(const void*, const void*), void (*free_data)(void*));
 
 // Free all nodes in a doubly linked list.
 void delete_dll(doubly_ll_Node* head, void (*free_data)(void*));

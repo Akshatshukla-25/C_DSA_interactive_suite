@@ -70,7 +70,8 @@ void dll_printlist(const doubly_ll_Node* head, void (*print_element)(const void*
     printf("NULL");
 }
 
-int dll_search(const doubly_ll_Node* head, const void* key, int (*compare)(const void*, const void*))
+int dll_search(const doubly_ll_Node* head, const void* key,
+               int (*compare)(const void*, const void*))
 {
     int index = 0;
     while (head != NULL)
@@ -150,7 +151,8 @@ int dll_deleteAtEnd(doubly_ll_Node** head_ref, void (*free_data)(void*))
     return 1;
 }
 
-int dll_deleteByValue(doubly_ll_Node** head_ref, const void* key, int (*compare)(const void*, const void*), void (*free_data)(void*))
+int dll_deleteByValue(doubly_ll_Node** head_ref, const void* key,
+                      int (*compare)(const void*, const void*), void (*free_data)(void*))
 {
     if (*head_ref == NULL)
         return -2;
