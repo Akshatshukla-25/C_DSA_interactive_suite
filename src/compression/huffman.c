@@ -153,6 +153,11 @@ void generate_huffman_codes(const HuffmanNode* root, char codes[256][256], char*
         return;
     }
 
+    if (depth >= 255)
+    {
+        return;
+    }
+
     // Leaf node
     if (root->left == NULL && root->right == NULL)
     {
