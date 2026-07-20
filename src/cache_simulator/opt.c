@@ -5,6 +5,7 @@
 bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len, int current_idx,
                       bool is_write)
 {
+    cache_normalize_access_counter(cache);
     cache->access_counter++;
 
     // Search for page in the cache (Hit check)

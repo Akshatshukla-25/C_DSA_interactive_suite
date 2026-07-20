@@ -40,6 +40,7 @@ bool cache_access_clock(Cache* cache, int page_id, bool is_write);
 bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write);
 void cache_print_status(const Cache* cache);
 void cache_visualize(const Cache* cache, int highlighted_slot, bool is_hit);
+void cache_normalize_access_counter(Cache* cache);
 void cache_simulator_demo(void);
 
 #endif // CACHE_H

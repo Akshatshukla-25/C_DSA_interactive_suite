@@ -185,3 +185,32 @@ void cache_visualize(const Cache* cache, int highlighted_slot, bool is_hit)
     }
     printf("\n\n");
 }
+
+void cache_normalize_access_counter(Cache* cache)
+{
+    if (cache == NULL || cache->access_counter < 1000000)
+    {
+        return;
+    }
+    int min_access = cache->access_counter;
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (cache->blocks[i].is_valid && cache->blocks[i].last_access_time < min_access)
+        {
+            min_access = cache->blocks[i].last_access_time;
+        }
+    }
+    int max_access = 0;
+    for (int i = 0; i < cache->capacity; i++)
+    {
+        if (cache->blocks[i].is_valid)
+        {
+            cache->blocks[i].last_access_time -= min_access;
+            if (cache->blocks[i].last_access_time > max_access)
+            {
+                max_access = cache->blocks[i].last_access_time;
+            }
+        }
+    }
+    cache->access_counter = max_access;
+}

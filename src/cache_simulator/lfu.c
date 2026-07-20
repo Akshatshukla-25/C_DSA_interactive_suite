@@ -3,6 +3,7 @@
 
 bool cache_access_lfu(Cache* cache, int page_id, bool is_write)
 {
+    cache_normalize_access_counter(cache);
     cache->access_counter++;
 
     // Periodic Frequency Aging / Decay (every 8 accesses)
@@ -23,7 +24,10 @@ bool cache_access_lfu(Cache* cache, int page_id, bool is_write)
         if (cache->blocks[i].is_valid && cache->blocks[i].page_id == page_id)
         {
             cache->hits++;
-            cache->blocks[i].frequency++;
+            if (cache->blocks[i].frequency < 2000000000)
+            {
+                cache->blocks[i].frequency++;
+            }
             cache->blocks[i].last_access_time = cache->access_counter;
             cache->last_accessed_slot = i;
             if (is_write)

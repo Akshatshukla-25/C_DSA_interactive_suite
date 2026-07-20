@@ -3,6 +3,7 @@
 
 bool cache_access_lru(Cache* cache, int page_id, bool is_write)
 {
+    cache_normalize_access_counter(cache);
     cache->access_counter++;
 
     // Search for page in the cache (Hit check)
