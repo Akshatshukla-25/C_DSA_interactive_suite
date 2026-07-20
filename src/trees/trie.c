@@ -18,16 +18,42 @@ bool trie_insert(TrieNode* root, const char* word)
     if (root == NULL || word == NULL)
         return false;
     TrieNode* curr = root;
+
+    TrieNode* first_new_node = NULL;
+    TrieNode* first_new_node_parent = NULL;
+    int first_new_node_idx = -1;
+
     for (int i = 0; word[i] != '\0'; i++)
     {
         int idx = word[i] - 'a';
         if (idx < 0 || idx >= TRIE_ALPHA_SIZE)
+        {
+            if (first_new_node != NULL)
+            {
+                trie_free(first_new_node);
+                first_new_node_parent->children[first_new_node_idx] = NULL;
+            }
             return false;
+        }
         if (curr->children[idx] == NULL)
         {
-            curr->children[idx] = trie_create_node();
-            if (curr->children[idx] == NULL)
+            TrieNode* new_node = trie_create_node();
+            if (new_node == NULL)
+            {
+                if (first_new_node != NULL)
+                {
+                    trie_free(first_new_node);
+                    first_new_node_parent->children[first_new_node_idx] = NULL;
+                }
                 return false;
+            }
+            curr->children[idx] = new_node;
+            if (first_new_node == NULL)
+            {
+                first_new_node = new_node;
+                first_new_node_parent = curr;
+                first_new_node_idx = idx;
+            }
         }
         curr = curr->children[idx];
     }
