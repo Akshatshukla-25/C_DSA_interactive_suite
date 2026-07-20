@@ -167,11 +167,36 @@ int lzw_decode(const int* input, int in_len, char* output, int out_max)
     strcpy(output + out_idx, old_str);
     out_idx += old_len;
 
+    bool just_reset = false;
+
     for (int i = 1; i < in_len; i++)
     {
         int new_code = input[i];
         char string[514];
         int string_len = 0;
+
+        if (just_reset)
+        {
+            if (new_code < 0 || new_code >= dict_size)
+            {
+                free(dict);
+                return -1;
+            }
+            strcpy(string, dict[new_code].str);
+            string_len = strlen(string);
+
+            if (out_idx + string_len >= out_max)
+            {
+                free(dict);
+                return -1;
+            }
+            strcpy(output + out_idx, string);
+            out_idx += string_len;
+
+            old_code = new_code;
+            just_reset = false;
+            continue;
+        }
 
         if (new_code >= 0 && new_code < dict_size)
         {
@@ -225,6 +250,7 @@ int lzw_decode(const int* input, int in_len, char* output, int out_max)
         if (dict_size >= LZW_MAX_CODES)
         {
             reset_dict(dict, &dict_size);
+            just_reset = true;
         }
 
         old_code = new_code;
