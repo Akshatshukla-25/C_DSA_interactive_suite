@@ -11,6 +11,7 @@ void merge_sort(int arr[], int n);
 void merge_sort_with_telemetry(int arr[], int n, SortingTelemetry* telemetry);
 void merge_sort_demo(void);
 void heap_sort(int arr[], int n);
+void heap_sort_with_telemetry(int arr[], int n, SortingTelemetry* telemetry);
 void heap_sort_demo(void);
 void radix_sort(int arr[], int n);
 void radix_sort_demo(void);
