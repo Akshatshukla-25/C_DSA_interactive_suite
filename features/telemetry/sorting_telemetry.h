@@ -33,5 +33,6 @@ void sorting_telemetry_exit_recursion(SortingTelemetry* t);
 void sorting_telemetry_add_pass(SortingTelemetry* t, int count);
 
 void sorting_telemetry_print_summary(const SortingTelemetry* t);
+void sorting_telemetry_dashboard_demo(void);
 
 #endif // SORTING_TELEMETRY_H
