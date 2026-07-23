@@ -14,4 +14,6 @@ int get_rightmost_set_bit(int n);
 int turn_off_rightmost_set_bit(int n);
 unsigned int reverse_bits(unsigned int n);
 
+int find_unique(int arr[], int n);
+
 #endif // BIT_MANIPULATION_H
