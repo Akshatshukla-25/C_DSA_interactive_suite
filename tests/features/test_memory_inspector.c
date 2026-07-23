@@ -1,4 +1,7 @@
+#include "dll.h"
 #include "memory_inspector.h"
+#include "sll.h"
+#include "trees.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -56,10 +59,25 @@ void test_struct_layout_analyzer(void)
     printf("test_struct_layout_analyzer passed!\n");
 }
 
+void test_dsa_node_inspectors(void)
+{
+    int val = 100;
+    Node sll_node = {.data = &val, .next = NULL};
+    doubly_ll_Node dll_node = {.data = &val, .prev = NULL, .next = NULL};
+    bstNode bst_node = {.data = 42, .left = NULL, .right = NULL};
+
+    inspect_sll_node_memory(&sll_node);
+    inspect_dll_node_memory(&dll_node);
+    inspect_bst_node_memory(&bst_node);
+
+    printf("test_dsa_node_inspectors passed!\n");
+}
+
 int main(void)
 {
     test_hexdump_null_handling();
     test_hexdump_basic_formatting();
     test_struct_layout_analyzer();
+    test_dsa_node_inspectors();
     return 0;
 }
