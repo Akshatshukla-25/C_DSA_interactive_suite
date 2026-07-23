@@ -39,7 +39,11 @@ void memory_inspector_demo(void)
             case 1:
             {
                 int sample_val = 2026;
-                Node sample_node = {.data = &sample_val, .next = NULL};
+                Node sample_node;
+                memset(&sample_node, 0, sizeof(sample_node));
+                sample_node.data = &sample_val;
+                sample_node.next = NULL;
+
                 printf("\n>>> Inspecting Live Singly-Linked List Node at %p...\n",
                        (void*)&sample_node);
                 inspect_sll_node_memory(&sample_node);
@@ -48,7 +52,12 @@ void memory_inspector_demo(void)
             case 2:
             {
                 int sample_val = 999;
-                doubly_ll_Node sample_dll = {.data = &sample_val, .prev = NULL, .next = NULL};
+                doubly_ll_Node sample_dll;
+                memset(&sample_dll, 0, sizeof(sample_dll));
+                sample_dll.data = &sample_val;
+                sample_dll.prev = NULL;
+                sample_dll.next = NULL;
+
                 printf("\n>>> Inspecting Live Doubly-Linked List Node at %p...\n",
                        (void*)&sample_dll);
                 inspect_dll_node_memory(&sample_dll);
@@ -56,7 +65,12 @@ void memory_inspector_demo(void)
             }
             case 3:
             {
-                bstNode sample_bst = {.data = 777, .left = NULL, .right = NULL};
+                bstNode sample_bst;
+                memset(&sample_bst, 0, sizeof(sample_bst));
+                sample_bst.data = 777;
+                sample_bst.left = NULL;
+                sample_bst.right = NULL;
+
                 printf("\n>>> Inspecting Live Binary Search Tree Node at %p...\n",
                        (void*)&sample_bst);
                 inspect_bst_node_memory(&sample_bst);
