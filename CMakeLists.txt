@@ -51,6 +51,7 @@ set(SRC_DIRS
     features/telemetry
     features/serialization
     features/dp_visualizer
+    features/memory_inspector
 )
 
 # Header search paths
