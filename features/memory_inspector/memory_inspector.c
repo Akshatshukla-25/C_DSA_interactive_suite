@@ -1,5 +1,6 @@
 #include "memory_inspector.h"
 #include <ctype.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -147,4 +148,88 @@ size_t format_hexdump(const void* ptr, size_t size, char* out_buf, size_t buf_si
     }
 
     return offset;
+}
+
+void finalize_struct_layout(StructLayout* layout)
+{
+    if (!layout)
+        return;
+
+    size_t payload = 0;
+    size_t padding = 0;
+
+    for (size_t i = 0; i < layout->field_count; i++)
+    {
+        payload += layout->fields[i].size;
+        if (i + 1 < layout->field_count)
+        {
+            size_t next_offset = layout->fields[i + 1].offset;
+            size_t end_curr = layout->fields[i].offset + layout->fields[i].size;
+            if (next_offset > end_curr)
+            {
+                layout->fields[i].padding_after = next_offset - end_curr;
+            }
+            else
+            {
+                layout->fields[i].padding_after = 0;
+            }
+        }
+        else
+        {
+            size_t end_curr = layout->fields[i].offset + layout->fields[i].size;
+            if (layout->total_size > end_curr)
+            {
+                layout->fields[i].padding_after = layout->total_size - end_curr;
+            }
+            else
+            {
+                layout->fields[i].padding_after = 0;
+            }
+        }
+        padding += layout->fields[i].padding_after;
+    }
+
+    layout->payload_size = payload;
+    layout->total_padding = padding;
+}
+
+void print_struct_layout_report(const StructLayout* layout, const void* instance_ptr)
+{
+    if (!layout)
+    {
+        printf("(NULL StructLayout pointer)\n");
+        return;
+    }
+
+    printf("\n========================================================================\n");
+    printf("        STRUCT MEMORY LAYOUT & ALIGNMENT ANALYSIS: %s        \n",
+           layout->struct_name ? layout->struct_name : "Anonymous Struct");
+    printf("========================================================================\n");
+    printf("Total Size: %zu bytes | Payload: %zu bytes | Padding: %zu bytes\n", layout->total_size,
+           layout->payload_size, layout->total_padding);
+    if (instance_ptr)
+    {
+        uintptr_t addr = (uintptr_t)instance_ptr;
+        printf("Instance Base Address: %p (Alignment: %zu-byte boundary %s)\n", instance_ptr,
+               layout->alignment,
+               (addr % (layout->alignment ? layout->alignment : 1) == 0) ? "[OK]" : "[MISALIGNED]");
+    }
+    printf("------------------------------------------------------------------------\n");
+    printf("  %-18s | %-8s | %-6s | %-12s | %-12s\n", "Field Name", "Offset", "Size",
+           "Padding After", "Byte Range");
+    printf("  -------------------+----------+--------+---------------+--------------\n");
+
+    for (size_t i = 0; i < layout->field_count; i++)
+    {
+        const StructField* f = &layout->fields[i];
+        size_t end_byte = f->offset + f->size - 1;
+        printf("  %-18s | +%-7zu | %-6zu | %-12zu | [%zu - %zu]\n", f->name, f->offset, f->size,
+               f->padding_after, f->offset, end_byte);
+    }
+    printf("========================================================================\n\n");
+
+    if (instance_ptr && layout->total_size > 0)
+    {
+        print_hexdump(instance_ptr, layout->total_size);
+    }
 }
