@@ -97,11 +97,17 @@ void help_graphs_trees_menu(void)
                 printf("STRONGLY CONNECTED COMPONENTS (SCC):\n");
                 printf("    Tarjan's or Kosaraju's algorithm to find directed cycles.\n\n");
                 printf("MAXIMUM FLOW:\n");
-                printf("    Ford-Fulkerson or Edmonds-Karp to compute maximum flow through a flow "
-                       "network.\n\n");
+                printf("    • Ford-Fulkerson or Edmonds-Karp: Compute maximum flow through a flow "
+                       "network.\n");
+                printf(
+                    "    • Dinic's Algorithm: Uses level graphs via BFS and blocking flows via DFS "
+                    "to find maximum flow in O(V^2 E) time.\n\n");
                 printf("BIPARTITE MATCHING:\n");
-                printf("    Hopcroft-Karp or augmenting path methods to find maximum cardinality "
-                       "matching.\n\n");
+                printf("    • Hopcroft-Karp or augmenting path methods: Find maximum cardinality "
+                       "matching.\n");
+                printf(
+                    "    • Dinic Bipartite Matching: Models bipartite matching as a network flow "
+                    "problem and runs Dinic's algorithm to solve it in O(E * sqrt(V)) time.\n\n");
                 printf("EULERIAN PATH:\n");
                 printf("    Fleury's algorithm or Hierholzer's algorithm to visit every edge "
                        "exactly once.\n\n");
