@@ -1,4 +1,5 @@
 #include "bit_manipulation.h"
+#include <stdio.h>
 
 /**
  * Counts the number of set bits (1s) in an integer using Brian Kernighan's Algorithm.
