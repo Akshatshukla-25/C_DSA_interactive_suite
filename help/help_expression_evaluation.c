@@ -12,9 +12,10 @@ void help_expression_evaluation_menu(void)
         printf("Select a sub-topic:\n\n");
         printf("1. Postfix Expression Evaluation\n");
         printf("2. Infix Expression Evaluation\n");
+        printf("3. Parentheses Checker\n");
         int choice;
         int status =
-            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 2);
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 3);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -63,6 +64,30 @@ void help_expression_evaluation_menu(void)
                        "operands (e.g., + A B).\n");
                 printf("    Achieved by reversing the infix expression, converting it, and "
                        "reversing the result.\n\n");
+                printf("=================================================================\n");
+                printf("Press [ENTER] to return...\n");
+                printf("=================================================================\n");
+                press_enter_to_continue();
+                break;
+
+            case 3:
+                display_header("Help - Parentheses Checker");
+                printf("PARENTHESES CHECKER:\n");
+                printf("    Uses a Stack data structure to check if the parentheses in an\n");
+                printf("    expression are balanced and correctly matched (e.g., '{[()]}' is "
+                       "balanced,\n");
+                printf("    but '{[(]}' is not).\n\n");
+                printf("HOW IT WORKS:\n");
+                printf("    • Iterate through each character of the expression string:\n");
+                printf("      - If an opening parenthesis ('(', '[', '{') is found, push it onto "
+                       "Stack.\n");
+                printf("      - If a closing parenthesis (')', ']', '}') is found, pop from Stack "
+                       "and\n");
+                printf("        check if it matches the current closing parenthesis.\n");
+                printf("        If Stack is empty or mismatch occurs, expression is unbalanced.\n");
+                printf("    • After checking the entire string, the Stack must be empty.\n");
+                printf("      If it is not empty, some opening parentheses were never "
+                       "matched/closed.\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
