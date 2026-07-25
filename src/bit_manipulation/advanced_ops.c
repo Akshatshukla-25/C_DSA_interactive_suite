@@ -7,10 +7,11 @@
  */
 int count_set_bits(int n)
 {
+    unsigned int u = (unsigned int)n;
     int count = 0;
-    while (n)
+    while (u)
     {
-        n = n & (n - 1);
+        u = u & (u - 1);
         count++;
     }
     return count;

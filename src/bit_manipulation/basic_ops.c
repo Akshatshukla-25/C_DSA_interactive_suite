@@ -6,6 +6,10 @@
  */
 int set_bit(int n, int k)
 {
+    if (k < 0 || k >= 31)
+    {
+        return n;
+    }
     return (n | (1U << k));
 }
 
@@ -15,6 +19,10 @@ int set_bit(int n, int k)
  */
 int clear_bit(int n, int k)
 {
+    if (k < 0 || k >= 31)
+    {
+        return n;
+    }
     return (n & (~(1U << k)));
 }
 
@@ -24,6 +32,10 @@ int clear_bit(int n, int k)
  */
 int toggle_bit(int n, int k)
 {
+    if (k < 0 || k >= 31)
+    {
+        return n;
+    }
     return (n ^ (1U << k));
 }
 
@@ -34,5 +46,9 @@ int toggle_bit(int n, int k)
  */
 int check_bit(int n, int k)
 {
+    if (k < 0 || k >= 31)
+    {
+        return 0;
+    }
     return ((n & (1U << k)) != 0) ? 1 : 0;
 }

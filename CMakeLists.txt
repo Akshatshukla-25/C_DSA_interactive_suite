@@ -49,11 +49,13 @@ set(SRC_DIRS
     demos/dynamic_programming
     demos/expression_evaluation
     demos/advanced_heaps
+    demos/error_correction_algorithms
     features/telemetry
     features/serialization
     features/dp_visualizer
     features/memory_inspector
     features/bigo_verifier
+    src/bit_manipulation
 )
 
 # Header search paths

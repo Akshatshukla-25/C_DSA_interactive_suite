@@ -43,15 +43,11 @@ static void write_bst_node(const bstNode* root, FILE* fp)
 static bstNode* read_bst_node(FILE* fp)
 {
     char val[64];
-    if (fscanf(fp, "%63s", val) != 1)
+    if (fscanf(fp, "%63s", val) != 1 || strcmp(val, "#") == 0)
     {
         return NULL;
     }
-    if (strcmp(val, "#") == 0)
-    {
-        return NULL;
-    }
-    bstNode* node = malloc(sizeof(bstNode));
+    bstNode* node = (bstNode*)malloc(sizeof(bstNode));
     if (node == NULL)
     {
         return NULL;
@@ -111,11 +107,7 @@ static void write_avl_node(const avlNode* root, FILE* fp)
 static avlNode* read_avl_node(FILE* fp)
 {
     char val[64];
-    if (fscanf(fp, "%63s", val) != 1)
-    {
-        return NULL;
-    }
-    if (strcmp(val, "#") == 0)
+    if (fscanf(fp, "%63s", val) != 1 || strcmp(val, "#") == 0)
     {
         return NULL;
     }
@@ -125,7 +117,7 @@ static avlNode* read_avl_node(FILE* fp)
     {
         return NULL;
     }
-    avlNode* node = malloc(sizeof(avlNode));
+    avlNode* node = (avlNode*)malloc(sizeof(avlNode));
     if (node == NULL)
     {
         return NULL;
@@ -184,14 +176,14 @@ bool serialize_graph_to_file(const Graph* graph, const char* filepath)
         return false;
     }
 
-    // Count unique undirected edges
+    // Count edges including self-loops
     int E = 0;
     for (int u = 0; u < graph->V; u++)
     {
         Node* curr = graph->array[u];
         while (curr != NULL)
         {
-            if (u < (int)(intptr_t)curr->data)
+            if (u <= (int)(intptr_t)curr->data)
             {
                 E++;
             }
@@ -207,7 +199,7 @@ bool serialize_graph_to_file(const Graph* graph, const char* filepath)
         Node* curr = graph->array[u];
         while (curr != NULL)
         {
-            if (u < (int)(intptr_t)curr->data)
+            if (u <= (int)(intptr_t)curr->data)
             {
                 fprintf(fp, "%d,%d\n", u, (int)(intptr_t)curr->data);
             }
