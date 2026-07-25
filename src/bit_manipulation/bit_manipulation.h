@@ -16,4 +16,6 @@ unsigned int reverse_bits(unsigned int n);
 
 int find_unique(int arr[], int n);
 
+void generate_subsets(int arr[], int n);
+
 #endif // BIT_MANIPULATION_H
