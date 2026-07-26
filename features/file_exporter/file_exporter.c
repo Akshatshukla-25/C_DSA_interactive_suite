@@ -43,9 +43,16 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
 
     const char* search_dir = base_dir;
     struct stat st_src;
-    if (strcmp(base_dir, ".") == 0 && stat("src", &st_src) == -1 && stat("../src", &st_src) == 0)
+    if (strcmp(base_dir, ".") == 0)
     {
-        search_dir = "..";
+        if (stat("src", &st_src) == 0 && S_ISDIR(st_src.st_mode))
+        {
+            search_dir = "src";
+        }
+        else if (stat("../src", &st_src) == 0 && S_ISDIR(st_src.st_mode))
+        {
+            search_dir = "../src";
+        }
     }
 
     DIR* dir = opendir(search_dir);
@@ -62,7 +69,9 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 ||
             strcmp(entry->d_name, ".git") == 0 || strcmp(entry->d_name, "build") == 0 ||
             strcmp(entry->d_name, "object_files") == 0 ||
-            strcmp(entry->d_name, "test_binaries") == 0 || entry->d_name[0] == '.')
+            strcmp(entry->d_name, "test_binaries") == 0 ||
+            strncmp(entry->d_name, "test_", 5) == 0 || strncmp(entry->d_name, "export", 6) == 0 ||
+            entry->d_name[0] == '.')
         {
             continue;
         }
