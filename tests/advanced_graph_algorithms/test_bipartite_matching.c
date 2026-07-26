@@ -12,6 +12,7 @@ void test_matching_simple()
     add_edge_undirected(g, 0, 2);
     add_edge_undirected(g, 0, 3);
     add_edge_undirected(g, 1, 2);
+    add_edge_undirected(g, 0, 2); // Duplicate edge test
 
     int match_count = 0;
     int* match_pairs = NULL;
