@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -5,7 +6,7 @@
 void splay_tree_demo(void)
 {
     splayNode* root = NULL;
-    printf("\n--- Splay Tree (Amortized O(log n)) Demo ---\n");
+    display_header("Splay Tree (Amortized O(log n))");
     printf("Action: Inserting 10, 20, 30, 40, 50, 25...\n");
     root = splay_tree_insert(root, 10);
     root = splay_tree_insert(root, 20);
