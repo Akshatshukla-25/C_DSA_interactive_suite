@@ -103,10 +103,15 @@ void print_floyd_warshall_solution(int** dist, int** next, int V)
 
             printf("  %d -> %d: Distance = %d, Path = [%d", i, j, dist[i][j], i);
             int curr = i;
-            while (curr != j)
+            int step_count = 0;
+            while (curr != j && curr != -1 && step_count < V)
             {
                 curr = next[curr][j];
-                printf(" -> %d", curr);
+                if (curr != -1)
+                {
+                    printf(" -> %d", curr);
+                }
+                step_count++;
             }
             printf("]\n");
         }

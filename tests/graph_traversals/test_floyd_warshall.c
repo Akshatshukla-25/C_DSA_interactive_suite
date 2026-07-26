@@ -126,6 +126,7 @@ void test_floyd_warshall_disconnected()
     graph[0][1] = 5;
 
     floyd_warshall(graph, V, dist, next);
+    print_floyd_warshall_solution(dist, next, V);
 
     assert(dist[0][1] == 5);
     assert(dist[0][2] == INF);
