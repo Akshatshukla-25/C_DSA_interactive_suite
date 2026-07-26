@@ -55,6 +55,7 @@ set(SRC_DIRS
     features/dp_visualizer
     features/memory_inspector
     features/bigo_verifier
+    features/file_exporter
     src/bit_manipulation
 )
 
