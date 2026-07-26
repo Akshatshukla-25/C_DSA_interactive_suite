@@ -18,4 +18,14 @@ int find_unique(int arr[], int n);
 
 void generate_subsets(int arr[], int n);
 
-#endif // BIT_MANIPULATION_H
+void bit_manipulation_demo(void);
+void basic_bit_ops_demo(void);
+void count_set_bits_demo(void);
+void power_of_two_demo(void);
+void xor_swap_demo(void);
+void rightmost_set_bit_demo(void);
+void reverse_bits_demo(void);
+void find_unique_demo(void);
+void generate_subsets_demo(void);
+
+#endif /* BIT_MANIPULATION_H */

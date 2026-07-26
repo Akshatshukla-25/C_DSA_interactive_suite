@@ -8,6 +8,7 @@
 #include "backtracking.h"
 #include "benchmark.h"
 #include "bigo_verifier.h"
+#include "bit_manipulation.h"
 #include "cache.h"
 #include "compression.h"
 #include "config.h"
@@ -70,8 +71,9 @@ void run_legacy_menu()
             "click 15 for Developer Console & System Utilities\n"
             "click 16 for Stochastic Fuzz Testing Engine demo\n"
             "click 17 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
+            "click 18 for Bit Manipulation demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 17 // limits
+            1, 18 /* limits */
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -240,6 +242,9 @@ void run_legacy_menu()
             case 17:
                 display_header("Empirical Big-O Verifier");
                 bigo_verifier_demo();
+                break;
+            case 18:
+                bit_manipulation_demo();
                 break;
         }
     }
