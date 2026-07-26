@@ -18,6 +18,9 @@ void test_ff_simple()
     int flow = ford_fulkerson(g, 0, 3);
     assert(flow == 5);
 
+    int same_src_sink_flow = ford_fulkerson(g, 0, 0);
+    assert(same_src_sink_flow == 0);
+
     free_weightedGraph(g);
     printf("test_ff_simple passed.\n");
 }

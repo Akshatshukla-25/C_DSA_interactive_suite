@@ -42,4 +42,9 @@ void help_hashing_menu(void);
  */
 void help_error_correction_menu(void);
 
+/**
+ * @brief Sub-menu for Bit Manipulation help.
+ */
+void bit_manipulation_help(void);
+
 #endif // HELP_H

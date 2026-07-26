@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "error_correction_algorithms.h"
 #include "safe_input.h"
 #include <stdbool.h>
@@ -25,7 +26,7 @@ void parity_bit_demo(void)
     char received[CHECKSUM_MAX_BITS + 2];
     int choice;
 
-    printf("\n--- Parity Bit Error Detection Demo ---\n");
+    display_header("Parity Bit Error Detection");
 
     /* INPUT DATA */
     while (1)
