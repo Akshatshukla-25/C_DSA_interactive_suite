@@ -224,3 +224,23 @@ bool export_stack(const char* root_dir, const char* dest_dir)
 {
     return export_file_pair(root_dir, "stack", "stack", dest_dir, NULL, NULL);
 }
+
+bool export_avl(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "avl", "trees", dest_dir, NULL, NULL);
+}
+
+bool export_graph(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "bfs", "graph_traversals", dest_dir, NULL, NULL);
+}
+
+bool export_hash(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "hash", "hash", dest_dir, NULL, NULL);
+}
+
+bool export_heaps(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "priority_queue", "priority_queue", dest_dir, NULL, NULL);
+}
