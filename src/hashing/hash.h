@@ -1,15 +1,25 @@
 #ifndef HASH_H
 #define HASH_H
 
+#include <stdbool.h>
+#include "sll.h"
+
 #define MIN_HASH_LIMIT 1
 #define MAX_HASH_LIMIT 1000
 
 void linear_probing_demo(void);
+bool linear_probing_insert(int arr[], int length_of_array, int value);
+int linear_probing_search(int arr[], int length_of_array, int search_val);
 void hashing_algorithms_demo(void);
 int hash_function(int value, int length_of_array);
 void separate_chaining_demo(void);
+bool separate_chaining_insert(Node* table[], int length_of_array, int value);
 void quadratic_probing_demo(void);
+bool quadratic_probing_insert(int arr[], int length_of_array, int value);
+int quadratic_probing_search(int arr[], int length_of_array, int search_val);
 void double_hashing_demo(void);
+bool double_hashing_insert(int arr[],int length_of_array,int value);
+int double_hashing_search(int arr[],int length_of_array,int search_val);
 
 static const unsigned char PRIMES[] = {
     0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1,
