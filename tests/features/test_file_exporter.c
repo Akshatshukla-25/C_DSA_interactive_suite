@@ -40,10 +40,22 @@ void test_export_file_pair(void)
     printf("test_export_file_pair passed!\n");
 }
 
+void test_structure_exporters(void)
+{
+    assert(export_sll(".", "./test_export/sll_out") == true);
+    assert(export_dll(".", "./test_export/dll_out") == true);
+    assert(export_bst(".", "./test_export/bst_out") == true);
+    assert(export_circular_queue(".", "./test_export/queue_out") == true);
+    assert(export_stack(".", "./test_export/stack_out") == true);
+
+    printf("test_structure_exporters passed!\n");
+}
+
 int main(void)
 {
     test_dfs_search();
     test_copy_file_contents();
     test_export_file_pair();
+    test_structure_exporters();
     return 0;
 }
