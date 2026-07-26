@@ -48,4 +48,8 @@ bool export_bst(const char* root_dir, const char* dest_dir);
 bool export_circular_queue(const char* root_dir, const char* dest_dir);
 bool export_stack(const char* root_dir, const char* dest_dir);
 
+// Advanced Data Structure Exporters
+bool export_avl(const char* root_dir, const char* dest_dir);
+bool export_heaps(const char* root_dir, const char* dest_dir);
+
 #endif /* FILE_EXPORTER_H */
