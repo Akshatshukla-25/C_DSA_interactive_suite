@@ -76,7 +76,7 @@ void linear_probing_demo(void)
             // search uses the SAME probing sequence as insertion: start at the hash location and
             // walk forward with wrap-around. instead of placing the value, we record the index
             // where it is found. this reflects the real cost of a hash-table lookup.
-            int res = linear_probing_search(arr,length_of_array,search_val);
+            int res = linear_probing_search(arr, length_of_array, search_val);
             if (res != -1)
             {
                 printf("\nValue %d found in the hash table at index %d.", search_val, res);

@@ -80,7 +80,8 @@ void quadratic_probing_demo(void)
 
             if (found)
             {
-                printf("\nValue %d found at index %d in the hash table.", search_value, found_index);
+                printf("\nValue %d found at index %d in the hash table.", search_value,
+                       found_index);
             }
             else
             {

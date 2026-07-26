@@ -42,9 +42,7 @@ static int second_hash(int value, int length_of_array)
     return step;
 }
 
-bool double_hashing_insert(int arr[],
-                           int length_of_array,
-                           int value)
+bool double_hashing_insert(int arr[], int length_of_array, int value)
 {
     int h1 = hash_function(value, length_of_array);
     if (h1 == -1)
@@ -68,9 +66,7 @@ bool double_hashing_insert(int arr[],
     return false;
 }
 
-int double_hashing_search(int arr[],
-                          int length_of_array,
-                          int search_val)
+int double_hashing_search(int arr[], int length_of_array, int search_val)
 {
     int h1 = hash_function(search_val, length_of_array);
 

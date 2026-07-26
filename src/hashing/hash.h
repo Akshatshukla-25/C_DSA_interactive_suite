@@ -1,8 +1,8 @@
 #ifndef HASH_H
 #define HASH_H
 
-#include <stdbool.h>
 #include "sll.h"
+#include <stdbool.h>
 
 #define MIN_HASH_LIMIT 1
 #define MAX_HASH_LIMIT 1000
@@ -18,8 +18,8 @@ void quadratic_probing_demo(void);
 bool quadratic_probing_insert(int arr[], int length_of_array, int value);
 int quadratic_probing_search(int arr[], int length_of_array, int search_val);
 void double_hashing_demo(void);
-bool double_hashing_insert(int arr[],int length_of_array,int value);
-int double_hashing_search(int arr[],int length_of_array,int search_val);
+bool double_hashing_insert(int arr[], int length_of_array, int value);
+int double_hashing_search(int arr[], int length_of_array, int search_val);
 
 static const unsigned char PRIMES[] = {
     0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1,

@@ -50,9 +50,10 @@ void double_hashing_demo(void)
                 print_array(arr, length_of_array);
             }
             else
-           {
+            {
                 printf("\nHash table full\n");
-                break;}
+                break;
+            }
         }
 
         // ---------- search phase (follows the same double-hash probe chain) ----------
@@ -73,10 +74,7 @@ void double_hashing_demo(void)
                 continue;
             }
 
-            int found_index = double_hashing_search(
-                arr,
-                length_of_array,
-                search_val);
+            int found_index = double_hashing_search(arr, length_of_array, search_val);
 
             if (found_index != -1)
             {

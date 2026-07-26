@@ -65,7 +65,8 @@ bool linear_probing_insert(int arr[], int length_of_array, int value)
 
     bool array_full = false;
 
-    int start = hash_location; // the modulo arithmetic for wrap-around logic, same as circular queue
+    int start =
+        hash_location; // the modulo arithmetic for wrap-around logic, same as circular queue
     do
     {
         hash_location = (hash_location + 1) % length_of_array;
@@ -91,7 +92,8 @@ int linear_probing_search(int arr[], int length_of_array, int search_val)
         return -1;
     }
 
-    int start = hash_location; // the modulo arithmetic for wrap-around logic, same as circular queue
+    int start =
+        hash_location; // the modulo arithmetic for wrap-around logic, same as circular queue
     do
     {
         if (arr[hash_location] == search_val)

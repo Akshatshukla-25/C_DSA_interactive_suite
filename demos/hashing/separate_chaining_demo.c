@@ -54,7 +54,7 @@ void separate_chaining_demo(void)
                 continue;
             }
 
-            if (!separate_chaining_insert(table,hash_table_size,value))
+            if (!separate_chaining_insert(table, hash_table_size, value))
             {
                 printf("\nInvalid array length for hashing.\n");
                 continue;
