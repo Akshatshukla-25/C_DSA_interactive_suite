@@ -42,125 +42,55 @@ static int second_hash(int value, int length_of_array)
     return step;
 }
 
-void double_hashing_demo(void)
+bool double_hashing_insert(int arr[], int length_of_array, int value)
 {
-    while (1)
+    int h1 = hash_function(value, length_of_array);
+    if (h1 == -1)
     {
-        int value;
-        int length_of_array;
+        return false;
+    }
 
-        int length_arr_status = safe_input_int(
-            &length_of_array, "\n\nenter length of the array (between 1 and 1000):- ", 1, 1000);
+    int h2 = second_hash(value, length_of_array);
 
-        if (length_arr_status == INPUT_EXIT_SIGNAL)
+    for (int i = 0; i < length_of_array; i++)
+    {
+        int probe_location = (h1 + i * h2) % length_of_array;
+
+        if (!arr[probe_location])
         {
-            printf("\nExiting double_hashing demo");
-            return;
-        }
-        if (length_arr_status == 0)
-        {
-            continue;
-        }
-
-        int arr[length_of_array];
-
-        memset(arr, 0, sizeof(arr)); // empty slot is represented by 0
-
-        // ---------- insertion phase ----------
-        while (1)
-        {
-            int value_status = safe_input_int(
-                &value, "\nenter a value between 1 and 1000 (enter '-1' to search elements):- ", 1,
-                1000);
-
-            if (value_status == INPUT_EXIT_SIGNAL)
-            {
-                break;
-            }
-            if (value_status == 0)
-            {
-                continue;
-            }
-
-            int h1 = hash_function(value, length_of_array); // primary hash
-            if (h1 == -1)
-            {
-                printf("\nInvalid array length for hashing.\n");
-                continue;
-            }
-            int h2 = second_hash(value, length_of_array); // step size, never 0
-            bool inserted = false;
-
-            for (int i = 0; i < length_of_array; i++)
-            {
-                int probe_location = (h1 + i * h2) % length_of_array;
-
-                if (!arr[probe_location])
-                {
-                    arr[probe_location] = value;
-                    print_array(arr, length_of_array);
-                    inserted = true;
-                    break;
-                }
-            }
-
-            if (!inserted)
-            {
-                printf("\nhash table full\n");
-                break;
-            }
-        }
-
-        // ---------- search phase (follows the same double-hash probe chain) ----------
-        while (1)
-        {
-            int search_val;
-            int search_status = safe_input_int(
-                &search_val, "\nenter a value to search in the hash table (enter '-1' to exit):- ",
-                1, 1000);
-
-            if (search_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting double_hashing demo.....\n");
-                return;
-            }
-            if (search_status == 0)
-            {
-                continue;
-            }
-
-            int h1 = hash_function(search_val, length_of_array);
-            if (h1 == -1)
-            {
-                printf("\nInvalid array length for hashing.\n");
-                continue;
-            }
-            int h2 = second_hash(search_val, length_of_array);
-            int found_index = -1;
-
-            for (int i = 0; i < length_of_array; i++)
-            {
-                int probe_location = (h1 + i * h2) % length_of_array;
-
-                if (arr[probe_location] == search_val)
-                {
-                    found_index = probe_location;
-                    break;
-                }
-                if (!arr[probe_location]) // empty slot: value cannot be further down the chain
-                {
-                    break;
-                }
-            }
-
-            if (found_index != -1)
-            {
-                printf("\nValue %d found in the hash table at index %d.", search_val, found_index);
-            }
-            else
-            {
-                printf("\nValue %d not found in the hash table.", search_val);
-            }
+            arr[probe_location] = value;
+            return true;
         }
     }
+
+    return false;
+}
+
+int double_hashing_search(int arr[], int length_of_array, int search_val)
+{
+    int h1 = hash_function(search_val, length_of_array);
+
+    if (h1 == -1)
+    {
+        return -1;
+    }
+
+    int h2 = second_hash(search_val, length_of_array);
+
+    for (int i = 0; i < length_of_array; i++)
+    {
+        int probe_location = (h1 + i * h2) % length_of_array;
+
+        if (arr[probe_location] == search_val)
+        {
+            return probe_location;
+        }
+
+        if (!arr[probe_location])
+        {
+            break;
+        }
+    }
+
+    return -1;
 }
