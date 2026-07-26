@@ -16,6 +16,7 @@
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
 #include "expression.h"
+#include "file_exporter.h"
 #include "fuzzer.h"
 #include "graph_traversals.h"
 #include "hash.h"
@@ -72,8 +73,9 @@ void run_legacy_menu()
             "click 18 for setting animation speed (by default 2s)\n"
             "click 19 for Stochastic Fuzz Testing Engine demo\n"
             "click 20 for Raw Memory Layout Inspector / Hexdump Visualizer demo\n"
+            "click 22 for Standalone File Exporter Engine demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 20 // limits
+            1, 22 // limits
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -202,6 +204,10 @@ void run_legacy_menu()
             case 20:
                 display_header("Raw Memory Layout Inspector");
                 memory_inspector_demo();
+                break;
+            case 22:
+                display_header("Standalone File Exporter Engine");
+                file_exporter_demo();
                 break;
         }
     }

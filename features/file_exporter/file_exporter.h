@@ -54,4 +54,9 @@ bool export_graph(const char* root_dir, const char* dest_dir);
 bool export_hash(const char* root_dir, const char* dest_dir);
 bool export_heaps(const char* root_dir, const char* dest_dir);
 
+/**
+ * Interactive Standalone File Exporter CLI/TUI Dashboard demo suite.
+ */
+void file_exporter_demo(void);
+
 #endif /* FILE_EXPORTER_H */
