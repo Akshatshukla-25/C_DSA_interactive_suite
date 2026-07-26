@@ -2,21 +2,6 @@
 #include "safe_input.h"
 #include <stdio.h>
 
-/**
- * Prints a 32-bit integer in grouped binary format: "0000 0000 ... 0000"
- */
-static void print_binary_32(unsigned int n)
-{
-    for (int i = 31; i >= 0; i--)
-    {
-        printf("%d", (n >> i) & 1);
-        if (i % 4 == 0 && i != 0)
-        {
-            printf(" ");
-        }
-    }
-}
-
 void bitwise_visualizer_demo(void)
 {
     while (1)

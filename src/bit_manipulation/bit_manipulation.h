@@ -29,4 +29,8 @@ void find_unique_demo(void);
 void generate_subsets_demo(void);
 void bitwise_visualizer_demo(void);
 
+/* Utils */
+void print_binary_32(unsigned int n);
+void print_binary_32_highlight(unsigned int n, unsigned int highlight_mask, const char* color_code);
+
 #endif /* BIT_MANIPULATION_H */
