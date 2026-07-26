@@ -41,4 +41,11 @@ bool copy_file_contents(const char* src_path, const char* dest_path);
 bool export_file_pair(const char* root_dir, const char* base_filename, const char* header_basename,
                       const char* dest_dir, char* exported_c_path, char* exported_h_path);
 
+// Core Data Structure Exporters
+bool export_sll(const char* root_dir, const char* dest_dir);
+bool export_dll(const char* root_dir, const char* dest_dir);
+bool export_bst(const char* root_dir, const char* dest_dir);
+bool export_circular_queue(const char* root_dir, const char* dest_dir);
+bool export_stack(const char* root_dir, const char* dest_dir);
+
 #endif /* FILE_EXPORTER_H */

@@ -59,7 +59,6 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
 
     while ((entry = readdir(dir)) != NULL)
     {
-        // Skip . and .. and hidden/build/git directories
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 ||
             strcmp(entry->d_name, ".git") == 0 || strcmp(entry->d_name, "build") == 0 ||
             strcmp(entry->d_name, "object_files") == 0 ||
@@ -79,7 +78,6 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
 
         if (S_ISDIR(st.st_mode))
         {
-            // Recurse into subdirectory (DFS)
             if (dfs_search_file(path, target_filename, found_path_out))
             {
                 found = true;
@@ -115,7 +113,6 @@ bool copy_file_contents(const char* src_path, const char* dest_path)
         return false;
     }
 
-    // Extract directory component from dest_path
     char dest_dir[1024];
     strncpy(dest_dir, dest_path, sizeof(dest_dir) - 1);
     dest_dir[sizeof(dest_dir) - 1] = '\0';
@@ -201,4 +198,29 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
     }
 
     return (success_c || success_h);
+}
+
+bool export_sll(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "sll", "sll", dest_dir, NULL, NULL);
+}
+
+bool export_dll(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "dll", "dll", dest_dir, NULL, NULL);
+}
+
+bool export_bst(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "bst", "trees", dest_dir, NULL, NULL);
+}
+
+bool export_circular_queue(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "queue", "queue", dest_dir, NULL, NULL);
+}
+
+bool export_stack(const char* root_dir, const char* dest_dir)
+{
+    return export_file_pair(root_dir, "stack", "stack", dest_dir, NULL, NULL);
 }
