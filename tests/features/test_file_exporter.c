@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+static void check_file_exists(const char* filepath)
+{
+    FILE* fp = fopen(filepath, "r");
+    assert(fp != NULL);
+    fclose(fp);
+}
+
 void test_dfs_search(void)
 {
     char found_path[512] = {0};
@@ -22,10 +29,7 @@ void test_copy_file_contents(void)
     bool copied = copy_file_contents(found_path, test_dest);
     assert(copied == true);
 
-    FILE* fp = fopen(test_dest, "r");
-    assert(fp != NULL);
-    fclose(fp);
-
+    check_file_exists(test_dest);
     printf("test_copy_file_contents passed!\n");
 }
 
@@ -37,16 +41,32 @@ void test_export_file_pair(void)
     assert(res == true);
     assert(strstr(c_path, "sll.c") != NULL);
     assert(strstr(h_path, "sll.h") != NULL);
+    check_file_exists(c_path);
+    check_file_exists(h_path);
     printf("test_export_file_pair passed!\n");
 }
 
 void test_structure_exporters(void)
 {
     assert(export_sll(".", "./test_export/sll_out") == true);
+    check_file_exists("./test_export/sll_out/sll.c");
+    check_file_exists("./test_export/sll_out/sll.h");
+
     assert(export_dll(".", "./test_export/dll_out") == true);
+    check_file_exists("./test_export/dll_out/dll.c");
+    check_file_exists("./test_export/dll_out/dll.h");
+
     assert(export_bst(".", "./test_export/bst_out") == true);
+    check_file_exists("./test_export/bst_out/bst.c");
+    check_file_exists("./test_export/bst_out/trees.h");
+
     assert(export_circular_queue(".", "./test_export/queue_out") == true);
+    check_file_exists("./test_export/queue_out/circular_queue.c");
+    check_file_exists("./test_export/queue_out/queue.h");
+
     assert(export_stack(".", "./test_export/stack_out") == true);
+    check_file_exists("./test_export/stack_out/stack.c");
+    check_file_exists("./test_export/stack_out/stack.h");
 
     printf("test_structure_exporters passed!\n");
 }
@@ -54,7 +74,12 @@ void test_structure_exporters(void)
 void test_advanced_data_structure_exporters(void)
 {
     assert(export_avl(".", "./test_export/avl_out") == true);
+    check_file_exists("./test_export/avl_out/avl.c");
+    check_file_exists("./test_export/avl_out/trees.h");
+
     assert(export_heaps(".", "./test_export/heaps_out") == true);
+    check_file_exists("./test_export/heaps_out/priority_queue.c");
+    check_file_exists("./test_export/heaps_out/priority_queue.h");
 
     printf("test_advanced_data_structure_exporters passed!\n");
 }
