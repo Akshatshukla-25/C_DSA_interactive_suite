@@ -61,21 +61,20 @@ void run_legacy_menu()
             "click 6 for hashing algorithms demo\n"
             "click 7 for trees demo\n"
             "click 8 for error correction algorithms demo\n"
-            "click 9 for job scheduling (FCFS / SJF / priority / round robin) demo\n"
+            "click 9 for Operating System Algorithms demo\n"
             "click 10 for backtracking algorithms demo\n"
             "click 11 for dynamic programming algorithms demo\n"
             "click 12 for String & Compression Suite demo\n"
-            "click 13 for process synchronization algorithms demo\n"
-            "click 14 for advanced heaps & priority queues suite demo\n"
-            "click 15 for cache replacement simulator demo\n"
-            "click 16 for algorithm benchmarking and profiling demo\n"
-            "click 17 for interactive algorithm step-debugger demo\n"
-            "click 18 for setting animation speed (by default 2s)\n"
-            "click 19 for Stochastic Fuzz Testing Engine demo\n"
-            "click 20 for Raw Memory Layout Inspector / Hexdump Visualizer demo\n"
-            "click 21 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
+            "click 13 for advanced heaps & priority queues suite demo\n"
+            "click 14 for cache replacement simulator demo\n"
+            "click 15 for algorithm benchmarking and profiling demo\n"
+            "click 16 for interactive algorithm step-debugger demo\n"
+            "click 17 for setting animation speed (by default 2s)\n"
+            "click 18 for Stochastic Fuzz Testing Engine demo\n"
+            "click 19 for Raw Memory Layout Inspector / Hexdump Visualizer demo\n"
+            "click 20 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 21 // limits
+            1, 20 // limits
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -149,7 +148,25 @@ void run_legacy_menu()
                 error_correction_algorithms_demo();
                 break;
             case 9:
-                job_scheduling_demo();
+                while (1)
+                {
+                    int os_choice;
+                    int os_status =
+                        safe_input_int(&os_choice,
+                                       "\n--- Operating System Algorithms ---\n"
+                                       "1. CPU Job Scheduling Simulators\n"
+                                       "2. Process Synchronization Problems (Semaphores / Mutex)\n"
+                                       "\nenter choice (\'-1\' to exit) : ",
+                                       1, 2);
+                    if (os_status == INPUT_EXIT_SIGNAL)
+                        break;
+                    if (os_status == 0)
+                        continue;
+                    if (os_choice == 1)
+                        job_scheduling_demo();
+                    else if (os_choice == 2)
+                        process_synchronization_demo();
+                }
                 break;
             case 10:
                 backtracking_demo();
@@ -178,34 +195,31 @@ void run_legacy_menu()
                 }
                 break;
             case 13:
-                process_synchronization_demo();
-                break;
-            case 14:
                 advanced_heaps_demo();
                 break;
-            case 15:
+            case 14:
                 cache_simulator_demo();
                 break;
-            case 16:
+            case 15:
                 display_header("Algorithm Benchmarking & Profiling");
                 benchmark_menu_demo();
                 break;
-            case 17:
+            case 16:
                 debugger_demo();
                 break;
-            case 18:
+            case 17:
                 display_header("Settings");
                 settings_menu_demo();
                 break;
-            case 19:
+            case 18:
                 display_header("Stochastic Fuzz Testing Engine");
                 fuzzer_demo();
                 break;
-            case 20:
+            case 19:
                 display_header("Raw Memory Layout Inspector");
                 memory_inspector_demo();
                 break;
-            case 21:
+            case 20:
                 display_header("Empirical Big-O Verifier");
                 bigo_verifier_demo();
                 break;
