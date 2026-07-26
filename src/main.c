@@ -18,6 +18,7 @@
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
 #include "expression.h"
+#include "file_exporter.h"
 #include "fuzzer.h"
 #include "graph_traversals.h"
 #include "hash.h"
@@ -38,42 +39,36 @@
 #include "string_algorithms.h"
 #include "trees.h"
 
-#include "tui.h"
-
-void data_structures_demo(void);
-
-// only give input as integer value as prompted through the console by programmer. dont attempt to
-// put any other type of value neglecting this warning can result in undefined behaviour
-
 void run_legacy_menu()
 {
     while (1)
     {
         int choice;
         int status = safe_input_int(
-            &choice, // variable in which value is to be inserted
+            &choice,
             "\nWelcome to DSA library built by Darshan Mukul Parekh"
             "\n(at any point enter '-1' to exit that particular demo, or 'help' for manual)\n\n"
-            "click 1 for data structures demo\n"
-            "click 2 for expression evaluation (infix to postfix and postfix evaluation) demo\n"
-            "click 3 for sorting algorithms demo\n"
-            "click 4 for searching algorithms demo\n"
-            "click 5 for graph algorithms demo\n"
-            "click 6 for hashing algorithms demo\n"
-            "click 7 for trees demo\n"
-            "click 8 for error correction algorithms demo\n"
-            "click 9 for Operating System Algorithms demo\n"
-            "click 10 for backtracking algorithms demo\n"
-            "click 11 for dynamic programming algorithms demo\n"
-            "click 12 for String & Compression Suite demo\n"
+            "click 1 for core data structures demo\n"
+            "click 2 for expression evaluation & parsing demo\n"
+            "click 3 for sorting algorithms suite demo\n"
+            "click 4 for searching algorithms suite demo\n"
+            "click 5 for graph traversals & shortest path suite demo\n"
+            "click 6 for advanced graph algorithms suite demo\n"
+            "click 7 for tree data structures & traversals suite demo\n"
+            "click 8 for dynamic programming algorithms demo\n"
+            "click 9 for backtracking algorithms demo\n"
+            "click 10 for error correction & detection algorithms demo\n"
+            "click 11 for job scheduling algorithms demo\n"
+            "click 12 for string processing & compression algorithms demo\n"
             "click 13 for advanced heaps & priority queues suite demo\n"
             "click 14 for cache replacement simulator demo\n"
             "click 15 for Developer Console & System Utilities\n"
             "click 16 for Stochastic Fuzz Testing Engine demo\n"
             "click 17 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
             "click 18 for Bit Manipulation demo\n"
+            "click 19 for Standalone File Exporter Engine demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 18 /* limits */
+            1, 19 /* limits */
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -89,7 +84,7 @@ void run_legacy_menu()
         switch (choice)
         {
             case 1:
-                data_structures_demo();
+                // data structures
                 break;
             case 2:
                 expression_evaluation_demo();
@@ -246,6 +241,10 @@ void run_legacy_menu()
             case 18:
                 bit_manipulation_demo();
                 break;
+            case 19:
+                display_header("Standalone File Exporter Engine");
+                file_exporter_demo();
+                break;
         }
     }
 }
@@ -281,7 +280,7 @@ void tui_menu()
                 run_legacy_menu();
                 break;
             case 2:
-                tui_run();
+                // future menu
                 break;
         }
     }

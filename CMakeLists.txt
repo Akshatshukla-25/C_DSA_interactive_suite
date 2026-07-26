@@ -51,6 +51,7 @@ set(SRC_DIRS
     demos/advanced_heaps
     demos/bit_manipulation
     demos/error_correction_algorithms
+    demos/hashing
     features/telemetry
     features/serialization
     features/dp_visualizer
