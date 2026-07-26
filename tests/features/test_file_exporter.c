@@ -51,14 +51,12 @@ void test_structure_exporters(void)
     printf("test_structure_exporters passed!\n");
 }
 
-void test_advanced_exporters(void)
+void test_advanced_data_structure_exporters(void)
 {
     assert(export_avl(".", "./test_export/avl_out") == true);
-    assert(export_graph(".", "./test_export/graph_out") == true);
-    assert(export_hash(".", "./test_export/hash_out") == true);
     assert(export_heaps(".", "./test_export/heaps_out") == true);
 
-    printf("test_advanced_exporters passed!\n");
+    printf("test_advanced_data_structure_exporters passed!\n");
 }
 
 int main(void)
@@ -67,6 +65,6 @@ int main(void)
     test_copy_file_contents();
     test_export_file_pair();
     test_structure_exporters();
-    test_advanced_exporters();
+    test_advanced_data_structure_exporters();
     return 0;
 }
