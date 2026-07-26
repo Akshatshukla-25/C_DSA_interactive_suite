@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "safe_input.h"
 #include "trees.h"
 #include <stdio.h>
@@ -5,7 +6,7 @@
 
 void fenwick_tree_demo(void)
 {
-    printf("\n--- Fenwick Tree (Dual-BIT) Range Update / Range Query Demo ---\n");
+    display_header("Fenwick Tree (Dual-BIT) Range Update / Range Query");
     int n = 5;
     printf("Created Fenwick Tree of size %d initialized to 0.\n", n);
     FenwickTree* ft = create_fenwick_tree(n);
