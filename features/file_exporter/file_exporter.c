@@ -168,7 +168,7 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
     bool found_c = dfs_search_file(start_dir, c_filename, found_c_src);
     bool found_h = dfs_search_file(start_dir, h_filename, found_h_src);
 
-    if (!found_c && !found_h)
+    if (!found_c || !found_h)
     {
         return false;
     }
@@ -200,5 +200,5 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
         }
     }
 
-    return (success_c || success_h);
+    return (success_c && success_h);
 }
