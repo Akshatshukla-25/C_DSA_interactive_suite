@@ -217,7 +217,7 @@ bool export_bst(const char* root_dir, const char* dest_dir)
 
 bool export_circular_queue(const char* root_dir, const char* dest_dir)
 {
-    return export_file_pair(root_dir, "queue", "queue", dest_dir, NULL, NULL);
+    return export_file_pair(root_dir, "circular_queue", "queue", dest_dir, NULL, NULL);
 }
 
 bool export_stack(const char* root_dir, const char* dest_dir)
