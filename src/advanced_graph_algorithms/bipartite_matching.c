@@ -220,6 +220,7 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
                 int v = (int)(intptr_t)temp->data;
                 if (color[v] == 1 && residual[u][v] == 0)
                 {
+                    residual[u][v] = -1;
                     count++;
                     if ((size_t)count > SIZE_MAX / sizeof(int[2]))
                     {
@@ -247,6 +248,7 @@ int max_bipartite_matching(Graph* graph, int** match_pairs, int* match_count)
                     pairs = new_pairs;
                     pairs[2 * (count - 1)] = u;
                     pairs[2 * (count - 1) + 1] = v;
+                    break;
                 }
                 temp = temp->next;
             }
