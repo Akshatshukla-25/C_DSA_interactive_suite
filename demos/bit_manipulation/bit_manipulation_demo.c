@@ -20,8 +20,9 @@ void bit_manipulation_demo(void)
                                 "\nenter 6 for Reverse Bits demo"
                                 "\nenter 7 for Find Unique Element (XOR) demo"
                                 "\nenter 8 for Generate Subsets (Bitmasking) demo"
+                                "\nenter 9 for Bitwise Visualizer (AND, OR, XOR) demo"
                                 "\nenter choice (\'-1\' to exit, or \'help\') : ",
-                                1, 8);
+                                1, 9);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -65,6 +66,10 @@ void bit_manipulation_demo(void)
             case 8:
                 display_header("Generate Subsets (Bitmasking)");
                 generate_subsets_demo();
+                break;
+            case 9:
+                display_header("Bitwise Visualizer (AND, OR, XOR)");
+                bitwise_visualizer_demo();
                 break;
         }
     }

@@ -27,5 +27,6 @@ void rightmost_set_bit_demo(void);
 void reverse_bits_demo(void);
 void find_unique_demo(void);
 void generate_subsets_demo(void);
+void bitwise_visualizer_demo(void);
 
 #endif /* BIT_MANIPULATION_H */
