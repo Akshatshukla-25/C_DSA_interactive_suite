@@ -17,13 +17,11 @@ void file_exporter_demo(void)
         printf("click 4 for circular queue export\n");
         printf("click 5 for stack export\n");
         printf("click 6 for avl tree export\n");
-        printf("click 7 for graph traversals export\n");
-        printf("click 8 for hash table export\n");
-        printf("click 9 for advanced heaps export\n");
+        printf("click 7 for advanced heaps export\n");
         printf("-1. Return to Main Menu\n");
 
         int choice;
-        int status = safe_input_int(&choice, "\nEnter choice: ", 1, 9);
+        int status = safe_input_int(&choice, "\nEnter choice: ", 1, 7);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -63,7 +61,7 @@ void file_exporter_demo(void)
                 success = export_bst(".", dest_dir);
                 break;
             case 4:
-                target_name = "Circular Queue (queue.c / queue.h)";
+                target_name = "Circular Queue (circular_queue.c / queue.h)";
                 success = export_circular_queue(".", dest_dir);
                 break;
             case 5:
@@ -75,14 +73,6 @@ void file_exporter_demo(void)
                 success = export_avl(".", dest_dir);
                 break;
             case 7:
-                target_name = "Graph Traversals (bfs.c / graph_traversals.h)";
-                success = export_graph(".", dest_dir);
-                break;
-            case 8:
-                target_name = "Hash Table (hash.c / hash.h)";
-                success = export_hash(".", dest_dir);
-                break;
-            case 9:
                 target_name = "Advanced Heaps (priority_queue.c / priority_queue.h)";
                 success = export_heaps(".", dest_dir);
                 break;
