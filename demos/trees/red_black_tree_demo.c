@@ -1,10 +1,11 @@
+#include "display_header.h"
 #include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 void red_black_tree_demo(void)
 {
-    printf("\n--- Red-Black Tree (Self-Balancing BST) Demo ---\n");
+    display_header("Red-Black Tree (Self-Balancing BST)");
     rbTree* tree = create_rb_tree();
     if (tree == NULL)
     {
