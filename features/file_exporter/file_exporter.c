@@ -43,9 +43,16 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
 
     const char* search_dir = base_dir;
     struct stat st_src;
-    if (strcmp(base_dir, ".") == 0 && stat("src", &st_src) == -1 && stat("../src", &st_src) == 0)
+    if (strcmp(base_dir, ".") == 0)
     {
-        search_dir = "..";
+        if (stat("src", &st_src) == 0 && S_ISDIR(st_src.st_mode))
+        {
+            search_dir = "src";
+        }
+        else if (stat("../src", &st_src) == 0 && S_ISDIR(st_src.st_mode))
+        {
+            search_dir = "../src";
+        }
     }
 
     DIR* dir = opendir(search_dir);
@@ -62,7 +69,9 @@ bool dfs_search_file(const char* base_dir, const char* target_filename, char* fo
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 ||
             strcmp(entry->d_name, ".git") == 0 || strcmp(entry->d_name, "build") == 0 ||
             strcmp(entry->d_name, "object_files") == 0 ||
-            strcmp(entry->d_name, "test_binaries") == 0 || entry->d_name[0] == '.')
+            strcmp(entry->d_name, "test_binaries") == 0 ||
+            strncmp(entry->d_name, "test_", 5) == 0 || strncmp(entry->d_name, "export", 6) == 0 ||
+            entry->d_name[0] == '.')
         {
             continue;
         }
@@ -151,7 +160,6 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
     }
 
     const char* start_dir = (strlen(root_dir) > 0) ? root_dir : ".";
-    ensure_dir_exists(dest_dir);
 
     char c_filename[256];
     char h_filename[256];
@@ -170,31 +178,35 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
         return false;
     }
 
-    bool success_c = false;
-    bool success_h = false;
+    ensure_dir_exists(dest_dir);
 
-    if (found_c)
+    char target_c_dest[1024];
+    char target_h_dest[1024];
+
+    size_t dest_len = strlen(dest_dir);
+    if (dest_len > 0 && dest_dir[dest_len - 1] == '/')
     {
-        char target_c_dest[1024];
+        snprintf(target_c_dest, sizeof(target_c_dest), "%s%s", dest_dir, c_filename);
+        snprintf(target_h_dest, sizeof(target_h_dest), "%s%s", dest_dir, h_filename);
+    }
+    else
+    {
         snprintf(target_c_dest, sizeof(target_c_dest), "%s/%s", dest_dir, c_filename);
-        success_c = copy_file_contents(found_c_src, target_c_dest);
-        if (success_c && exported_c_path)
-        {
-            strncpy(exported_c_path, target_c_dest, 512);
-            exported_c_path[511] = '\0';
-        }
+        snprintf(target_h_dest, sizeof(target_h_dest), "%s/%s", dest_dir, h_filename);
     }
 
-    if (found_h)
+    bool success_c = copy_file_contents(found_c_src, target_c_dest);
+    if (success_c && exported_c_path)
     {
-        char target_h_dest[1024];
-        snprintf(target_h_dest, sizeof(target_h_dest), "%s/%s", dest_dir, h_filename);
-        success_h = copy_file_contents(found_h_src, target_h_dest);
-        if (success_h && exported_h_path)
-        {
-            strncpy(exported_h_path, target_h_dest, 512);
-            exported_h_path[511] = '\0';
-        }
+        strncpy(exported_c_path, target_c_dest, 512);
+        exported_c_path[511] = '\0';
+    }
+
+    bool success_h = copy_file_contents(found_h_src, target_h_dest);
+    if (success_h && exported_h_path)
+    {
+        strncpy(exported_h_path, target_h_dest, 512);
+        exported_h_path[511] = '\0';
     }
 
     return (success_c && success_h);

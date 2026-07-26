@@ -35,10 +35,14 @@ void file_exporter_demo(void)
         }
 
         char dest_dir[256] = {0};
-        if (safe_input_string(
-                dest_dir,
-                "\nEnter destination directory to export files (e.g. ./exported_files): ") != 0 ||
-            strlen(dest_dir) == 0)
+        int input_res = safe_input_string(
+            dest_dir, "\nEnter destination directory to export files (e.g. ./exported_files): ");
+        if (input_res == INPUT_EXIT_SIGNAL)
+        {
+            printf("\nExiting File Exporter Dashboard...\n");
+            return;
+        }
+        if (strlen(dest_dir) == 0)
         {
             strncpy(dest_dir, "./exported_files", sizeof(dest_dir));
         }
