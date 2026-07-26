@@ -21,7 +21,45 @@ void count_set_bits_demo(void)
         if (status == 0)
             continue;
 
-        printf("\ncount_set_bits(%d) = %d\n", n, count_set_bits(n));
+        printf("\n--- Visualizing Brian Kernighan's Algorithm ---\n");
+        unsigned int un = (unsigned int)n;
+        int count = 0;
+
+        if (un == 0)
+        {
+            printf("  n       = ");
+            print_binary_32(un);
+            printf("  (0)\n");
+        }
+
+        while (un > 0)
+        {
+            unsigned int next_un = un & (un - 1);
+            unsigned int flipped_bit = un ^ next_un;
+
+            printf("Step %d:\n", count + 1);
+            printf("  n       = ");
+            print_binary_32_highlight(un, flipped_bit, "\033[1;31m");
+            printf("  (%u)\n", un);
+
+            printf("  n - 1   = ");
+            print_binary_32(un - 1);
+            printf("  (%u)\n", un - 1);
+
+            printf("  n&(n-1) = ");
+            print_binary_32_highlight(next_un, 0, NULL);
+            printf("  (%u)\n\n", next_un);
+
+            un = next_un;
+            count++;
+
+            if (un > 0)
+            {
+                press_enter_to_continue();
+            }
+        }
+        printf("Final Count: %d\n", count);
+        press_enter_to_continue();
     }
 }
 
@@ -88,8 +126,63 @@ void xor_swap_demo(void)
         if (b_status == 0)
             continue;
 
-        printf("\nBefore swap: a = %d, b = %d\n", a, b);
+        printf("\n--- Visualizing XOR Swap Step-by-Step ---\n");
+        unsigned int ua = (unsigned int)a;
+        unsigned int ub = (unsigned int)b;
+
+        printf("Initial State:\n");
+        printf("  A = ");
+        print_binary_32(ua);
+        printf("  (%d)\n", a);
+        printf("  B = ");
+        print_binary_32(ub);
+        printf("  (%d)\n\n", b);
+        press_enter_to_continue();
+
+        printf("Step 1: A = A ^ B\n");
+        unsigned int new_a = ua ^ ub;
+        printf("  A = ");
+        print_binary_32_highlight(ua, ua ^ new_a, "\033[1;33m");
+        printf("\n  B = ");
+        print_binary_32(ub);
+        printf("\n  ---------------------------------------\n");
+        printf("A^B = ");
+        print_binary_32_highlight(new_a, ua ^ new_a, "\033[1;32m");
+        printf("  (New A)\n\n");
+        ua = new_a;
+        press_enter_to_continue();
+
+        printf("Step 2: B = A ^ B\n");
+        unsigned int new_b = ua ^ ub;
+        printf("  A = ");
+        print_binary_32(ua);
+        printf("\n  B = ");
+        print_binary_32_highlight(ub, ub ^ new_b, "\033[1;33m");
+        printf("\n  ---------------------------------------\n");
+        printf("A^B = ");
+        print_binary_32_highlight(new_b, ub ^ new_b, "\033[1;32m");
+        printf("  (New B)\n\n");
+        ub = new_b;
+        press_enter_to_continue();
+
+        printf("Step 3: A = A ^ B\n");
+        new_a = ua ^ ub;
+        printf("  A = ");
+        print_binary_32_highlight(ua, ua ^ new_a, "\033[1;33m");
+        printf("\n  B = ");
+        print_binary_32(ub);
+        printf("\n  ---------------------------------------\n");
+        printf("A^B = ");
+        print_binary_32_highlight(new_a, ua ^ new_a, "\033[1;32m");
+        printf("  (New A)\n\n");
+        ua = new_a;
+
+        printf("Final Swapped State:\n");
+        printf("  A = %d\n", (int)ua);
+        printf("  B = %d\n", (int)ub);
+
+        /* Actually swap the real variables so it's formally correct */
         xor_swap(&a, &b);
-        printf("After swap:  a = %d, b = %d\n", a, b);
+        press_enter_to_continue();
     }
 }
