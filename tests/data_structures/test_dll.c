@@ -228,6 +228,44 @@ void test_delete_at_position()
     printf("DLL delete at position tests passed\n");
 }
 
+/* Advanced edge cases & null safety assertions */
+void test_dll_advanced_edge_cases()
+{
+    doubly_ll_Node* head = NULL;
+
+    /* Search empty list */
+    int key = 777;
+    assert(dll_search(head, &key, compare_ints) == -1);
+
+    /* Insert single element */
+    int* val = malloc(sizeof(int));
+    assert(val != NULL);
+    *val = 777;
+    assert(dll_insertAtBeginning(&head, val) == 1);
+    assert(dll_search(head, &key, compare_ints) == 0);
+
+    /* Delete single element from beginning */
+    assert(dll_deleteAtBeginning(&head, free) == 1);
+    assert(head == NULL);
+
+    /* Boundary positions for insertion */
+    for (int i = 1; i <= 3; i++)
+    {
+        int* v = malloc(sizeof(int));
+        assert(v != NULL);
+        *v = i * 5;
+        assert(dll_insertAtEnd(&head, v) == 1);
+    }
+    int* val999 = malloc(sizeof(int));
+    assert(val999 != NULL);
+    *val999 = 999;
+    assert(dll_insertAtPosition(&head, val999, 999) == -2);
+    free(val999);
+
+    delete_dll(head, free);
+    printf("DLL advanced edge case tests passed\n");
+}
+
 /* Edge cases */
 void test_edge_cases()
 {
@@ -258,6 +296,7 @@ int main()
     test_insert_at_position();
     test_delete_at_position();
     test_edge_cases();
+    test_dll_advanced_edge_cases();
 
     printf("All DLL tests passed\n");
 
