@@ -135,11 +135,51 @@ void test_suffix_array()
     printf("Suffix Array validation tests passed\n");
 }
 
+void test_string_advanced_edge_cases()
+{
+    /* Pattern longer than text */
+    char short_txt[] = "cat";
+    char long_pat[] = "caterpillar";
+    assert(count_matches(naive_string_matching, short_txt, long_pat) == 0);
+    assert(count_matches(kmp_search, short_txt, long_pat) == 0);
+    assert(count_matches_rk(short_txt, long_pat, 101) == 0);
+
+    /* Single character text and pattern */
+    char single_t[] = "x";
+    char single_p[] = "x";
+    assert(count_matches(naive_string_matching, single_t, single_p) == 1);
+    assert(count_matches(kmp_search, single_t, single_p) == 1);
+    assert(count_matches_rk(single_t, single_p, 101) == 1);
+
+    /* Single character text and non-matching pattern */
+    char single_miss[] = "z";
+    assert(count_matches(naive_string_matching, single_t, single_miss) == 0);
+    assert(count_matches(kmp_search, single_t, single_miss) == 0);
+    assert(count_matches_rk(single_t, single_miss, 101) == 0);
+
+    /* Repeated single character pattern */
+    char rep_t[] = "bbbbbb";
+    char rep_p[] = "b";
+    assert(count_matches(naive_string_matching, rep_t, rep_p) == 6);
+    assert(count_matches(kmp_search, rep_t, rep_p) == 6);
+    assert(count_matches_rk(rep_t, rep_p, 101) == 6);
+
+    /* Empty text string */
+    char empty_t[] = "";
+    char any_p[] = "abc";
+    assert(count_matches(naive_string_matching, empty_t, any_p) == 0);
+    assert(count_matches(kmp_search, empty_t, any_p) == 0);
+    assert(count_matches_rk(empty_t, any_p, 101) == 0);
+
+    printf("String matching advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_basic_matches();
     test_non_ascii_bytes();
     test_suffix_array();
+    test_string_advanced_edge_cases();
     printf("All string algorithms tests passed\n");
     return 0;
 }
