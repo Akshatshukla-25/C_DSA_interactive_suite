@@ -147,6 +147,32 @@ void test_delete_nonexistent()
     printf("BST delete nonexistent node test passed\n");
 }
 
+void test_bst_advanced_edge_cases()
+{
+    bstNode* root = NULL;
+
+    /* Single node deletion and root update */
+    assert(bst_insert(&root, 50) == 1);
+    assert(countnodes(root) == 1);
+    root = bst_delete(root, 50);
+    assert(root == NULL);
+    assert(countnodes(root) == 0);
+
+    /* Negative value insertions */
+    assert(bst_insert(&root, -10) == 1);
+    assert(bst_insert(&root, -20) == 1);
+    assert(bst_insert(&root, -5) == 1);
+    assert(countnodes(root) == 3);
+    assert(tree_height(root) == 2);
+
+    /* Deleting root with 2 children in negative tree */
+    root = bst_delete(root, -10);
+    assert(countnodes(root) == 2);
+
+    destroy_bst(root);
+    printf("BST advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_insert_and_count();
@@ -158,6 +184,7 @@ int main()
     test_delete_single_child();
     test_delete_two_children();
     test_delete_nonexistent();
+    test_bst_advanced_edge_cases();
 
     printf("All BST tests passed\n");
     return 0;
