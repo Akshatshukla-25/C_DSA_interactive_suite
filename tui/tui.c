@@ -9,6 +9,11 @@
 #include "advanced_sorting.h"
 #include "array.h"
 #include "backtracking.h"
+#include "benchmark.h"
+#include "bigo_verifier.h"
+#include "bit_manipulation.h"
+#include "cache.h"
+#include "compression.h"
 #include "config.h"
 #include "cross_platform_timer.h"
 #include "dcll.h"
@@ -17,9 +22,12 @@
 #include "dynamic_programming.h"
 #include "error_correction_algorithms.h"
 #include "expression.h"
+#include "file_exporter.h"
+#include "fuzzer.h"
 #include "graph_traversals.h"
 #include "hash.h"
 #include "job_scheduling.h"
+#include "memory_inspector.h"
 #include "priority_queue.h"
 #include "process_synchronization.h"
 #include "queue.h"
@@ -29,12 +37,10 @@
 #include "sll.h"
 #include "sorting_algorithms_n2.h"
 #include "stack.h"
+#include "step_debugger.h"
 #include "string_algorithms.h"
 #include "trees.h"
 #include "tui.h"
-
-#include "benchmark.h"
-#include "step_debugger.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -138,20 +144,18 @@ typedef struct
  */
 static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
-    {"Animation speed (s)", NULL, 1, 1, 0},
-    {"Set Animation Speed", settings_menu_demo, 0, 0, 1},
-
-    {"Linear Data Structures", NULL, 1, 0, 0},
-    {"Singly Linked List", sll_demo, 0, 0, 1},
-    {"Doubly Linked List", dll_demo, 0, 0, 1},
-    {"Array", array_demo, 0, 0, 1},
-    {"Priority Queue", priority_queue_demo, 0, 0, 1},
-    {"Linear Queue", simple_queue_demo, 0, 0, 1},
-    {"Circular Data Structures", NULL, 1, 0, 0},
-    {"Circular Queue", circular_queue_demo, 0, 0, 1},
-    {"Singly Circular Linked List", scll_demo, 0, 0, 1},
-    {"Doubly Circular Linked List", dcll_demo, 0, 0, 1},
-    {"Double-ended Queue", deque_demo, 0, 0, 1},
+    {"Data Structures", NULL, 1, 1, 0},
+    {"Linear Data Structures", NULL, 1, 0, 1},
+    {"Singly Linked List", sll_demo, 0, 0, 2},
+    {"Doubly Linked List", dll_demo, 0, 0, 2},
+    {"Array", array_demo, 0, 0, 2},
+    {"Priority Queue", priority_queue_demo, 0, 0, 2},
+    {"Linear Queue", simple_queue_demo, 0, 0, 2},
+    {"Circular Data Structures", NULL, 1, 0, 1},
+    {"Circular Queue", circular_queue_demo, 0, 0, 2},
+    {"Singly Circular Linked List", scll_demo, 0, 0, 2},
+    {"Doubly Circular Linked List", dcll_demo, 0, 0, 2},
+    {"Double-ended Queue", deque_demo, 0, 0, 2},
 
     {"Backtracking", NULL, 1, 1, 0},
     {"N queens", n_queens_demo, 0, 0, 1},
@@ -271,23 +275,34 @@ static Entry ENTRIES[] = {
     {"KMP Search", kmp_demo, 0, 0, 1},
     {"Rabin-Karp Search", rabin_karp_demo, 0, 0, 1},
     {"Suffix Array & Kasai's LCP", suffix_array_demo, 0, 0, 1},
+    {"String Compression", compression_demo, 0, 0, 1},
 
-    {"algorithm_benchmarks", NULL, 1, 1, 0},
-    {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 1},
-    {"Searching Benchmarks", run_searching_benchmark_wrapper, 0, 0, 1},
-    {"Graphs Shortest Path", run_graphs_benchmark_wrapper, 0, 0, 1},
-    {"Network Flow Benchmark", run_flow_benchmark_wrapper, 0, 0, 1},
-    {"MST Benchmarks", run_mst_benchmark_wrapper, 0, 0, 1},
-    {"Job Scheduling", run_scheduling_benchmark_wrapper, 0, 0, 1},
-    {"String Matching", run_strings_benchmark_wrapper, 0, 0, 1},
-    {"Dynamic Programming", run_dp_benchmark_wrapper, 0, 0, 1},
-    {"Hash Map Resolution", run_hashing_benchmark_wrapper, 0, 0, 1},
-    {"Trees Lookups", run_trees_benchmark_wrapper, 0, 0, 1},
-    {"Backtracking", run_backtracking_benchmark_wrapper, 0, 0, 1},
-    {"Advanced Heaps Benchmark", run_heaps_benchmark_wrapper, 0, 0, 1},
+    {"Bit Manipulation", NULL, 1, 1, 0},
+    {"Bit Manipulation Demo", bit_manipulation_demo, 0, 0, 1},
 
-    {"algorithm_step_debugger", NULL, 1, 1, 0},
-    {"Interactive Debugger Demo", debugger_demo, 0, 0, 1},
+    {"Developer Utilities", NULL, 1, 1, 0},
+    {"algorithm_benchmarks", NULL, 1, 0, 1},
+    {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 2},
+    {"Searching Benchmarks", run_searching_benchmark_wrapper, 0, 0, 2},
+    {"Graphs Shortest Path", run_graphs_benchmark_wrapper, 0, 0, 2},
+    {"Network Flow Benchmark", run_flow_benchmark_wrapper, 0, 0, 2},
+    {"MST Benchmarks", run_mst_benchmark_wrapper, 0, 0, 2},
+    {"Job Scheduling", run_scheduling_benchmark_wrapper, 0, 0, 2},
+    {"String Matching", run_strings_benchmark_wrapper, 0, 0, 2},
+    {"Dynamic Programming", run_dp_benchmark_wrapper, 0, 0, 2},
+    {"Hash Map Resolution", run_hashing_benchmark_wrapper, 0, 0, 2},
+    {"Trees Lookups", run_trees_benchmark_wrapper, 0, 0, 2},
+    {"Backtracking", run_backtracking_benchmark_wrapper, 0, 0, 2},
+    {"Advanced Heaps Benchmark", run_heaps_benchmark_wrapper, 0, 0, 2},
+
+    {"algorithm_step_debugger", NULL, 1, 0, 1},
+    {"Interactive Debugger Demo", debugger_demo, 0, 0, 2},
+    {"Memory Layout Inspector", memory_inspector_demo, 0, 0, 1},
+    {"Cache Replacement Simulator", cache_simulator_demo, 0, 0, 1},
+    {"Stochastic Fuzz Testing", fuzzer_demo, 0, 0, 1},
+    {"Empirical Big-O Verifier", bigo_verifier_demo, 0, 0, 1},
+    {"Standalone File Exporter", file_exporter_demo, 0, 0, 1},
+    {"System Settings (Animation Speed)", settings_menu_demo, 0, 0, 1},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);

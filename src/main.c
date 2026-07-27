@@ -61,14 +61,10 @@ void run_legacy_menu()
             "click 11 for job scheduling algorithms demo\n"
             "click 12 for string processing & compression algorithms demo\n"
             "click 13 for advanced heaps & priority queues suite demo\n"
-            "click 14 for cache replacement simulator demo\n"
+            "click 14 for Bit Manipulation demo\n"
             "click 15 for Developer Console & System Utilities\n"
-            "click 16 for Stochastic Fuzz Testing Engine demo\n"
-            "click 17 for Empirical Asymptotic Complexity Verifier (Big-O Engine) demo\n"
-            "click 18 for Bit Manipulation demo\n"
-            "click 19 for Standalone File Exporter Engine demo\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 19 /* limits */
+            1, 15 /* limits */
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -84,7 +80,79 @@ void run_legacy_menu()
         switch (choice)
         {
             case 1:
-                // data structures
+                while (1)
+                {
+                    int ds_type;
+                    int ds_status =
+                        safe_input_int(&ds_type,
+                                       "\n--- Core Data Structures ---\n"
+                                       "1. Linear Data Structures (SLL, DLL, Array, Queue, PQ)\n"
+                                       "2. Circular Data Structures (CQ, SCLL, DCLL, Deque)\n"
+                                       "\nenter choice (\'-1\' to exit) : ",
+                                       1, 2);
+                    if (ds_status == INPUT_EXIT_SIGNAL)
+                        break;
+                    if (ds_status == 0)
+                        continue;
+
+                    if (ds_type == 1)
+                    {
+                        while (1)
+                        {
+                            int lin_choice;
+                            int lin_status = safe_input_int(&lin_choice,
+                                                            "\n--- Linear Data Structures ---\n"
+                                                            "1. Singly Linked List\n"
+                                                            "2. Doubly Linked List\n"
+                                                            "3. Array\n"
+                                                            "4. Priority Queue\n"
+                                                            "5. Linear Queue\n"
+                                                            "\nenter choice (\'-1\' to exit) : ",
+                                                            1, 5);
+                            if (lin_status == INPUT_EXIT_SIGNAL)
+                                break;
+                            if (lin_status == 0)
+                                continue;
+                            if (lin_choice == 1)
+                                sll_demo();
+                            else if (lin_choice == 2)
+                                dll_demo();
+                            else if (lin_choice == 3)
+                                array_demo();
+                            else if (lin_choice == 4)
+                                priority_queue_demo();
+                            else if (lin_choice == 5)
+                                simple_queue_demo();
+                        }
+                    }
+                    else if (ds_type == 2)
+                    {
+                        while (1)
+                        {
+                            int circ_choice;
+                            int circ_status = safe_input_int(&circ_choice,
+                                                             "\n--- Circular Data Structures ---\n"
+                                                             "1. Circular Queue\n"
+                                                             "2. Singly Circular Linked List\n"
+                                                             "3. Doubly Circular Linked List\n"
+                                                             "4. Double-ended Queue\n"
+                                                             "\nenter choice (\'-1\' to exit) : ",
+                                                             1, 4);
+                            if (circ_status == INPUT_EXIT_SIGNAL)
+                                break;
+                            if (circ_status == 0)
+                                continue;
+                            if (circ_choice == 1)
+                                circular_queue_demo();
+                            else if (circ_choice == 2)
+                                scll_demo();
+                            else if (circ_choice == 3)
+                                dcll_demo();
+                            else if (circ_choice == 4)
+                                deque_demo();
+                        }
+                    }
+                }
                 break;
             case 2:
                 expression_evaluation_demo();
@@ -192,7 +260,7 @@ void run_legacy_menu()
                 advanced_heaps_demo();
                 break;
             case 14:
-                cache_simulator_demo();
+                bit_manipulation_demo();
                 break;
             case 15:
                 while (1)
@@ -205,8 +273,12 @@ void run_legacy_menu()
                                        "2. Interactive Step-Debugger\n"
                                        "3. Raw Memory Layout Inspector / Hexdump Visualizer\n"
                                        "4. System Settings (Animation Speed, Debugger toggles)\n"
+                                       "5. Cache Replacement Simulator\n"
+                                       "6. Stochastic Fuzz Testing Engine\n"
+                                       "7. Empirical Big-O Verifier\n"
+                                       "8. Standalone File Exporter Engine\n"
                                        "\nenter choice (\'-1\' to exit) : ",
-                                       1, 4);
+                                       1, 8);
                     if (dev_status == INPUT_EXIT_SIGNAL)
                         break;
                     if (dev_status == 0)
@@ -228,22 +300,27 @@ void run_legacy_menu()
                         display_header("Settings");
                         settings_menu_demo();
                     }
+                    else if (dev_choice == 5)
+                    {
+                        display_header("Cache Replacement Simulator");
+                        cache_simulator_demo();
+                    }
+                    else if (dev_choice == 6)
+                    {
+                        display_header("Stochastic Fuzz Testing Engine");
+                        fuzzer_demo();
+                    }
+                    else if (dev_choice == 7)
+                    {
+                        display_header("Empirical Big-O Verifier");
+                        bigo_verifier_demo();
+                    }
+                    else if (dev_choice == 8)
+                    {
+                        display_header("Standalone File Exporter Engine");
+                        file_exporter_demo();
+                    }
                 }
-                break;
-            case 16:
-                display_header("Stochastic Fuzz Testing Engine");
-                fuzzer_demo();
-                break;
-            case 17:
-                display_header("Empirical Big-O Verifier");
-                bigo_verifier_demo();
-                break;
-            case 18:
-                bit_manipulation_demo();
-                break;
-            case 19:
-                display_header("Standalone File Exporter Engine");
-                file_exporter_demo();
                 break;
         }
     }
