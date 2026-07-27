@@ -52,10 +52,46 @@ void test_bfs_disconnected()
     free_graph(graph);
 }
 
+void test_bfs_advanced_edge_cases()
+{
+    reset_printf_buf();
+
+    /* NULL graph pointer guard */
+    bfs(NULL, 0);
+
+    /* Single vertex graph with no edges */
+    Graph* graph_single = create_graph(1);
+    assert(graph_single != NULL);
+    bfs(graph_single, 0);
+    assert(strstr(g_printf_buf, "0->end") != NULL);
+    free_graph(graph_single);
+
+    /* Graph with self-loop */
+    reset_printf_buf();
+    Graph* graph_loop = create_graph(2);
+    assert(graph_loop != NULL);
+    add_edge_undirected(graph_loop, 0, 0);
+    add_edge_undirected(graph_loop, 0, 1);
+    bfs(graph_loop, 0);
+    assert(strstr(g_printf_buf, "0->1->end") != NULL);
+    free_graph(graph_loop);
+
+    /* Invalid start vertex index */
+    reset_printf_buf();
+    Graph* graph_inv = create_graph(3);
+    assert(graph_inv != NULL);
+    bfs(graph_inv, -1);
+    bfs(graph_inv, 10);
+    free_graph(graph_inv);
+
+    printf("BFS advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_bfs_simple();
     test_bfs_disconnected();
+    test_bfs_advanced_edge_cases();
 
     fprintf(stdout, "All BFS tests passed\n");
     return 0;
