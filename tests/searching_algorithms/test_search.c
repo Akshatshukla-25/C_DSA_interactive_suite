@@ -81,12 +81,63 @@ void test_jump_search()
     printf("Jump search tests passed\n");
 }
 
+void test_searching_advanced_edge_cases()
+{
+    /* Array with negative numbers */
+    int neg_arr[] = {-50, -30, -10, 0, 15, 45, 90};
+    int n = 7;
+    assert(linear_search(neg_arr, -30, n) == 1);
+    assert(binary_search(neg_arr, -30, n) == 1);
+    assert(interpolation_search(neg_arr, -30, n) == 1);
+    assert(jump_search(neg_arr, -30, n) == 1);
+
+    /* Target smaller than min element */
+    assert(linear_search(neg_arr, -100, n) == -1);
+    assert(binary_search(neg_arr, -100, n) == -1);
+    assert(interpolation_search(neg_arr, -100, n) == -1);
+    assert(jump_search(neg_arr, -100, n) == -1);
+
+    /* Target larger than max element */
+    assert(linear_search(neg_arr, 500, n) == -1);
+    assert(binary_search(neg_arr, 500, n) == -1);
+    assert(interpolation_search(neg_arr, 500, n) == -1);
+    assert(jump_search(neg_arr, 500, n) == -1);
+
+    /* Large uniform array */
+    int uniform[10] = {7, 7, 7, 7, 7, 7, 7, 7, 7, 7};
+    assert(linear_search(uniform, 7, 10) == 0);
+    assert(binary_search(uniform, 7, 10) >= 0);
+    assert(interpolation_search(uniform, 7, 10) >= 0);
+    assert(jump_search(uniform, 7, 10) >= 0);
+
+    /* Two element array */
+    int duo[2] = {10, 20};
+    assert(binary_search(duo, 10, 2) == 0);
+    assert(binary_search(duo, 20, 2) == 1);
+    assert(binary_search(duo, 15, 2) == -1);
+
+    /* Reverse sorted array searching */
+    int rev_search[] = {100, 80, 60, 40, 20, 0};
+    assert(linear_search(rev_search, 60, 6) == 2);
+    assert(linear_search(rev_search, 999, 6) == -1);
+
+    /* Single element array boundary checks */
+    int single_arr[] = {42};
+    assert(linear_search(single_arr, 42, 1) == 0);
+    assert(linear_search(single_arr, 99, 1) == -1);
+    assert(binary_search(single_arr, 42, 1) == 0);
+    assert(binary_search(single_arr, 99, 1) == -1);
+
+    printf("Searching advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_linear_search();
     test_binary_search();
     test_interpolation_search();
     test_jump_search();
+    test_searching_advanced_edge_cases();
     printf("All search tests passed\n");
     return 0;
 }
