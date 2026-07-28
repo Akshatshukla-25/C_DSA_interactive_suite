@@ -1,6 +1,6 @@
 // Trigger build test
+#include "segment_tree.h"
 #include "safe_input.h"
-#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 

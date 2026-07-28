@@ -1,6 +1,6 @@
+#include "avl.h"
 #include "safe_input.h"
 #include "serialization.h"
-#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
