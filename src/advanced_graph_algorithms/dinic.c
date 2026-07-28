@@ -58,7 +58,8 @@ static int dinic_dfs(int V, int** residual, int u, int sink, int flow, int* leve
 
 int dinic(weightedGraph* graph, int source, int sink)
 {
-    if (graph == NULL || source < 0 || source >= graph->V || sink < 0 || sink >= graph->V)
+    if (graph == NULL || source < 0 || source >= graph->V || sink < 0 || sink >= graph->V ||
+        source == sink)
         return 0;
 
     int V = graph->V;

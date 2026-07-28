@@ -31,11 +31,19 @@ typedef struct GanttSegment
 
 void job_scheduling_demo(void);
 void fcfs_demo(void);
+void fcfs_schedule(Process* procs, int n, GanttSegment* segments, int* segment_count);
 void sjf_demo(void);
+void sjf_schedule(Process* procs, int n, GanttSegment* segments, int* segment_count);
 void srtf_demo(void);
+void srtf_schedule(Process* procs, int n, GanttSegment* segments, int* segment_count);
 void priority_scheduling_demo(void);
+void priority_scheduling(Process* procs, int n, GanttSegment* segments, int* segment_count);
 void preemptive_priority_demo(void);
+void preemptive_priority_schedule(Process* procs, int n, GanttSegment* segments,
+                                  int* segment_count);
 void round_robin_demo(void);
+void round_robin_schedule(Process* procs, int n, int quantum, GanttSegment* segments,
+                          int* segment_count);
 
 #ifdef TEST_MOCK_SCHEDULING
 #define js_read_processes mock_js_read_processes
