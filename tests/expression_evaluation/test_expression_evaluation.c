@@ -67,11 +67,44 @@ void test_stack_operations()
     printf("--> test_stack_operations PASSED!\n");
 }
 
+void test_expression_advanced_edge_cases()
+{
+    printf("Running test_expression_advanced_edge_cases...\n");
+
+    /* Null and empty stack handling */
+    assert(isEmpty(NULL) == 1);
+    assert(push(NULL, (void*)(intptr_t)'x') == 0);
+    assert(pop(NULL) == NULL);
+    assert(peek(NULL) == NULL);
+    destroyStack(NULL, NULL);
+
+    /* Stack pushing multiple operators and order verification */
+    stack* s = createStack();
+    assert(s != NULL);
+
+    char ops[] = {'+', '-', '*', '/', '^'};
+    for (int i = 0; i < 5; i++)
+    {
+        assert(push(s, (void*)(intptr_t)ops[i]) == 1);
+        assert((char)(intptr_t)peek(s) == ops[i]);
+    }
+
+    for (int i = 4; i >= 0; i--)
+    {
+        assert((char)(intptr_t)pop(s) == ops[i]);
+    }
+    assert(isEmpty(s) == 1);
+
+    destroyStack(s, NULL);
+    printf("--> test_expression_advanced_edge_cases PASSED!\n");
+}
+
 int main()
 {
     test_isOperator();
     test_precedence();
     test_stack_operations();
+    test_expression_advanced_edge_cases();
     printf("All Expression Helper Tests Passed! \n");
     return 0;
 }

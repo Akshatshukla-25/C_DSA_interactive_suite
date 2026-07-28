@@ -331,6 +331,58 @@ void test_bucket_sort()
     printf("Bucket sort tests passed\n");
 }
 
+void test_sorting_advanced_edge_cases()
+{
+    /* All equal elements */
+    int eq[7] = {9, 9, 9, 9, 9, 9, 9};
+    quicksort(eq, 0, 6);
+    for (int i = 0; i < 7; i++)
+    {
+        assert(eq[i] == 9);
+    }
+
+    int eq_m[7] = {9, 9, 9, 9, 9, 9, 9};
+    merge_sort(eq_m, 7);
+    for (int i = 0; i < 7; i++)
+    {
+        assert(eq_m[i] == 9);
+    }
+
+    int eq_h[7] = {9, 9, 9, 9, 9, 9, 9};
+    heap_sort(eq_h, 7);
+    for (int i = 0; i < 7; i++)
+    {
+        assert(eq_h[i] == 9);
+    }
+
+    /* Reverse sorted array */
+    int rev[6] = {100, 80, 60, 40, 20, 0};
+    quicksort(rev, 0, 5);
+    for (int i = 0; i < 6; i++)
+    {
+        assert(rev[i] == i * 20);
+    }
+
+    int rev_m[6] = {100, 80, 60, 40, 20, 0};
+    merge_sort(rev_m, 6);
+    for (int i = 0; i < 6; i++)
+    {
+        assert(rev_m[i] == i * 20);
+    }
+
+    /* Negative number sorting */
+    int neg[5] = {-10, -50, 0, -5, -20};
+    quicksort(neg, 0, 4);
+    assert(neg[0] == -50 && neg[1] == -20 && neg[2] == -10 && neg[3] == -5 && neg[4] == 0);
+
+    int neg_m[5] = {-10, -50, 0, -5, -20};
+    merge_sort(neg_m, 5);
+    assert(neg_m[0] == -50 && neg_m[1] == -20 && neg_m[2] == -10 && neg_m[3] == -5 &&
+           neg_m[4] == 0);
+
+    printf("Sorting advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_quick_sort();
@@ -338,6 +390,7 @@ int main()
     test_heap_sort();
     test_radix_sort();
     test_bucket_sort();
+    test_sorting_advanced_edge_cases();
     printf("All advanced sorting tests passed\n");
     return 0;
 }

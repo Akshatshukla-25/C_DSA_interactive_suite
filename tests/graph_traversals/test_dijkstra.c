@@ -81,11 +81,56 @@ void test_dijkstra_out_of_bounds()
     free_weightedGraph(graph);
 }
 
+void test_dijkstra_advanced_edge_cases()
+{
+    reset_printf_buf();
+
+    /* NULL graph pointer guard */
+    dijkstra(NULL, 0);
+
+    /* Single vertex graph */
+    weightedGraph* graph_single = create_weightedGraph(1);
+    assert(graph_single != NULL);
+    dijkstra(graph_single, 0);
+    assert(strstr(g_printf_buf, "0 -> 0") != NULL);
+    assert(strstr(g_printf_buf, "0") != NULL);
+    free_weightedGraph(graph_single);
+
+    /* Graph with zero weight edge */
+    reset_printf_buf();
+    weightedGraph* graph_zero = create_weightedGraph(2);
+    assert(graph_zero != NULL);
+    add_edge_directed(graph_zero, 0, 1, 0);
+    dijkstra(graph_zero, 0);
+    assert(strstr(g_printf_buf, "0 -> 1") != NULL);
+    assert(strstr(g_printf_buf, "0") != NULL);
+    free_weightedGraph(graph_zero);
+
+    /* Invalid start vertex index bounds */
+    reset_printf_buf();
+    weightedGraph* graph_inv = create_weightedGraph(3);
+    assert(graph_inv != NULL);
+    dijkstra(graph_inv, -1);
+    dijkstra(graph_inv, 100);
+    free_weightedGraph(graph_inv);
+
+    /* Duplicate edges with different weights */
+    reset_printf_buf();
+    weightedGraph* graph_dup = create_weightedGraph(2);
+    assert(graph_dup != NULL);
+    add_edge_directed(graph_dup, 0, 1, 10);
+    add_edge_directed(graph_dup, 0, 1, 3);
+    dijkstra(graph_dup, 0);
+    assert(strstr(g_printf_buf, "0 -> 1") != NULL);
+    free_weightedGraph(graph_dup);
+}
+
 int main()
 {
     test_dijkstra_simple_path();
     test_dijkstra_unreachable();
     test_dijkstra_out_of_bounds();
+    test_dijkstra_advanced_edge_cases();
 
     // Use stdout here since we undefined printf mock
     fprintf(stdout, "All Dijkstra tests passed\n");

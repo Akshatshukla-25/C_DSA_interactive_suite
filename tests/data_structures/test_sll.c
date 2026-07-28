@@ -210,6 +210,45 @@ void test_delete_at_position()
     printf("sll Delete at position tests passed\n");
 }
 
+/* Advanced edge cases & null safety assertions */
+void test_sll_advanced_edge_cases()
+{
+    Node* head = NULL;
+
+    /* Search in empty list */
+    int key = 999;
+    assert(sll_search(head, &key, compare_ints) == -1);
+
+    /* Single element operations */
+    int* val100 = malloc(sizeof(int));
+    assert(val100 != NULL);
+    *val100 = 100;
+    assert(sll_insertAtBeginning(&head, val100) == 1);
+    assert(sll_search(head, &key, compare_ints) == -1);
+    assert(sll_search(head, val100, compare_ints) == 0);
+
+    /* Single element delete at position 0 */
+    assert(sll_deleteAtPosition(&head, 0, free) == 1);
+    assert(head == NULL);
+
+    /* Insert multiple and test boundary positions */
+    for (int i = 1; i <= 5; i++)
+    {
+        int* v = malloc(sizeof(int));
+        assert(v != NULL);
+        *v = i * 10;
+        assert(sll_insertAtEnd(&head, v) == 1);
+    }
+    int* val999 = malloc(sizeof(int));
+    assert(val999 != NULL);
+    *val999 = 999;
+    assert(sll_insertAtPosition(&head, val999, 100) == -2);
+    free(val999);
+
+    delete_sll(head, free);
+    printf("sll Advanced edge case tests passed\n");
+}
+
 /* Edge cases */
 void test_edge_cases()
 {
@@ -241,6 +280,7 @@ int main()
     test_insert_at_position();
     test_delete_at_position();
     test_edge_cases();
+    test_sll_advanced_edge_cases();
 
     printf("All SLL tests passed\n");
     return 0;

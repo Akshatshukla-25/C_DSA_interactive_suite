@@ -56,10 +56,36 @@ void test_dfs_disconnected()
     free_graph(graph);
 }
 
+void test_dfs_advanced_edge_cases()
+{
+    reset_printf_buf();
+
+    /* NULL graph pointer guard */
+    dfs(NULL, 0);
+
+    /* Single vertex graph */
+    Graph* graph_single = create_graph(1);
+    assert(graph_single != NULL);
+    dfs(graph_single, 0);
+    assert(strstr(g_printf_buf, "0->end") != NULL);
+    free_graph(graph_single);
+
+    /* Invalid start vertex index */
+    reset_printf_buf();
+    Graph* graph_inv = create_graph(3);
+    assert(graph_inv != NULL);
+    dfs(graph_inv, -1);
+    dfs(graph_inv, 100);
+    free_graph(graph_inv);
+
+    printf("DFS advanced edge case tests passed\n");
+}
+
 int main()
 {
     test_dfs_simple();
     test_dfs_disconnected();
+    test_dfs_advanced_edge_cases();
 
     fprintf(stdout, "All DFS tests passed\n");
     return 0;
