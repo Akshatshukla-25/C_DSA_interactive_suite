@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "tui.h"
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
 #include "advanced_sorting.h"
@@ -39,6 +38,7 @@
 #include "step_debugger.h"
 #include "string_algorithms.h"
 #include "trees.h"
+#include "tui.h"
 
 void probabilistic_ds_demo(void);
 
