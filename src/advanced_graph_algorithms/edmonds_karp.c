@@ -48,7 +48,8 @@ static bool bfs_augmenting_path(int V, int** residual, int source, int sink, int
 
 int edmonds_karp(weightedGraph* graph, int source, int sink)
 {
-    if (graph == NULL || source < 0 || source >= graph->V || sink < 0 || sink >= graph->V)
+    if (graph == NULL || source < 0 || source >= graph->V || sink < 0 || sink >= graph->V ||
+        source == sink)
         return 0;
 
     int V = graph->V;
