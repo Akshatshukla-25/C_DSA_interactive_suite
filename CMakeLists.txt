@@ -60,6 +60,7 @@ set(SRC_DIRS
     features/file_exporter
     src/bit_manipulation
     src/probabilistic_data_structures
+    demos/probabilistic_data_structures
 )
 
 # Header search paths
