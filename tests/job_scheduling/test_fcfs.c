@@ -5,121 +5,51 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Globals to feed input and collect output
-static Process g_input_procs[10];
-static int g_input_count = 0;
-static Process g_output_procs[10];
-static int g_output_count = 0;
-
-// Mock implementations of the interactive/UI functions
-int mock_js_read_processes(Process* procs, int* n, int need_priority)
-{
-    (void)need_priority;
-    for (int i = 0; i < g_input_count; i++)
-    {
-        procs[i] = g_input_procs[i];
-        procs[i].remaining = procs[i].burst;
-    }
-    *n = g_input_count;
-    return 1;
-}
-
-void mock_js_print_result(const Process* procs, int n)
-{
-    g_output_count = n;
-    for (int i = 0; i < n; i++)
-    {
-        g_output_procs[i] = procs[i];
-    }
-}
-
-void mock_js_print_gantt(const GanttSegment* segments, int count)
-{
-    (void)segments;
-    (void)count;
-}
-
-// Include the source file directly so the compiler compiles fcfs_demo
-// as part of this translation unit, bypassing duplicate symbol linking.
 #include "../../src/job_scheduling/fcfs.c"
 
-void test_fcfs_basic()
+void test_fcfs_basic(void)
 {
-    // Initialize input processes
-    g_input_count = 3;
+    Process procs[3] = {
+        {.id = 1, .arrival = 0, .burst = 5, .remaining = 5},
+        {.id = 2, .arrival = 2, .burst = 3, .remaining = 3},
+        {.id = 3, .arrival = 4, .burst = 1, .remaining = 1},
+    };
 
-    // Process 1: id=1, arrival=0, burst=5
-    g_input_procs[0].id = 1;
-    g_input_procs[0].arrival = 0;
-    g_input_procs[0].burst = 5;
-    g_input_procs[0].priority = 0;
+    GanttSegment segments[JS_MAX_SEGMENTS];
+    int segment_count = 0;
 
-    // Process 2: id=2, arrival=2, burst=3
-    g_input_procs[1].id = 2;
-    g_input_procs[1].arrival = 2;
-    g_input_procs[1].burst = 3;
-    g_input_procs[1].priority = 0;
+    fcfs_schedule(procs, 3, segments, &segment_count);
 
-    // Process 3: id=3, arrival=4, burst=1
-    g_input_procs[2].id = 3;
-    g_input_procs[2].arrival = 4;
-    g_input_procs[2].burst = 1;
-    g_input_procs[2].priority = 0;
+    assert(procs[0].completion == 5);
+    assert(procs[0].turnaround == 5);
+    assert(procs[0].waiting == 0);
 
-    // Run the scheduler demo (which will execute the mocked functions)
-    fcfs_demo();
+    assert(procs[1].completion == 8);
+    assert(procs[1].turnaround == 6);
+    assert(procs[1].waiting == 3);
 
-    // Assert results
-    assert(g_output_count == 3);
+    assert(procs[2].completion == 9);
+    assert(procs[2].turnaround == 5);
+    assert(procs[2].waiting == 4);
 
-    // FCFS execution order should be P1, P2, P3
-    // P1: starts at 0, finishes at 5. Wait = 0, Turnaround = 5
-    // P2: starts at 5, finishes at 8. Wait = 3, Turnaround = 6
-    // P3: starts at 8, finishes at 9. Wait = 4, Turnaround = 5
-
-    // Find and verify each process's computed values
-    for (int i = 0; i < g_output_count; i++)
-    {
-        if (g_output_procs[i].id == 1)
-        {
-            assert(g_output_procs[i].completion == 5);
-            assert(g_output_procs[i].turnaround == 5);
-            assert(g_output_procs[i].waiting == 0);
-        }
-        else if (g_output_procs[i].id == 2)
-        {
-            assert(g_output_procs[i].completion == 8);
-            assert(g_output_procs[i].turnaround == 6);
-            assert(g_output_procs[i].waiting == 3);
-        }
-        else if (g_output_procs[i].id == 3)
-        {
-            assert(g_output_procs[i].completion == 9);
-            assert(g_output_procs[i].turnaround == 5);
-            assert(g_output_procs[i].waiting == 4);
-        }
-    }
     printf("FCFS basic test passed\n");
 }
 
-void test_fcfs_zero_burst()
+void test_fcfs_zero_burst(void)
 {
-    // Initialize input processes
-    g_input_count = 1;
+    Process procs[1] = {
+        {.id = 1, .arrival = 0, .burst = 0, .remaining = 0},
+    };
 
-    g_input_procs[0].id = 1;
-    g_input_procs[0].arrival = 0;
-    g_input_procs[0].burst = 0;
-    g_input_procs[0].priority = 0;
+    GanttSegment segments[JS_MAX_SEGMENTS];
+    int segment_count = 0;
 
-    // Run the scheduler demo
-    fcfs_demo();
+    fcfs_schedule(procs, 1, segments, &segment_count);
 
-    // Assert results
-    assert(g_output_count == 1);
-    assert(g_output_procs[0].completion == 0);
-    assert(g_output_procs[0].turnaround == 0);
-    assert(g_output_procs[0].waiting == 0);
+    assert(procs[0].completion == 0);
+    assert(procs[0].turnaround == 0);
+    assert(procs[0].waiting == 0);
+
     printf("FCFS zero burst test passed\n");
 }
 
