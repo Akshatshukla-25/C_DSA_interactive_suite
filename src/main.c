@@ -39,6 +39,8 @@
 #include "string_algorithms.h"
 #include "trees.h"
 
+void probabilistic_ds_demo(void);
+
 void run_legacy_menu()
 {
     while (1)
@@ -63,8 +65,9 @@ void run_legacy_menu()
             "click 13 for advanced heaps & priority queues suite demo\n"
             "click 14 for Bit Manipulation demo\n"
             "click 15 for Developer Console & System Utilities\n"
+            "click 16 for Probabilistic Data Structures Module\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
-            1, 15 /* limits */
+            1, 16 /* limits */
         );
 
         if (status == INPUT_EXIT_SIGNAL)
@@ -321,6 +324,10 @@ void run_legacy_menu()
                         file_exporter_demo();
                     }
                 }
+                break;
+            case 16:
+                display_header("Probabilistic Data Structures Module");
+                probabilistic_ds_demo();
                 break;
         }
     }
