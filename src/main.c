@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "tui.h"
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
 #include "advanced_sorting.h"
@@ -364,7 +365,7 @@ void tui_menu()
                 run_legacy_menu();
                 break;
             case 2:
-                // future menu
+                tui_run();
                 break;
         }
     }
