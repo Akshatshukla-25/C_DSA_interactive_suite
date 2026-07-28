@@ -9,44 +9,9 @@
 // note: the time measured by clock() covers the scheduling computation only (it
 // starts after the quantum is read) and is for demonstration only, not a
 // measure of the algorithm's efficiency.
-void round_robin_demo(void)
+
+void round_robin_schedule(Process *procs, int n, int quantum, GanttSegment *segments, int *segment_count)
 {
-    Process procs[10];
-    int n;
-
-    if (!js_read_processes(procs, &n, 0))
-    {
-        printf("\nExiting round robin demo....\n");
-        return;
-    }
-
-    int quantum;
-
-    while (1)
-    {
-        int quantum_status =
-            safe_input_int(&quantum, "\nenter the time quantum (1 to 1000): ", 1, 1000);
-
-        if (quantum_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting round robin demo....\n");
-            return;
-        }
-        if (quantum_status == 0)
-        {
-            continue;
-        }
-        break;
-    }
-
-    clock_t start_t, end_t;
-    double total_t;
-
-    start_t = clock();
-
-    GanttSegment segments[JS_MAX_SEGMENTS];
-    int segment_count = 0;
-
     // circular ready queue: at most n processes are queued at once, so n + 1
     // slots are always enough no matter how many times a job is requeued.
     int queue[11];
@@ -99,7 +64,7 @@ void round_robin_demo(void)
 
             while (current_time < next_arrival)
             {
-                js_add_segment(segments, &segment_count, -1, current_time);
+                js_add_segment(segments, segment_count, -1, current_time);
                 current_time++;
             }
 
@@ -116,7 +81,7 @@ void round_robin_demo(void)
 
         for (int t = 0; t < slice; t++)
         {
-            js_add_segment(segments, &segment_count, procs[idx].id, current_time);
+            js_add_segment(segments, segment_count, procs[idx].id, current_time);
             current_time++;
         }
 
@@ -147,11 +112,4 @@ void round_robin_demo(void)
             completed++;
         }
     }
-
-    end_t = clock();
-    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-
-    js_print_result(procs, n);
-    js_print_gantt(segments, segment_count);
-    printf("\ntotal CPU time taken for round robin scheduling:- %f seconds\n", total_t);
 }
