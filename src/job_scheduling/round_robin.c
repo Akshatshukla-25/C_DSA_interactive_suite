@@ -10,7 +10,8 @@
 // starts after the quantum is read) and is for demonstration only, not a
 // measure of the algorithm's efficiency.
 
-void round_robin_schedule(Process *procs, int n, int quantum, GanttSegment *segments, int *segment_count)
+void round_robin_schedule(Process* procs, int n, int quantum, GanttSegment* segments,
+                          int* segment_count)
 {
     // circular ready queue: at most n processes are queued at once, so n + 1
     // slots are always enough no matter how many times a job is requeued.

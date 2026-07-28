@@ -8,7 +8,7 @@
 // note: the time measured by clock() covers the scheduling computation only and
 // is for demonstration only, not a measure of the algorithm's efficiency.
 
-void priority_scheduling(Process *procs, int n, GanttSegment *segments, int *segment_count)
+void priority_scheduling(Process* procs, int n, GanttSegment* segments, int* segment_count)
 {
     int done[10] = {0};
     int completed = 0;

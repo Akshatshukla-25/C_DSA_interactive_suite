@@ -20,7 +20,7 @@ void sjf_demo(void)
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
-    
+
     sjf_schedule(procs, n, segments, &segment_count);
 
     end_t = clock();

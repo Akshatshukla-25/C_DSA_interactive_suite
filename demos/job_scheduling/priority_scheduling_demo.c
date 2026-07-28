@@ -20,7 +20,7 @@ void priority_scheduling_demo(void)
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
-    
+
     priority_scheduling(procs, n, segments, &segment_count);
 
     end_t = clock();

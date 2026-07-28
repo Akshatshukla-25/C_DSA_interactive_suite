@@ -20,9 +20,9 @@ void srtf_demo(void)
 
     GanttSegment segments[JS_MAX_SEGMENTS];
     int segment_count = 0;
-    
+
     srtf_schedule(procs, n, segments, &segment_count);
-    
+
     end_t = clock();
     total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
 

@@ -10,7 +10,7 @@
 // note: the time measured by clock() covers the scheduling computation only and
 // is for demonstration only, not a measure of the algorithm's efficiency.
 
-void srtf_schedule(Process *procs, int n, GanttSegment *segments, int *segment_count)
+void srtf_schedule(Process* procs, int n, GanttSegment* segments, int* segment_count)
 {
     int completed = 0;
     int current_time = 0;

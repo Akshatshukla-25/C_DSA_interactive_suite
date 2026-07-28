@@ -10,7 +10,7 @@
 // printed). it is for demonstration only and must not be treated as a measure
 // of the algorithm's efficiency.
 
-void fcfs_schedule(Process *procs, int n, GanttSegment *segments, int *segment_count)
+void fcfs_schedule(Process* procs, int n, GanttSegment* segments, int* segment_count)
 {
     // Stable insertion sort to keep input order on ties
     for (int i = 1; i < n; i++)
