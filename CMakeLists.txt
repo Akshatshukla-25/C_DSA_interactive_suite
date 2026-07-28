@@ -59,6 +59,7 @@ set(SRC_DIRS
     features/bigo_verifier
     features/file_exporter
     src/bit_manipulation
+    src/probabilistic_data_structures
 )
 
 # Header search paths
