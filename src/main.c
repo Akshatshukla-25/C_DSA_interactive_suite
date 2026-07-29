@@ -41,6 +41,7 @@
 #include "tui.h"
 
 void probabilistic_ds_demo(void);
+void serialization_demo(void);
 
 void run_legacy_menu()
 {
@@ -281,8 +282,9 @@ void run_legacy_menu()
                                        "6. Stochastic Fuzz Testing Engine\n"
                                        "7. Empirical Big-O Verifier\n"
                                        "8. Standalone File Exporter Engine\n"
+                                       "9. State Serialization & Deserialization Engine\n"
                                        "\nenter choice (\'-1\' to exit) : ",
-                                       1, 8);
+                                       1, 9);
                     if (dev_status == INPUT_EXIT_SIGNAL)
                         break;
                     if (dev_status == 0)
@@ -323,6 +325,11 @@ void run_legacy_menu()
                     {
                         display_header("Standalone File Exporter Engine");
                         file_exporter_demo();
+                    }
+                    else if (dev_choice == 9)
+                    {
+                        display_header("State Serialization Engine");
+                        serialization_demo();
                     }
                 }
                 break;
