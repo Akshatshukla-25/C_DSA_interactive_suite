@@ -15,8 +15,10 @@ void dynamic_programming_demo(void)
                                    "\nenter 2 for Longest Common Subsequence (LCS) demo"
                                    "\nenter 3 for Fibonacci sequence demo"
                                    "\nenter 4 for Matrix Chain Multiplication (MCM) demo"
+                                   "\nenter 5 for Edit Distance (Levenshtein) demo"
+                                   "\nenter 6 for Coin Change demo"
                                    "\nenter choice (\'-1\' to exit, or \'help\') : ",
-                                   1, 4);
+                                   1, 6);
 
         if (dp_status == INPUT_EXIT_SIGNAL)
         {
@@ -44,6 +46,14 @@ void dynamic_programming_demo(void)
             case 4:
                 display_header("Matrix Chain Multiplication");
                 mcm_demo();
+                break;
+            case 5:
+                display_header("Edit Distance");
+                edit_distance_demo();
+                break;
+            case 6:
+                display_header("Coin Change");
+                coin_change_demo();
                 break;
         }
     }
