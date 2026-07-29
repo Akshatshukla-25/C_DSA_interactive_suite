@@ -62,6 +62,7 @@ set(SRC_DIRS
     src/bit_manipulation
     src/probabilistic_data_structures
     demos/probabilistic_data_structures
+    src/spatial_indexing
 )
 
 # Header search paths
