@@ -144,7 +144,7 @@ typedef struct
  */
 static Entry ENTRIES[] = {
     /* name                    fn          folder  expanded  depth */
-    {"Data Structures", NULL, 1, 1, 0},
+    {"Data Structures", NULL, 1, 0, 0},
     {"Linear Data Structures", NULL, 1, 0, 1},
     {"Singly Linked List", sll_demo, 0, 0, 2},
     {"Doubly Linked List", dll_demo, 0, 0, 2},
@@ -157,20 +157,20 @@ static Entry ENTRIES[] = {
     {"Doubly Circular Linked List", dcll_demo, 0, 0, 2},
     {"Double-ended Queue", deque_demo, 0, 0, 2},
 
-    {"Backtracking", NULL, 1, 1, 0},
+    {"Backtracking", NULL, 1, 0, 0},
     {"N queens", n_queens_demo, 0, 0, 1},
     {"Sudoku", sudoku_demo, 0, 0, 1},
     {"Rat in a Maze", rat_in_maze_demo, 0, 0, 1},
     {"Graph Coloring", graph_coloring_demo, 0, 0, 1},
     {"Knights Tour", knights_tour_demo, 0, 0, 1},
 
-    {"Dynamic Programming", NULL, 1, 1, 0},
+    {"Dynamic Programming", NULL, 1, 0, 0},
     {"Knapsack", knapsack_demo, 0, 0, 1},
     {"lcs", lcs_demo, 0, 0, 1},
     {"fibonacci", fibonacci_demo, 0, 0, 1},
     {"matrix Chain", mcm_demo, 0, 0, 1},
 
-    {"trees", NULL, 1, 1, 0},
+    {"trees", NULL, 1, 0, 0},
     {"Binary Search Tree", binary_search_tree_demo, 0, 0, 1},
     {"AVL Tree", avl_demo, 0, 0, 1},
     {"Threaded Binary Tree", TBT_demo, 0, 0, 1},
@@ -193,7 +193,7 @@ static Entry ENTRIES[] = {
     {"Radix Sort", radix_sort_demo, 0, 0, 2},
     {"Bucket Sort", bucket_sort_demo, 0, 0, 2},
 
-    {"searching_algorithms", NULL, 1, 1, 0},
+    {"searching_algorithms", NULL, 1, 0, 0},
     {"Linear Search", linear_search_demo_wrapper, 0, 0, 1},
     {"Binary Search", binary_search_demo_wrapper, 0, 0, 1},
     {"Binary Search (Recursive)", binary_search_recursive_demo, 0, 0, 1},
@@ -223,7 +223,7 @@ static Entry ENTRIES[] = {
     {"Bipartite Matching (Hopcroft-Karp)", hopcroft_karp_demo, 0, 0, 2},
     {"Eulerian Path", eulerian_path_demo, 0, 0, 2},
 
-    {"advanced_heaps", NULL, 1, 1, 0},
+    {"advanced_heaps", NULL, 1, 0, 0},
     {"Binomial Heap", run_binomial_demo, 0, 0, 1},
     {"Fibonacci Heap", run_fibonacci_demo, 0, 0, 1},
     {"Leftist Heap", run_leftist_demo, 0, 0, 1},
@@ -232,19 +232,19 @@ static Entry ENTRIES[] = {
     {"d-Ary Heap", run_dary_demo, 0, 0, 1},
     {"Treap", run_treap_demo, 0, 0, 1},
 
-    {"hashing", NULL, 1, 1, 0},
+    {"hashing", NULL, 1, 0, 0},
     {"Linear Probing", linear_probing_demo, 0, 0, 1},
     {"Separate Chaining", separate_chaining_demo, 0, 0, 1},
     {"Double Hashing", double_hashing_demo, 0, 0, 1},
     {"Quadratic Probing", quadratic_probing_demo, 0, 0, 1},
 
-    {"expression_evaluation", NULL, 1, 1, 0},
+    {"expression_evaluation", NULL, 1, 0, 0},
     {"Infix to Postfix", infix_to_postfix_demo, 0, 0, 1},
     {"Postfix Evaluation", postfix_evaluation_demo, 0, 0, 1},
     {"Parentheses Checker", parantheses_checker_demo, 0, 0, 1},
     {"Infix to Prefix", infix_to_prefix_demo, 0, 0, 1},
 
-    {"error_correction_algorithms", NULL, 1, 1, 0},
+    {"error_correction_algorithms", NULL, 1, 0, 0},
     {"Checksum (Sender)", checksum_demo, 0, 0, 1},
     {"Checksum (Receiver)", checksum_receiver_demo, 0, 0, 1},
     {"CRC (Sender)", crc_demo, 0, 0, 1},
@@ -257,7 +257,7 @@ static Entry ENTRIES[] = {
     {"Hamming Code (Sender)", hamming_demo, 0, 0, 1},
     {"Hamming Code (Receiver)", hamming_receiver_demo, 0, 0, 1},
 
-    {"job_scheduling", NULL, 1, 1, 0},
+    {"job_scheduling", NULL, 1, 0, 0},
     {"FCFS", fcfs_demo, 0, 0, 1},
     {"SJF", sjf_demo, 0, 0, 1},
     {"SRTF", srtf_demo, 0, 0, 1},
@@ -265,22 +265,22 @@ static Entry ENTRIES[] = {
     {"Preemptive Priority", preemptive_priority_demo, 0, 0, 1},
     {"Round Robin", round_robin_demo, 0, 0, 1},
 
-    {"process_synchronization", NULL, 1, 1, 0},
+    {"process_synchronization", NULL, 1, 0, 0},
     {"Producer-Consumer", producer_consumer_demo, 0, 0, 1},
     {"Dining Philosophers", dining_philosophers_demo, 0, 0, 1},
     {"Peterson's Algorithm", petersons_algorithm_demo, 0, 0, 1},
 
-    {"string_algorithms", NULL, 1, 1, 0},
+    {"string_algorithms", NULL, 1, 0, 0},
     {"Naive String Matching", naive_string_matching_demo, 0, 0, 1},
     {"KMP Search", kmp_demo, 0, 0, 1},
     {"Rabin-Karp Search", rabin_karp_demo, 0, 0, 1},
     {"Suffix Array & Kasai's LCP", suffix_array_demo, 0, 0, 1},
     {"String Compression", compression_demo, 0, 0, 1},
 
-    {"Bit Manipulation", NULL, 1, 1, 0},
+    {"Bit Manipulation", NULL, 1, 0, 0},
     {"Bit Manipulation Demo", bit_manipulation_demo, 0, 0, 1},
 
-    {"Developer Utilities", NULL, 1, 1, 0},
+    {"Developer Utilities", NULL, 1, 0, 0},
     {"algorithm_benchmarks", NULL, 1, 0, 1},
     {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 2},
     {"Searching Benchmarks", run_searching_benchmark_wrapper, 0, 0, 2},
@@ -295,8 +295,7 @@ static Entry ENTRIES[] = {
     {"Backtracking", run_backtracking_benchmark_wrapper, 0, 0, 2},
     {"Advanced Heaps Benchmark", run_heaps_benchmark_wrapper, 0, 0, 2},
 
-    {"algorithm_step_debugger", NULL, 1, 0, 1},
-    {"Interactive Debugger Demo", debugger_demo, 0, 0, 2},
+    {"Algorithm Step Debugger", debugger_demo, 0, 0, 1},
     {"Memory Layout Inspector", memory_inspector_demo, 0, 0, 1},
     {"Cache Replacement Simulator", cache_simulator_demo, 0, 0, 1},
     {"Stochastic Fuzz Testing", fuzzer_demo, 0, 0, 1},

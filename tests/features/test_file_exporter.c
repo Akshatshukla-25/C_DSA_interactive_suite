@@ -58,7 +58,7 @@ void test_structure_exporters(void)
 
     assert(export_bst(".", "./test_export/bst_out") == true);
     check_file_exists("./test_export/bst_out/bst.c");
-    check_file_exists("./test_export/bst_out/trees.h");
+    check_file_exists("./test_export/bst_out/bst.h");
 
     assert(export_circular_queue(".", "./test_export/queue_out") == true);
     check_file_exists("./test_export/queue_out/circular_queue.c");
@@ -75,7 +75,7 @@ void test_advanced_data_structure_exporters(void)
 {
     assert(export_avl(".", "./test_export/avl_out") == true);
     check_file_exists("./test_export/avl_out/avl.c");
-    check_file_exists("./test_export/avl_out/trees.h");
+    check_file_exists("./test_export/avl_out/avl.h");
 
     assert(export_heaps(".", "./test_export/heaps_out") == true);
     check_file_exists("./test_export/heaps_out/priority_queue.c");

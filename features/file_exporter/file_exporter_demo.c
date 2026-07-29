@@ -61,7 +61,7 @@ void file_exporter_demo(void)
                 success = export_dll(".", dest_dir);
                 break;
             case 3:
-                target_name = "Binary Search Tree (bst.c / trees.h)";
+                target_name = "Binary Search Tree (bst.c / bst.h)";
                 success = export_bst(".", dest_dir);
                 break;
             case 4:
@@ -73,7 +73,7 @@ void file_exporter_demo(void)
                 success = export_stack(".", dest_dir);
                 break;
             case 6:
-                target_name = "AVL Tree (avl.c / trees.h)";
+                target_name = "AVL Tree (avl.c / avl.h)";
                 success = export_avl(".", dest_dir);
                 break;
             case 7:
