@@ -23,7 +23,8 @@ static int bst_value_width(const bstNode* root)
     if (width < 1)
         width = 1;
 
-    return bst_max_int(width, bst_max_int(bst_value_width(root->left), bst_value_width(root->right)));
+    return bst_max_int(width,
+                       bst_max_int(bst_value_width(root->left), bst_value_width(root->right)));
 }
 
 static void bst_fill_row(char* row, int width)
@@ -46,8 +47,8 @@ static void bst_place_text(char* row, int width, int center, const char* text)
         row[start + i] = text[i];
 }
 
-static void bst_render_ascii(const bstNode* node, int level, int left, int right,
-                             char** rows, int row_count, int width)
+static void bst_render_ascii(const bstNode* node, int level, int left, int right, char** rows,
+                             int row_count, int width)
 {
     if (node == NULL || level * 2 >= row_count || left > right)
         return;
