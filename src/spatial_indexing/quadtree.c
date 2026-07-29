@@ -112,10 +112,11 @@ static bool node_insert(QuadTreeNode* node, double x, double y, void* data)
         for (size_t i = 0; i < node->count; i++)
         {
             QuadPoint pt = node->points[i];
-            node_insert(node->nw, pt.x, pt.y, pt.data) ||
-                node_insert(node->ne, pt.x, pt.y, pt.data) ||
-                node_insert(node->sw, pt.x, pt.y, pt.data) ||
-                node_insert(node->se, pt.x, pt.y, pt.data);
+            bool redistributed = node_insert(node->nw, pt.x, pt.y, pt.data) ||
+                                 node_insert(node->ne, pt.x, pt.y, pt.data) ||
+                                 node_insert(node->sw, pt.x, pt.y, pt.data) ||
+                                 node_insert(node->se, pt.x, pt.y, pt.data);
+            (void)redistributed;
         }
         node->count = 0;
     }
