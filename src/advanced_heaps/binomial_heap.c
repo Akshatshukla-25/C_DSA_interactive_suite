@@ -262,11 +262,14 @@ BinomialNode* binomial_heap_find_node(BinomialNode* head, int key)
         return head;
     }
 
-    /* Search the child subtree */
-    BinomialNode* res = binomial_heap_find_node(head->child, key);
-    if (res != NULL)
+    /* Search the child subtree only if head->key < key (min-heap property) */
+    if (head->key < key)
     {
-        return res;
+        BinomialNode* res = binomial_heap_find_node(head->child, key);
+        if (res != NULL)
+        {
+            return res;
+        }
     }
 
     /* Search the sibling list */

@@ -1,4 +1,4 @@
-#include "trees.h"
+#include "bst.h"
 #include <assert.h>
 #include <stdio.h>
 

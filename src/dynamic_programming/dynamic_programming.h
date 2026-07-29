@@ -16,4 +16,11 @@ long long fibonacci_iterative(int n);
 int matrix_chain_order(int p[], int n);
 void mcm_demo(void);
 
+void edit_distance_demo(void);
+int edit_distance(char* word1, char* word2, int m, int n);
+
+void coin_change_demo(void);
+int coin_change_min_coins(int coins[], int n, int amount);
+int coin_change_ways(int coins[], int n, int amount);
+
 #endif // DYNAMIC_PROGRAMMING_H

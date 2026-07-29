@@ -1,5 +1,5 @@
 #include "safe_input.h"
-#include "trees.h"
+#include "segment_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 

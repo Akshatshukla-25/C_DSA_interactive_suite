@@ -1,5 +1,5 @@
+#include "fenwick_tree.h"
 #include "safe_input.h"
-#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -52,10 +52,16 @@ void fenwick_range_update(FenwickTree* ft, int l, int r, int delta)
         return;
     int n = ft->size;
     fenwick_point_update(ft->BIT1, n, l, delta);
-    fenwick_point_update(ft->BIT1, n, r + 1, -delta);
+    if (r + 1 <= n)
+    {
+        fenwick_point_update(ft->BIT1, n, r + 1, -delta);
+    }
 
     fenwick_point_update(ft->BIT2, n, l, delta * (l - 1));
-    fenwick_point_update(ft->BIT2, n, r + 1, -delta * r);
+    if (r + 1 <= n)
+    {
+        fenwick_point_update(ft->BIT2, n, r + 1, -delta * r);
+    }
 }
 
 // Point query on a single BIT

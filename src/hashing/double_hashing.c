@@ -44,8 +44,13 @@ static int second_hash(int value, int length_of_array)
 
 bool double_hashing_insert(int arr[], int length_of_array, int value)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return false;
+    }
+
     int h1 = hash_function(value, length_of_array);
-    if (h1 == -1)
+    if (h1 < 0)
     {
         return false;
     }
@@ -54,9 +59,13 @@ bool double_hashing_insert(int arr[], int length_of_array, int value)
 
     for (int i = 0; i < length_of_array; i++)
     {
-        int probe_location = (h1 + i * h2) % length_of_array;
+        int probe_location = (int)(((long long)h1 + (long long)i * h2) % length_of_array);
+        if (probe_location < 0)
+        {
+            probe_location += length_of_array;
+        }
 
-        if (!arr[probe_location])
+        if (arr[probe_location] == 0)
         {
             arr[probe_location] = value;
             return true;
@@ -68,9 +77,13 @@ bool double_hashing_insert(int arr[], int length_of_array, int value)
 
 int double_hashing_search(int arr[], int length_of_array, int search_val)
 {
-    int h1 = hash_function(search_val, length_of_array);
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return -1;
+    }
 
-    if (h1 == -1)
+    int h1 = hash_function(search_val, length_of_array);
+    if (h1 < 0)
     {
         return -1;
     }
@@ -79,14 +92,18 @@ int double_hashing_search(int arr[], int length_of_array, int search_val)
 
     for (int i = 0; i < length_of_array; i++)
     {
-        int probe_location = (h1 + i * h2) % length_of_array;
+        int probe_location = (int)(((long long)h1 + (long long)i * h2) % length_of_array);
+        if (probe_location < 0)
+        {
+            probe_location += length_of_array;
+        }
 
         if (arr[probe_location] == search_val)
         {
             return probe_location;
         }
 
-        if (!arr[probe_location])
+        if (arr[probe_location] == 0)
         {
             break;
         }

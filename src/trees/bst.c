@@ -1,5 +1,5 @@
+#include "bst.h"
 #include "safe_input.h"
-#include "trees.h"
 #include <stdio.h>
 #include <stdlib.h>
 int deletionStrategy = 1;

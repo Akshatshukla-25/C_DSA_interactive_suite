@@ -1,7 +1,7 @@
 #ifndef MWST_UTILS_H
 #define MWST_UTILS_H
 
-#include "trees.h"
+#include "bplus_tree.h"
 
 /* -------------------------------------------------------
  * Shared utilities for multi-way search trees

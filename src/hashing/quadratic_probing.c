@@ -7,15 +7,21 @@
 
 bool quadratic_probing_insert(int arr[], int length_of_array, int value)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return false;
+    }
+
     int base_hash_location = hash_function(value, length_of_array);
-    if (base_hash_location == -1)
+    if (base_hash_location < 0)
     {
         return false;
     }
 
     for (int i = 0; i < length_of_array; i++)
     {
-        int probe_location = (base_hash_location + i * i) % length_of_array;
+        int probe_location =
+            (int)(((long long)base_hash_location + (long long)i * i) % length_of_array);
 
         if (!arr[probe_location])
         {
@@ -28,15 +34,21 @@ bool quadratic_probing_insert(int arr[], int length_of_array, int value)
 
 int quadratic_probing_search(int arr[], int length_of_array, int search_val)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return -1;
+    }
+
     int base_hash_location = hash_function(search_val, length_of_array);
-    if (base_hash_location == -1)
+    if (base_hash_location < 0)
     {
         return -1;
     }
 
     for (int i = 0; i < length_of_array; i++)
     {
-        int probe_location = (base_hash_location + i * i) % length_of_array;
+        int probe_location =
+            (int)(((long long)base_hash_location + (long long)i * i) % length_of_array);
 
         if (arr[probe_location] == search_val)
         {
