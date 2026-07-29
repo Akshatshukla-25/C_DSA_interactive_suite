@@ -32,7 +32,8 @@ static void counting_sort(int arr[], int n, int exp, SortingTelemetry* telemetry
 
     for (int i = 0; i < n; i++)
     {
-        count[(arr[i] / exp) % 10]++;
+        int digit = abs((arr[i] / exp) % 10);
+        count[digit]++;
     }
 
     for (int i = 1; i < 10; i++)
@@ -42,9 +43,10 @@ static void counting_sort(int arr[], int n, int exp, SortingTelemetry* telemetry
 
     for (int i = n - 1; i >= 0; i--)
     {
-        output[count[(arr[i] / exp) % 10] - 1] = arr[i];
+        int digit = abs((arr[i] / exp) % 10);
+        output[count[digit] - 1] = arr[i];
         sorting_telemetry_add_copy(telemetry, 1);
-        count[(arr[i] / exp) % 10]--;
+        count[digit]--;
     }
 
     for (int i = 0; i < n; i++)
