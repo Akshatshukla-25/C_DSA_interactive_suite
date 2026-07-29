@@ -1,4 +1,4 @@
-#include "trees.h"
+#include "segment_tree.h"
 #include <assert.h>
 #include <stdio.h>
 

@@ -1,5 +1,5 @@
 #include "display_header.h"
-#include "trees.h"
+#include "splay_tree.h"
 #include <stdio.h>
 #include <stdlib.h>
 
