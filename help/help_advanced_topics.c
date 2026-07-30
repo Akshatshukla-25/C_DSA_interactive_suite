@@ -115,32 +115,7 @@ void help_advanced_topics_menu(void)
                 break;
 
             case 3:
-                display_header("Help - Process Sync & Job Scheduling");
-                printf("PROCESS SYNCHRONIZATION:\n");
-                printf("    • Peterson's Algorithm: Software-based solution to critical section "
-                       "problem.\n");
-                printf("    • Producer-Consumer Problem using semaphores.\n");
-                printf("    • Dining Philosophers: Classic synchronization problem.\n\n");
-                printf("JOB SCHEDULING:\n");
-                printf("    • FCFS (First Come First Served), SJF (Shortest Job First),\n");
-                printf("      Priority, and Round Robin CPU scheduling.\n");
-                printf("    • SRTF (Shortest Remaining Time First): Preemptive version of SJF.\n");
-                printf("      Preempts the running process if a new process has a shorter "
-                       "remaining burst time.\n");
-                printf(
-                    "      - Real-World Use: Minimizes average waiting time in CPU schedulers.\n");
-                printf("    • Preemptive Priority Scheduling: Preempts the running process if a "
-                       "newly\n");
-                printf("      arrived process has a higher priority.\n");
-                printf("      - Real-World Use: Used in Real-Time Operating Systems (RTOS) for "
-                       "critical tasks.\n\n");
-                printf("HOW TO RUN IN THIS SUITE:\n");
-                printf("    1. Exit to the main menu and select option 10 (Job Scheduling).\n");
-                printf("    2. Choose 3 for SRTF, or 5 for Preemptive Priority Scheduling.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
-                press_enter_to_continue();
+                help_process_synchronization_menu();
                 break;
 
             case 4:
