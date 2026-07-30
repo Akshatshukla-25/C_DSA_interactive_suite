@@ -82,6 +82,10 @@ int rle_decode(const char* input, int len, char* output, int out_max)
         while (i < len && isdigit((unsigned char)input[i]))
         {
             count = count * 10 + (input[i] - '0');
+            if (count > out_max)
+            {
+                return -1;
+            }
             i++;
         }
 
