@@ -15,6 +15,9 @@ void scc_demo(void);
 void tarjan_scc_demo(void);
 void kosaraju_scc_demo(void);
 
+// ------------------For Network Vulnerabilities-----------------------------
+bool* find_articulation_points(Graph* graph, int* count);
+
 // ------------------For Maximum Flow-----------------------------------------
 int ford_fulkerson(weightedGraph* graph, int source, int sink);
 int edmonds_karp(weightedGraph* graph, int source, int sink);
@@ -39,6 +42,7 @@ void bipartite_matching_demo(void);
 void dinic_bipartite_matching_demo(void);
 void hopcroft_karp_demo(void);
 void eulerian_path_demo(void);
+void articulation_points_demo(void);
 void advanced_graph_algorithms_demo(void);
 
 #endif
