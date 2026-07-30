@@ -47,4 +47,9 @@ void help_error_correction_menu(void);
  */
 void bit_manipulation_help(void);
 
+/**
+ * @brief Sub-menu for Process Synchronization help.
+ */
+void help_process_synchronization_menu(void);
+
 #endif // HELP_H
