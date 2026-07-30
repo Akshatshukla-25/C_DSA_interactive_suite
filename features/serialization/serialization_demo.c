@@ -89,13 +89,15 @@ void serialization_demo(void)
     while (1)
     {
         display_header("State Serialization & Deserialization Engine");
-        printf("1. BST & AVL Tree Serialization / Deserialization Demo\n");
-        printf("2. Graph Serialization / Deserialization Demo\n");
-        printf("3. Inspect Serialized File Payloads & Integrity\n");
-        printf("-1. Return to Main Menu\n");
 
         int choice;
-        int status = safe_input_int(&choice, "\nEnter choice: ", 1, 3);
+        int status =
+            safe_input_int(&choice,
+                           "\nclick 1 for BST & AVL Tree Serialization / Deserialization Demo"
+                           "\nclick 2 for Graph Serialization / Deserialization Demo"
+                           "\nclick 3 for Inspect Serialized File Payloads & Integrity"
+                           "\nenter choice (\'-1\' to exit) : ",
+                           1, 3);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
