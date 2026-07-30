@@ -19,6 +19,11 @@
 
 int interpolation_search(int arr[], int target, int length_of_array)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return -1;
+    }
+
     int low = 0;
     int high = length_of_array - 1;
 
@@ -36,8 +41,9 @@ int interpolation_search(int arr[], int target, int length_of_array)
             return -1;
         }
 
-        int pos =
-            low + (int)(((double)(high - low) / (arr[high] - arr[low])) * (target - arr[low]));
+        double num = (double)(high - low) * ((double)target - (double)arr[low]);
+        double den = (double)arr[high] - (double)arr[low];
+        int pos = low + (int)(num / den);
 
         if (arr[pos] == target)
             return pos;

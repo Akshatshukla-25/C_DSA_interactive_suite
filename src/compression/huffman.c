@@ -105,16 +105,24 @@ HuffmanNode* build_huffman_tree(const char* input)
     if (heap.size == 1)
     {
         HuffmanNode* leaf = heap_pop(&heap);
+        HuffmanNode* dummy = malloc(sizeof(HuffmanNode));
         HuffmanNode* parent = malloc(sizeof(HuffmanNode));
-        if (parent == NULL)
+        if (parent == NULL || dummy == NULL)
         {
             free(leaf);
+            free(dummy);
+            free(parent);
             return NULL;
         }
+        dummy->ch = '\0';
+        dummy->freq = 0;
+        dummy->left = NULL;
+        dummy->right = NULL;
+
         parent->ch = '\0';
         parent->freq = leaf->freq;
         parent->left = leaf;
-        parent->right = NULL;
+        parent->right = dummy;
         return parent;
     }
 
