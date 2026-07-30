@@ -3,6 +3,11 @@
 
 bool cache_access_lru(Cache* cache, int page_id, bool is_write)
 {
+    if (cache == NULL || cache->capacity <= 0 || cache->blocks == NULL)
+    {
+        return false;
+    }
+
     cache_normalize_access_counter(cache);
     cache->access_counter++;
 
