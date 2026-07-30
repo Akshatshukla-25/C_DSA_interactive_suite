@@ -2,9 +2,135 @@
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 int deletionStrategy = 1;
 #define SUCCESSOR 1
 #define PREDECESSOR 2
+#define BST_ASCII_MAX_HEIGHT 6
+
+static int bst_max_int(int a, int b)
+{
+    return (a > b) ? a : b;
+}
+
+static int bst_value_width(const bstNode* root)
+{
+    if (root == NULL)
+        return 1;
+
+    char buffer[32];
+    int width = snprintf(buffer, sizeof(buffer), "%d", root->data);
+    if (width < 1)
+        width = 1;
+
+    return bst_max_int(width,
+                       bst_max_int(bst_value_width(root->left), bst_value_width(root->right)));
+}
+
+static void bst_fill_row(char* row, int width)
+{
+    memset(row, ' ', (size_t)width);
+    row[width] = '\0';
+}
+
+static void bst_place_text(char* row, int width, int center, const char* text)
+{
+    int text_width = (int)strlen(text);
+    int start = center - (text_width / 2);
+
+    if (start < 0)
+        start = 0;
+    if (start + text_width > width)
+        start = width - text_width;
+
+    for (int i = 0; i < text_width && start + i < width; i++)
+        row[start + i] = text[i];
+}
+
+static void bst_render_ascii(const bstNode* node, int level, int left, int right, char** rows,
+                             int row_count, int width)
+{
+    if (node == NULL || level * 2 >= row_count || left > right)
+        return;
+
+    int center = (left + right) / 2;
+    char buffer[32];
+    snprintf(buffer, sizeof(buffer), "%d", node->data);
+    bst_place_text(rows[level * 2], width, center, buffer);
+
+    int connector_row = level * 2 + 1;
+    if (connector_row < row_count)
+    {
+        if (node->left != NULL)
+        {
+            int left_center = (left + center - 1) / 2;
+            int slash_position = (center + left_center) / 2;
+            if (slash_position >= 0 && slash_position < width)
+                rows[connector_row][slash_position] = '/';
+        }
+        if (node->right != NULL)
+        {
+            int right_center = (center + 1 + right) / 2;
+            int slash_position = (center + right_center) / 2;
+            if (slash_position >= 0 && slash_position < width)
+                rows[connector_row][slash_position] = '\\';
+        }
+    }
+
+    bst_render_ascii(node->left, level + 1, left, center - 1, rows, row_count, width);
+    bst_render_ascii(node->right, level + 1, center + 1, right, rows, row_count, width);
+}
+
+void bst_print_ascii(const bstNode* root)
+{
+    if (root == NULL)
+    {
+        printf("Tree is empty\n");
+        return;
+    }
+
+    int height = tree_height(root);
+    if (height > BST_ASCII_MAX_HEIGHT)
+    {
+        printf("Tree is too tall to render as ASCII (max supported height: %d)\n",
+               BST_ASCII_MAX_HEIGHT);
+        return;
+    }
+
+    int value_width = bst_value_width(root) + 2;
+    int row_count = (height * 2) - 1;
+    int width = (1 << height) * value_width;
+
+    char** rows = malloc((size_t)row_count * sizeof(char*));
+    if (rows == NULL)
+    {
+        printf("Tree is too large to render\n");
+        return;
+    }
+
+    for (int i = 0; i < row_count; i++)
+    {
+        rows[i] = malloc((size_t)width + 1);
+        if (rows[i] == NULL)
+        {
+            for (int j = 0; j < i; j++)
+                free(rows[j]);
+            free(rows);
+            printf("Tree is too large to render\n");
+            return;
+        }
+        bst_fill_row(rows[i], width);
+    }
+
+    bst_render_ascii(root, 0, 0, width - 1, rows, row_count, width);
+
+    for (int i = 0; i < row_count; i++)
+    {
+        printf("%s\n", rows[i]);
+        free(rows[i]);
+    }
+    free(rows);
+}
 
 // insert function returns -1 on malloc failure, 0 when value already exists in the tree and 1 on
 // successful insertion

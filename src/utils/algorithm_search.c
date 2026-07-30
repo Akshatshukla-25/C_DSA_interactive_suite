@@ -1,4 +1,6 @@
 #include "algorithm_search.h"
+#include "display_header.h"
+#include "safe_input.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -104,9 +106,6 @@ size_t search_algorithms(const char* query, const AlgorithmEntry** results, size
     return found;
 }
 
-#include "display_header.h"
-#include "safe_input.h"
-
 void run_algorithm_search_menu(void)
 {
     display_header("Interactive Algorithm Quick-Search Finder");
@@ -116,6 +115,7 @@ void run_algorithm_search_menu(void)
         safe_input_string(query, "\nEnter search keyword (e.g. 'dijkstra', 'avl', 'sort'): ");
     if (status == INPUT_EXIT_SIGNAL || strlen(query) == 0)
     {
+        printf("\nExiting interactive algorithm finder...\n");
         return;
     }
 
@@ -125,6 +125,7 @@ void run_algorithm_search_menu(void)
     if (count == 0)
     {
         printf("\nNo algorithms matching '%s' were found in the registry.\n", query);
+        printf("\nExiting interactive algorithm finder...\n");
         return;
     }
 
@@ -140,6 +141,7 @@ void run_algorithm_search_menu(void)
                             (int)count);
     if (status == INPUT_EXIT_SIGNAL || choice < 1 || (size_t)choice > count)
     {
+        printf("\nExiting interactive algorithm finder...\n");
         return;
     }
 
