@@ -103,3 +103,49 @@ size_t search_algorithms(const char* query, const AlgorithmEntry** results, size
 
     return found;
 }
+
+#include "display_header.h"
+#include "safe_input.h"
+
+void run_algorithm_search_menu(void)
+{
+    display_header("Interactive Algorithm Quick-Search Finder");
+
+    char query[64] = {0};
+    int status =
+        safe_input_string(query, "\nEnter search keyword (e.g. 'dijkstra', 'avl', 'sort'): ");
+    if (status == INPUT_EXIT_SIGNAL || strlen(query) == 0)
+    {
+        return;
+    }
+
+    const AlgorithmEntry* results[20];
+    size_t count = search_algorithms(query, results, 20);
+
+    if (count == 0)
+    {
+        printf("\nNo algorithms matching '%s' were found in the registry.\n", query);
+        return;
+    }
+
+    printf("\nFound %zu matching algorithm demo(s):\n", count);
+    for (size_t i = 0; i < count; i++)
+    {
+        printf("  %zu. %s [%s] (Menu Option %d)\n", i + 1, results[i]->name, results[i]->category,
+               results[i]->menu_option);
+    }
+
+    int choice;
+    status = safe_input_int(&choice, "\nSelect algorithm number to launch demo (-1 to cancel): ", 1,
+                            (int)count);
+    if (status == INPUT_EXIT_SIGNAL || choice < 1 || (size_t)choice > count)
+    {
+        return;
+    }
+
+    printf("\nLaunching '%s' demo...\n\n", results[choice - 1]->name);
+    if (results[choice - 1]->demo_fn)
+    {
+        results[choice - 1]->demo_fn();
+    }
+}

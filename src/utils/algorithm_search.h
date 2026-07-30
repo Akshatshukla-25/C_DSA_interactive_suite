@@ -36,4 +36,9 @@ const AlgorithmRegistry* get_algorithm_registry(void);
  */
 size_t search_algorithms(const char* query, const AlgorithmEntry** results, size_t max_results);
 
+/**
+ * @brief Interactive CLI search interface allowing users to find and launch algorithm demos directly.
+ */
+void run_algorithm_search_menu(void);
+
 #endif // ALGORITHM_SEARCH_H
