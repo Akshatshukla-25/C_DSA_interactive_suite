@@ -46,6 +46,8 @@ void binary_search_tree_demo(void)
                 continue;
             }
             printf("\nBST loaded successfully from '%s'.\n", path);
+            printf("\nBST shape:\n");
+            bst_print_ascii(head);
         }
         else
         {
@@ -100,6 +102,8 @@ void binary_search_tree_demo(void)
                 }
                 i++;
                 total_bst_nodes--;
+                printf("\nBST shape after insertion:\n");
+                bst_print_ascii(head);
             }
         }
 
@@ -168,6 +172,8 @@ void binary_search_tree_demo(void)
                 printf("\nnode deleted. updated inorder traversal: ");
                 bst_inorder(head);
                 printf("\n");
+                printf("BST shape after deletion:\n");
+                bst_print_ascii(head);
             }
             else if (bst_traversal_choice == 6)
             {

@@ -14,6 +14,7 @@ typedef struct bstNode
 
 void binary_search_tree_demo(void);
 void bst_level_order(struct bstNode* head);
+void bst_print_ascii(const bstNode* root);
 int bst_insert(bstNode** head_ref, int value);
 void bst_inorder(const bstNode* head);
 void bst_preorder(const bstNode* head);
