@@ -46,6 +46,7 @@ void hopcroft_karp_demo(void);
 void eulerian_path_demo(void);
 void articulation_points_demo(void);
 void bridges_demo(void);
+void network_vulnerability_demo(void);
 void advanced_graph_algorithms_demo(void);
 
 #endif
