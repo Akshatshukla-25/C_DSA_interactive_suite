@@ -74,11 +74,19 @@ void mcm_demo(void);
 void edit_distance_demo(void);
 void coin_change_demo(void);
 
+void probabilistic_ds_demo(void);
+void bloom_filter_demo(void);
+void count_min_sketch_demo(void);
+void hyperloglog_demo(void);
+
+void spatial_indexing_demo(void);
+void kd_tree_demo(void);
+void quadtree_demo(void);
+void rtree_demo(void);
+
 void searching_algorithms_demo(void);
 void compression_demo(void);
 void string_algorithms_demo(void);
-void probabilistic_ds_demo(void);
-void spatial_indexing_demo(void);
 
 static const AlgorithmEntry GLOBAL_ALGORITHM_TABLE[] = {
     /* Trees Category */
@@ -217,15 +225,34 @@ static const AlgorithmEntry GLOBAL_ALGORITHM_TABLE[] = {
     {"Dynamic Programming Algorithms Suite", "Dynamic Programming",
      "knapsack lcs mcm fibonacci coin change edit distance dp", 8, dynamic_programming_demo},
 
-    /* Other Category Modules */
+    /* Probabilistic Data Structures Category */
+    {"Bloom Filter Set Membership Demo", "Probabilistic DS",
+     "bloom filter fnv hash set membership false positive rate probabilistic", 16,
+     bloom_filter_demo},
+    {"Count-Min Sketch Frequency Estimator Demo", "Probabilistic DS",
+     "count min sketch frequency estimator sublinear heavy hitter probabilistic", 16,
+     count_min_sketch_demo},
+    {"HyperLogLog Cardinality Estimator Demo", "Probabilistic DS",
+     "hyperloglog hll cardinality estimator unique count harmonic mean probabilistic", 16,
+     hyperloglog_demo},
+    {"Probabilistic Data Structures Suite", "Probabilistic DS",
+     "bloom filter count min sketch hyperloglog hll probabilistic", 16, probabilistic_ds_demo},
+
+    /* Spatial Indexing Category */
+    {"k-d Tree Multi-Dimensional Point Indexing Demo", "Spatial Indexing",
+     "kd kdtree k-d tree point indexing nearest neighbor range search spatial", 17, kd_tree_demo},
+    {"QuadTree 2D Spatial Partitioning Demo", "Spatial Indexing",
+     "quadtree 2d spatial partitioning bounding box point region spatial", 17, quadtree_demo},
+    {"R-Tree Minimum Bounding Rectangle (MBR) Demo", "Spatial Indexing",
+     "rtree r-tree minimum bounding rectangle mbr spatial indexing range search", 17, rtree_demo},
+    {"Spatial & Multi-Dimensional Indexing Suite", "Spatial Indexing",
+     "kd kdtree quadtree rtree spatial 2d mbr point range search", 17, spatial_indexing_demo},
+
+    /* Searching & Compression Suites */
     {"Searching Algorithms Suite (Binary, Linear, Jump, Interpolation)", "Searching",
      "binary linear interpolation jump exponential search", 4, searching_algorithms_demo},
-    {"String Processing & Compression Algorithms", "String & Compression",
-     "huffman rle lzw bwt kmp rabin karp string compression", 12, compression_demo},
-    {"Probabilistic Data Structures (Bloom, CM-Sketch, HLL)", "Probabilistic DS",
-     "bloom filter count min sketch hyperloglog hll probabilistic", 16, probabilistic_ds_demo},
-    {"Spatial & Multi-Dimensional Indexing (k-d Tree, QuadTree, R-Tree)", "Spatial Indexing",
-     "kd kdtree quadtree rtree spatial 2d mbr point range search", 17, spatial_indexing_demo}};
+    {"String Processing & Compression Algorithms Suite", "String & Compression",
+     "huffman rle lzw bwt kmp rabin karp string compression", 12, compression_demo}};
 
 static const AlgorithmRegistry GLOBAL_REGISTRY = {
     GLOBAL_ALGORITHM_TABLE, sizeof(GLOBAL_ALGORITHM_TABLE) / sizeof(GLOBAL_ALGORITHM_TABLE[0])};
@@ -305,8 +332,8 @@ void run_algorithm_search_menu(void)
         return;
     }
 
-    const AlgorithmEntry* results[50];
-    size_t count = search_algorithms(query, results, 50);
+    const AlgorithmEntry* results[60];
+    size_t count = search_algorithms(query, results, 60);
 
     if (count == 0)
     {
