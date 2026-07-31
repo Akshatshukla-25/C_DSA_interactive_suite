@@ -152,3 +152,15 @@ add_custom_target(valgrind
     COMMENT "Running Valgrind memory checks on all tests..."
 )
 
+# Doxygen API Documentation target
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen..."
+        VERBATIM
+    )
+endif()
+
+

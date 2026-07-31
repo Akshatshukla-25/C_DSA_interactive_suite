@@ -5,7 +5,7 @@ bool cache_access_fifo(Cache* cache, int page_id, bool is_write)
 {
     /* Guard against NULL cache or zero capacity: would dereference blocks[]
      * and cause division-by-zero in fifo_index % capacity. */
-    if (!cache || cache->capacity == 0)
+    if (!cache || cache->capacity <= 0)
     {
         return false;
     }
