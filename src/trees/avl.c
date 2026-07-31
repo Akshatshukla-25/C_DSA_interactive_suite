@@ -28,6 +28,10 @@ int avl_balance_factor(const avlNode* node)
 /* Right rotates subtree rooted with y */
 static avlNode* right_rotate(avlNode* y)
 {
+    if (y == NULL || y->left == NULL)
+    {
+        return y;
+    }
     avlNode* x = y->left;
     avlNode* T2 = x->right;
 
@@ -45,6 +49,10 @@ static avlNode* right_rotate(avlNode* y)
 /* Left rotates subtree rooted with x */
 static avlNode* left_rotate(avlNode* x)
 {
+    if (x == NULL || x->right == NULL)
+    {
+        return x;
+    }
     avlNode* y = x->right;
     avlNode* T2 = y->left;
 

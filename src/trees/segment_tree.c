@@ -122,7 +122,7 @@ void update_point(SegmentTree* st, int node, int start, int end, int idx, int va
 
 int query_range(SegmentTree* st, int node, int start, int end, int l, int r)
 {
-    if (r < start || end < l)
+    if (l > r || r < start || end < l)
         return 0;
     if (l <= start && end <= r)
         return st->tree[node];
