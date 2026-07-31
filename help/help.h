@@ -28,6 +28,11 @@ void help_graphs_trees_menu(void);
 void help_advanced_topics_menu(void);
 
 /**
+ * @brief Sub-menu for Dynamic Programming help.
+ */
+void help_dynamic_programming_menu(void);
+
+/**
  * @brief Sub-menu for Expression Evaluation help.
  */
 void help_expression_evaluation_menu(void);
