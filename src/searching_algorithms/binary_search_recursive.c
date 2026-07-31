@@ -9,7 +9,7 @@ int binary_search_recursive(int arr[], int target, int low, int high);
 // low and high carry the shrinking search window, so the demo starts it with 0 and length - 1.
 int binary_search_recursive(int arr[], int target, int low, int high)
 {
-    if (low > high) // base case: empty window, target is not present
+    if (arr == NULL || low < 0 || low > high) // base case: empty or invalid window
     {
         return -1;
     }

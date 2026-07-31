@@ -23,8 +23,11 @@ void advanced_graph_algorithms_demo(void)
                                     "6. Dinic Bipartite Matching\n"
                                     "7. Hopcroft-Karp Bipartite Matching\n"
                                     "8. Eulerian Path\n"
+                                    "9. Articulation Points Analysis\n"
+                                    "10. Bridges (Critical Edges) Analysis\n"
+                                    "11. Network Vulnerability Simulator\n"
                                     "\nenter choice (\'-1\' to exit, or \'help\') : ",
-                                    1, 8);
+                                    1, 11);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -70,6 +73,18 @@ void advanced_graph_algorithms_demo(void)
             case 8:
                 display_header("Eulerian Path");
                 eulerian_path_demo();
+                break;
+            case 9:
+                display_header("Articulation Points");
+                articulation_points_demo();
+                break;
+            case 10:
+                display_header("Bridges Analysis");
+                bridges_demo();
+                break;
+            case 11:
+                display_header("Network Simulator");
+                network_vulnerability_demo();
                 break;
         }
     }

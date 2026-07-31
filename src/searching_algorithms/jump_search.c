@@ -46,12 +46,16 @@ static int integer_sqrt(int n)
 
 int jump_search(int arr[], int target, int length_of_array)
 {
-    if (length_of_array <= 0)
+    if (arr == NULL || length_of_array <= 0)
     {
         return -1;
     }
 
     int step = integer_sqrt(length_of_array);
+    if (step <= 0)
+    {
+        step = 1;
+    }
     int prev = 0;
 
     while (arr[prev + step - 1 < length_of_array ? prev + step - 1 : length_of_array - 1] < target)
