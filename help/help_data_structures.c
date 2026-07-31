@@ -42,9 +42,7 @@ void help_data_structures_menu(void)
                 printf("    • Insert (Beginning, Middle, End)\n");
                 printf("    • Delete (Beginning, Middle, End)\n");
                 printf("    • Search & Traverse\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -82,9 +80,7 @@ void help_data_structures_menu(void)
                 printf("OPERATIONS:\n");
                 printf("    • Insertion & Deletion at arbitrary positions\n");
                 printf("    • Reverse Traversal\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -105,9 +101,7 @@ void help_data_structures_menu(void)
                        "structures.\n");
                 printf("    Just like the DLL, you pass helper callbacks for printing, searching, "
                        "and freeing memory.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -149,9 +143,7 @@ void help_data_structures_menu(void)
                 printf("    • Use Deques for undo/redo browser history trackers, and work-stealing "
                        "job processor queues.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -163,9 +155,7 @@ void help_data_structures_menu(void)
                 printf("PRIORITY QUEUE:\n");
                 printf("    A queue where each element has a priority. Implemented here using a "
                        "Binary Heap structure.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }

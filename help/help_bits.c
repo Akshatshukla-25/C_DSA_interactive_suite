@@ -48,8 +48,6 @@ void bit_manipulation_help(void)
     printf("    1. Exit to the main menu and select option 18.\n");
     printf("    2. Choose from the sub-menu to visualize algorithms.\n\n");
 
-    printf("========================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("========================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }

@@ -32,9 +32,7 @@ static void show_overview_help(void)
     printf(
         "      their critical sections after a process requests entry, preventing starvation.\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -70,9 +68,7 @@ static void show_producer_consumer_help(void)
     printf("HOW TO RUN IN THIS SUITE:\n");
     printf("    Main Menu ➔ Option 9 (OS Algorithms) ➔ Option 2 (Process Sync) ➔ Demo 1\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -112,9 +108,7 @@ static void show_dining_philosophers_help(void)
     printf("HOW TO RUN IN THIS SUITE:\n");
     printf("    Main Menu ➔ Option 9 (OS Algorithms) ➔ Option 2 (Process Sync) ➔ Demo 2\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -151,9 +145,7 @@ static void show_petersons_algorithm_help(void)
     printf("HOW TO RUN IN THIS SUITE:\n");
     printf("    Main Menu ➔ Option 9 (OS Algorithms) ➔ Option 2 (Process Sync) ➔ Demo 3\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -190,9 +182,7 @@ static void show_deadlock_starvation_help(void)
         "    • Starvation Avoidance: Aging (gradually increasing process priority as it waits)\n");
     printf("      and Fair FIFO Request Queues for semaphores/locks.\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 

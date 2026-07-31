@@ -50,9 +50,7 @@ void help_hashing_menu(void)
                 printf(
                     "    Since multiple keys cannot occupy the same slot, collision resolution\n");
                 printf("    methods are required to handle this.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -73,9 +71,7 @@ void help_hashing_menu(void)
                 printf("    • Suffers from Primary Clustering (long contiguous runs of occupied "
                        "slots\n");
                 printf("      forming, which increases search times).\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -95,9 +91,7 @@ void help_hashing_menu(void)
                 printf(
                     "    • Worst-case search time degrades to O(N) if all elements hash to the\n");
                 printf("      same slot (forming a single long linked list).\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -118,9 +112,7 @@ void help_hashing_menu(void)
                 printf("      index will follow the exact same probe sequence).\n");
                 printf("    • Table size must be a prime number to guarantee finding a free "
                        "slot.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -139,9 +131,7 @@ void help_hashing_menu(void)
                 printf("    • Virtually eliminates both Primary and Secondary Clustering.\n");
                 printf("    • Provides excellent distribution of keys.\n");
                 printf("    • Slightly higher computation overhead due to two hash functions.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -196,9 +186,7 @@ void help_hashing_menu(void)
                 printf("    • Database Indexes and Routers often use Double Hashing or Linear "
                        "Probing\n");
                 printf("      for fast, fixed-size hardware-friendly caches.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }

@@ -77,9 +77,7 @@ void help_advanced_topics_menu(void)
                 printf("HOW TO RUN IN THIS SUITE:\n");
                 printf("    • Backtracking: Main Menu ➔ Option 11.\n");
                 printf("    • Dynamic Programming: Main Menu ➔ Option 12.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -114,9 +112,7 @@ void help_advanced_topics_menu(void)
                 printf("HOW TO RUN IN THIS SUITE:\n");
                 printf("    • String Algorithms: Main Menu ➔ Option 13.\n");
                 printf("    • String Compression: Main Menu ➔ Option 18.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -159,9 +155,7 @@ void help_advanced_topics_menu(void)
                 printf("STEP-DEBUGGER:\n");
                 printf("    Interactive tool to run algorithms step-by-step to examine variable "
                        "changes and pointer updates.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 

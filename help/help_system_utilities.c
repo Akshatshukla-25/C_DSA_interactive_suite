@@ -14,14 +14,17 @@ static void display_telemetry_help(void)
            " 1. SORTING TELEMETRY DASHBOARD\n"
            "================================================================================\n"
            " Concept:\n"
-           "   Tracks real-time algorithmic operations, comparisons, swaps, and execution timers.\n"
-           "   - Features: Real-time swap counters, time-series metrics, comparative dashboards.\n\n"
+           "   Tracks real-time algorithmic operations, comparisons, swaps, and execution\n"
+           "   timers.\n"
+           "   - Features: Real-time swap counters, time-series metrics, comparative\n"
+           "     dashboards.\n\n"
            "================================================================================\n"
            " 2. MEMORY INSPECTOR & PROFILER\n"
            "================================================================================\n"
            " Concept:\n"
            "   Intercepts malloc/free allocations to audit heap usage and detect memory leaks.\n"
-           "   - Features: Active allocation tracking, byte leakage alerts, pointer inspection.\n\n"
+           "   - Features: Active allocation tracking, byte leakage alerts, pointer\n"
+           "     inspection.\n\n"
            " Press [ENTER] to return to System Utilities Help Menu...");
     getchar();
 }
@@ -35,8 +38,8 @@ static void display_serialization_help(void)
            " STATE SERIALIZATION & DESERIALIZATION\n"
            "================================================================================\n"
            " Concept:\n"
-           "   Serializes live in-memory data structures (BST, AVL Trees, Graphs) to binary payload\n"
-           "   files on disk and restores exact state during application execution.\n"
+           "   Serializes live in-memory data structures (BST, AVL Trees, Graphs) to binary\n"
+           "   payload files on disk and restores exact state during application execution.\n"
            "   - Supported Structures: Binary Search Trees, AVL Trees, Weighted Graphs.\n"
            "   - Data Integrity: Checksum-verified binary payloads.\n\n"
            " Press [ENTER] to return to System Utilities Help Menu...");

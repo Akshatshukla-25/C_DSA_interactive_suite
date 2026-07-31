@@ -41,9 +41,7 @@ void help_expression_evaluation_menu(void)
                        "binary operators),\n");
                 printf("      evaluate the result, and push the result back onto Stack.\n");
                 printf("    • The final result will be the single value left on Stack.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
             case 2:
@@ -64,9 +62,7 @@ void help_expression_evaluation_menu(void)
                        "operands (e.g., + A B).\n");
                 printf("    Achieved by reversing the infix expression, converting it, and "
                        "reversing the result.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -88,9 +84,7 @@ void help_expression_evaluation_menu(void)
                 printf("    • After checking the entire string, the Stack must be empty.\n");
                 printf("      If it is not empty, some opening parentheses were never "
                        "matched/closed.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }
