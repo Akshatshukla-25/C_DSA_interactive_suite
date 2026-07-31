@@ -46,6 +46,8 @@
 
 void probabilistic_ds_demo(void);
 void spatial_indexing_demo(void);
+void fenwick_tree_demo(void);
+void splay_tree_demo(void);
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
 typedef void (*demo_fn)(void);
@@ -187,6 +189,8 @@ static Entry ENTRIES[] = {
     {"B+ Tree", bplus_tree_demo, 0, 0, 1},
     {"Segment Tree", segment_tree_demo, 0, 0, 1},
     {"Red-Black Tree", red_black_tree_demo, 0, 0, 1},
+    {"Fenwick Tree (BIT)", fenwick_tree_demo, 0, 0, 1},
+    {"Splay Tree", splay_tree_demo, 0, 0, 1},
 
     {"Sorting Algorithms", NULL, 1, 0, 0},
     {"O(N^2) Family", NULL, 1, 0, 1},
