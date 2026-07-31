@@ -3,6 +3,10 @@
 
 bool cache_access_clock(Cache* cache, int page_id, bool is_write)
 {
+    if (cache == NULL || cache->capacity <= 0)
+    {
+        return false;
+    }
     cache->access_counter++;
 
     // Search for page in the cache (Hit check)
@@ -69,6 +73,10 @@ bool cache_access_clock(Cache* cache, int page_id, bool is_write)
 
 bool cache_access_enhanced_clock(Cache* cache, int page_id, bool is_write)
 {
+    if (cache == NULL || cache->capacity <= 0)
+    {
+        return false;
+    }
     cache->access_counter++;
 
     // Search for page in the cache (Hit check)

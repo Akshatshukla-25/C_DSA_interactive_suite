@@ -397,6 +397,24 @@ void run_cache_fuzz(FuzzerState* fuzzer, int ops)
         cache_access_opt(&cache_opt, page_id, ref_str, ref_len, i, is_write);
     }
 
+    // Verify hit/miss telemetry sums up to total operations
+    assert(cache_fifo.hits + cache_fifo.misses == ops);
+    assert(cache_lru.hits + cache_lru.misses == ops);
+    assert(cache_mru.hits + cache_mru.misses == ops);
+    assert(cache_lfu.hits + cache_lfu.misses == ops);
+    assert(cache_clock.hits + cache_clock.misses == ops);
+    assert(cache_eclock.hits + cache_eclock.misses == ops);
+    assert(cache_opt.hits + cache_opt.misses == ops);
+
+    // Verify LFU aging bounds frequency (should never exceed 16 since it halves every 8 accesses)
+    for (int i = 0; i < capacity; i++)
+    {
+        if (cache_lfu.blocks[i].is_valid)
+        {
+            assert(cache_lfu.blocks[i].frequency <= 16);
+        }
+    }
+
     free(ref_str);
 }
 
