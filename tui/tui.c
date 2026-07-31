@@ -7,6 +7,7 @@
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
 #include "advanced_sorting.h"
+#include "algorithm_search.h"
 #include "array.h"
 #include "backtracking.h"
 #include "benchmark.h"
@@ -34,6 +35,7 @@
 #include "safe_input.h"
 #include "scll.h"
 #include "searching_algorithms.h"
+#include "serialization_demo.h"
 #include "sll.h"
 #include "sorting_algorithms_n2.h"
 #include "stack.h"
@@ -43,6 +45,9 @@
 #include "tui.h"
 
 /* ── types ──────────────────────────────────────────────────────────────────── */
+void probabilistic_ds_demo(void);
+void spatial_indexing_demo(void);
+
 typedef void (*demo_fn)(void);
 
 // for non void return type demos
@@ -169,6 +174,9 @@ static Entry ENTRIES[] = {
     {"lcs", lcs_demo, 0, 0, 1},
     {"fibonacci", fibonacci_demo, 0, 0, 1},
     {"matrix Chain", mcm_demo, 0, 0, 1},
+    {"Edit Distance", edit_distance_demo, 0, 0, 1},
+    {"Coin Change", coin_change_demo, 0, 0, 1},
+    {"Travelling Salesperson Problem", tsp_demo, 0, 0, 1},
 
     {"trees", NULL, 1, 0, 0},
     {"Binary Search Tree", binary_search_tree_demo, 0, 0, 1},
@@ -178,6 +186,8 @@ static Entry ENTRIES[] = {
     {"B-Tree", btree_demo, 0, 0, 1},
     {"B+ Tree", bplus_tree_demo, 0, 0, 1},
     {"Segment Tree", segment_tree_demo, 0, 0, 1},
+    {"Fenwick Tree (BIT)", fenwick_tree_demo, 0, 0, 1},
+    {"Splay Tree", splay_tree_demo, 0, 0, 1},
     {"Red-Black Tree", red_black_tree_demo, 0, 0, 1},
 
     {"Sorting Algorithms", NULL, 1, 0, 0},
@@ -222,6 +232,9 @@ static Entry ENTRIES[] = {
     {"Bipartite Matching (Dinic)", dinic_bipartite_matching_demo, 0, 0, 2},
     {"Bipartite Matching (Hopcroft-Karp)", hopcroft_karp_demo, 0, 0, 2},
     {"Eulerian Path", eulerian_path_demo, 0, 0, 2},
+    {"Articulation Points", articulation_points_demo, 0, 0, 2},
+    {"Bridges Analysis", bridges_demo, 0, 0, 2},
+    {"Network Simulator", network_vulnerability_demo, 0, 0, 2},
 
     {"advanced_heaps", NULL, 1, 0, 0},
     {"Binomial Heap", run_binomial_demo, 0, 0, 1},
@@ -301,7 +314,12 @@ static Entry ENTRIES[] = {
     {"Stochastic Fuzz Testing", fuzzer_demo, 0, 0, 1},
     {"Empirical Big-O Verifier", bigo_verifier_demo, 0, 0, 1},
     {"Standalone File Exporter", file_exporter_demo, 0, 0, 1},
+    {"State Serialization Engine", serialization_demo, 0, 0, 1},
     {"System Settings (Animation Speed)", settings_menu_demo, 0, 0, 1},
+
+    {"Probabilistic Data Structures", probabilistic_ds_demo, 0, 0, 0},
+    {"Spatial Indexing Module", spatial_indexing_demo, 0, 0, 0},
+    {"Interactive Algorithm Quick-Search", run_algorithm_search_menu, 0, 0, 0},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);
