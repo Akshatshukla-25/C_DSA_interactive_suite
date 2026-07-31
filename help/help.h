@@ -72,4 +72,9 @@ void help_advanced_graphs_menu(void);
  */
 void help_system_utilities_menu(void);
 
+/**
+ * @brief Sub-menu for Cache Replacement Simulator help.
+ */
+void help_cache_simulator_menu(void);
+
 #endif // HELP_H
