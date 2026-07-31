@@ -5,6 +5,10 @@
 bool cache_access_opt(Cache* cache, int page_id, const int* ref_str, int ref_len, int current_idx,
                       bool is_write)
 {
+    if (cache == NULL || cache->capacity <= 0)
+    {
+        return false;
+    }
     cache_normalize_access_counter(cache);
     cache->access_counter++;
 

@@ -391,6 +391,129 @@ void test_enhanced_clock_advanced()
     printf("Enhanced Clock advanced cache tests passed\n");
 }
 
+void test_cache_edge_cases()
+{
+    // 1. Zero-capacity cache configurations
+    {
+        Cache cache;
+        cache_init(&cache, 3);
+        cache.capacity = 0; // Manually set to 0
+
+        int ref_str[] = {1, 2, 3};
+        assert(!cache_access_fifo(&cache, 1, false));
+        assert(!cache_access_lru(&cache, 1, false));
+        assert(!cache_access_mru(&cache, 1, false));
+        assert(!cache_access_lfu(&cache, 1, false));
+        assert(!cache_access_opt(&cache, 1, ref_str, 3, 0, false));
+        assert(!cache_access_clock(&cache, 1, false));
+        assert(!cache_access_enhanced_clock(&cache, 1, false));
+    }
+
+    // 2. Uniform reference strings (multiple consecutive hits on the same page)
+    {
+        Cache cache;
+        cache_init(&cache, 3);
+        assert(!cache_access_fifo(&cache, 1, false));
+        assert(cache_access_fifo(&cache, 1, false));
+        assert(cache_access_fifo(&cache, 1, false));
+        assert(cache.hits == 2);
+        assert(cache.misses == 1);
+
+        cache_init(&cache, 3);
+        assert(!cache_access_lru(&cache, 1, false));
+        assert(cache_access_lru(&cache, 1, false));
+        assert(cache_access_lru(&cache, 1, false));
+        assert(cache.hits == 2);
+
+        cache_init(&cache, 3);
+        assert(!cache_access_mru(&cache, 1, false));
+        assert(cache_access_mru(&cache, 1, false));
+        assert(cache_access_mru(&cache, 1, false));
+        assert(cache.hits == 2);
+
+        cache_init(&cache, 3);
+        assert(!cache_access_lfu(&cache, 1, false));
+        assert(cache_access_lfu(&cache, 1, false));
+        assert(cache_access_lfu(&cache, 1, false));
+        assert(cache.hits == 2);
+    }
+
+    // 3. Strict LRU tie-breaking logic in LFU eviction
+    {
+        Cache cache;
+        cache_init(&cache, 3);
+        // Fill cache
+        assert(!cache_access_lfu(&cache, 1, false)); // accessed at time 1
+        assert(!cache_access_lfu(&cache, 2, false)); // accessed at time 2
+        assert(!cache_access_lfu(&cache, 3, false)); // accessed at time 3
+
+        // Page 1 and 2 get hits (freq becomes 2)
+        assert(cache_access_lfu(&cache, 1, false)); // time 4
+        assert(cache_access_lfu(&cache, 2, false)); // time 5
+
+        // Current state:
+        // Page 1: freq 2, time 4
+        // Page 2: freq 2, time 5
+        // Page 3: freq 1, time 3
+
+        // Evict 3 because it has minimum frequency (1 vs 2)
+        assert(!cache_access_lfu(
+            &cache, 4, false)); // time 6 (evicts 3, page 4 is inserted with freq 1, time 6)
+
+        // Make page 4 hit so it also has frequency 2
+        assert(cache_access_lfu(&cache, 4, false)); // time 7 (freq 2, time 7)
+
+        // State now:
+        // Page 1: freq 2, time 4
+        // Page 2: freq 2, time 5
+        // Page 4: freq 2, time 7
+        // All have same frequency (2). Page 1 is the oldest (time 4 < 5 < 7).
+
+        // Evict 1
+        assert(!cache_access_lfu(&cache, 5, false));
+
+        bool found_1 = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (cache.blocks[i].page_id == 1)
+                found_1 = true;
+        }
+        assert(!found_1);
+    }
+
+    // 4. Clock pointer circular wrap-around safety
+    {
+        Cache cache;
+        cache_init(&cache, 3);
+        // Hand starts at 0
+        assert(!cache_access_clock(&cache, 1, false)); // [1(ref=1), -, -], hand = 0
+        assert(!cache_access_clock(&cache, 2, false)); // [1, 2(ref=1), -], hand = 0
+        assert(!cache_access_clock(&cache, 3, false)); // [1, 2, 3(ref=1)], hand = 0
+
+        // Clock hand does not advance on standard insertion unless cache is full.
+        // Let's check hand is still 0
+        assert(cache.fifo_index == 0);
+
+        // Access 4: cache is full. Hand is at 0.
+        // Hand scans 0 (page 1, ref 1 -> 0), advances to 1
+        // Hand scans 1 (page 2, ref 1 -> 0), advances to 2
+        // Hand scans 2 (page 3, ref 1 -> 0), advances to 0 (wrap-around)
+        // Hand scans 0 (page 1, ref 0 -> evict), replaces, advances to 1
+        assert(!cache_access_clock(&cache, 4, false));
+        assert(cache.fifo_index == 1);
+
+        bool found_1 = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (cache.blocks[i].page_id == 1)
+                found_1 = true;
+        }
+        assert(!found_1);
+    }
+
+    printf("Cache simulator edge case tests passed\n");
+}
+
 int main()
 {
     test_fifo_basic();
@@ -401,6 +524,7 @@ int main()
     test_clock_basic();
     test_enhanced_clock_basic();
     test_enhanced_clock_advanced();
+    test_cache_edge_cases();
     printf("All cache simulator tests passed\n");
     return 0;
 }
