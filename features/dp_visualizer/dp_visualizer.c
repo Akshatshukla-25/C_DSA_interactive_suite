@@ -491,3 +491,59 @@ void visualize_mcm_tables(const int* m, const int* s, int n, int active_i, int a
 
     dynamic_sleep();
 }
+
+void visualize_dp_bitmask(int mask, int pos, int cost, int N)
+{
+    if (!is_terminal_interactive())
+    {
+        return;
+    }
+
+    printf("\033[H\033[J");
+    printf("\n=== TSP DP Bitmask Visualizer ===\n\n");
+
+    printf("State: [ mask: \033[1;36m");
+    for (int i = N - 1; i >= 0; i--)
+    {
+        if ((mask & (1 << i)))
+        {
+            printf("1");
+        }
+        else
+        {
+            printf("0");
+        }
+    }
+    printf("\033[0m, pos: \033[1;33m%d\033[0m ]\n", pos);
+
+    printf("Visited Cities: ");
+    int first = 1;
+    for (int i = 0; i < N; i++)
+    {
+        if ((mask & (1 << i)))
+        {
+            if (!first)
+            {
+                printf(", ");
+            }
+            printf("%d", i);
+            first = 0;
+        }
+    }
+    printf("\n");
+
+    printf("Current Minimum Cost: ");
+    if (cost >= 999999999)
+    {
+        printf("\033[1;31mINF\033[0m\n");
+    }
+    else
+    {
+        printf("\033[1;32m%d\033[0m\n", cost);
+    }
+
+    printf("\n-----------------------------------\n");
+    fflush(stdout);
+
+    dynamic_sleep();
+}
