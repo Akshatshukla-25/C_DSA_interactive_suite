@@ -14,4 +14,7 @@ void visualize_dp_table_2d(const char* label, int** table, int rows, int cols,
 // MCM custom table visualizer (for m-table and s-table)
 void visualize_mcm_tables(const int* m, const int* s, int n, int active_i, int active_j);
 
+// Bitmask visualizer for TSP DP
+void visualize_dp_bitmask(int mask, int pos, int cost, int N);
+
 #endif // DP_VISUALIZER_H

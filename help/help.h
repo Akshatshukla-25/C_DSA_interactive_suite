@@ -52,4 +52,9 @@ void bit_manipulation_help(void);
  */
 void help_process_synchronization_menu(void);
 
+/**
+ * @brief Sub-menu for Backtracking Algorithms help.
+ */
+void help_backtracking_menu(void);
+
 #endif // HELP_H
