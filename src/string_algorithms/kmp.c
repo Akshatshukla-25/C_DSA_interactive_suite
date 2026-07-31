@@ -8,7 +8,7 @@
 #include <string.h>
 #include <time.h>
 
-void kmp_search(char* text, char* pattern)
+void kmp_search(const char* text, const char* pattern)
 {
     if (!text || !pattern)
     {
@@ -95,7 +95,7 @@ void kmp_search(char* text, char* pattern)
     free(lps);
 }
 
-static void compute_lps_array_visual(char* pattern, int m, int* lps)
+static void compute_lps_array_visual(const char* pattern, int m, int* lps)
 {
     int length = 0;
     lps[0] = 0;
@@ -137,7 +137,7 @@ static void compute_lps_array_visual(char* pattern, int m, int* lps)
     printf("\n-----------------------------------\n\n");
 }
 
-void kmp_visualization(char* text, char* pattern)
+void kmp_visualization(const char* text, const char* pattern)
 {
     if (!text || !pattern)
     {
