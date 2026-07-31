@@ -53,6 +53,7 @@ set(SRC_DIRS
     demos/error_correction_algorithms
     demos/hashing
     demos/job_scheduling
+    demos/process_synchronization
     features/telemetry
     features/serialization
     features/dp_visualizer
