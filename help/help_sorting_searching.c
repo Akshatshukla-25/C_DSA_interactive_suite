@@ -71,9 +71,7 @@ void help_sorting_searching_menu(void)
                 printf("      stack overhead (of Quick Sort) or auxiliary memory (of Merge Sort) "
                        "is unacceptable.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -96,9 +94,7 @@ void help_sorting_searching_menu(void)
                 printf("    Non-comparison sort that processes digits from least to most "
                        "significant.\n");
                 printf("    O(D * (N + K)) where D is the number of digits.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -116,9 +112,7 @@ void help_sorting_searching_menu(void)
                 printf("INTERPOLATION SEARCH:\n");
                 printf("    Improved binary search for uniformly distributed sorted arrays. O(log "
                        "log N) average case.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }

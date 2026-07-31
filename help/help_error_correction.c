@@ -55,9 +55,7 @@ void help_error_correction_menu(void)
                 printf("    • Cannot detect even number of bit errors (they cancel each other "
                        "out).\n");
                 printf("    • Cannot correct any errors.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -75,9 +73,7 @@ void help_error_correction_menu(void)
                 printf("    • Only detects single-bit errors within each individual character.\n");
                 printf("    • Cannot detect errors if two bits in the same character are "
                        "flipped.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -98,9 +94,7 @@ void help_error_correction_menu(void)
                 printf("    • Better than VRC: Can detect burst errors within a block.\n");
                 printf("    • If two bits in the same column flip, the column parity check will\n");
                 printf("      fail to detect the error.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -127,9 +121,7 @@ void help_error_correction_menu(void)
                     "    • If the values of two data blocks shift in opposite directions by the\n");
                 printf("      same amount, the sum remains unchanged, failing to detect the "
                        "error.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -155,9 +147,7 @@ void help_error_correction_menu(void)
                 printf("ADVANTAGES:\n");
                 printf("    • Detects single-bit, double-bit, odd-numbered, and burst errors very "
                        "reliably.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -183,9 +173,7 @@ void help_error_correction_menu(void)
                 printf("    • Single Error Correction (SEC).\n");
                 printf("    • Double Error Detection (DED) when an extra overall parity bit is "
                        "added.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -236,9 +224,7 @@ void help_error_correction_menu(void)
                 printf("      ZIP/PNG file integrity checks.\n");
                 printf("    • Hamming Code: ECC (Error-Correcting Code) RAM modules, RAID 2 "
                        "storage.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }

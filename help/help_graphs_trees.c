@@ -57,9 +57,7 @@ void help_graphs_trees_menu(void)
                 printf("    Binary tree where NULL child pointers are reused as \"threads\" to "
                        "in-order neighbors,\n");
                 printf("    allowing traversal without recursion or a stack.\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -86,9 +84,7 @@ void help_graphs_trees_menu(void)
                 printf("SPANNING TREES:\n");
                 printf("    • Prim's & Kruskal's algorithms to find Minimum Spanning Trees "
                        "(MST).\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -128,9 +124,7 @@ void help_graphs_trees_menu(void)
                        "network fragmentation.\n\n");
                 printf("HOW TO RUN IN THIS SUITE:\n");
                 printf("    Main Menu ➔ Option 16 (Advanced Graph Algorithms)\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -223,9 +217,7 @@ void help_graphs_trees_menu(void)
                 printf("      - Real-world: IP routing tables, randomized database search "
                        "indexes.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }

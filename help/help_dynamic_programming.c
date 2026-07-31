@@ -41,9 +41,7 @@ static void print_dp_basics(void)
     printf("    • Space is typically O(state count) for the table, plus recursion\n");
     printf("      stack only in memoized top-down solutions.\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -84,9 +82,7 @@ static void print_fibonacci_and_knapsack(void)
     printf("    • DP table: O(nW) time, O(nW) space.\n");
     printf("    • A 1D optimization can reduce the space to O(W).\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 
@@ -124,9 +120,7 @@ static void print_lcs_and_mcm(void)
     printf("    • Naive recursion: exponential.\n");
     printf("    • DP: O(n^3) time, O(n^2) space.\n\n");
 
-    printf("=================================================================\n");
-    printf("Press [ENTER] to return...\n");
-    printf("=================================================================\n");
+    printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
 }
 

@@ -87,9 +87,7 @@ void help_backtracking_menu(void)
 
                 printf("HOW TO RUN IN THIS SUITE:\n");
                 printf("    Main Menu -> Option 11 (Backtracking Algorithms).\n\n");
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -132,9 +130,7 @@ void help_backtracking_menu(void)
                 printf("    N=5 : 10 solutions    N=7 : 40 solutions\n");
                 printf("                          N=8 : 92 solutions\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -175,9 +171,7 @@ void help_backtracking_menu(void)
                 printf("    - The sub-block constraint is the most powerful pruner: a single\n");
                 printf("      occupied 2x3 block can eliminate 5 of 6 candidates instantly.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -218,9 +212,7 @@ void help_backtracking_menu(void)
                 printf("    - In a densely walled maze, the rat may trace its entire path\n");
                 printf("      backward before finding the correct route.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -272,9 +264,7 @@ void help_backtracking_menu(void)
                 printf("    - For K3,3 with M=2, observe near-instant success: bipartite\n");
                 printf("      structure matches 2 colors perfectly with no conflicts.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -326,9 +316,7 @@ void help_backtracking_menu(void)
                 printf("      a near-linear one in practice.\n");
                 printf("    - Compare solve times between the two modes on the same board.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
 
@@ -379,9 +367,7 @@ void help_backtracking_menu(void)
                 printf("    A constraint that eliminates 90%% of candidates at each level\n");
                 printf("    can reduce an exponential search to near-linear in practice.\n\n");
 
-                printf("=================================================================\n");
-                printf("Press [ENTER] to return...\n");
-                printf("=================================================================\n");
+                printf("\nPress [ENTER] to return...\n");
                 press_enter_to_continue();
                 break;
         }
