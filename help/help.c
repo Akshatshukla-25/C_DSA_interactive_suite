@@ -45,13 +45,14 @@ void launch_help_page(void)
         printf("4. Graphs & Trees Help\n");
         printf("5. Hashing Help\n");
         printf("6. Advanced & Specialized Topics Help\n");
-        printf("7. Error Correction Help\n");
-        printf("8. Bit Manipulation Help\n");
-        printf("9. Navigation, CLI Flags & General Info\n");
-        printf("10. Backtracking Algorithms Help\n");
+        printf("7. Dynamic Programming Help\n");
+        printf("8. Error Correction Help\n");
+        printf("9. Bit Manipulation Help\n");
+        printf("10. Navigation, CLI Flags & General Info\n");
+        printf("11. Backtracking Algorithms Help\n");
         int choice;
         int status =
-            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 10);
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 11);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -84,12 +85,15 @@ void launch_help_page(void)
                 help_advanced_topics_menu();
                 break;
             case 7:
-                help_error_correction_menu();
+                help_dynamic_programming_menu();
                 break;
             case 8:
-                bit_manipulation_help();
+                help_error_correction_menu();
                 break;
             case 9:
+                bit_manipulation_help();
+                break;
+            case 10:
                 display_header("General Navigation, CLI Flags & Commands");
                 printf("DESCRIPTION\n");
                 printf("    The C DSA Interactive Suite is a terminal-based application\n");
@@ -119,7 +123,7 @@ void launch_help_page(void)
                 printf("=================================================================\n");
                 press_enter_to_continue();
                 break;
-            case 10:
+            case 11:
                 help_backtracking_menu();
                 break;
         }
