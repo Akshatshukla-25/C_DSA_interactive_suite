@@ -20,7 +20,7 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 
 ## List of All Implemented Data Structures & Algorithms
 
-This suite includes over **100+ interactive, memory-audited data structures and algorithms** organized across 17+ core module categories. Each entry is mapped to its CLI main menu option and includes time and space complexity breakdowns.
+This suite includes over **100+ interactive, memory-audited data structures and algorithms** organized across 21+ core module categories. Each entry is mapped to its CLI main menu option and includes time and space complexity breakdowns.
 
 ### 1. Data Structures & Core Modules (Menu Option 1)
 | Data Structure / Algorithm | Category | Time Complexity (Best / Avg / Worst) | Space Complexity | Description |
@@ -177,12 +177,47 @@ This suite includes over **100+ interactive, memory-audited data structures and 
 | **CLOCK (Second-Chance)** | Cache Replacement | $\mathcal{O}(1)$ avg | Circular buffer pointer approximation of LRU using reference bits. |
 | **Optimal (Belady's OPT)** | Theoretical Limit | $\mathcal{O}(N)$ | Evicts page that will not be used for longest time in future. |
 
-### 17. System Utilities: Telemetry, Memory Inspector & Serialization (Menu Options 10, 11, 18)
+### 17. Backtracking Algorithms
+| Algorithm / Problem | Category | Time Complexity | Space Complexity | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **Knight's Tour Problem** | Backtracking | $\mathcal{O}(8^{N^2})$ | $\mathcal{O}(N^2)$ | Warnsdorff's heuristic knight's tour board traversal. |
+| **N-Queens Problem** | Backtracking | $\mathcal{O}(N!)$ | $\mathcal{O}(N)$ | Places $N$ non-attacking queens on $N \times N$ chessboard. |
+| **Sudoku Solver** | Backtracking | $\mathcal{O}(9^{D})$ | $\mathcal{O}(D)$ | Backtracking constraint satisfaction 9x9 grid solver. |
+| **Subset Sum Problem** | Backtracking | $\mathcal{O}(2^N)$ | $\mathcal{O}(N)$ | Finds subsets matching target sum using pruning. |
+| **Rat in a Maze** | Backtracking | $\mathcal{O}(2^{N^2})$ | $\mathcal{O}(N^2)$ | Grid maze pathfinding from source to destination. |
+
+### 18. Hashing & Collision Resolution
+| Hash Technique | Category | Time Complexity (Avg / Worst) | Space Complexity | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **Separate Chaining** | Open Hashing | $\mathcal{O}(1) / \mathcal{O}(N)$ | $\mathcal{O}(N + M)$ | Collision resolution via linked lists per table bucket. |
+| **Linear Probing** | Closed Hashing | $\mathcal{O}(1) / \mathcal{O}(N)$ | $\mathcal{O}(M)$ | Open addressing with sequential index step probing. |
+| **Quadratic Probing** | Closed Hashing | $\mathcal{O}(1) / \mathcal{O}(N)$ | $\mathcal{O}(M)$ | Open addressing with quadratic step $i^2$ probing. |
+| **Double Hashing** | Closed Hashing | $\mathcal{O}(1) / \mathcal{O}(N)$ | $\mathcal{O}(M)$ | Open addressing using independent secondary hash function. |
+
+### 19. CPU & Job Scheduling Algorithms
+| Scheduling Policy | Category | Preemptive | Complexity | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **First-Come First-Served (FCFS)** | CPU Scheduling | No | $\mathcal{O}(N \log N)$ | Non-preemptive arrival order job execution. |
+| **Shortest Job First (SJF)** | CPU Scheduling | No | $\mathcal{O}(N \log N)$ | Non-preemptive shortest burst time job scheduling. |
+| **Shortest Remaining Time First (SRTF)** | CPU Scheduling | Yes | $\mathcal{O}(N \log N)$ | Preemptive shortest remaining burst time scheduling. |
+| **Priority Scheduling** | CPU Scheduling | No | $\mathcal{O}(N \log N)$ | Non-preemptive priority-rank based process execution. |
+| **Preemptive Priority Scheduling** | CPU Scheduling | Yes | $\mathcal{O}(N \log N)$ | Preemptive higher-priority job execution. |
+| **Round Robin (RR)** | CPU Scheduling | Yes | $\mathcal{O}(N)$ | Preemptive time-slice quantum round-robin scheduler. |
+
+### 20. Bit Manipulation & Bitwise Operations
+| Bitwise Feature | Category | Time Complexity | Description |
+| :--- | :--- | :--- | :--- |
+| **Basic Bitwise Operations** | Bit Operations | $\mathcal{O}(1)$ | Set, clear, toggle, and test individual bit positions. |
+| **Advanced Bit Manipulation** | Bit Operations | $\mathcal{O}(1)$ | Count set bits (popcount), power of 2 check, and bit reversal. |
+| **Bitwise Applications** | Bit Operations | $\mathcal{O}(1)$ | Single number finder, subset generation, and XOR tricks. |
+| **Interactive Bit Visualizer** | Bit Visualization | $\mathcal{O}(1)$ | Step-by-step 32-bit register bitwise visualizer. |
+
+### 21. System Utilities: Telemetry, Memory Inspector & Serialization (Menu Options 10, 11, 18)
 | Utility Feature | Category | Description |
 | :--- | :--- | :--- |
 | **Sorting Telemetry Dashboard** | Performance Audit | Real-time comparative execution metrics, comparison counters, and swap timers. |
 | **Memory Inspector & Profiler** | Memory Audit | Dynamic heap allocation tracking, pointer inspection, and leak detection. |
-| **State Serialization Engine** | Data Persistence | Binary payload serialization & deserialization for BST, AVL, and Graph structures. |
+| **State Serialization Engine** | Persistence | Binary payload serialization & deserialization for BST, AVL, and Graph structures. |
 | **Interactive Algorithm Finder** | Quick Search | Fast case-insensitive keyword search engine mapping all suite algorithms. |
 
 ---
