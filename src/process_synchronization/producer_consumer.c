@@ -9,8 +9,8 @@
 
 #define BUFFER_SIZE 5
 
-static void display_buffer_state(const int* buffer, int in, int out, int mutex, int empty, int full,
-                                 int prod_blocked, int cons_blocked)
+void display_buffer_state(const int* buffer, int in, int out, int mutex, int empty, int full,
+                          int prod_blocked, int cons_blocked)
 {
     printf("\n\033[1;34m┌────────────────────────────────────────────────────────┐\033[0m");
     printf("\n\033[1;34m│                 PRODUCER-CONSUMER STATE                │\033[0m");

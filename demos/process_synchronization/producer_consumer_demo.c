@@ -9,44 +9,6 @@
 
 #define BUFFER_SIZE 5
 
-static void display_buffer_state(const int* buffer, int in, int out, int mutex, int empty, int full,
-                                 int prod_blocked, int cons_blocked)
-{
-    printf("\n\033[1;34m┌────────────────────────────────────────────────────────┐\033[0m");
-    printf("\n\033[1;34m│                 PRODUCER-CONSUMER STATE                │\033[0m");
-    printf("\n\033[1;34m├────────────────────────────────────────────────────────┤\033[0m");
-    printf("\n│ Buffer: [");
-    for (int i = 0; i < BUFFER_SIZE; i++)
-    {
-        if (buffer[i] == 0)
-        {
-            printf("  -  ");
-        }
-        else
-        {
-            printf(" P%-3d", buffer[i]);
-        }
-        if (i < BUFFER_SIZE - 1)
-        {
-            printf(" |");
-        }
-    }
-    printf(" ]           │");
-    printf("\n│           in = %d, out = %d                              │", in, out);
-    printf("\n\033[1;34m├────────────────────────────────────────────────────────┤\033[0m");
-    printf("\n│ Semaphores:                                            │");
-    printf("\n│   mutex     = %-10d (Mutual exclusion lock)       │", mutex);
-    printf("\n│   empty_sem = %-10d (Available empty slots)       │", empty);
-    printf("\n│   full_sem  = %-10d (Filled item slots)           │", full);
-    printf("\n\033[1;34m├────────────────────────────────────────────────────────┤\033[0m");
-    printf("\n│ Process States:                                        │");
-    printf("\n│   Producer : %-50s   │", prod_blocked ? "\033[1;31mBLOCKED (Buffer Full)\033[0m"
-                                                      : "\033[1;32mACTIVE/READY\033[0m");
-    printf("\n│   Consumer : %-50s   │", cons_blocked ? "\033[1;31mBLOCKED (Buffer Empty)\033[0m"
-                                                      : "\033[1;32mACTIVE/READY\033[0m");
-    printf("\n\033[1;34m└────────────────────────────────────────────────────────┘\033[0m\n");
-}
-
 void producer_consumer_demo(void)
 {
     ProducerConsumerState pc_state;
