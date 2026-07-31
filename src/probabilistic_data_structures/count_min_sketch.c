@@ -35,6 +35,13 @@ CountMinSketch* cms_init(double epsilon, double delta)
         d = 1;
     }
 
+    /* Zero-init depth so cms_free is safe even on partial-failure paths */
+    sketch->width = 0;
+    sketch->depth = 0;
+    sketch->total_count = 0;
+    sketch->epsilon = epsilon;
+    sketch->delta = delta;
+
     sketch->table = (uint32_t**)malloc(sizeof(uint32_t*) * d);
     if (!sketch->table)
     {
@@ -47,18 +54,16 @@ CountMinSketch* cms_init(double epsilon, double delta)
         sketch->table[i] = (uint32_t*)calloc(w, sizeof(uint32_t));
         if (!sketch->table[i])
         {
-            for (size_t j = 0; j < i; j++)
-            {
-                free(sketch->table[j]);
-            }
-            free(sketch->table);
-            free(sketch);
+            /* depth tracks how many rows are validly allocated;
+             * cms_free will loop only over those rows. */
+            cms_free(sketch);
             return NULL;
         }
+        sketch->depth++; /* row i is now valid */
     }
 
     sketch->width = w;
-    sketch->depth = d;
+    sketch->depth = d; /* finalize – all d rows allocated */
     sketch->total_count = 0;
     sketch->epsilon = epsilon;
     sketch->delta = delta;

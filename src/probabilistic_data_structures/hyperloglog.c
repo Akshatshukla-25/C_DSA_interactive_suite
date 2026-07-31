@@ -110,7 +110,8 @@ uint64_t hll_count(const HyperLogLog* hll)
     for (size_t i = 0; i < hll->m; i++)
     {
         uint8_t val = hll->registers[i];
-        sum += 1.0 / (double)(1ULL << val);
+        /* Use ldexp to avoid UB when val >= 64 (integer shift past 63 bits) */
+        sum += ldexp(1.0, -(double)val);
         if (val == 0)
         {
             zero_registers++;
