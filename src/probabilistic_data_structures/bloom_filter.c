@@ -52,6 +52,12 @@ BloomFilter* bloom_init(size_t expected_items, double false_positive_rate)
         k = 1;
     }
 
+    /* Guard against size_t wrap: (m + 7) overflows when m > SIZE_MAX - 7 */
+    if (m > SIZE_MAX - 7)
+    {
+        free(filter);
+        return NULL;
+    }
     size_t byte_size = (m + 7) / 8;
     filter->bit_array = (uint8_t*)calloc(byte_size, sizeof(uint8_t));
     if (!filter->bit_array)

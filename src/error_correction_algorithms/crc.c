@@ -24,6 +24,18 @@ void crc_generate(const char* data, const char* generator, char* remainder_out, 
 
     // Append (generator_len - 1) zero bits to data to form the dividend
     char dividend[(CHECKSUM_MAX_BITS * 2) + 1];
+
+    /* Reject inputs that would overflow the fixed-size dividend buffer */
+    if (data_len <= 0 || generator_len <= 0 ||
+        data_len + generator_len - 1 > (int)(sizeof(dividend) - 1))
+    {
+        if (remainder_out)
+            remainder_out[0] = '\0';
+        if (codeword_out)
+            codeword_out[0] = '\0';
+        return;
+    }
+
     strcpy(dividend, data);
     for (int i = 0; i < generator_len - 1; i++)
     {

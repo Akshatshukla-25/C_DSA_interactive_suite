@@ -69,7 +69,7 @@ QuadTree* quadtree_create(Rect boundary, size_t capacity)
     return tree;
 }
 
-static void subdivide(QuadTreeNode* node)
+static bool subdivide(QuadTreeNode* node)
 {
     double x = node->boundary.x;
     double y = node->boundary.y;
@@ -86,7 +86,22 @@ static void subdivide(QuadTreeNode* node)
     node->sw = create_quad_node(sw_rect, node->capacity);
     node->se = create_quad_node(se_rect, node->capacity);
 
+    /* Roll back all successful allocations if any child failed */
+    if (!node->nw || !node->ne || !node->sw || !node->se)
+    {
+        free(node->nw);
+        free(node->ne);
+        free(node->sw);
+        free(node->se);
+        node->nw = NULL;
+        node->ne = NULL;
+        node->sw = NULL;
+        node->se = NULL;
+        return false;
+    }
+
     node->divided = true;
+    return true;
 }
 
 static bool node_insert(QuadTreeNode* node, double x, double y, void* data)
@@ -107,7 +122,10 @@ static bool node_insert(QuadTreeNode* node, double x, double y, void* data)
 
     if (!node->divided)
     {
-        subdivide(node);
+        if (!subdivide(node))
+        {
+            return false; /* allocation failure: cannot subdivide */
+        }
         /* Redistribute existing points */
         for (size_t i = 0; i < node->count; i++)
         {

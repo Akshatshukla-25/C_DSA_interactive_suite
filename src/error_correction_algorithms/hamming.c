@@ -19,6 +19,14 @@ void hamming_generate(const char* data, char* codeword_out)
     }
     int n = k + r;
 
+    /* Guard: ham[] is CHECKSUM_MAX_BITS + 16 elements (1-based, indices 1..n) */
+    if (n > CHECKSUM_MAX_BITS + 15 || n <= 0)
+    {
+        if (codeword_out)
+            codeword_out[0] = '\0';
+        return;
+    }
+
     // ham[1..n]: power-of-2 positions are parity placeholders, all others hold data
     int ham[CHECKSUM_MAX_BITS + 16];
     int data_index = 0;

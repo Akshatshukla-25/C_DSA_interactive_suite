@@ -194,6 +194,13 @@ bool rtree_insert(RTree* tree, MBR mbr, void* data)
         return false;
     }
 
+    /* Reject degenerate MBRs: NaN or Inf coordinates corrupt mbr_combine */
+    if (!isfinite(mbr.min_x) || !isfinite(mbr.min_y) || !isfinite(mbr.max_x) ||
+        !isfinite(mbr.max_y) || mbr.min_x > mbr.max_x || mbr.min_y > mbr.max_y)
+    {
+        return false;
+    }
+
     RTreeItem item = {mbr, data};
     RTreeNode* split_root = insert_recursive(tree, tree->root, item);
 
