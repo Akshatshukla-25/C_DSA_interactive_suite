@@ -111,6 +111,23 @@ void help_graphs_trees_menu(void)
                 printf("EULERIAN PATH:\n");
                 printf("    Fleury's algorithm or Hierholzer's algorithm to visit every edge "
                        "exactly once.\n\n");
+                printf("ARTICULATION POINTS (CUT VERTICES):\n");
+                printf("    Vertices in a graph whose removal increases the number of connected "
+                       "components.\n");
+                printf("    Found using Tarjan's bridge-finding algorithm (DFS with discovery "
+                       "times and low values).\n\n");
+                printf("BRIDGES (CRITICAL EDGES):\n");
+                printf("    Edges in a graph whose removal increases the number of connected "
+                       "components.\n");
+                printf("    Critical for identifying single points of failure in network "
+                       "topologies.\n\n");
+                printf("NETWORK VULNERABILITY SIMULATOR:\n");
+                printf("    Interactive tool that analyzes a network, finds its bridges and "
+                       "articulation points,\n");
+                printf("    and simulates targeted attacks (node/edge removal) to demonstrate "
+                       "network fragmentation.\n\n");
+                printf("HOW TO RUN IN THIS SUITE:\n");
+                printf("    Main Menu ➔ Option 16 (Advanced Graph Algorithms)\n\n");
                 printf("=================================================================\n");
                 printf("Press [ENTER] to return...\n");
                 printf("=================================================================\n");
