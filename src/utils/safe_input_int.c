@@ -89,5 +89,3 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
         return 1; // Successful insertion
     }
 }
-
-#include "io_utility.c"
