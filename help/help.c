@@ -48,9 +48,10 @@ void launch_help_page(void)
         printf("7. Error Correction Help\n");
         printf("8. Bit Manipulation Help\n");
         printf("9. Navigation, CLI Flags & General Info\n");
+        printf("10. Backtracking Algorithms Help\n");
         int choice;
         int status =
-            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 9);
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 10);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -117,6 +118,9 @@ void launch_help_page(void)
                 printf("Press [ENTER] to return to the main help menu...\n");
                 printf("=================================================================\n");
                 press_enter_to_continue();
+                break;
+            case 10:
+                help_backtracking_menu();
                 break;
         }
     }
