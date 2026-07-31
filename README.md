@@ -324,6 +324,32 @@ Removes executables and generated object/test binaries.
 
 ## Architectural Breakdown: Docker & The Build System
 
+### System Architecture Overview
+
+The **C DSA Interactive Suite** is organized into a modular three-tier architecture:
+- **Core Engine (`dsa_lib`)**: Reusable C static library containing implementations of data structures, graph traversals, dynamic programming, probabilistic models, memory profiler, and telemetry engines.
+- **Interactive CLI (`src/main.c`)**: Main menu driver supporting CLI arguments (`--profile`, `--load-bst`, `--export-trace`) and prompt-driven algorithm demos.
+- **Terminal UI (`tui/tui.c`)**: Ncurses/ANSI grid visualizer indexed directly with the `AlgorithmRegistry` (`src/utils/algorithm_search.c`).
+
+```mermaid
+flowchart TD
+    CLI[src/main.c - CLI Driver] -->|Menu Dispatch| Demos[src/ Module Demos]
+    CLI -->|Command Flags| Features[features/ Options]
+    TUI[tui/tui.c - TUI Visualizer] -->|Search Index| Registry[src/utils/algorithm_search.c]
+
+    Demos --> DSALib[libdsa_lib.a Core Library]
+    Features --> DSALib
+    TUI --> DSALib
+
+    subgraph DSALib [Core Engine - dsa_lib]
+        direction LR
+        DS[Data Structures & Trees]
+        Graph[Graphs & DP]
+        Sys[Cache & Utilities]
+        Prof[Memory Profiler & Telemetry]
+    end
+```
+
 ### Why Docker?
 
 Docker acts as a cross-platform wrapper around the build system. Contributors on Windows, macOS, and Linux can use the same isolated Ubuntu environment without manually configuring compiler toolchains, build dependencies, or platform-specific settings.
