@@ -62,4 +62,14 @@ void help_process_synchronization_menu(void);
  */
 void help_backtracking_menu(void);
 
+/**
+ * @brief Sub-menu for Advanced Graph Algorithms & Network Resilience help.
+ */
+void help_advanced_graphs_menu(void);
+
+/**
+ * @brief Sub-menu for Telemetry, Memory Inspector & State Serialization help.
+ */
+void help_system_utilities_menu(void);
+
 #endif // HELP_H

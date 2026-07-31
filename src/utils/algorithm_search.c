@@ -41,14 +41,52 @@ void heap_sort_demo(void);
 void radix_sort_demo(void);
 void bucket_sort_demo(void);
 
-void searching_algorithms_demo(void);
 void graph_traversals_demo(void);
+void bfs_demo(void);
+void dfs_demo(void);
+void dijkstra_demo(void);
+void astar_demo(void);
+void greedy_best_first_search_demo(void);
+void bellman_ford_demo(void);
+void topological_sort_demo(void);
+void kruskal_demo(void);
+void prim_demo(void);
+void floyd_warshall_demo(void);
+
 void advanced_graph_algorithms_demo(void);
+void tarjan_scc_demo(void);
+void kosaraju_scc_demo(void);
+void ford_fulkerson_demo(void);
+void edmonds_karp_demo(void);
+void dinic_demo(void);
+void dinic_bipartite_matching_demo(void);
+void hopcroft_karp_demo(void);
+void eulerian_path_demo(void);
+void articulation_points_demo(void);
+void bridges_demo(void);
+void network_vulnerability_demo(void);
+
 void dynamic_programming_demo(void);
+void knapsack_demo(void);
+void lcs_demo(void);
+void fibonacci_demo(void);
+void mcm_demo(void);
+void edit_distance_demo(void);
+void coin_change_demo(void);
+
+void probabilistic_ds_demo(void);
+void bloom_filter_demo(void);
+void count_min_sketch_demo(void);
+void hyperloglog_demo(void);
+
+void spatial_indexing_demo(void);
+void kd_tree_demo(void);
+void quadtree_demo(void);
+void rtree_demo(void);
+
+void searching_algorithms_demo(void);
 void compression_demo(void);
 void string_algorithms_demo(void);
-void probabilistic_ds_demo(void);
-void spatial_indexing_demo(void);
 
 static const AlgorithmEntry GLOBAL_ALGORITHM_TABLE[] = {
     /* Trees Category */
@@ -118,23 +156,103 @@ static const AlgorithmEntry GLOBAL_ALGORITHM_TABLE[] = {
     {"O(N log N) Advanced Sorting Suite", "Sorting",
      "quick merge heap radix bucket sort advanced nlogn", 3, advanced_sorting_demo},
 
-    {"Searching Algorithms Suite (Binary, Linear, Jump, Interpolation)", "Searching",
-     "binary linear interpolation jump exponential search", 4, searching_algorithms_demo},
+    /* Graph Traversals Category */
+    {"Breadth-First Search (BFS) Traversal Demo", "Graph Traversals",
+     "bfs breadth first search queue shortest path unweighted graph", 5, bfs_demo},
+    {"Depth-First Search (DFS) Traversal Demo", "Graph Traversals",
+     "dfs depth first search stack recursion component cycle graph", 5, dfs_demo},
+    {"Dijkstra Shortest Path Single-Source Demo", "Graph Traversals",
+     "dijkstra shortest path single source non negative priority queue graph", 5, dijkstra_demo},
+    {"A* Heuristic Shortest Path Search Demo", "Graph Traversals",
+     "astar a* heuristic shortest path euclidean manhattan grid graph", 5, astar_demo},
+    {"Greedy Best-First Search Interactive Demo", "Graph Traversals",
+     "greedy best first search heuristic grid pathfinding graph", 5, greedy_best_first_search_demo},
+    {"Bellman-Ford Negative Weight Edge Path Demo", "Graph Traversals",
+     "bellman ford shortest path negative weight edge cycle detection graph", 5, bellman_ford_demo},
+    {"Topological Sort Directed Acyclic Graph Demo", "Graph Traversals",
+     "topological sort dag dependency order indegree kahn kahn's graph", 5, topological_sort_demo},
+    {"Kruskal Minimum Spanning Tree (MST) Demo", "Graph Traversals",
+     "kruskal mst minimum spanning tree disjoint set union find greedy graph", 5, kruskal_demo},
+    {"Prim Minimum Spanning Tree (MST) Demo", "Graph Traversals",
+     "prim mst minimum spanning tree priority queue greedy graph", 5, prim_demo},
+    {"Floyd-Warshall All-Pairs Shortest Path Demo", "Graph Traversals",
+     "floyd warshall all pairs shortest path matrix dynamic programming graph", 5,
+     floyd_warshall_demo},
+    {"Graph Traversals & Pathfinding Suite", "Graph Traversals",
+     "bfs dfs dijkstra astar bellman ford kruskal prim floyd warshall", 5, graph_traversals_demo},
 
-    /* Other Category Modules */
-    {"Graph Traversals (BFS, DFS, Dijkstra)", "Graph Traversals",
-     "bfs dfs dijkstra breadth depth shortest path graph", 5, graph_traversals_demo},
-    {"Advanced Graph Algorithms (Flow, Matching, SCC, Bridges)", "Advanced Graphs",
+    /* Advanced Graph Algorithms Category */
+    {"Tarjan Strongly Connected Components (SCC) Demo", "Advanced Graphs",
+     "tarjan scc strongly connected components lowlink dfs graph", 6, tarjan_scc_demo},
+    {"Kosaraju Strongly Connected Components (SCC) Demo", "Advanced Graphs",
+     "kosaraju scc strongly connected components transpose dfs graph", 6, kosaraju_scc_demo},
+    {"Ford-Fulkerson Maximum Network Flow Demo", "Advanced Graphs",
+     "ford fulkerson max flow residual capacity augmenting path graph", 6, ford_fulkerson_demo},
+    {"Edmonds-Karp BFS Maximum Flow Demo", "Advanced Graphs",
+     "edmonds karp max flow bfs shortest augmenting path graph", 6, edmonds_karp_demo},
+    {"Dinic Blocking Flow Maximum Network Flow Demo", "Advanced Graphs",
+     "dinic max flow level graph blocking flow network graph", 6, dinic_demo},
+    {"Dinic Bipartite Matching Interactive Demo", "Advanced Graphs",
+     "dinic bipartite matching maximum matching flow graph", 6, dinic_bipartite_matching_demo},
+    {"Hopcroft-Karp Bipartite Matching Demo", "Advanced Graphs",
+     "hopcroft karp bipartite matching maximum cardinality graph", 6, hopcroft_karp_demo},
+    {"Eulerian Path & Circuit Interactive Demo", "Advanced Graphs",
+     "eulerian path circuit walk degree hierholzer graph", 6, eulerian_path_demo},
+    {"Articulation Points Cut Vertex Analysis Demo", "Advanced Graphs",
+     "articulation points cut vertex critical node network graph", 6, articulation_points_demo},
+    {"Bridges Critical Edge Network Analysis Demo", "Advanced Graphs",
+     "bridges critical edge network vulnerability connectivity graph", 6, bridges_demo},
+    {"Network Vulnerability & Resilience Simulator", "Advanced Graphs",
+     "network vulnerability simulator resilience critical nodes edges graph", 6,
+     network_vulnerability_demo},
+    {"Advanced Graph Algorithms Suite", "Advanced Graphs",
      "dinic ford fulkerson edmonds karp scc bipartite matching bridges articulation", 6,
      advanced_graph_algorithms_demo},
+
+    /* Dynamic Programming Category */
+    {"0/1 Knapsack Problem DP Interactive Demo", "Dynamic Programming",
+     "knapsack 0/1 weight value capacity optimization dp", 8, knapsack_demo},
+    {"Longest Common Subsequence (LCS) DP Demo", "Dynamic Programming",
+     "lcs longest common subsequence string alignment dp", 8, lcs_demo},
+    {"Fibonacci Sequence Memoization & Tabulation Demo", "Dynamic Programming",
+     "fibonacci memoization tabulation recurrence golden ratio dp", 8, fibonacci_demo},
+    {"Matrix Chain Multiplication (MCM) DP Demo", "Dynamic Programming",
+     "mcm matrix chain multiplication parenthesization cost dp", 8, mcm_demo},
+    {"Edit Distance (Levenshtein Distance) DP Demo", "Dynamic Programming",
+     "edit distance levenshtein insert delete replace string dp", 8, edit_distance_demo},
+    {"Coin Change Minimum Coins DP Demo", "Dynamic Programming",
+     "coin change minimum coins ways amount denomination dp", 8, coin_change_demo},
     {"Dynamic Programming Algorithms Suite", "Dynamic Programming",
      "knapsack lcs mcm fibonacci coin change edit distance dp", 8, dynamic_programming_demo},
-    {"String Processing & Compression Algorithms", "String & Compression",
-     "huffman rle lzw bwt kmp rabin karp string compression", 12, compression_demo},
-    {"Probabilistic Data Structures (Bloom, CM-Sketch, HLL)", "Probabilistic DS",
+
+    /* Probabilistic Data Structures Category */
+    {"Bloom Filter Set Membership Demo", "Probabilistic DS",
+     "bloom filter fnv hash set membership false positive rate probabilistic", 16,
+     bloom_filter_demo},
+    {"Count-Min Sketch Frequency Estimator Demo", "Probabilistic DS",
+     "count min sketch frequency estimator sublinear heavy hitter probabilistic", 16,
+     count_min_sketch_demo},
+    {"HyperLogLog Cardinality Estimator Demo", "Probabilistic DS",
+     "hyperloglog hll cardinality estimator unique count harmonic mean probabilistic", 16,
+     hyperloglog_demo},
+    {"Probabilistic Data Structures Suite", "Probabilistic DS",
      "bloom filter count min sketch hyperloglog hll probabilistic", 16, probabilistic_ds_demo},
-    {"Spatial & Multi-Dimensional Indexing (k-d Tree, QuadTree, R-Tree)", "Spatial Indexing",
-     "kd kdtree quadtree rtree spatial 2d mbr point range search", 17, spatial_indexing_demo}};
+
+    /* Spatial Indexing Category */
+    {"k-d Tree Multi-Dimensional Point Indexing Demo", "Spatial Indexing",
+     "kd kdtree k-d tree point indexing nearest neighbor range search spatial", 17, kd_tree_demo},
+    {"QuadTree 2D Spatial Partitioning Demo", "Spatial Indexing",
+     "quadtree 2d spatial partitioning bounding box point region spatial", 17, quadtree_demo},
+    {"R-Tree Minimum Bounding Rectangle (MBR) Demo", "Spatial Indexing",
+     "rtree r-tree minimum bounding rectangle mbr spatial indexing range search", 17, rtree_demo},
+    {"Spatial & Multi-Dimensional Indexing Suite", "Spatial Indexing",
+     "kd kdtree quadtree rtree spatial 2d mbr point range search", 17, spatial_indexing_demo},
+
+    /* Searching & Compression Suites */
+    {"Searching Algorithms Suite (Binary, Linear, Jump, Interpolation)", "Searching",
+     "binary linear interpolation jump exponential search", 4, searching_algorithms_demo},
+    {"String Processing & Compression Algorithms Suite", "String & Compression",
+     "huffman rle lzw bwt kmp rabin karp string compression", 12, compression_demo}};
 
 static const AlgorithmRegistry GLOBAL_REGISTRY = {
     GLOBAL_ALGORITHM_TABLE, sizeof(GLOBAL_ALGORITHM_TABLE) / sizeof(GLOBAL_ALGORITHM_TABLE[0])};
@@ -214,8 +332,8 @@ void run_algorithm_search_menu(void)
         return;
     }
 
-    const AlgorithmEntry* results[40];
-    size_t count = search_algorithms(query, results, 40);
+    const AlgorithmEntry* results[60];
+    size_t count = search_algorithms(query, results, 60);
 
     if (count == 0)
     {
