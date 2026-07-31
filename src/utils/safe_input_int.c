@@ -32,7 +32,7 @@ int safe_input_int(int* input, const char* prompt, int min_val, int max_val)
                 clearerr(stdin);
             }
             printf("input ended unexpectedly\n");
-            return 0;
+            return INPUT_EXIT_SIGNAL;
         }
 
         // Remove trailing newline, if present

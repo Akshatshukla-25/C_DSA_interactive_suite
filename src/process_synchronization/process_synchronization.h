@@ -40,6 +40,8 @@ typedef struct
 void consumer_step(ProducerConsumerState* pc_state);
 void pc_auto_stimulate(ProducerConsumerState* pc_state, int steps, int step_mode);
 void producer_step(ProducerConsumerState* pc_state);
+void display_buffer_state(const int* buffer, int in, int out, int mutex, int empty, int full,
+                          int prod_blocked, int cons_blocked);
 void pc_init(ProducerConsumerState* pc_state);
 void petersons_init(int* flag, int* turn, int* pc);
 void petersons_reset(int* flag, int* turn, int* pc);
