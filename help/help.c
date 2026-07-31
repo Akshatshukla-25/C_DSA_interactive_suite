@@ -52,10 +52,11 @@ void launch_help_page(void)
         printf("11. Backtracking Algorithms Help\n");
         printf("12. Advanced Graph Algorithms & Network Resilience Help\n");
         printf("13. System Utilities, Telemetry & Serialization Help\n");
-        printf("14. Navigation, CLI Flags & General Info\n");
+        printf("14. Cache Replacement Simulator Help\n");
+        printf("15. Navigation, CLI Flags & General Info\n");
         int choice;
         int status =
-            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 14);
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 15);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -109,6 +110,9 @@ void launch_help_page(void)
                 help_system_utilities_menu();
                 break;
             case 14:
+                help_cache_simulator_menu();
+                break;
+            case 15:
                 display_header("General Navigation, CLI Flags & Commands");
                 printf("DESCRIPTION\n");
                 printf("    The C DSA Interactive Suite is a terminal-based application\n");
