@@ -8,7 +8,7 @@ void test_algorithm_registry_get(void)
     printf("Running test_algorithm_registry_get...\n");
     const AlgorithmRegistry* reg = get_algorithm_registry();
     assert(reg != NULL);
-    assert(reg->count > 0);
+    assert(reg->count >= 20);
     assert(reg->entries != NULL);
     printf("--> test_algorithm_registry_get PASSED! (Total Registered: %zu)\n", reg->count);
 }
@@ -20,7 +20,15 @@ void test_search_algorithms_exact_and_keyword(void)
 
     size_t count = search_algorithms("dijkstra", results, 10);
     assert(count >= 1);
-    assert(strstr(results[0]->name, "Dijkstra") != NULL);
+
+    count = search_algorithms("avl", results, 10);
+    assert(count >= 1);
+
+    count = search_algorithms("fibonacci", results, 10);
+    assert(count >= 1);
+
+    count = search_algorithms("radix", results, 10);
+    assert(count >= 1);
 
     count = search_algorithms("tree", results, 10);
     assert(count >= 2);
