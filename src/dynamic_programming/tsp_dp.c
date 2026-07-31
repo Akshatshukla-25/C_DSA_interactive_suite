@@ -1,4 +1,5 @@
 #include "../bit_manipulation/bit_manipulation.h"
+#include "dp_visualizer.h"
 #include "dynamic_programming.h"
 #include <limits.h>
 #include <stdio.h>
@@ -34,7 +35,9 @@ int tsp_dp(int mask, int pos, int n, int** dist, int** memo)
         }
     }
 
-    return memo[mask][pos] = ans;
+    memo[mask][pos] = ans;
+    visualize_dp_bitmask(mask, pos, ans, n);
+    return ans;
 }
 
 int* reconstruct_tsp_path(int n, int** dist, int** memo, int min_cost)

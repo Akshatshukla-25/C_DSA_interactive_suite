@@ -23,6 +23,7 @@ void coin_change_demo(void);
 int coin_change_min_coins(int coins[], int n, int amount);
 int coin_change_ways(int coins[], int n, int amount);
 
+void tsp_demo(void);
 int tsp_dp(int mask, int pos, int n, int** dist, int** memo);
 int* reconstruct_tsp_path(int n, int** dist, int** memo, int min_cost);
 int solve_tsp(int n, int** dist, int** path_out);
