@@ -44,6 +44,11 @@ void bit_manipulation_help(void)
     printf("      loop counter's bits as include flags generates\n");
     printf("      all combinations (Power Set).\n\n");
 
+    printf("INTERACTIVE 32-BIT VISUALIZER:\n");
+    printf("    • Bit Grid Display: Renders 32-bit integers as formatted 4-byte grids.\n");
+    printf("    • Interactive Bit Toggling: Interactively flip individual bit positions.\n");
+    printf("    • Real-time Formats: View signed/unsigned decimal, hex (0x), and binary.\n\n");
+
     printf("HOW TO RUN IN THIS SUITE:\n");
     printf("    1. Exit to the main menu and select option 18.\n");
     printf("    2. Choose from the sub-menu to visualize algorithms.\n\n");
