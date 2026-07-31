@@ -13,6 +13,9 @@ The codebase is structured as a reusable **DSA library**, with an interactive, c
 - [Build Instructions](#build-instructions)
 - [Continuous Integration](#continuous-integration)
 - [Architectural Breakdown: Docker & The Build System](#architectural-breakdown-docker--the-build-system)
+  - [System Architecture Overview](#system-architecture-overview)
+  - [Why Docker?](#why-docker)
+  - [Container Build Chain](#container-build-chain)
 - [List of All Implemented Data Structures & Algorithms](#list-of-all-implemented-data-structures--algorithms)
 - [License](#license)
 
