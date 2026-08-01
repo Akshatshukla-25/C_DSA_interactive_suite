@@ -7,8 +7,16 @@
 #include <sys/select.h>
 #include <termios.h>
 #include <unistd.h>
+
+#define DEBUGGER_HISTORY_MAX 64
+
 static char event_log[5][128];
 static int event_count = 0;
+
+static char history_snapshots[DEBUGGER_HISTORY_MAX][128];
+static int total_history_count = 0;
+static int history_cursor = 0;
+static int inspector_active = 0;
 
 static int get_keypress(int block)
 {
@@ -54,6 +62,65 @@ static int get_keypress(int block)
     return ch;
 }
 
+int debugger_get_history_count(void)
+{
+    return total_history_count;
+}
+
+int debugger_get_current_step(void)
+{
+    return history_cursor;
+}
+
+void debugger_step_prev(void)
+{
+    if (history_cursor > 0)
+    {
+        history_cursor--;
+    }
+}
+
+void debugger_step_next(void)
+{
+    if (history_cursor < total_history_count - 1)
+    {
+        history_cursor++;
+    }
+}
+
+void debugger_step_reset(void)
+{
+    history_cursor = 0;
+}
+
+void debugger_toggle_inspector(void)
+{
+    inspector_active = !inspector_active;
+}
+
+int debugger_is_inspector_visible(void)
+{
+    return inspector_active;
+}
+
+void print_state_inspector_card(void)
+{
+    printf("\n┌──────────────────────────────────────────────────┐\n");
+    printf("│              LIVE STATE INSPECTOR                │\n");
+    printf("├──────────────────────────────────────────────────┤\n");
+    printf("│ Active Step Index : %-28d │\n", history_cursor + 1);
+    printf("│ Total Steps Saved : %-28d │\n", total_history_count);
+    if (total_history_count > 0 && history_cursor < total_history_count)
+    {
+        printf("│ Current Snapshot  : %-28.28s │\n", history_snapshots[history_cursor]);
+    }
+    else
+    {
+        printf("│ Current Snapshot  : %-28s │\n", "None");
+    }
+    printf("└──────────────────────────────────────────────────┘\n");
+}
+
 void algorithm_step_hook(const char* event_msg)
 {
     if (event_msg == NULL)
@@ -81,6 +148,25 @@ void algorithm_step_hook(const char* event_msg)
         event_log[4][127] = '\0';
     }
 
+    // Record snapshot in history ring buffer
+    if (total_history_count < DEBUGGER_HISTORY_MAX)
+    {
+        strncpy(history_snapshots[total_history_count], event_msg, 127);
+        history_snapshots[total_history_count][127] = '\0';
+        history_cursor = total_history_count;
+        total_history_count++;
+    }
+    else
+    {
+        for (int i = 0; i < DEBUGGER_HISTORY_MAX - 1; i++)
+        {
+            strcpy(history_snapshots[i], history_snapshots[i + 1]);
+        }
+        strncpy(history_snapshots[DEBUGGER_HISTORY_MAX - 1], event_msg, 127);
+        history_snapshots[DEBUGGER_HISTORY_MAX - 1][127] = '\0';
+        history_cursor = DEBUGGER_HISTORY_MAX - 1;
+    }
+
     if (!get_step_mode())
         return;
 
@@ -102,10 +188,14 @@ void algorithm_step_hook(const char* event_msg)
     }
 
     print_recent_events_card();
+    if (inspector_active)
+    {
+        print_state_inspector_card();
+    }
 
     while (get_step_mode() && get_paused())
     {
-        printf("[Paused] Press [Space] to Resume, [s] to Step, [q] to Quit...\n");
+        printf("[Paused] Stepping: [n]ext, [p]rev, [r]eset, [i]nspect, [Space] resume, [q]uit\n");
         fflush(stdout);
 
         int ch = get_keypress(1);
@@ -114,9 +204,34 @@ void algorithm_step_hook(const char* event_msg)
             set_paused(0);
             printf("Resuming execution...\n");
         }
-        else if (ch == 's' || ch == 'S')
+        else if (ch == 'n' || ch == 'N' || ch == 's' || ch == 'S')
         {
-            break; // Single step
+            debugger_step_next();
+            break; // Single step forward
+        }
+        else if (ch == 'p' || ch == 'P')
+        {
+            debugger_step_prev();
+            printf("[Time-Travel: Step %d / %d] Event: %s\n", history_cursor + 1,
+                   total_history_count, history_snapshots[history_cursor]);
+        }
+        else if (ch == 'r' || ch == 'R')
+        {
+            debugger_step_reset();
+            printf("[Time-Travel: Reset to Step 1 / %d] Event: %s\n", total_history_count,
+                   history_snapshots[0]);
+        }
+        else if (ch == 'i' || ch == 'I')
+        {
+            debugger_toggle_inspector();
+            if (inspector_active)
+            {
+                print_state_inspector_card();
+            }
+            else
+            {
+                printf("State Inspector Hidden.\n");
+            }
         }
         else if (ch == 'q' || ch == 'Q')
         {
@@ -139,6 +254,8 @@ void get_recent_events(char events[5][128], int* count)
 void clear_recent_events(void)
 {
     event_count = 0;
+    total_history_count = 0;
+    history_cursor = 0;
 }
 
 void print_recent_events_card(void)

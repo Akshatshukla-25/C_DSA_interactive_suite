@@ -78,12 +78,49 @@ void test_debugger_step_counting(void)
     printf("test_debugger_step_counting passed.\n");
 }
 
+void test_time_travel_stepping(void)
+{
+    clear_recent_events();
+    algorithm_step_hook("Step 1: Init");
+    algorithm_step_hook("Step 2: Compare");
+    algorithm_step_hook("Step 3: Swap");
+
+    assert(debugger_get_history_count() == 3);
+    assert(debugger_get_current_step() == 2);
+
+    debugger_step_prev();
+    assert(debugger_get_current_step() == 1);
+
+    debugger_step_prev();
+    assert(debugger_get_current_step() == 0);
+
+    // Test lower clamp
+    debugger_step_prev();
+    assert(debugger_get_current_step() == 0);
+
+    debugger_step_next();
+    assert(debugger_get_current_step() == 1);
+
+    debugger_step_reset();
+    assert(debugger_get_current_step() == 0);
+
+    debugger_toggle_inspector();
+    assert(debugger_is_inspector_visible() == 1);
+    print_state_inspector_card();
+
+    debugger_toggle_inspector();
+    assert(debugger_is_inspector_visible() == 0);
+
+    printf("test_time_travel_stepping passed.\n");
+}
+
 int main(void)
 {
     printf("Starting Step Debugger unit tests...\n");
     test_debugger_state();
     test_debugger_events();
     test_debugger_step_counting();
+    test_time_travel_stepping();
     printf("All Step Debugger unit tests passed successfully!\n");
     return 0;
 }

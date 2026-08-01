@@ -15,6 +15,16 @@ void get_recent_events(char events[5][128], int* count);
 void clear_recent_events(void);
 void print_recent_events_card(void);
 
+/* ── Time-Travel Stepping & State Inspector API ────────────────── */
+int debugger_get_history_count(void);
+int debugger_get_current_step(void);
+void debugger_step_prev(void);
+void debugger_step_next(void);
+void debugger_step_reset(void);
+void debugger_toggle_inspector(void);
+int debugger_is_inspector_visible(void);
+void print_state_inspector_card(void);
+
 void debugger_demo(void);
 
 #endif // STEP_DEBUGGER_H
