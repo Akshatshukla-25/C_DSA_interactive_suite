@@ -135,9 +135,9 @@ bool extractTop_pq_graph(PQ_graph* pq, PQ_graph_node* result)
 void dijkstra(weightedGraph* graph, int start)
 {
     telemetry_init("dijkstra");
-    if (graph == NULL || start < 0 || start >= graph->V)
+    if (graph == NULL || graph->V <= 0 || start < 0 || start >= graph->V)
     {
-        printf("\nError: invalid graph or starting node passed to Dijkstra");
+        printf("\nError: invalid graph or starting node passed to Dijkstra\n");
         telemetry_close();
         return;
     }

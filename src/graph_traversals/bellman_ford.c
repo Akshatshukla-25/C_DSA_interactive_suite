@@ -34,8 +34,14 @@ void bellman_ford(weightedGraph* graph, int start)
                 int v = current->destination;
                 int weight = current->weight;
 
-                if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
-                    dist[v] = dist[u] + weight;
+                if (dist[u] != INT_MAX)
+                {
+                    long long new_dist = (long long)dist[u] + weight;
+                    if (new_dist < dist[v])
+                    {
+                        dist[v] = (new_dist < INT_MIN) ? INT_MIN : (int)new_dist;
+                    }
+                }
 
                 current = current->next;
             }
@@ -50,13 +56,18 @@ void bellman_ford(weightedGraph* graph, int start)
         {
             int v = current->destination;
             int weight = current->weight;
-            if (dist[u] != INT_MAX && dist[u] + weight < dist[v])
+            if (dist[u] != INT_MAX)
             {
-                end_t = clock();
-                total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
-                printf("Negative edge cycle detected. Graph is not suitable for bellman ford.\n");
-                printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
-                return;
+                long long new_dist = (long long)dist[u] + weight;
+                if (new_dist < dist[v])
+                {
+                    end_t = clock();
+                    total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+                    printf(
+                        "Negative edge cycle detected. Graph is not suitable for bellman ford.\n");
+                    printf("\ntotal CPU time taken for Bellman-Ford:- %f seconds\n", total_t);
+                    return;
+                }
             }
 
             current = current->next;
