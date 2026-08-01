@@ -55,10 +55,12 @@ void count_set_bits_demo(void)
 
             if (un > 0)
             {
+                printf("Press Enter to continue...\n");
                 press_enter_to_continue();
             }
         }
         printf("Final Count: %d\n", count);
+        printf("Press Enter to continue...\n");
         press_enter_to_continue();
     }
 }
@@ -137,6 +139,7 @@ void xor_swap_demo(void)
         printf("  B = ");
         print_binary_32(ub);
         printf("  (%d)\n\n", b);
+        printf("Press Enter to continue...\n");
         press_enter_to_continue();
 
         printf("Step 1: A = A ^ B\n");
@@ -150,6 +153,7 @@ void xor_swap_demo(void)
         print_binary_32_highlight(new_a, ua ^ new_a, "\033[1;32m");
         printf("  (New A)\n\n");
         ua = new_a;
+        printf("Press Enter to continue...\n");
         press_enter_to_continue();
 
         printf("Step 2: B = A ^ B\n");
@@ -163,6 +167,7 @@ void xor_swap_demo(void)
         print_binary_32_highlight(new_b, ub ^ new_b, "\033[1;32m");
         printf("  (New B)\n\n");
         ub = new_b;
+        printf("Press Enter to continue...\n");
         press_enter_to_continue();
 
         printf("Step 3: A = A ^ B\n");
@@ -183,6 +188,7 @@ void xor_swap_demo(void)
 
         /* Actually swap the real variables so it's formally correct */
         xor_swap(&a, &b);
+        printf("Press Enter to continue...\n");
         press_enter_to_continue();
     }
 }
