@@ -300,6 +300,7 @@ void telemetry_bridge_reset(const char* algorithm_name)
     memset(&current_bridge_state, 0, sizeof(current_bridge_state));
     if (algorithm_name != NULL)
     {
-        strncpy(current_bridge_state.algorithm_name, algorithm_name, sizeof(current_bridge_state.algorithm_name) - 1);
+        strncpy(current_bridge_state.algorithm_name, algorithm_name,
+                sizeof(current_bridge_state.algorithm_name) - 1);
     }
 }
