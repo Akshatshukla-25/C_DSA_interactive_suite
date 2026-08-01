@@ -13,9 +13,24 @@ void launch_help_page(void);
 void help_data_structures_menu(void);
 
 /**
+ * @brief Sub-menu for Expression Evaluation help.
+ */
+void help_expression_evaluation_menu(void);
+
+/**
  * @brief Sub-menu for O(N^2) Sorting Algorithms help.
  */
 void help_sorting_algorithms_n2_menu(void);
+
+/**
+ * @brief Sub-menu for Advanced Sorting Algorithms help.
+ */
+void help_advanced_sorting_algorithms_menu(void);
+
+/**
+ * @brief Sub-menu for Searching Algorithms help.
+ */
+void help_searching_algorithms_menu(void);
 
 /**
  * @brief Sub-menu for Trees help.
@@ -33,6 +48,11 @@ void help_graph_traversals_menu(void);
 void help_advanced_heaps_menu(void);
 
 /**
+ * @brief Sub-menu for Hashing help.
+ */
+void help_hashing_menu(void);
+
+/**
  * @brief Sub-menu for String Algorithms & Compression help.
  */
 void help_string_compression_menu(void);
@@ -43,14 +63,14 @@ void help_string_compression_menu(void);
 void help_dynamic_programming_menu(void);
 
 /**
- * @brief Sub-menu for Expression Evaluation help.
+ * @brief Sub-menu for Spatial Indexing help.
  */
-void help_expression_evaluation_menu(void);
+void help_spatial_indexing_menu(void);
 
 /**
- * @brief Sub-menu for Hashing help.
+ * @brief Sub-menu for Probabilistic Data Structures help.
  */
-void help_hashing_menu(void);
+void help_probabilistic_data_structures_menu(void);
 
 /**
  * @brief Sub-menu for Error Correction help.
@@ -66,6 +86,11 @@ void help_bit_manipulation_menu(void);
  * @brief Sub-menu for Process Synchronization help.
  */
 void help_process_synchronization_menu(void);
+
+/**
+ * @brief Sub-menu for Job Scheduling help.
+ */
+void help_job_scheduling_menu(void);
 
 /**
  * @brief Sub-menu for Backtracking Algorithms help.
