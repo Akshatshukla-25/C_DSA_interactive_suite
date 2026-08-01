@@ -34,7 +34,8 @@ void help_sorting_algorithms_n2_menu(void)
     printf("        subsequent passes to run in near-linear time.\n\n");
 
     printf("WHEN TO USE WHAT & REAL-WORLD USE CASES:\n");
-    printf("    • Use Insertion Sort for small arrays (typically N < 15) or nearly-sorted lists\n");
+    printf("    • Use Insertion Sort for small arrays (typically N < 15) or nearly-sorted\n"
+           "      lists\n");
     printf("      (often used as the base-case cutoff for Quick Sort and Merge Sort).\n");
     printf("    • Use Shell Sort in embedded systems with strict memory bounds where recursive\n");
     printf("      stack overhead (of Quick Sort) or auxiliary memory (of Merge Sort) is "

@@ -13,7 +13,8 @@ void help_searching_algorithms_menu(void)
     printf("    Finds position of target value within a sorted array by repeatedly halving the "
            "search interval. O(log N).\n\n");
     printf("JUMP SEARCH:\n");
-    printf("    Searches in a sorted array by jumping ahead by fixed steps (usually sqrt(N)).\n\n");
+    printf("    Searches in a sorted array by jumping ahead by fixed steps\n"
+           "    (usually sqrt(N)).\n\n");
     printf("INTERPOLATION SEARCH:\n");
     printf("    Improved binary search for uniformly distributed sorted arrays. O(log log N) "
            "average case.\n\n");

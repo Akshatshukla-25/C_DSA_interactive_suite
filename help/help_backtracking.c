@@ -5,371 +5,258 @@
 
 void help_backtracking_menu(void)
 {
-    while (1)
-    {
-        display_header("Help - Backtracking Algorithms");
+    display_header("Help - Backtracking Algorithms");
 
-        printf("Select a sub-topic:\n\n");
-        printf("1. What is Backtracking? (Concept & Cycle)\n");
-        printf("2. N-Queens Problem\n");
-        printf("3. 6x6 Sudoku Solver\n");
-        printf("4. Rat in a Maze\n");
-        printf("5. Graph Coloring\n");
-        printf("6. Knight's Tour\n");
-        printf("7. Time Complexity Summary\n");
+    printf("--- WHAT IS BACKTRACKING? (CONCEPT & CYCLE) ---\n\n");
+    printf("DEFINITION:\n");
+    printf("    Backtracking is a systematic, depth-first search technique that builds\n");
+    printf("    a solution incrementally and abandons (\"backtracks\") the current path\n");
+    printf("    the moment it is determined that the path cannot possibly lead to a\n");
+    printf("    valid solution.\n\n");
+    printf("HOW IT DIFFERS FROM BRUTE FORCE:\n");
+    printf("    Brute Force           Backtracking\n");
+    printf("    -------------------------------------------------------\n");
+    printf("    Generates ALL         Prunes branches early when a\n");
+    printf("    candidate solutions,  constraint is violated, avoiding\n");
+    printf("    then filters valid    vast portions of the search space\n");
+    printf("    ones at the end.      entirely.\n\n");
+    printf("    Example - 4-Queens:\n");
+    printf("      Brute force tests 4^4 = 256 placements.\n");
+    printf("      Backtracking explores only ~8 nodes to the first solution.\n\n");
+    printf("THE EXPLORE -> CHECK -> BACKTRACK CYCLE:\n");
+    printf("    1. EXPLORE   - Place/assign the next candidate value at the current\n");
+    printf("                   position (e.g., put a queen in this row, try digit 3\n");
+    printf("                   in this Sudoku cell).\n\n");
+    printf("    2. CHECK     - Test whether the candidate satisfies all constraints\n");
+    printf("                   so far (the 'is_safe' guard). If it does, recurse\n");
+    printf("                   deeper to the next position.\n\n");
+    printf("    3. BACKTRACK - If a dead end is reached (no valid candidate works\n");
+    printf("                   at this position), undo the last placement and return\n");
+    printf("                   control to the caller, which tries the next candidate.\n\n");
+    printf("PSEUDOCODE SKELETON:\n");
+    printf("    solve(position):\n");
+    printf("        if position == GOAL:         // base case: solution complete\n");
+    printf("            report solution\n");
+    printf("            return true\n");
+    printf("        for each candidate c:\n");
+    printf("            if is_safe(position, c): // constraint check\n");
+    printf("                place(position, c)   // EXPLORE\n");
+    printf("                if solve(position+1): return true\n");
+    printf("                remove(position, c)  // BACKTRACK\n");
+    printf("        return false                 // no candidate worked\n\n");
+    printf("KEY INSIGHT:\n");
+    printf("    The constraint check (is_safe) is what makes backtracking powerful.\n");
+    printf("    The tighter the constraint, the larger the subtree pruned, and the\n");
+    printf("    faster the algorithm converges to a solution.\n\n");
 
-        int choice;
-        int status = safe_input_int(&choice, "\nenter choice ('-1' to exit, or 'help') : ", 1, 7);
+    printf("--- N-QUEENS PROBLEM ---\n\n");
+    printf("PROBLEM STATEMENT:\n");
+    printf("    Place N non-attacking queens on an N x N chessboard such that no\n");
+    printf("    two queens share the same row, column, or diagonal.\n\n");
+    printf("ALGORITHM (solve_n_queens_util):\n");
+    printf("    - Works column by column (left to right).\n");
+    printf("    - For each column, tries every row from 0 to N-1.\n");
+    printf("    - is_safe() checks three directions for an existing queen:\n");
+    printf("        * The entire row to the left.\n");
+    printf("        * The upper-left diagonal.\n");
+    printf("        * The lower-left diagonal.\n");
+    printf("    - If safe, places 'Q' at board[row][col] and recurses to col+1.\n");
+    printf("    - If no safe row exists in the current column, returns false,\n");
+    printf("      triggering the caller to backtrack and try the next row.\n\n");
+    printf("VISUALIZER WALKTHROUGH:\n");
+    printf("    - Enter a board size N (4 to 8).\n");
+    printf("    - The board is printed live at every placement and removal.\n");
+    printf("    - '.' = empty cell.  'Q' = placed queen.\n");
+    printf("    - Watch queens appear (EXPLORE) and then vanish (BACKTRACK)\n");
+    printf("      as the algorithm proves a path is a dead end.\n");
+    printf("    - The final board shows the first valid solution found.\n\n");
+    printf("WHAT TO OBSERVE:\n");
+    printf("    - How early pruning eliminates entire columns instantly:\n");
+    printf("      if row 0 is taken, no queen is even tried in conflicting rows.\n");
+    printf("    - The cascade of backtracks when the last few columns are filled:\n");
+    printf("      the algorithm may backtrack several levels to free up a row.\n");
+    printf("    - For N=8, only 92 solutions exist out of 8^8 = 16M raw placements.\n\n");
+    printf("BOARD SIZES & SOLUTION COUNTS:\n");
+    printf("    N=4 :  2 solutions    N=6 :  4 solutions\n");
+    printf("    N=5 : 10 solutions    N=7 : 40 solutions\n");
+    printf("                          N=8 : 92 solutions\n\n");
 
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            break;
-        }
+    printf("--- 6x6 SUDOKU SOLVER ---\n\n");
+    printf("PROBLEM STATEMENT:\n");
+    printf("    Fill a 6x6 grid with digits 1-6 such that every row, every column,\n");
+    printf("    and every 2x3 sub-block contains each digit exactly once.\n");
+    printf("    Pre-filled cells (shown as [N]) are treated as fixed constraints.\n\n");
+    printf("ALGORITHM (solve_sudoku_util):\n");
+    printf("    - Scans the grid cell by cell, row by row (row, col order).\n");
+    printf("    - Skips pre-filled cells (grid[row][col] > 0).\n");
+    printf("    - For each empty cell, tries digits 1 to 6.\n");
+    printf("    - is_safe_sudoku() checks three constraints simultaneously:\n");
+    printf("        * No duplicate in the current row.\n");
+    printf("        * No duplicate in the current column.\n");
+    printf("        * No duplicate in the enclosing 2x3 sub-block.\n");
+    printf("    - Tracks 'placements' and 'backtracks' counters for performance.\n");
+    printf("    - Pre-validates the initial board before solving to reject\n");
+    printf("      illegal starting grids immediately.\n\n");
+    printf("VISUALIZER WALKTHROUGH:\n");
+    printf("    - Pre-filled clue cells are shown as [N] (bracketed).\n");
+    printf("    - Solver-placed digits appear as plain N (no brackets).\n");
+    printf("    - '.' = still-empty cell.\n");
+    printf("    - '--' divides the two 2x3 row-bands.\n");
+    printf("    - ' | ' divides the two 3-column blocks.\n");
+    printf("    - Watch digits appear and disappear as the solver backtracks\n");
+    printf("      out of dead-end sub-blocks.\n\n");
+    printf("WHAT TO OBSERVE:\n");
+    printf("    - The placements vs. backtracks ratio shown after solving.\n");
+    printf("      A high ratio of backtracks signals a hard puzzle.\n");
+    printf("    - How a conflict in column 5 may force backtracking all the way\n");
+    printf("      back to column 0 of the same row.\n");
+    printf("    - The sub-block constraint is the most powerful pruner: a single\n");
+    printf("      occupied 2x3 block can eliminate 5 of 6 candidates instantly.\n\n");
 
-        if (status == 0)
-        {
-            continue;
-        }
+    printf("--- RAT IN A MAZE ---\n\n");
+    printf("PROBLEM STATEMENT:\n");
+    printf("    A rat starts at the top-left cell (0,0) of a 6x6 grid and must\n");
+    printf("    reach the bottom-right cell (5,5). Cells marked 1 are open;\n");
+    printf("    cells marked 0 are walls the rat cannot enter.\n\n");
+    printf("ALGORITHM (solve_maze_util):\n");
+    printf("    - Explores four directions in priority order:\n");
+    printf("        1. Down  (x+1, y) - move forward one row\n");
+    printf("        2. Right (x, y+1) - move forward one column\n");
+    printf("        3. Up    (x-1, y) - move back one row\n");
+    printf("        4. Left  (x, y-1) - move back one column\n");
+    printf("    - is_safe_rat() guards against:\n");
+    printf("        * Out-of-bounds moves (x or y < 0, or >= 6).\n");
+    printf("        * Walls (maze[x][y] == 0).\n");
+    printf("        * Revisiting a cell already on the current path\n");
+    printf("          (solution[x][y] == 1), preventing infinite loops.\n");
+    printf("    - Marks a cell (solution[x][y] = 1) before recursing, and\n");
+    printf("      unmarks it (= 0) on backtrack.\n\n");
+    printf("VISUALIZER WALKTHROUGH:\n");
+    printf("    - 'R' = rat's current path cells.\n");
+    printf("    - '.' = open, unvisited cell.\n");
+    printf("    - '|' = wall (impassable).\n");
+    printf("    - Watch the path grow as the rat advances and shrink as\n");
+    printf("      it backtracks out of dead ends.\n\n");
+    printf("WHAT TO OBSERVE:\n");
+    printf("    - Constraint pruning at work: hitting a wall or a revisited cell\n");
+    printf("      triggers an immediate backtrack with no further recursion.\n");
+    printf("    - The direction priority (Down > Right > Up > Left) shapes the\n");
+    printf("      search: the rat strongly prefers moving toward the goal first.\n");
+    printf("    - In a densely walled maze, the rat may trace its entire path\n");
+    printf("      backward before finding the correct route.\n\n");
 
-        switch (choice)
-        {
-            /* ------------------------------------------------------------------ */
-            case 1:
-                display_header("Help - What is Backtracking?");
-                printf("DEFINITION:\n");
-                printf(
-                    "    Backtracking is a systematic, depth-first search technique that builds\n");
-                printf("    a solution incrementally and abandons (\"backtracks\") the current "
-                       "path\n");
-                printf("    the moment it is determined that the path cannot possibly lead to a\n");
-                printf("    valid solution.\n\n");
+    printf("--- GRAPH COLORING ---\n\n");
+    printf("PROBLEM STATEMENT:\n");
+    printf("    Given a graph G and an integer M, assign one of M colors to each\n");
+    printf("    vertex such that no two adjacent (connected) vertices share the\n");
+    printf("    same color. This is the M-Coloring Problem.\n\n");
+    printf("ALGORITHM (solve_graph_coloring_util):\n");
+    printf("    - Processes vertices one at a time (V0, V1, ... Vn-1).\n");
+    printf("    - For each vertex v, tries every color c from 1 to M.\n");
+    printf("    - is_safe() scans all neighbors via the adjacency matrix:\n");
+    printf("        * If any neighbor already has color c, c is rejected.\n");
+    printf("    - Assigns colors[v] = c and recurses to vertex v+1.\n");
+    printf("    - On failure at v+1, resets colors[v] = 0 (BACKTRACK) and\n");
+    printf("      tries the next color c+1.\n\n");
+    printf("PRESET GRAPH TOPOLOGIES:\n");
+    printf("    1. Cycle Graph C5       - 5 vertices, ring structure. Chromatic num = 3.\n");
+    printf("    2. Bipartite Graph K3,3 - 6 vertices, two independent sets. Chromatic num = 2.\n");
+    printf("    3. Complete Graph K4    - 4 vertices, all pairs connected. Chromatic num = 4.\n");
+    printf("    4. Complete Graph K5    - 5 vertices, all pairs connected. Chromatic num = 5.\n");
+    printf("    5. Wheel Graph W5       - 4 rim + 1 hub, connected to all rim. Chromatic\n"
+           "                              num = 4.\n");
+    printf("    6. Petersen Graph       - 10 vertices, famous non-planar graph. Chromatic\n"
+           "                              num = 3.\n\n");
+    printf("VISUALIZER WALKTHROUGH:\n");
+    printf("    - The adjacency matrix and vertex states are shown live.\n");
+    printf("    - An ASCII art drawing of the selected topology is rendered\n");
+    printf("      with each vertex highlighted in its assigned ANSI color.\n");
+    printf("    - The active vertex is marked with [brackets] in bold yellow.\n");
+    printf("    - Status messages report 'Assigned RED to V2' or\n");
+    printf("      'Conflict! Backtracking V3...' at each step.\n\n");
+    printf("WHAT TO OBSERVE:\n");
+    printf("    - Try M < chromatic number to watch a full exhaustive failure:\n");
+    printf("      every color combination is attempted and rejected.\n");
+    printf("    - Try M = chromatic number to see minimal coloring succeed.\n");
+    printf("    - For K5 with M=4, observe deep backtracking: assigning the\n");
+    printf("      4th vertex forces a cascade of recoloring earlier vertices.\n");
+    printf("    - For K3,3 with M=2, observe near-instant success: bipartite\n");
+    printf("      structure matches 2 colors perfectly with no conflicts.\n\n");
 
-                printf("HOW IT DIFFERS FROM BRUTE FORCE:\n");
-                printf("    Brute Force           Backtracking\n");
-                printf("    -------------------------------------------------------\n");
-                printf("    Generates ALL         Prunes branches early when a\n");
-                printf("    candidate solutions,  constraint is violated, avoiding\n");
-                printf("    then filters valid    vast portions of the search space\n");
-                printf("    ones at the end.      entirely.\n\n");
-                printf("    Example - 4-Queens:\n");
-                printf("      Brute force tests 4^4 = 256 placements.\n");
-                printf("      Backtracking explores only ~8 nodes to the first solution.\n\n");
+    printf("--- KNIGHT'S TOUR ---\n\n");
+    printf("PROBLEM STATEMENT:\n");
+    printf("    Move a chess knight across an N x N board, visiting every cell\n");
+    printf("    exactly once. The knight moves in an 'L' shape: two squares in\n");
+    printf("    one direction and one square perpendicular (8 possible moves).\n\n");
+    printf("TWO ALGORITHMS:\n\n");
+    printf("  1. STANDARD BACKTRACKING (solve_standard)  -- Small boards (<= 5x5):\n");
+    printf("    - At each cell, tries all 8 L-shaped moves in fixed order.\n");
+    printf("    - Skips moves that go out of bounds or revisit a cell.\n");
+    printf("    - If all 8 moves fail, backtracks to the previous cell and\n");
+    printf("      continues with the next untried move from there.\n");
+    printf("    - Exhaustive: always finds a tour if one exists, but is\n");
+    printf("      exponentially slow on large boards.\n\n");
+    printf("  2. WARNSDORFF'S HEURISTIC (solve_warnsdorff) -- Larger boards (>= 6x6):\n");
+    printf("    - Same structure as standard backtracking, but moves are sorted\n");
+    printf("      before being tried.\n");
+    printf("    - HEURISTIC RULE: Always move to the neighbor with the fewest\n");
+    printf("      onward moves (minimum degree / accessibility).\n");
+    printf("    - get_degree() counts how many unvisited cells a candidate\n");
+    printf("      square can still reach from that position.\n");
+    printf("    - Moves are sorted ascending by degree (via qsort), so the\n");
+    printf("      most constrained next-cell is tried first.\n");
+    printf("    - Effect: guides the knight away from dead-end corners early,\n");
+    printf("      drastically reducing backtracking on large boards.\n\n");
+    printf("VISUALIZER WALKTHROUGH:\n");
+    printf("    - A checkerboard is rendered with alternating ANSI background shades.\n");
+    printf("    - The active knight is shown as the unicode chess piece in bold yellow.\n");
+    printf("    - Visited cells show their step number (01, 02, 03...) in cyan.\n");
+    printf("    - Empty unvisited cells are shown as blank checkered squares.\n");
+    printf("    - Standard mode: watch numbers fill in and then erase on backtrack.\n");
+    printf("    - Warnsdorff mode: observe a smooth, nearly backtrack-free fill.\n\n");
+    printf("WHAT TO OBSERVE:\n");
+    printf("    - Run a 5x5 board in Standard mode: count the backtracks as step\n");
+    printf("      numbers disappear from squares (visible board regressions).\n");
+    printf("    - Run a 6x6 or 8x8 board in Warnsdorff mode: the tour fills\n");
+    printf("      almost completely with zero or minimal backtracking, illustrating\n");
+    printf("      how a good heuristic transforms an exponential search into\n");
+    printf("      a near-linear one in practice.\n");
+    printf("    - Compare solve times between the two modes on the same board.\n\n");
 
-                printf("THE EXPLORE -> CHECK -> BACKTRACK CYCLE:\n");
-                printf("    1. EXPLORE   - Place/assign the next candidate value at the current\n");
-                printf("                   position (e.g., put a queen in this row, try digit 3\n");
-                printf("                   in this Sudoku cell).\n\n");
-                printf("    2. CHECK     - Test whether the candidate satisfies all constraints\n");
-                printf("                   so far (the 'is_safe' guard). If it does, recurse\n");
-                printf("                   deeper to the next position.\n\n");
-                printf("    3. BACKTRACK - If a dead end is reached (no valid candidate works\n");
-                printf(
-                    "                   at this position), undo the last placement and return\n");
-                printf("                   control to the caller, which tries the next "
-                       "candidate.\n\n");
+    printf("--- TIME COMPLEXITY SUMMARY ---\n\n");
+    printf("NOTE: Backtracking worst-case complexity is often exponential.\n");
+    printf("In practice, constraint pruning dramatically reduces the real\n");
+    printf("running time compared to the theoretical upper bound.\n\n");
+    printf("ALGORITHM           WORST CASE          NOTES\n");
+    printf("-----------------------------------------------------------------------\n");
+    printf("N-Queens            O(N!)               N choices for col 0, N-1 for\n");
+    printf("                                        col 1, etc. Pruning typically\n");
+    printf("                                        reduces this to near O(N^(N/2)).\n\n");
+    printf("6x6 Sudoku          O(6^K)              K = number of empty cells.\n");
+    printf("                                        Each cell tries up to 6 digits.\n");
+    printf("                                        Row/col/block constraints prune\n");
+    printf("                                        most branches very early.\n\n");
+    printf("Rat in a Maze       O(4^(N*N))          4 directions per cell, up to\n");
+    printf("                                        N*N cells in the path. Wall\n");
+    printf("                                        density and the no-revisit\n");
+    printf("                                        guard prune most branches.\n\n");
+    printf("Graph Coloring      O(M^V)              M colors, V vertices. Each\n");
+    printf("  (M-coloring)                          vertex tries up to M colors.\n");
+    printf("                                        Adjacency constraints eliminate\n");
+    printf("                                        most assignments instantly.\n\n");
+    printf("Knight's Tour       O(8^(N*N))          Up to 8 moves per cell, N*N\n");
+    printf("  Standard                              cells to fill. Extremely slow\n");
+    printf("                                        for N >= 6 without heuristics.\n\n");
+    printf("Knight's Tour       Near O(N^2)         Warnsdorff's rule effectively\n");
+    printf("  Warnsdorff                            reduces search to a single\n");
+    printf("                                        greedy pass in most cases.\n");
+    printf("                                        Not guaranteed for all inputs.\n\n");
+    printf("GENERAL RULE OF THUMB:\n");
+    printf("    The effectiveness of backtracking is determined by the pruning ratio:\n");
+    printf("    the fraction of the search tree eliminated by constraints.\n");
+    printf("    A constraint that eliminates 90%% of candidates at each level\n");
+    printf("    can reduce an exponential search to near-linear in practice.\n\n");
 
-                printf("PSEUDOCODE SKELETON:\n");
-                printf("    solve(position):\n");
-                printf("        if position == GOAL:         // base case: solution complete\n");
-                printf("            report solution\n");
-                printf("            return true\n");
-                printf("        for each candidate c:\n");
-                printf("            if is_safe(position, c): // constraint check\n");
-                printf("                place(position, c)   // EXPLORE\n");
-                printf("                if solve(position+1): return true\n");
-                printf("                remove(position, c)  // BACKTRACK\n");
-                printf("        return false                 // no candidate worked\n\n");
-
-                printf("KEY INSIGHT:\n");
-                printf("    The constraint check (is_safe) is what makes backtracking powerful.\n");
-                printf("    The tighter the constraint, the larger the subtree pruned, and the\n");
-                printf("    faster the algorithm converges to a solution.\n\n");
-
-                printf("HOW TO RUN IN THIS SUITE:\n");
-                printf("    Main Menu -> Option 11 (Backtracking Algorithms).\n\n");
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 2:
-                display_header("Help - N-Queens Problem");
-                printf("PROBLEM STATEMENT:\n");
-                printf("    Place N non-attacking queens on an N x N chessboard such that no\n");
-                printf("    two queens share the same row, column, or diagonal.\n\n");
-
-                printf("ALGORITHM (solve_n_queens_util):\n");
-                printf("    - Works column by column (left to right).\n");
-                printf("    - For each column, tries every row from 0 to N-1.\n");
-                printf("    - is_safe() checks three directions for an existing queen:\n");
-                printf("        * The entire row to the left.\n");
-                printf("        * The upper-left diagonal.\n");
-                printf("        * The lower-left diagonal.\n");
-                printf("    - If safe, places 'Q' at board[row][col] and recurses to col+1.\n");
-                printf("    - If no safe row exists in the current column, returns false,\n");
-                printf("      triggering the caller to backtrack and try the next row.\n\n");
-
-                printf("VISUALIZER WALKTHROUGH:\n");
-                printf("    - Enter a board size N (4 to 8).\n");
-                printf("    - The board is printed live at every placement and removal.\n");
-                printf("    - '.' = empty cell.  'Q' = placed queen.\n");
-                printf("    - Watch queens appear (EXPLORE) and then vanish (BACKTRACK)\n");
-                printf("      as the algorithm proves a path is a dead end.\n");
-                printf("    - The final board shows the first valid solution found.\n\n");
-
-                printf("WHAT TO OBSERVE:\n");
-                printf("    - How early pruning eliminates entire columns instantly:\n");
-                printf("      if row 0 is taken, no queen is even tried in conflicting rows.\n");
-                printf("    - The cascade of backtracks when the last few columns are filled:\n");
-                printf("      the algorithm may backtrack several levels to free up a row.\n");
-                printf(
-                    "    - For N=8, only 92 solutions exist out of 8^8 = 16M raw placements.\n\n");
-
-                printf("BOARD SIZES & SOLUTION COUNTS:\n");
-                printf("    N=4 :  2 solutions    N=6 :  4 solutions\n");
-                printf("    N=5 : 10 solutions    N=7 : 40 solutions\n");
-                printf("                          N=8 : 92 solutions\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 3:
-                display_header("Help - 6x6 Sudoku Solver");
-                printf("PROBLEM STATEMENT:\n");
-                printf("    Fill a 6x6 grid with digits 1-6 such that every row, every column,\n");
-                printf("    and every 2x3 sub-block contains each digit exactly once.\n");
-                printf("    Pre-filled cells (shown as [N]) are treated as fixed constraints.\n\n");
-
-                printf("ALGORITHM (solve_sudoku_util):\n");
-                printf("    - Scans the grid cell by cell, row by row (row, col order).\n");
-                printf("    - Skips pre-filled cells (grid[row][col] > 0).\n");
-                printf("    - For each empty cell, tries digits 1 to 6.\n");
-                printf("    - is_safe_sudoku() checks three constraints simultaneously:\n");
-                printf("        * No duplicate in the current row.\n");
-                printf("        * No duplicate in the current column.\n");
-                printf("        * No duplicate in the enclosing 2x3 sub-block.\n");
-                printf("    - Tracks 'placements' and 'backtracks' counters for performance.\n");
-                printf("    - Pre-validates the initial board before solving to reject\n");
-                printf("      illegal starting grids immediately.\n\n");
-
-                printf("VISUALIZER WALKTHROUGH:\n");
-                printf("    - Pre-filled clue cells are shown as [N] (bracketed).\n");
-                printf("    - Solver-placed digits appear as plain N (no brackets).\n");
-                printf("    - '.' = still-empty cell.\n");
-                printf("    - '--' divides the two 2x3 row-bands.\n");
-                printf("    - ' | ' divides the two 3-column blocks.\n");
-                printf("    - Watch digits appear and disappear as the solver backtracks\n");
-                printf("      out of dead-end sub-blocks.\n\n");
-
-                printf("WHAT TO OBSERVE:\n");
-                printf("    - The placements vs. backtracks ratio shown after solving.\n");
-                printf("      A high ratio of backtracks signals a hard puzzle.\n");
-                printf("    - How a conflict in column 5 may force backtracking all the way\n");
-                printf("      back to column 0 of the same row.\n");
-                printf("    - The sub-block constraint is the most powerful pruner: a single\n");
-                printf("      occupied 2x3 block can eliminate 5 of 6 candidates instantly.\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 4:
-                display_header("Help - Rat in a Maze");
-                printf("PROBLEM STATEMENT:\n");
-                printf("    A rat starts at the top-left cell (0,0) of a 6x6 grid and must\n");
-                printf("    reach the bottom-right cell (5,5). Cells marked 1 are open;\n");
-                printf("    cells marked 0 are walls the rat cannot enter.\n\n");
-
-                printf("ALGORITHM (solve_maze_util):\n");
-                printf("    - Explores four directions in priority order:\n");
-                printf("        1. Down  (x+1, y) - move forward one row\n");
-                printf("        2. Right (x, y+1) - move forward one column\n");
-                printf("        3. Up    (x-1, y) - move back one row\n");
-                printf("        4. Left  (x, y-1) - move back one column\n");
-                printf("    - is_safe_rat() guards against:\n");
-                printf("        * Out-of-bounds moves (x or y < 0, or >= 6).\n");
-                printf("        * Walls (maze[x][y] == 0).\n");
-                printf("        * Revisiting a cell already on the current path\n");
-                printf("          (solution[x][y] == 1), preventing infinite loops.\n");
-                printf("    - Marks a cell (solution[x][y] = 1) before recursing, and\n");
-                printf("      unmarks it (= 0) on backtrack.\n\n");
-
-                printf("VISUALIZER WALKTHROUGH:\n");
-                printf("    - 'R' = rat's current path cells.\n");
-                printf("    - '.' = open, unvisited cell.\n");
-                printf("    - '|' = wall (impassable).\n");
-                printf("    - Watch the path grow as the rat advances and shrink as\n");
-                printf("      it backtracks out of dead ends.\n\n");
-
-                printf("WHAT TO OBSERVE:\n");
-                printf("    - Constraint pruning at work: hitting a wall or a revisited cell\n");
-                printf("      triggers an immediate backtrack with no further recursion.\n");
-                printf("    - The direction priority (Down > Right > Up > Left) shapes the\n");
-                printf("      search: the rat strongly prefers moving toward the goal first.\n");
-                printf("    - In a densely walled maze, the rat may trace its entire path\n");
-                printf("      backward before finding the correct route.\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 5:
-                display_header("Help - Graph Coloring");
-                printf("PROBLEM STATEMENT:\n");
-                printf("    Given a graph G and an integer M, assign one of M colors to each\n");
-                printf("    vertex such that no two adjacent (connected) vertices share the\n");
-                printf("    same color. This is the M-Coloring Problem.\n\n");
-
-                printf("ALGORITHM (solve_graph_coloring_util):\n");
-                printf("    - Processes vertices one at a time (V0, V1, ... Vn-1).\n");
-                printf("    - For each vertex v, tries every color c from 1 to M.\n");
-                printf("    - is_safe() scans all neighbors via the adjacency matrix:\n");
-                printf("        * If any neighbor already has color c, c is rejected.\n");
-                printf("    - Assigns colors[v] = c and recurses to vertex v+1.\n");
-                printf("    - On failure at v+1, resets colors[v] = 0 (BACKTRACK) and\n");
-                printf("      tries the next color c+1.\n\n");
-
-                printf("PRESET GRAPH TOPOLOGIES:\n");
-                printf("    1. Cycle Graph C5       - 5 vertices, ring structure.\n");
-                printf("                              Chromatic number = 3 (odd cycle).\n");
-                printf("    2. Bipartite Graph K3,3 - 6 vertices, two independent sets.\n");
-                printf("                              Chromatic number = 2.\n");
-                printf("    3. Complete Graph K4    - 4 vertices, all pairs connected.\n");
-                printf("                              Chromatic number = 4.\n");
-                printf("    4. Complete Graph K5    - 5 vertices, all pairs connected.\n");
-                printf("                              Chromatic number = 5.\n");
-                printf("    5. Wheel Graph W5       - 4 rim + 1 hub, hub connects to all rim.\n");
-                printf("                              Chromatic number = 4.\n");
-                printf("    6. Petersen Graph       - 10 vertices, famous non-planar graph.\n");
-                printf("                              Chromatic number = 3.\n\n");
-
-                printf("VISUALIZER WALKTHROUGH:\n");
-                printf("    - The adjacency matrix and vertex states are shown live.\n");
-                printf("    - An ASCII art drawing of the selected topology is rendered\n");
-                printf("      with each vertex highlighted in its assigned ANSI color.\n");
-                printf("    - The active vertex is marked with [brackets] in bold yellow.\n");
-                printf("    - Status messages report 'Assigned RED to V2' or\n");
-                printf("      'Conflict! Backtracking V3...' at each step.\n\n");
-
-                printf("WHAT TO OBSERVE:\n");
-                printf("    - Try M < chromatic number to watch a full exhaustive failure:\n");
-                printf("      every color combination is attempted and rejected.\n");
-                printf("    - Try M = chromatic number to see minimal coloring succeed.\n");
-                printf("    - For K5 with M=4, observe deep backtracking: assigning the\n");
-                printf("      4th vertex forces a cascade of recoloring earlier vertices.\n");
-                printf("    - For K3,3 with M=2, observe near-instant success: bipartite\n");
-                printf("      structure matches 2 colors perfectly with no conflicts.\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 6:
-                display_header("Help - Knight's Tour");
-                printf("PROBLEM STATEMENT:\n");
-                printf("    Move a chess knight across an N x N board, visiting every cell\n");
-                printf("    exactly once. The knight moves in an 'L' shape: two squares in\n");
-                printf("    one direction and one square perpendicular (8 possible moves).\n\n");
-
-                printf("TWO ALGORITHMS:\n\n");
-                printf("  1. STANDARD BACKTRACKING (solve_standard)  -- Small boards (<= 5x5):\n");
-                printf("    - At each cell, tries all 8 L-shaped moves in fixed order.\n");
-                printf("    - Skips moves that go out of bounds or revisit a cell.\n");
-                printf("    - If all 8 moves fail, backtracks to the previous cell and\n");
-                printf("      continues with the next untried move from there.\n");
-                printf("    - Exhaustive: always finds a tour if one exists, but is\n");
-                printf("      exponentially slow on large boards.\n\n");
-                printf(
-                    "  2. WARNSDORFF'S HEURISTIC (solve_warnsdorff) -- Larger boards (>= 6x6):\n");
-                printf("    - Same structure as standard backtracking, but moves are sorted\n");
-                printf("      before being tried.\n");
-                printf("    - HEURISTIC RULE: Always move to the neighbor with the fewest\n");
-                printf("      onward moves (minimum degree / accessibility).\n");
-                printf("    - get_degree() counts how many unvisited cells a candidate\n");
-                printf("      square can still reach from that position.\n");
-                printf("    - Moves are sorted ascending by degree (via qsort), so the\n");
-                printf("      most constrained next-cell is tried first.\n");
-                printf("    - Effect: guides the knight away from dead-end corners early,\n");
-                printf("      drastically reducing backtracking on large boards.\n\n");
-
-                printf("VISUALIZER WALKTHROUGH:\n");
-                printf(
-                    "    - A checkerboard is rendered with alternating ANSI background shades.\n");
-                printf("    - The active knight is shown as the unicode chess piece in bold "
-                       "yellow.\n");
-                printf("    - Visited cells show their step number (01, 02, 03...) in cyan.\n");
-                printf("    - Empty unvisited cells are shown as blank checkered squares.\n");
-                printf("    - Standard mode: watch numbers fill in and then erase on backtrack.\n");
-                printf("    - Warnsdorff mode: observe a smooth, nearly backtrack-free fill.\n\n");
-
-                printf("WHAT TO OBSERVE:\n");
-                printf("    - Run a 5x5 board in Standard mode: count the backtracks as step\n");
-                printf("      numbers disappear from squares (visible board regressions).\n");
-                printf("    - Run a 6x6 or 8x8 board in Warnsdorff mode: the tour fills\n");
-                printf("      almost completely with zero or minimal backtracking, illustrating\n");
-                printf("      how a good heuristic transforms an exponential search into\n");
-                printf("      a near-linear one in practice.\n");
-                printf("    - Compare solve times between the two modes on the same board.\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-
-            /* ------------------------------------------------------------------ */
-            case 7:
-                display_header("Help - Backtracking: Time Complexity Summary");
-                printf("NOTE: Backtracking worst-case complexity is often exponential.\n");
-                printf("In practice, constraint pruning dramatically reduces the real\n");
-                printf("running time compared to the theoretical upper bound.\n\n");
-
-                printf("ALGORITHM           WORST CASE          NOTES\n");
-                printf("-----------------------------------------------------------------------\n");
-                printf("N-Queens            O(N!)               N choices for col 0, N-1 for\n");
-                printf("                                        col 1, etc. Pruning typically\n");
-                printf(
-                    "                                        reduces this to near O(N^(N/2)).\n\n");
-
-                printf("6x6 Sudoku          O(6^K)              K = number of empty cells.\n");
-                printf("                                        Each cell tries up to 6 digits.\n");
-                printf("                                        Row/col/block constraints prune\n");
-                printf("                                        most branches very early.\n\n");
-
-                printf("Rat in a Maze       O(4^(N*N))          4 directions per cell, up to\n");
-                printf("                                        N*N cells in the path. Wall\n");
-                printf("                                        density and the no-revisit\n");
-                printf("                                        guard prune most branches.\n\n");
-
-                printf("Graph Coloring      O(M^V)              M colors, V vertices. Each\n");
-                printf("  (M-coloring)                          vertex tries up to M colors.\n");
-                printf("                                        Adjacency constraints eliminate\n");
-                printf("                                        most assignments instantly.\n\n");
-
-                printf("Knight's Tour       O(8^(N*N))          Up to 8 moves per cell, N*N\n");
-                printf("  Standard                              cells to fill. Extremely slow\n");
-                printf(
-                    "                                        for N >= 6 without heuristics.\n\n");
-
-                printf("Knight's Tour       Near O(N^2)         Warnsdorff's rule effectively\n");
-                printf("  Warnsdorff                            reduces search to a single\n");
-                printf("                                        greedy pass in most cases.\n");
-                printf(
-                    "                                        Not guaranteed for all inputs.\n\n");
-
-                printf("GENERAL RULE OF THUMB:\n");
-                printf(
-                    "    The effectiveness of backtracking is determined by the pruning ratio:\n");
-                printf("    the fraction of the search tree eliminated by constraints.\n");
-                printf("    A constraint that eliminates 90%% of candidates at each level\n");
-                printf("    can reduce an exponential search to near-linear in practice.\n\n");
-
-                printf("\nPress [ENTER] to return...\n");
-                press_enter_to_continue();
-                break;
-        }
-    }
+    printf("\nPress [ENTER] to return...\n");
+    press_enter_to_continue();
 }

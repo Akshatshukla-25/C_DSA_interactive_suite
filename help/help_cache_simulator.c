@@ -22,8 +22,8 @@ void help_cache_simulator_menu(void)
            "periodic aging/decay.\n");
     printf("    • Belady's Optimal (OPT): Lookahead policy evicting page accessed furthest in the "
            "future.\n");
-    printf("    • Second-Chance (Clock): Circular buffer maintaining reference bits to approximate "
-           "LRU.\n");
+    printf("    • Second-Chance (Clock): Circular buffer maintaining reference bits to\n"
+           "      approximate LRU.\n\n");
     printf("    • Enhanced Second-Chance: Classifies blocks using (reference_bit, dirty_bit) "
            "tuples.\n\n");
 
