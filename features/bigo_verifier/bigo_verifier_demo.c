@@ -1,4 +1,5 @@
 #include "bigo_verifier.h"
+#include "display_header.h"
 #include "safe_input.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,9 +8,7 @@ void bigo_verifier_demo(void)
 {
     while (1)
     {
-        printf("\n========================================================================\n");
-        printf("         EMPIRICAL ASYMPTOTIC COMPLEXITY VERIFIER (BIG-O ENGINE)        \n");
-        printf("========================================================================\n");
+        display_header("Empirical Big-O Verifier");
         printf("1. Profile Bubble Sort [Theoretical O(N^2)]\n");
         printf("2. Profile Quick Sort [Theoretical O(N log N)]\n");
         printf("3. Profile Merge Sort [Theoretical O(N log N)]\n");

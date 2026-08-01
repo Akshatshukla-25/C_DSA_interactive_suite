@@ -272,11 +272,9 @@ void run_legacy_menu(void)
                 bit_manipulation_demo();
                 break;
             case 15:
-                display_header("Probabilistic Data Structures Module");
                 probabilistic_ds_demo();
                 break;
             case 16:
-                display_header("Spatial Indexing Module");
                 spatial_indexing_demo();
                 break;
             case 17:
@@ -305,47 +303,23 @@ void run_legacy_menu(void)
                     if (dev_status == 0)
                         continue;
                     if (dev_choice == 1)
-                    {
-                        display_header("Algorithm Benchmarking & Profiling");
                         benchmark_menu_demo();
-                    }
                     else if (dev_choice == 2)
                         debugger_demo();
                     else if (dev_choice == 3)
-                    {
-                        display_header("Raw Memory Layout Inspector");
                         memory_inspector_demo();
-                    }
                     else if (dev_choice == 4)
-                    {
-                        display_header("Settings");
                         settings_menu_demo();
-                    }
                     else if (dev_choice == 5)
-                    {
-                        display_header("Cache Replacement Simulator");
                         cache_simulator_demo();
-                    }
                     else if (dev_choice == 6)
-                    {
-                        display_header("Stochastic Fuzz Testing Engine");
                         fuzzer_demo();
-                    }
                     else if (dev_choice == 7)
-                    {
-                        display_header("Empirical Big-O Verifier");
                         bigo_verifier_demo();
-                    }
                     else if (dev_choice == 8)
-                    {
-                        display_header("Standalone File Exporter Engine");
                         file_exporter_demo();
-                    }
                     else if (dev_choice == 9)
-                    {
-                        display_header("State Serialization Engine");
                         serialization_demo();
-                    }
                 }
                 break;
         }
