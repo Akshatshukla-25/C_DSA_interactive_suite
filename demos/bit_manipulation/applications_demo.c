@@ -70,6 +70,7 @@ void find_unique_demo(void)
             printf("  (%d)\n\n", next_xor);
 
             running_xor = next_xor;
+            printf("Press Enter to continue...\n");
             press_enter_to_continue();
         }
 
@@ -141,6 +142,7 @@ void generate_subsets_demo(void)
 
             if ((mask + 1) % 8 == 0 && (mask + 1) != total_subsets)
             {
+                printf("Press Enter to continue...\n");
                 press_enter_to_continue();
             }
         }
