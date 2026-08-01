@@ -1,6 +1,7 @@
 #ifndef TREES_H
 #define TREES_H
 
+#include "memory_inspector.h"
 #include <stdbool.h>
 #include <stddef.h>
 

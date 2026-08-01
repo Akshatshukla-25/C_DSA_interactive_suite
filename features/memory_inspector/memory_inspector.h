@@ -2,6 +2,7 @@
 #define MEMORY_INSPECTOR_H
 
 #include <stddef.h>
+#include <stdlib.h>
 
 #define MAX_STRUCT_FIELDS 16
 #define MAX_TRACKED_BLOCKS 64
@@ -89,5 +90,12 @@ void inspect_bst_node_memory(const void* node_ptr);
  * Interactive memory inspector and raw hexdump visualizer demo suite.
  */
 void memory_inspector_demo(void);
+
+/* Intercept memory calls in target files */
+#ifndef IN_MEMORY_INSPECTOR_C
+#define malloc(size) dsa_malloc((size), "Dynamic Node")
+#define free(ptr) dsa_free((ptr))
+#define realloc(ptr, size) dsa_realloc((ptr), (size), "Dynamic Node Realloc")
+#endif
 
 #endif /* MEMORY_INSPECTOR_H */

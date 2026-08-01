@@ -1,3 +1,4 @@
+#define IN_MEMORY_INSPECTOR_C
 #include "dll.h"
 #include "memory_inspector.h"
 #include "sll.h"

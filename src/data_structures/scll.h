@@ -1,6 +1,8 @@
 #ifndef SCLL_H
 #define SCLL_H
 
+#include "memory_inspector.h"
+
 // For singly circular linked list
 // Invariant: when non-empty, tail->next == head (the ring closes back onto head);
 // when empty, head == tail == NULL and length == 0. head and tail are both tracked and
