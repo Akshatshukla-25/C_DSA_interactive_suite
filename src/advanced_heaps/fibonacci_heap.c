@@ -120,12 +120,12 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
         return NULL;
     }
 
-    /* Max degree for any node in Fibonacci heap of size n is bounded by O(log n) */
-    /* An array of size 64 is more than enough for up to 2^60 elements */
-    FibonacciNode* arr[64];
-    for (int i = 0; i < 64; i++)
+    /* Max degree for any node in Fibonacci heap is bounded by O(log n) */
+    int max_degree = 64;
+    FibonacciNode** arr = (FibonacciNode**)calloc(max_degree, sizeof(FibonacciNode*));
+    if (arr == NULL)
     {
-        arr[i] = NULL;
+        return min_node;
     }
 
     /* Count number of roots in the list to avoid infinite loops during updates */
@@ -144,6 +144,7 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
     FibonacciNode** roots = (FibonacciNode**)malloc(num_roots * sizeof(FibonacciNode*));
     if (roots == NULL)
     {
+        free(arr);
         return min_node;
     }
     x = min_node;
@@ -157,7 +158,7 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
     {
         x = roots[i];
         int d = x->degree;
-        while (d < 64 && arr[d] != NULL)
+        while (d < max_degree && arr[d] != NULL)
         {
             FibonacciNode* y = arr[d];
             if (x->key > y->key)
@@ -171,13 +172,14 @@ static FibonacciNode* fib_heap_consolidate(FibonacciNode* min_node)
             arr[d] = NULL;
             d++;
         }
-        if (d < 64)
+        if (d < max_degree)
         {
             arr[d] = x;
         }
     }
 
     free(roots);
+    free(arr);
 
     /* Reconstruct the root list from the array of consolidated trees */
     FibonacciNode* new_min = NULL;
