@@ -84,6 +84,25 @@ void test_advanced_data_structure_exporters(void)
     printf("test_advanced_data_structure_exporters passed!\n");
 }
 
+void test_export_generic_state(void)
+{
+    printf("Running test_export_generic_state...\n");
+
+    // Test TXT export
+    assert(export_generic_state("BloomFilter", "txt", "bit_array: 10101010") == true);
+    check_file_exists("exports/BloomFilter_state.txt");
+
+    // Test CSV export
+    assert(export_generic_state("PriorityQueue", "csv", "index,val\n0,10\n1,20") == true);
+    check_file_exists("exports/PriorityQueue_state.csv");
+
+    // Test JSON export
+    assert(export_generic_state("CMS", "json", "{\"width\": 10, \"depth\": 4}") == true);
+    check_file_exists("exports/CMS_state.json");
+
+    printf("test_export_generic_state passed!\n");
+}
+
 int main(void)
 {
     test_dfs_search();
@@ -91,5 +110,6 @@ int main(void)
     test_export_file_pair();
     test_structure_exporters();
     test_advanced_data_structure_exporters();
+    test_export_generic_state();
     return 0;
 }
