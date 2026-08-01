@@ -94,16 +94,15 @@ void run_graphs_benchmark(int v)
         double times[BENCHMARK_DEFAULT_ITERATIONS];
         size_t peak_mem = 0;
 
-        RUN_BENCHMARK(times, peak_mem, {
-            // Redirect stdout to suppress prints from algorithm steps
-            fflush(stdout);
-            int stdout_dup = dup(1);
-            FILE* fnull = fopen("/dev/null", "w");
-            if (fnull != NULL && stdout_dup >= 0)
-            {
-                dup2(fileno(fnull), 1);
-            }
+        fflush(stdout);
+        int stdout_dup = dup(1);
+        FILE* fnull = fopen("/dev/null", "w");
+        if (fnull != NULL && stdout_dup >= 0)
+        {
+            dup2(fileno(fnull), 1);
+        }
 
+        RUN_BENCHMARK(times, peak_mem, {
             // Run algorithm
             switch (i)
             {
@@ -120,19 +119,19 @@ void run_graphs_benchmark(int v)
                     greedy_best_first_search(graph, start, dest, h);
                     break;
             }
-
-            // Restore stdout
-            fflush(stdout);
-            if (stdout_dup >= 0)
-            {
-                dup2(stdout_dup, 1);
-                close(stdout_dup);
-            }
-            if (fnull != NULL)
-            {
-                fclose(fnull);
-            }
         });
+
+        // Restore stdout
+        fflush(stdout);
+        if (stdout_dup >= 0)
+        {
+            dup2(stdout_dup, 1);
+            close(stdout_dup);
+        }
+        if (fnull != NULL)
+        {
+            fclose(fnull);
+        }
 
         // Print row and export
         benchmark_report_result("graphs", name, v, times, peak_mem);

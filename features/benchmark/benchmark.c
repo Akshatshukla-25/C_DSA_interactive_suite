@@ -7,7 +7,11 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef FAST_BENCHMARK
+int benchmark_iterations = 1;
+#else
 int benchmark_iterations = 5;
+#endif
 BenchmarkFormat benchmark_output_format = FORMAT_CSV;
 
 #include <sys/resource.h>
