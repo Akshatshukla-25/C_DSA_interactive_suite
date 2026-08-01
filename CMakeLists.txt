@@ -109,6 +109,7 @@ add_library(dsa_lib STATIC ${SOURCES})
 # Build the main executable
 add_executable(dsa src/main.c)
 target_link_libraries(dsa dsa_lib ${EXTRA_LIBS})
+target_compile_definitions(dsa PRIVATE ENABLE_MEMORY_TRACKER)
 
 # Enable testing support
 enable_testing()
@@ -120,6 +121,7 @@ foreach(TEST_FILE ${TEST_FILES})
     get_filename_component(TEST_NAME ${TEST_FILE} NAME_WE)
     add_executable(${TEST_NAME} ${TEST_FILE})
     target_link_libraries(${TEST_NAME} dsa_lib ${EXTRA_LIBS})
+    target_compile_definitions(${TEST_NAME} PRIVATE ENABLE_MEMORY_TRACKER)
     if(TEST_NAME MATCHES "^test_benchmark")
         target_compile_definitions(${TEST_NAME} PRIVATE FAST_BENCHMARK=1)
     endif()
