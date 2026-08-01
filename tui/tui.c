@@ -1,8 +1,6 @@
-// #include <math.h>
+#include <ctype.h>
 #include <ncurses.h>
-// #include <stdlib.h>
 #include <string.h>
-// #include <locale.h>
 
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
@@ -333,14 +331,35 @@ typedef enum
 
 typedef struct
 {
-    int nav_cursor;    /* index into visible list   */
-    ActivePane active; /* which pane has focus      */
-    char last_ran[64]; /* name of last run demo     */
-    int demo_ran;      /* 1 if a demo has been run  */
+    int nav_cursor;        /* index into visible list   */
+    ActivePane active;     /* which pane has focus      */
+    char last_ran[64];     /* name of last run demo     */
+    int demo_ran;          /* 1 if a demo has been run  */
+    char search_query[64]; /* live search filter string */
+    int searching;         /* 1 if search input active  */
 } State;
 
 /* ── visible list ───────────────────────────────────────────────────────────── */
-/* builds a flat visible list respecting folder expanded state */
+static int ci_strstr(const char* haystack, const char* needle)
+{
+    if (!needle || !*needle)
+        return 1;
+    if (!haystack)
+        return 0;
+    for (; *haystack; haystack++)
+    {
+        const char *h = haystack, *n = needle;
+        while (*h && *n && (tolower((unsigned char)*h) == tolower((unsigned char)*n)))
+        {
+            h++;
+            n++;
+        }
+        if (!*n)
+            return 1;
+    }
+    return 0;
+}
+
 /* find parent folder of entry at index */
 static int find_parent(int idx)
 {
@@ -367,13 +386,22 @@ static int is_visible(int idx)
 }
 
 /* ── visible list ───────────────────────────────────────────────────────────── */
-/* builds a flat visible list respecting folder expanded state */
-static int build_visible(int* visible, int max)
+/* builds a flat visible list respecting folder expanded state and search filter */
+static int build_visible(int* visible, int max, const char* query)
 {
     int count = 0;
+    int has_query = (query != NULL && query[0] != '\0');
+
     for (int i = 0; i < ENTRY_COUNT && count < max; i++)
     {
-        if (is_visible(i))
+        if (has_query)
+        {
+            if (!ENTRIES[i].is_folder && ci_strstr(ENTRIES[i].name, query))
+            {
+                visible[count++] = i;
+            }
+        }
+        else if (is_visible(i))
         {
             visible[count++] = i;
         }
@@ -539,17 +567,21 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
     (void)mid_row;
 }
 
-static void draw_status(WINDOW* status, ActivePane active)
+static void draw_status(WINDOW* status, ActivePane active, const State* s)
 {
     int cols;
     getmaxyx(status, (int){0}, cols);
     werase(status);
     wattron(status, COLOR_PAIR(COL_STATUS));
 
-    if (active == PANE_NAV)
+    if (s && (s->searching || s->search_query[0] != '\0'))
+    {
+        mvwprintw(status, 0, 0, " Search: %s_ (Enter Run, ESC Clear)", s->search_query);
+    }
+    else if (active == PANE_NAV)
     {
         mvwprintw(status, 0, 0,
-                  " Up/Down Navigate  Enter Run  Space/<- -> Expand  Tab Switch pane  q Quit");
+                  " Up/Down Nav  / Search  Enter Run  Space/<- -> Expand  Tab Switch pane  q Quit");
     }
     else
     {
@@ -631,7 +663,7 @@ void tui_run(void)
         keypad(viz_win, TRUE);
 
         /* build visible list */
-        vis_count = build_visible(visible, 256);
+        vis_count = build_visible(visible, 256, s.search_query);
 
         /* clamp cursor */
         if (s.nav_cursor >= vis_count)
@@ -641,14 +673,79 @@ void tui_run(void)
 
         draw_nav(nav_win, visible, vis_count, s.nav_cursor, s.active == PANE_NAV);
         draw_viz(viz_win, &s, visible, s.nav_cursor, s.active == PANE_VIZ);
-        draw_status(status_win, s.active);
+        draw_status(status_win, s.active, &s);
 
         /* input from active pane */
         WINDOW* active_win = (s.active == PANE_NAV) ? nav_win : viz_win;
         ch = wgetch(active_win);
 
+        if (s.searching)
+        {
+            if (ch == 27 || ch == 3) /* ESC or Ctrl+C */
+            {
+                s.searching = 0;
+                s.search_query[0] = '\0';
+                s.nav_cursor = 0;
+            }
+            else if (ch == KEY_BACKSPACE || ch == 127 || ch == 8)
+            {
+                size_t qlen = strlen(s.search_query);
+                if (qlen > 0)
+                {
+                    s.search_query[qlen - 1] = '\0';
+                }
+                if (s.search_query[0] == '\0')
+                {
+                    s.searching = 0;
+                }
+                s.nav_cursor = 0;
+            }
+            else if (ch == '\n' || ch == KEY_ENTER)
+            {
+                if (vis_count > 0 && s.nav_cursor >= 0 && s.nav_cursor < vis_count)
+                {
+                    int ei = visible[s.nav_cursor];
+                    Entry* e = &ENTRIES[ei];
+                    if (!e->is_folder && e->fn != NULL)
+                    {
+                        delwin(nav_win);
+                        delwin(viz_win);
+                        delwin(status_win);
+                        run_demo(e->fn, e->name, &s);
+                        continue;
+                    }
+                }
+                s.searching = 0;
+            }
+            else if (ch >= 32 && ch <= 126)
+            {
+                size_t qlen = strlen(s.search_query);
+                if (qlen < sizeof(s.search_query) - 1)
+                {
+                    s.search_query[qlen] = (char)ch;
+                    s.search_query[qlen + 1] = '\0';
+                }
+                s.nav_cursor = 0;
+            }
+            delwin(nav_win);
+            delwin(viz_win);
+            delwin(status_win);
+            continue;
+        }
+
         switch (ch)
         {
+            case '/':
+            case 's':
+            case 'S':
+                if (s.active == PANE_NAV)
+                {
+                    s.searching = 1;
+                    s.search_query[0] = '\0';
+                    s.nav_cursor = 0;
+                    break;
+                }
+                break;
 
             case 'q':
             case 'Q':
@@ -679,25 +776,28 @@ void tui_run(void)
             case 'h':
             {
                 /* collapse folder or jump to parent */
-                int ei = visible[s.nav_cursor];
-                if (ENTRIES[ei].is_folder && ENTRIES[ei].expanded)
+                if (vis_count > 0 && s.nav_cursor >= 0 && s.nav_cursor < vis_count)
                 {
-                    ENTRIES[ei].expanded = 0;
-                }
-                else
-                {
-                    /* jump to parent folder */
-                    int parent = find_parent(ei);
-                    if (parent >= 0)
+                    int ei = visible[s.nav_cursor];
+                    if (ENTRIES[ei].is_folder && ENTRIES[ei].expanded)
                     {
-                        /* find parent in visible list */
-                        vis_count = build_visible(visible, 256);
-                        for (int i = 0; i < vis_count; i++)
+                        ENTRIES[ei].expanded = 0;
+                    }
+                    else
+                    {
+                        /* jump to parent folder */
+                        int parent = find_parent(ei);
+                        if (parent >= 0)
                         {
-                            if (visible[i] == parent)
+                            /* find parent in visible list */
+                            vis_count = build_visible(visible, 256, s.search_query);
+                            for (int i = 0; i < vis_count; i++)
                             {
-                                s.nav_cursor = i;
-                                break;
+                                if (visible[i] == parent)
+                                {
+                                    s.nav_cursor = i;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -710,32 +810,38 @@ void tui_run(void)
             case ' ':
             {
                 /* expand folder */
-                int ei = visible[s.nav_cursor];
-                if (ENTRIES[ei].is_folder)
-                    ENTRIES[ei].expanded = !ENTRIES[ei].expanded;
+                if (vis_count > 0 && s.nav_cursor >= 0 && s.nav_cursor < vis_count)
+                {
+                    int ei = visible[s.nav_cursor];
+                    if (ENTRIES[ei].is_folder)
+                        ENTRIES[ei].expanded = !ENTRIES[ei].expanded;
+                }
                 break;
             }
 
             case '\n':
             case KEY_ENTER:
             {
-                int ei = visible[s.nav_cursor];
-                Entry* e = &ENTRIES[ei];
+                if (vis_count > 0 && s.nav_cursor >= 0 && s.nav_cursor < vis_count)
+                {
+                    int ei = visible[s.nav_cursor];
+                    Entry* e = &ENTRIES[ei];
 
-                if (e->is_folder)
-                {
-                    /* toggle expand */
-                    e->expanded = !e->expanded;
-                }
-                else if (e->fn != NULL)
-                {
-                    /* run demo */
-                    delwin(nav_win);
-                    delwin(viz_win);
-                    delwin(status_win);
-                    run_demo(e->fn, e->name, &s);
-                    /* windows recreated next loop iteration */
-                    continue;
+                    if (e->is_folder)
+                    {
+                        /* toggle expand */
+                        e->expanded = !e->expanded;
+                    }
+                    else if (e->fn != NULL)
+                    {
+                        /* run demo */
+                        delwin(nav_win);
+                        delwin(viz_win);
+                        delwin(status_win);
+                        run_demo(e->fn, e->name, &s);
+                        /* windows recreated next loop iteration */
+                        continue;
+                    }
                 }
                 break;
             }

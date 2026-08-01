@@ -9,11 +9,21 @@ void test_build_visible(void)
 {
     printf("Running test_build_visible...\n");
     int visible[256];
-    int count = build_visible(visible, 256);
+    int count = build_visible(visible, 256, NULL);
     assert(count > 0);
     // Make sure we have "Animation speed (s)" as first visible category
     assert(visible[0] == 0);
     printf("--> test_build_visible PASSED! (%d visible items)\n", count);
+}
+
+void test_live_search(void)
+{
+    printf("Running test_live_search...\n");
+    int visible[256];
+    int count = build_visible(visible, 256, "dijkstra");
+    assert(count > 0);
+    assert(ci_strstr(ENTRIES[visible[0]].name, "dijkstra") != 0);
+    printf("--> test_live_search PASSED! (%d items matching 'dijkstra')\n", count);
 }
 
 void test_find_parent(void)
@@ -30,6 +40,7 @@ int main(void)
 {
     printf("Starting TUI unit tests...\n");
     test_build_visible();
+    test_live_search();
     test_find_parent();
     printf("All TUI unit tests passed successfully!\n");
     return 0;
