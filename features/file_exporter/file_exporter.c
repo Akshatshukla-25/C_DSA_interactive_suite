@@ -211,3 +211,72 @@ bool export_file_pair(const char* root_dir, const char* base_filename, const cha
 
     return (success_c && success_h);
 }
+
+bool export_generic_state(const char* ds_name, const char* format, const char* details)
+{
+    if (!ds_name || !format || !details)
+    {
+        return false;
+    }
+
+    ensure_dir_exists("exports");
+
+    char filepath[1024];
+    snprintf(filepath, sizeof(filepath), "exports/%s_state.%s", ds_name, format);
+
+    FILE* fp = fopen(filepath, "w");
+    if (!fp)
+    {
+        return false;
+    }
+
+    if (strcasecmp(format, "json") == 0)
+    {
+        // If not already structured as JSON, format it
+        if (details[0] != '{' && details[0] != '[')
+        {
+            fprintf(fp, "{\n  \"data_structure\": \"%s\",\n  \"state\": \"%s\"\n}\n", ds_name,
+                    details);
+        }
+        else
+        {
+            fprintf(fp, "%s\n", details);
+        }
+    }
+    else if (strcasecmp(format, "csv") == 0)
+    {
+        // Simple CSV format check
+        if (strchr(details, '\n') == NULL)
+        {
+            fprintf(fp, "DataStructure,State\n%s,%s\n", ds_name, details);
+        }
+        else
+        {
+            fprintf(fp, "%s\n", details);
+        }
+    }
+    else
+    {
+        // Fallback or TXT format
+        fprintf(fp, "=== %s STATE SNAPSHOT ===\n", ds_name);
+        fprintf(fp, "%s\n", details);
+    }
+
+    fclose(fp);
+    printf("\n[Export Successful] Saved to: %s\n", filepath);
+    return true;
+}
+
+void draw_unicode_box_header(const char* title)
+{
+    if (!title)
+        return;
+    printf("\n┌────────────────────────────────────────────────────────┐\n");
+    printf("│ %-54s │\n", title);
+    printf("├────────────────────────────────────────────────────────┤\n");
+}
+
+void draw_unicode_box_footer(void)
+{
+    printf("└────────────────────────────────────────────────────────┘\n");
+}
