@@ -3,7 +3,7 @@
 PROJECT_NAME           = "C DSA Interactive Suite"
 PROJECT_NUMBER         = "2.0.0"
 PROJECT_BRIEF          = "A modular, interactive Data Structures & Algorithms library written in pure C"
-OUTPUT_DIRECTORY       = docs/doxygen
+OUTPUT_DIRECTORY       = doxygen_out
 CREATE_SUBDIRS         = NO
 OUTPUT_LANGUAGE        = English
 
@@ -12,7 +12,7 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 EXTRACT_STATIC         = YES
 CASE_SENSE_NAMES       = YES
-INPUT                  = src/ help/ tui/ demos/ features/ include/
+INPUT                  = src/ help/ tui/ demos/ features/
 RECURSIVE              = YES
 FILE_PATTERNS          = *.c *.h
 

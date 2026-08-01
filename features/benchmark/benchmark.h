@@ -14,7 +14,11 @@ extern int benchmark_iterations;
 extern BenchmarkFormat benchmark_output_format;
 
 #define BENCHMARK_SEED 12345
+#ifdef FAST_BENCHMARK
+#define BENCHMARK_DEFAULT_ITERATIONS 1
+#else
 #define BENCHMARK_DEFAULT_ITERATIONS benchmark_iterations
+#endif
 
 #define RUN_BENCHMARK(times_arr, peak_mem_var, ...)                                                \
     do                                                                                             \

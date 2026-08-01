@@ -40,7 +40,7 @@ jobs:
       - name: Upload Doxygen Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/doxygen/html
+          path: doxygen_out/html
 
       - name: Deploy to GitHub Pages
         id: deployment
