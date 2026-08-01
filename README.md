@@ -150,28 +150,56 @@ If any test fails or Valgrind detects a memory error, the CI job fails automatic
 
 ### System Architecture Overview
 
-The **C DSA Interactive Suite** is organized into a modular three-tier architecture:
-- **Core Engine (`dsa_lib`)**: Reusable C static library containing implementations of data structures, graph traversals, dynamic programming, probabilistic models, memory profiler, and telemetry engines.
-- **Interactive CLI (`src/main.c`)**: Main menu driver supporting CLI arguments (`--profile`, `--load-bst`, `--export-trace`) and prompt-driven algorithm demos.
-- **Terminal UI (`tui/tui.c`)**: Ncurses/ANSI grid visualizer indexed directly with the `AlgorithmRegistry` (`src/utils/algorithm_search.c`).
+The **C DSA Interactive Suite** is organized into a modular four-tier architecture:
+- **UI & Driver Layer**: `src/main.c` (CLI prompt driver & command flag parser), `tui/tui.c` (Ncurses/ANSI dual-pane visualizer dashboard), and `src/utils/algorithm_search.c` (live search index).
+- **Telemetry & Utility Layer**: Live Step-Debugger (`features/debugger/`), Memory Profiler (`features/memory_inspector/`), File & Source Exporters (`features/file_exporter/`), State Serialization (`features/serialization/`), and Big-O Verifier & Benchmark Suites (`features/bigo_verifier/`, `features/benchmark/`).
+- **Core Library Engine (`libdsa_lib.a`)**: Static C library housing all dynamic data structures, standard/spatial trees, graph algorithms, dynamic programming solvers, probabilistic data structures, OS/hardware simulators, and error correction/bit operations.
 
 ```mermaid
 flowchart TD
-    CLI[src/main.c - CLI Driver] -->|Menu Dispatch| Demos[src/ Module Demos]
-    CLI -->|Command Flags| Features[features/ Options]
-    TUI[tui/tui.c - TUI Visualizer] -->|Search Index| Registry[src/utils/algorithm_search.c]
-
-    Demos --> DSALib[libdsa_lib.a Core Library]
-    Features --> DSALib
-    TUI --> DSALib
-
-    subgraph DSALib [Core Engine - dsa_lib]
-        direction LR
-        DS[Data Structures & Trees]
-        Graph[Graphs & DP]
-        Sys[Cache & Utilities]
-        Prof[Memory Profiler & Telemetry]
+    subgraph UI_Layer ["Terminal Interface & Driver Layer"]
+        CLI["src/main.c (CLI Driver & Flag Processor)"]
+        TUI["tui/tui.c (Ncurses/ANSI Dual-Pane Visualizer)"]
+        Search["src/utils/algorithm_search.c (Algorithm Search Registry)"]
     end
+
+    subgraph Feature_Layer ["Interactive Telemetry & Utility Engines"]
+        Debugger["features/debugger (Step Debugger & Telemetry Bridge)"]
+        Inspector["features/memory_inspector (Live Heap Memory Map)"]
+        Exporter["features/file_exporter (Source & State Exporters)"]
+        Serializer["features/serialization (File State Persistence)"]
+        Verifier["features/bigo_verifier (Empirical Big-O Analysis)"]
+        Bench["features/benchmark (Multi-Algorithm Stress Tests)"]
+    end
+
+    subgraph Core_Library ["libdsa_lib.a Core Algorithms Engine"]
+        subgraph DS_Trees ["Data Structures & Trees"]
+            SLL["Lists & Queues (SLL, DLL, Stack, Circular Queue)"]
+            Trees["BST, AVL, B-Tree, Splay, Fenwick, Red-Black"]
+            Spatial["Spatial Indexing (k-d Tree, QuadTree, R-Tree)"]
+        end
+
+        subgraph Graph_Algos ["Graphs & DP"]
+            Traversals["Traversals & Paths (BFS, DFS, Dijkstra, A*, Floyd-Warshall)"]
+            Flow["Advanced Graph (Max Flow, SCC, Eulerian, Bipartite)"]
+            DP["Dynamic Programming (Knapsack, LCS, MCM, Coin Change)"]
+        end
+
+        subgraph Advanced_Models ["Probabilistic & Systems"]
+            Prob["Probabilistic DS (Bloom Filter, Count-Min, HyperLogLog)"]
+            System["OS & Hardware (Process Sync, Cache Simulator, Fuzzer)"]
+            ErrorBit["Bit & Info Theory (CRC, Hamming, Checksum, Bit Ops)"]
+        end
+    end
+
+    CLI -->|Launch CLI Demos| Core_Library
+    CLI -->|Run Features| Feature_Layer
+    TUI -->|Search & Launch| Search
+    Search -->|Map Selection| Core_Library
+
+    Feature_Layer -->|Inspect & Profile| Core_Library
+    TUI -->|Render Telemetry| Debugger
+    TUI -->|Render Heap Map| Inspector
 ```
 
 ### Why Docker?
