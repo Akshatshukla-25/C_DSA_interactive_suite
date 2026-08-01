@@ -30,7 +30,7 @@ static void update_avl_telemetry(avlNode* root, const char* status)
     telemetry_bridge_get(&bridge);
 
     strncpy(bridge.status_message, status, sizeof(bridge.status_message) - 1);
-    
+
     bridge.var_count = 2;
     strncpy(bridge.variables[0].name, "root", 31);
     snprintf(bridge.variables[0].value, 63, "%p", (void*)root);
@@ -38,7 +38,7 @@ static void update_avl_telemetry(avlNode* root, const char* status)
     snprintf(bridge.variables[1].value, 63, "%d", root ? root->height : 0);
 
     scan_avl_nodes(root, &bridge);
-    
+
     telemetry_bridge_update(&bridge);
 }
 

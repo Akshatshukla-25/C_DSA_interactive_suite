@@ -40,13 +40,13 @@ void bubble_sort_optimized_with_telemetry(int arr[], int length_of_array,
             bridge.step_index = step_counter++;
             bridge.recursion_depth = 0;
             bridge.var_count = 3;
-            
+
             strncpy(bridge.variables[0].name, "i", 31);
             snprintf(bridge.variables[0].value, 63, "%d", i);
-            
+
             strncpy(bridge.variables[1].name, "j", 31);
             snprintf(bridge.variables[1].value, 63, "%d", j);
-            
+
             strncpy(bridge.variables[2].name, "swapped", 31);
             snprintf(bridge.variables[2].value, 63, "%d", swapped);
 

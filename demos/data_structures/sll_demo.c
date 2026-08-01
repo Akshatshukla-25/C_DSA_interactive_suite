@@ -25,7 +25,7 @@ static void update_sll_telemetry(Node* head, const char* status)
     telemetry_bridge_get(&bridge);
 
     strncpy(bridge.status_message, status, sizeof(bridge.status_message) - 1);
-    
+
     bridge.var_count = 2;
     strncpy(bridge.variables[0].name, "head", 31);
     snprintf(bridge.variables[0].value, 63, "%p", (void*)head);
@@ -44,7 +44,7 @@ static void update_sll_telemetry(Node* head, const char* status)
         curr = curr->next;
     }
     bridge.alloc_count = idx;
-    
+
     telemetry_bridge_update(&bridge);
 }
 
