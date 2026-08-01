@@ -3,6 +3,35 @@
 
 #include <stddef.h>
 
+#define MAX_TELEMETRY_VARIABLES 8
+#define MAX_TELEMETRY_ALLOCATIONS 16
+
+typedef struct VariableSnapshot
+{
+    char name[32];
+    char value[64];
+} VariableSnapshot;
+
+typedef struct AllocationSnapshot
+{
+    void* address;
+    size_t size;
+    char label[32];
+    int active; // 1 = active, 0 = freed
+} AllocationSnapshot;
+
+typedef struct AlgorithmStateBridge
+{
+    char algorithm_name[64];
+    int step_index;
+    int recursion_depth;
+    int var_count;
+    VariableSnapshot variables[MAX_TELEMETRY_VARIABLES];
+    int alloc_count;
+    AllocationSnapshot allocations[MAX_TELEMETRY_ALLOCATIONS];
+    char status_message[128];
+} AlgorithmStateBridge;
+
 void set_step_mode(int active);
 int get_step_mode(void);
 
@@ -24,6 +53,11 @@ void debugger_step_reset(void);
 void debugger_toggle_inspector(void);
 int debugger_is_inspector_visible(void);
 void print_state_inspector_card(void);
+
+/* ── Unified Interactive Telemetry Bridge API ──────────────────── */
+void telemetry_bridge_update(const AlgorithmStateBridge* bridge);
+void telemetry_bridge_get(AlgorithmStateBridge* bridge_out);
+void telemetry_bridge_reset(const char* algorithm_name);
 
 void debugger_demo(void);
 

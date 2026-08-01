@@ -276,3 +276,31 @@ void print_recent_events_card(void)
     }
     printf("└──────────────────────────────────────────────────┘\n");
 }
+
+static AlgorithmStateBridge current_bridge_state = {0};
+
+void telemetry_bridge_update(const AlgorithmStateBridge* bridge)
+{
+    if (bridge != NULL)
+    {
+        current_bridge_state = *bridge;
+    }
+}
+
+void telemetry_bridge_get(AlgorithmStateBridge* bridge_out)
+{
+    if (bridge_out != NULL)
+    {
+        *bridge_out = current_bridge_state;
+    }
+}
+
+void telemetry_bridge_reset(const char* algorithm_name)
+{
+    memset(&current_bridge_state, 0, sizeof(current_bridge_state));
+    if (algorithm_name != NULL)
+    {
+        strncpy(current_bridge_state.algorithm_name, algorithm_name,
+                sizeof(current_bridge_state.algorithm_name) - 1);
+    }
+}
