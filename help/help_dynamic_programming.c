@@ -3,20 +3,20 @@
 #include "safe_input.h"
 #include <stdio.h>
 
-static void print_dp_basics(void)
+void help_dynamic_programming_menu(void)
 {
-    display_header("Help - Dynamic Programming Basics");
+    display_header("Help - Dynamic Programming");
+
+    printf("--- DP FUNDAMENTALS (MEMOIZATION VS TABULATION) ---\n\n");
     printf("WHAT DYNAMIC PROGRAMMING SOLVES:\n");
     printf("    Dynamic Programming (DP) is used when a problem can be split into\n");
     printf("    smaller subproblems whose answers can be reused. It is ideal when the\n");
     printf("    same states appear repeatedly during the search.\n\n");
-
     printf("CORE PROPERTIES:\n");
     printf("    • Optimal substructure: an optimal solution can be built from optimal\n");
     printf("      solutions to subproblems.\n");
     printf("    • Overlapping subproblems: the same subproblem is solved many times\n");
     printf("      in a naive recursive solution.\n\n");
-
     printf("MEMOIZATION VS TABULATION:\n");
     printf("    Memoization (top-down):\n");
     printf("      - Start with recursion and cache results after first computation.\n");
@@ -27,13 +27,11 @@ static void print_dp_basics(void)
     printf("      - Best when the state order is easy to determine.\n");
     printf("      - Usually avoids recursion depth and often has tighter control over\n");
     printf("        memory layout.\n\n");
-
     printf("WHEN TO USE EACH:\n");
     printf("    • Use memoization when the state space is sparse or the recursive\n");
     printf("      structure is easier to express than an iterative table.\n");
     printf("    • Use tabulation when you know the dependency order and want a\n");
     printf("      predictable iterative implementation.\n\n");
-
     printf("TIME & SPACE PATTERN:\n");
     printf("    • Naive recursion on DP problems is often exponential.\n");
     printf("    • Memoization and tabulation usually reduce the runtime to polynomial\n");
@@ -41,13 +39,7 @@ static void print_dp_basics(void)
     printf("    • Space is typically O(state count) for the table, plus recursion\n");
     printf("      stack only in memoized top-down solutions.\n\n");
 
-    printf("\nPress [ENTER] to return...\n");
-    press_enter_to_continue();
-}
-
-static void print_fibonacci_and_knapsack(void)
-{
-    display_header("Help - Fibonacci & 0/1 Knapsack");
+    printf("--- FIBONACCI & 0/1 KNAPSACK ---\n\n");
     printf("1) FIBONACCI SEQUENCE\n");
     printf("PROBLEM DEFINITION:\n");
     printf("    Compute F(n), where F(n) = F(n-1) + F(n-2), F(0)=0, F(1)=1.\n\n");
@@ -63,7 +55,6 @@ static void print_fibonacci_and_knapsack(void)
     printf("    • Memoization: O(n) time, O(n) space.\n");
     printf("    • Tabulation: O(n) time, O(n) space, reducible to O(1) auxiliary\n");
     printf("      space with two variables.\n\n");
-
     printf("2) 0/1 KNAPSACK\n");
     printf("PROBLEM DEFINITION:\n");
     printf("    Choose a subset of items with weights wt[i] and values val[i] so the\n");
@@ -82,13 +73,7 @@ static void print_fibonacci_and_knapsack(void)
     printf("    • DP table: O(nW) time, O(nW) space.\n");
     printf("    • A 1D optimization can reduce the space to O(W).\n\n");
 
-    printf("\nPress [ENTER] to return...\n");
-    press_enter_to_continue();
-}
-
-static void print_lcs_and_mcm(void)
-{
-    display_header("Help - LCS & Matrix Chain Multiplication");
+    printf("--- LCS & MATRIX CHAIN MULTIPLICATION ---\n\n");
     printf("3) LONGEST COMMON SUBSEQUENCE (LCS)\n");
     printf("PROBLEM DEFINITION:\n");
     printf("    Find the longest sequence that appears in both strings in the same\n");
@@ -104,7 +89,6 @@ static void print_lcs_and_mcm(void)
     printf("COMPLEXITY:\n");
     printf("    • Naive recursion: exponential time.\n");
     printf("    • DP: O(mn) time, O(mn) space.\n\n");
-
     printf("4) MATRIX CHAIN MULTIPLICATION (MCM)\n");
     printf("PROBLEM DEFINITION:\n");
     printf("    Given matrices A1..An with compatible dimensions, find the parenthesization\n");
@@ -122,43 +106,4 @@ static void print_lcs_and_mcm(void)
 
     printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();
-}
-
-void help_dynamic_programming_menu(void)
-{
-    while (1)
-    {
-        display_header("Help - Dynamic Programming");
-
-        printf("Select a sub-topic:\n\n");
-        printf("1. DP Fundamentals (memoization vs tabulation)\n");
-        printf("2. Fibonacci + 0/1 Knapsack\n");
-        printf("3. LCS + Matrix Chain Multiplication\n");
-
-        int choice;
-        int status = safe_input_int(&choice, "\nenter choice ('-1' to exit, or 'help') : ", 1, 3);
-
-        if (status == INPUT_EXIT_SIGNAL)
-        {
-            break;
-        }
-
-        if (status == 0)
-        {
-            continue;
-        }
-
-        switch (choice)
-        {
-            case 1:
-                print_dp_basics();
-                break;
-            case 2:
-                print_fibonacci_and_knapsack();
-                break;
-            case 3:
-                print_lcs_and_mcm();
-                break;
-        }
-    }
 }
