@@ -12,9 +12,10 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 EXTRACT_STATIC         = YES
 CASE_SENSE_NAMES       = YES
-INPUT                  = src/ help/ tui/ demos/ features/
+INPUT                  = src/ help/ tui/ demos/ features/ README.md
+USE_MDFILE_AS_MAINPAGE = README.md
 RECURSIVE              = YES
-FILE_PATTERNS          = *.c *.h
+FILE_PATTERNS          = *.c *.h *.md
 
 # HTML output
 GENERATE_HTML          = YES
@@ -22,9 +23,15 @@ HTML_OUTPUT            = html
 HTML_FILE_EXTENSION    = .html
 GENERATE_LATEX         = NO
 
+# Navigation and Search formatting
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+SEARCHENGINE           = YES
+
 # Graphviz / Diagram options
 HAVE_DOT               = YES
 CLASS_GRAPH            = YES
 COLLABORATION_GRAPH    = YES
 CALL_GRAPH             = YES
 CALLER_GRAPH           = YES
+DIRECTORY_GRAPH        = YES
