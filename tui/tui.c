@@ -1,6 +1,18 @@
 #include <ctype.h>
-#include <ncurses.h>
 #include <string.h>
+
+#ifndef WITHOUT_NCURSES
+#include <ncurses.h>
+#else
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+typedef void WINDOW;
+#define stdscr NULL
+#define A_BOLD 0
+#define FALSE 0
+#define TRUE 1
+#endif
 
 #include "advanced_graph_algorithms.h"
 #include "advanced_heaps.h"
@@ -431,6 +443,7 @@ static int build_visible(int* visible, int max, const char* query)
 #define COL_GREEN 8
 #define COL_RED 9
 
+#ifndef WITHOUT_NCURSES
 static void init_colors(void)
 {
     if (!has_colors())
@@ -928,3 +941,38 @@ void tui_run(void)
         delwin(status_win);
     }
 }
+#else
+void tui_run(void)
+{
+    printf("\n\033[1;33m⚠️  Warning: NCURSES is missing or disabled.\033[0m\n");
+    printf("\033[1;36m=== ANSI Fallback Console Dashboard ===\033[0m\n");
+
+    int visible[256];
+    int vis_count = build_visible(visible, 256, NULL);
+    int demo_count = 0;
+    int demo_mapping[256];
+
+    for (int i = 0; i < vis_count; i++)
+    {
+        int idx = visible[i];
+        if (ENTRIES[idx].is_folder)
+        {
+            printf("\n\033[1;34m[%s]\033[0m\n", ENTRIES[idx].name);
+        }
+        else if (ENTRIES[idx].fn != NULL)
+        {
+            demo_mapping[demo_count] = idx;
+            printf("  %d. %s\n", ++demo_count, ENTRIES[idx].name);
+        }
+    }
+
+    printf("\nSelect a demo to run (1-%d, or -1 to exit): ", demo_count);
+    int choice;
+    if (scanf("%d", &choice) == 1 && choice >= 1 && choice <= demo_count)
+    {
+        int target_idx = demo_mapping[choice - 1];
+        printf("\n\033[1;32mRunning %s...\033[0m\n", ENTRIES[target_idx].name);
+        ENTRIES[target_idx].fn();
+    }
+}
+#endif
