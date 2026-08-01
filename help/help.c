@@ -42,21 +42,23 @@ void launch_help_page(void)
         printf("1. Data Structures Help\n");
         printf("2. Expression Evaluation Help\n");
         printf("3. Sorting & Searching Help\n");
-        printf("4. Graphs & Trees Help\n");
-        printf("5. Hashing Help\n");
-        printf("6. Advanced & Specialized Topics Help\n");
-        printf("7. Dynamic Programming Help\n");
-        printf("8. Error Correction Help\n");
-        printf("9. Bit Manipulation Help\n");
-        printf("10. Process Synchronization Help\n");
-        printf("11. Backtracking Algorithms Help\n");
-        printf("12. Advanced Graph Algorithms & Network Resilience Help\n");
-        printf("13. System Utilities, Telemetry & Serialization Help\n");
-        printf("14. Cache Replacement Simulator Help\n");
-        printf("15. Navigation, CLI Flags & General Info\n");
+        printf("4. Trees Help\n");
+        printf("5. Graph Traversals Help\n");
+        printf("6. Advanced Heaps Help\n");
+        printf("7. Hashing Help\n");
+        printf("8. String Algorithms & Compression Help\n");
+        printf("9. Dynamic Programming Help\n");
+        printf("10. Error Correction Help\n");
+        printf("11. Bit Manipulation Help\n");
+        printf("12. Process Synchronization Help\n");
+        printf("13. Backtracking Algorithms Help\n");
+        printf("14. Advanced Graph Algorithms & Network Resilience Help\n");
+        printf("15. System Utilities, Telemetry & Serialization Help\n");
+        printf("16. Cache Replacement Simulator Help\n");
+        printf("17. Navigation, CLI Flags & General Info\n");
         int choice;
         int status =
-            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 15);
+            safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 17);
 
         if (status == INPUT_EXIT_SIGNAL)
         {
@@ -80,46 +82,53 @@ void launch_help_page(void)
                 help_sorting_searching_menu();
                 break;
             case 4:
-                help_graphs_trees_menu();
+                help_trees_menu();
                 break;
             case 5:
-                help_hashing_menu();
+                help_graph_traversals_menu();
                 break;
             case 6:
-                help_advanced_topics_menu();
+                help_advanced_heaps_menu();
                 break;
             case 7:
-                help_dynamic_programming_menu();
+                help_hashing_menu();
                 break;
             case 8:
-                help_error_correction_menu();
+                help_string_compression_menu();
                 break;
             case 9:
-                bit_manipulation_help();
+                help_dynamic_programming_menu();
                 break;
             case 10:
-                help_process_synchronization_menu();
+                help_error_correction_menu();
                 break;
             case 11:
-                help_backtracking_menu();
+                bit_manipulation_help();
                 break;
             case 12:
-                help_advanced_graphs_menu();
+                help_process_synchronization_menu();
                 break;
             case 13:
-                help_system_utilities_menu();
+                help_backtracking_menu();
                 break;
             case 14:
-                help_cache_simulator_menu();
+                help_advanced_graphs_menu();
                 break;
             case 15:
+                help_system_utilities_menu();
+                break;
+            case 16:
+                help_cache_simulator_menu();
+                break;
+            case 17:
                 display_header("General Navigation, CLI Flags & Commands");
                 printf("DESCRIPTION\n");
                 printf("    The C DSA Interactive Suite is a terminal-based application\n");
                 printf("    designed to help you visualize and interact with Data Structures\n");
                 printf("    and Algorithms implemented in C.\n\n");
                 printf("NAVIGATION & COMMANDS\n");
-                printf("    help               - Launches this help page from any input prompt.\n");
+                printf("    help               - Launches this help page from any input "
+                       "prompt.\n");
                 printf("    -1                 - Exits the current menu, sub-suite, or "
                        "application.\n");
                 printf("    Numbers            - Choose specific menu items or menu paths.\n\n");
@@ -131,10 +140,10 @@ void launch_help_page(void)
                        "exports.\n");
                 printf("    --load-bst <path>          - Load and visualize a BST from a "
                        "serialized file.\n");
-                printf("    --load-avl <path>          - Load and visualize an AVL Tree from a "
-                       "serialized file.\n");
-                printf("    --load-graph <path>        - Load and print an unweighted Graph from a "
-                       "file.\n");
+                printf("    --load-avl <path>          - Load and visualize an AVL Tree "
+                       "from a serialized file.\n");
+                printf("    --load-graph <path>        - Load and print an unweighted "
+                       "Graph from a file.\n");
                 printf("    --load-wgraph <path>       - Load and print a Weighted Graph from a "
                        "file.\n\n");
                 printf("=================================================================\n");
