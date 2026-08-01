@@ -84,6 +84,23 @@ void test_advanced_data_structure_exporters(void)
     printf("test_advanced_data_structure_exporters passed!\n");
 }
 
+void test_probabilistic_data_structure_exporters(void)
+{
+    assert(export_bloom_filter(".", "./test_export/bloom_out") == true);
+    check_file_exists("./test_export/bloom_out/bloom_filter.c");
+    check_file_exists("./test_export/bloom_out/bloom_filter.h");
+
+    assert(export_count_min_sketch(".", "./test_export/cms_out") == true);
+    check_file_exists("./test_export/cms_out/count_min_sketch.c");
+    check_file_exists("./test_export/cms_out/count_min_sketch.h");
+
+    assert(export_hyperloglog(".", "./test_export/hll_out") == true);
+    check_file_exists("./test_export/hll_out/hyperloglog.c");
+    check_file_exists("./test_export/hll_out/hyperloglog.h");
+
+    printf("test_probabilistic_data_structure_exporters passed!\n");
+}
+
 int main(void)
 {
     test_dfs_search();
@@ -91,5 +108,6 @@ int main(void)
     test_export_file_pair();
     test_structure_exporters();
     test_advanced_data_structure_exporters();
+    test_probabilistic_data_structure_exporters();
     return 0;
 }
