@@ -569,8 +569,8 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
     {
         /* Live Side-by-Side Step Debugger and Memory Inspector Telemetry Display */
         wattron(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
-        mvwprintw(viz, 2, 2, "Telemetry: %s (Step %d, Recurse Depth %d)", 
-                  bridge.algorithm_name, bridge.step_index, bridge.recursion_depth);
+        mvwprintw(viz, 2, 2, "Telemetry: %s (Step %d, Recurse Depth %d)", bridge.algorithm_name,
+                  bridge.step_index, bridge.recursion_depth);
         wattroff(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
 
         /* Variables Panel (Left) */
@@ -580,15 +580,16 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
         {
             if (i < bridge.var_count)
             {
-                mvwprintw(viz, 5 + i, 2, "│  %-12.12s : %-24.24s │", 
-                          bridge.variables[i].name, bridge.variables[i].value);
+                mvwprintw(viz, 5 + i, 2, "│  %-12.12s : %-24.24s │", bridge.variables[i].name,
+                          bridge.variables[i].value);
             }
             else
             {
                 mvwprintw(viz, 5 + i, 2, "│  %-12s : %-24s │", "-", "-");
             }
         }
-        mvwprintw(viz, 5 + MAX_TELEMETRY_VARIABLES, 2, "└──────────────────────────────────────────┘");
+        mvwprintw(viz, 5 + MAX_TELEMETRY_VARIABLES, 2,
+                  "└──────────────────────────────────────────┘");
         wattroff(viz, COLOR_PAIR(COL_ITEM));
 
         /* Memory Inspector Panel (Right) */
@@ -603,7 +604,7 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
                 {
                     int color = bridge.allocations[i].active ? COL_GREEN : COL_RED;
                     wattron(viz, COLOR_PAIR(color));
-                    mvwprintw(viz, 5 + i, start_col + 3, "%s [%s] %zuB", 
+                    mvwprintw(viz, 5 + i, start_col + 3, "%s [%s] %zuB",
                               bridge.allocations[i].active ? "🟩" : "🟥",
                               bridge.allocations[i].label, bridge.allocations[i].size);
                     wattroff(viz, COLOR_PAIR(color));
@@ -615,7 +616,8 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
                 /* Print padding for borders */
                 mvwprintw(viz, 5 + i, start_col + 43, "│");
             }
-            mvwprintw(viz, 5 + MAX_TELEMETRY_ALLOCATIONS, start_col, "└──────────────────────────────────────────┘");
+            mvwprintw(viz, 5 + MAX_TELEMETRY_ALLOCATIONS, start_col,
+                      "└──────────────────────────────────────────┘");
             wattroff(viz, COLOR_PAIR(COL_ITEM));
         }
 
