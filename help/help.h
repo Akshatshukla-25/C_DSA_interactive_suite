@@ -60,7 +60,7 @@ void help_error_correction_menu(void);
 /**
  * @brief Sub-menu for Bit Manipulation help.
  */
-void bit_manipulation_help(void);
+void help_bit_manipulation_menu(void);
 
 /**
  * @brief Sub-menu for Process Synchronization help.
@@ -75,7 +75,7 @@ void help_backtracking_menu(void);
 /**
  * @brief Sub-menu for Advanced Graph Algorithms & Network Resilience help.
  */
-void help_advanced_graphs_menu(void);
+void help_advanced_graph_algorithms_menu(void);
 
 /**
  * @brief Sub-menu for Telemetry, Memory Inspector & State Serialization help.
