@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "file_exporter.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -8,9 +9,7 @@ void file_exporter_demo(void)
 {
     while (1)
     {
-        printf("\n========================================================================\n");
-        printf("           STANDALONE RECURSIVE FILE EXPORTER ENGINE DASHBOARD          \n");
-        printf("========================================================================\n");
+        display_header("Standalone File Exporter Engine");
         printf("click 1 for sll export\n");
         printf("click 2 for dll export\n");
         printf("click 3 for binary search tree export\n");

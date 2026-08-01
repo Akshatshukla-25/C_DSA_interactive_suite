@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "dll.h"
 #include "memory_inspector.h"
 #include "safe_input.h"
@@ -11,9 +12,7 @@ void memory_inspector_demo(void)
 {
     while (1)
     {
-        printf("\n========================================================================\n");
-        printf("         RAW MEMORY LAYOUT INSPECTOR & HEXDUMP VISUALIZER SUITE          \n");
-        printf("========================================================================\n");
+        display_header("Raw Memory Layout Inspector");
         printf("1. Inspect Singly-Linked List Node (Node) Memory Layout\n");
         printf("2. Inspect Doubly-Linked List Node (doubly_ll_Node) Memory Layout\n");
         printf("3. Inspect Binary Search Tree Node (bstNode) Memory Layout\n");

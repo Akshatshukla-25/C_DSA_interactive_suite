@@ -1,3 +1,4 @@
+#include "display_header.h"
 #include "fuzzer.h"
 #include "safe_input.h"
 #include <stdio.h>
@@ -32,7 +33,7 @@ void fuzzer_demo(void)
 {
     while (1)
     {
-        printf("\n=== STOCHASTIC FUZZ TESTING ENGINE ===\n");
+        display_header("Stochastic Fuzz Testing Engine");
         printf("1. Fuzz Tree Data Structures\n");
         printf("2. Fuzz Heap Data Structures\n");
         printf("3. Fuzz Graph Algorithms\n");

@@ -1,5 +1,6 @@
 #include "config.h"
 #include "cross_platform_timer.h"
+#include "display_header.h"
 #include "safe_input.h"
 #include "step_debugger.h"
 #include "telemetry.h"
@@ -98,9 +99,7 @@ void settings_menu_demo(void)
 {
     while (1)
     {
-        printf("\n===================================\n");
-        printf("        Settings & Debugger        \n");
-        printf("===================================\n");
+        display_header("Settings");
         print_current_speed();
         printf("Debugger Step Mode: %s\n", get_step_mode() ? "ON" : "OFF");
         printf("\nOptions:\n");
