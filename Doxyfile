@@ -12,10 +12,9 @@ EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 EXTRACT_STATIC         = YES
 CASE_SENSE_NAMES       = YES
-INPUT                  = src/ help/ tui/ demos/ features/ README.md
-USE_MDFILE_AS_MAINPAGE = README.md
+INPUT                  = src/ help/ tui/ demos/ features/
 RECURSIVE              = YES
-FILE_PATTERNS          = *.c *.h *.md
+FILE_PATTERNS          = *.c *.h
 
 # HTML output
 GENERATE_HTML          = YES
