@@ -61,7 +61,7 @@ void launch_help_page(void)
         printf("20. System Utilities, Telemetry & Serialization Help\n");
         printf("21. Cache Replacement Simulator Help\n");
         printf("22. Navigation, CLI Flags & General Info\n");
-        
+
         int choice;
         int status =
             safe_input_int(&choice, "\nenter choice (\'-1\' to exit, or \'help\') : ", 1, 22);
