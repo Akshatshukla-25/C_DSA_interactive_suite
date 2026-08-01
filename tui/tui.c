@@ -428,6 +428,8 @@ static int build_visible(int* visible, int max, const char* query)
 #define COL_BORDER 5
 #define COL_VIZPANE 6
 #define COL_STATUS 7
+#define COL_GREEN 8
+#define COL_RED 9
 
 static void init_colors(void)
 {
@@ -443,6 +445,8 @@ static void init_colors(void)
     init_pair(COL_BORDER, COLOR_BLUE, -1);
     init_pair(COL_VIZPANE, COLOR_GREEN, -1);
     init_pair(COL_STATUS, COLOR_BLACK, COLOR_BLUE);
+    init_pair(COL_GREEN, COLOR_GREEN, -1);
+    init_pair(COL_RED, COLOR_RED, -1);
 }
 
 /* ── draw helpers ───────────────────────────────────────────────────────────── */
@@ -531,6 +535,9 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
     int mid_row = rows / 2;
     int mid_col = cols / 2;
 
+    AlgorithmStateBridge bridge = {0};
+    telemetry_bridge_get(&bridge);
+
     if (!s->demo_ran)
     {
         /* idle state */
@@ -545,9 +552,68 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
         mvwprintw(viz, mid_row + 3, mid_col - 12, "q to quit");
         wattroff(viz, COLOR_PAIR(COL_ITEM));
     }
+    else if (strlen(bridge.algorithm_name) > 0)
+    {
+        /* Live Side-by-Side Step Debugger and Memory Inspector Telemetry Display */
+        wattron(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
+        mvwprintw(viz, 2, 2, "Telemetry: %s (Step %d, Recurse Depth %d)", 
+                  bridge.algorithm_name, bridge.step_index, bridge.recursion_depth);
+        wattroff(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
+
+        /* Variables Panel (Left) */
+        wattron(viz, COLOR_PAIR(COL_ITEM));
+        mvwprintw(viz, 4, 2, "┌── Variables Inspector ───────────────────┐");
+        for (int i = 0; i < MAX_TELEMETRY_VARIABLES; i++)
+        {
+            if (i < bridge.var_count)
+            {
+                mvwprintw(viz, 5 + i, 2, "│  %-12.12s : %-24.24s │", 
+                          bridge.variables[i].name, bridge.variables[i].value);
+            }
+            else
+            {
+                mvwprintw(viz, 5 + i, 2, "│  %-12s : %-24s │", "-", "-");
+            }
+        }
+        mvwprintw(viz, 5 + MAX_TELEMETRY_VARIABLES, 2, "└──────────────────────────────────────────┘");
+        wattroff(viz, COLOR_PAIR(COL_ITEM));
+
+        /* Memory Inspector Panel (Right) */
+        if (cols > 75)
+        {
+            int start_col = cols - 44;
+            wattron(viz, COLOR_PAIR(COL_ITEM));
+            mvwprintw(viz, 4, start_col, "┌── Heap Memory Map ───────────────────────┐");
+            for (int i = 0; i < MAX_TELEMETRY_ALLOCATIONS; i++)
+            {
+                if (i < bridge.alloc_count)
+                {
+                    int color = bridge.allocations[i].active ? COL_GREEN : COL_RED;
+                    wattron(viz, COLOR_PAIR(color));
+                    mvwprintw(viz, 5 + i, start_col + 3, "%s [%s] %zuB", 
+                              bridge.allocations[i].active ? "🟩" : "🟥",
+                              bridge.allocations[i].label, bridge.allocations[i].size);
+                    wattroff(viz, COLOR_PAIR(color));
+                }
+                else
+                {
+                    mvwprintw(viz, 5 + i, start_col + 3, "⬛ [Empty]");
+                }
+                /* Print padding for borders */
+                mvwprintw(viz, 5 + i, start_col + 43, "│");
+            }
+            mvwprintw(viz, 5 + MAX_TELEMETRY_ALLOCATIONS, start_col, "└──────────────────────────────────────────┘");
+            wattroff(viz, COLOR_PAIR(COL_ITEM));
+        }
+
+        /* Status Bar (Bottom) */
+        wattron(viz, COLOR_PAIR(COL_TITLE));
+        mvwprintw(viz, rows - 4, 2, "Status: %s", bridge.status_message);
+        wattroff(viz, COLOR_PAIR(COL_TITLE));
+    }
     else
     {
-        /* show last ran info */
+        /* fallback show last ran info */
         wattron(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
         mvwprintw(viz, 2, 3, "Last run: %s", s->last_ran);
         wattroff(viz, COLOR_PAIR(COL_VIZPANE) | A_BOLD);
@@ -555,11 +621,7 @@ static void draw_viz(WINDOW* viz, State* s, int* visible, int cursor, int active
         wattron(viz, COLOR_PAIR(COL_ITEM));
         mvwprintw(viz, 4, 3, "Demo ran in full terminal mode.");
         mvwprintw(viz, 5, 3, "Press Enter again to re-run.");
-        mvwprintw(viz, 7, 3, "Note: interactive demos require");
-        mvwprintw(viz, 8, 3, "full terminal I/O. The visualizer");
-        mvwprintw(viz, 9, 3, "pane will show step-by-step output");
-        mvwprintw(viz, 10, 3, "once demos are refactored to return");
-        mvwprintw(viz, 11, 3, "structured data.");
+        mvwprintw(viz, 7, 3, "No active telemetry data was captured.");
         wattroff(viz, COLOR_PAIR(COL_ITEM));
     }
 
