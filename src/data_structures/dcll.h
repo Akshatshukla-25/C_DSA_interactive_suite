@@ -1,6 +1,8 @@
 #ifndef DCLL_H
 #define DCLL_H
 
+#include "memory_inspector.h"
+
 // For Doubly cirular linked list
 
 typedef struct dcll_Node

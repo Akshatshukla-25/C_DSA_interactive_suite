@@ -1,6 +1,8 @@
 #ifndef DLL_H
 #define DLL_H
 
+#include "memory_inspector.h"
+
 typedef struct doubly_ll_Node
 {
     void* data;

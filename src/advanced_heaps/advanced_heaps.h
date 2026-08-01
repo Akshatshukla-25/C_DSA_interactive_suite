@@ -1,6 +1,7 @@
 #ifndef ADVANCED_HEAPS_H
 #define ADVANCED_HEAPS_H
 
+#include "memory_inspector.h"
 #include <stdbool.h>
 
 /*

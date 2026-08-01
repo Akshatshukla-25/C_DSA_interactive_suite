@@ -1,5 +1,6 @@
 #ifndef GRAPH_TRAVERSALS_H
 #define GRAPH_TRAVERSALS_H
+#include "memory_inspector.h"
 #include "sll.h"
 #include <stdbool.h>
 

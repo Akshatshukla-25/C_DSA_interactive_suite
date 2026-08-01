@@ -1,6 +1,7 @@
 #ifndef SLL_H
 #define SLL_H
 
+#include "memory_inspector.h"
 #include <stdint.h>
 
 /**
