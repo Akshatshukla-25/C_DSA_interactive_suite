@@ -79,7 +79,7 @@ void launch_help_page(void)
                 help_expression_evaluation_menu();
                 break;
             case 3:
-                help_sorting_searching_menu();
+                help_sorting_algorithms_n2_menu();
                 break;
             case 4:
                 help_trees_menu();
