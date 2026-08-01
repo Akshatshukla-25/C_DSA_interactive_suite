@@ -1,9 +1,46 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "avl.h"
 #include "safe_input.h"
 #include "serialization.h"
+#include "step_debugger.h"
+
+static void scan_avl_nodes(avlNode* root, AlgorithmStateBridge* bridge)
+{
+    if (root == NULL || bridge->alloc_count >= MAX_TELEMETRY_ALLOCATIONS)
+        return;
+
+    int idx = bridge->alloc_count;
+    bridge->allocations[idx].address = (void*)root;
+    bridge->allocations[idx].size = sizeof(avlNode);
+    snprintf(bridge->allocations[idx].label, 31, "Node(%d, H:%d)", root->data, root->height);
+    bridge->allocations[idx].active = 1;
+    bridge->alloc_count++;
+
+    scan_avl_nodes(root->left, bridge);
+    scan_avl_nodes(root->right, bridge);
+}
+
+static void update_avl_telemetry(avlNode* root, const char* status)
+{
+    AlgorithmStateBridge bridge;
+    telemetry_bridge_reset("AVL Tree");
+    telemetry_bridge_get(&bridge);
+
+    strncpy(bridge.status_message, status, sizeof(bridge.status_message) - 1);
+
+    bridge.var_count = 2;
+    strncpy(bridge.variables[0].name, "root", 31);
+    snprintf(bridge.variables[0].value, 63, "%p", (void*)root);
+    strncpy(bridge.variables[1].name, "height", 31);
+    snprintf(bridge.variables[1].value, 63, "%d", root ? root->height : 0);
+
+    scan_avl_nodes(root, &bridge);
+
+    telemetry_bridge_update(&bridge);
+}
 
 void avl_demo(void)
 {
@@ -28,6 +65,7 @@ void avl_demo(void)
         }
 
         avlNode* root = NULL;
+        update_avl_telemetry(root, "AVL Tree Initialized Empty");
 
         if (option == 2)
         {
@@ -44,6 +82,8 @@ void avl_demo(void)
                 continue;
             }
             printf("\nAVL tree loaded successfully from '%s'.\n", path);
+            update_avl_telemetry(root, "AVL Tree loaded from file");
+            algorithm_step_hook("AVL: Load from File");
         }
         else
         {
@@ -95,6 +135,11 @@ void avl_demo(void)
                 }
                 i++;
                 total_nodes--;
+
+                char status_msg[128];
+                snprintf(status_msg, sizeof(status_msg), "Inserted unique value %d", node_value);
+                update_avl_telemetry(root, status_msg);
+                algorithm_step_hook("AVL: Node Inserted");
             }
         }
 
@@ -168,6 +213,11 @@ void avl_demo(void)
                     printf("\nnode deleted. updated inorder traversal: ");
                     avl_inorder(root);
                     printf("\n");
+
+                    char status_msg[128];
+                    snprintf(status_msg, sizeof(status_msg), "Deleted value %d", delete_value);
+                    update_avl_telemetry(root, status_msg);
+                    algorithm_step_hook("AVL: Node Deleted");
                 }
             }
             else if (traversal_choice == 5)

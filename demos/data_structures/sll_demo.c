@@ -1,7 +1,9 @@
 #include "safe_input.h"
 #include "sll.h"
+#include "step_debugger.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static void print_int(const void* data)
 {
@@ -16,9 +18,40 @@ static int compare_ints(const void* a, const void* b)
     return *(const int*)a - *(const int*)b;
 }
 
+static void update_sll_telemetry(Node* head, const char* status)
+{
+    AlgorithmStateBridge bridge;
+    telemetry_bridge_reset("Singly Linked List");
+    telemetry_bridge_get(&bridge);
+
+    strncpy(bridge.status_message, status, sizeof(bridge.status_message) - 1);
+
+    bridge.var_count = 2;
+    strncpy(bridge.variables[0].name, "head", 31);
+    snprintf(bridge.variables[0].value, 63, "%p", (void*)head);
+    strncpy(bridge.variables[1].name, "length", 31);
+    snprintf(bridge.variables[1].value, 63, "%d", sll_getLength(head));
+
+    Node* curr = head;
+    int idx = 0;
+    while (curr && idx < MAX_TELEMETRY_ALLOCATIONS)
+    {
+        bridge.allocations[idx].address = (void*)curr;
+        bridge.allocations[idx].size = sizeof(Node);
+        snprintf(bridge.allocations[idx].label, 31, "Node(%d)", *(int*)curr->data);
+        bridge.allocations[idx].active = 1;
+        idx++;
+        curr = curr->next;
+    }
+    bridge.alloc_count = idx;
+
+    telemetry_bridge_update(&bridge);
+}
+
 void sll_demo(void)
 {
     Node* head = NULL;
+    update_sll_telemetry(head, "SLL Initialized Empty");
     int sll_element_count;
     int sll_length_status;
 
@@ -103,6 +136,8 @@ start_sll:
             }
             printf("\n");
             sll_printlist(head, print_int);
+            update_sll_telemetry(head, "Inserted node at end");
+            algorithm_step_hook("SLL: Insert At End");
         }
         else if (sll_position_choice == 0)
         {
@@ -142,6 +177,8 @@ start_sll:
             }
             printf("\n");
             sll_printlist(head, print_int);
+            update_sll_telemetry(head, "Inserted node at beginning");
+            algorithm_step_hook("SLL: Insert At Beginning");
         }
         else if (sll_position_choice == 2)
         {
