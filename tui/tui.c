@@ -294,6 +294,18 @@ static Entry ENTRIES[] = {
     {"Bit Manipulation", NULL, 1, 0, 0},
     {"Bit Manipulation Demo", bit_manipulation_demo, 0, 0, 1},
 
+    {"Probabilistic Data Structures", NULL, 1, 0, 0},
+    {"Bloom Filter", bloom_filter_demo, 0, 0, 1},
+    {"Count-Min Sketch", count_min_sketch_demo, 0, 0, 1},
+    {"HyperLogLog", hyperloglog_demo, 0, 0, 1},
+
+    {"Spatial Indexing", NULL, 1, 0, 0},
+    {"k-d Tree", kd_tree_demo, 0, 0, 1},
+    {"QuadTree", quadtree_demo, 0, 0, 1},
+    {"R-Tree", rtree_demo, 0, 0, 1},
+
+    {"Interactive Algorithm Quick-Search", run_algorithm_search_menu, 0, 0, 0},
+
     {"Developer Utilities", NULL, 1, 0, 0},
     {"algorithm_benchmarks", NULL, 1, 0, 1},
     {"Sorting Benchmarks", run_sorting_benchmark_wrapper, 0, 0, 2},
@@ -317,18 +329,6 @@ static Entry ENTRIES[] = {
     {"Standalone File Exporter", file_exporter_demo, 0, 0, 1},
     {"State Serialization Engine", serialization_demo, 0, 0, 1},
     {"System Settings (Animation Speed)", settings_menu_demo, 0, 0, 1},
-
-    {"Probabilistic Data Structures", NULL, 1, 0, 0},
-    {"Bloom Filter", bloom_filter_demo, 0, 0, 1},
-    {"Count-Min Sketch", count_min_sketch_demo, 0, 0, 1},
-    {"HyperLogLog", hyperloglog_demo, 0, 0, 1},
-
-    {"Spatial Indexing", NULL, 1, 0, 0},
-    {"k-d Tree", kd_tree_demo, 0, 0, 1},
-    {"QuadTree", quadtree_demo, 0, 0, 1},
-    {"R-Tree", rtree_demo, 0, 0, 1},
-
-    {"Interactive Algorithm Quick-Search", run_algorithm_search_menu, 0, 0, 0},
 };
 
 static const int ENTRY_COUNT = sizeof(ENTRIES) / sizeof(ENTRIES[0]);
