@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void print_hexdump(const void* ptr, size_t size)
@@ -275,4 +276,131 @@ void inspect_bst_node_memory(const void* node_ptr)
                    {"right (bstNode*)", offsetof(bstNode, right), sizeof(bstNode*), 0}}};
     finalize_struct_layout(&layout);
     print_struct_layout_report(&layout, node_ptr);
+}
+
+/* ── Live Allocation Tracking & Heap Map ────────────────────── */
+static AllocatedBlock tracked_blocks[MAX_TRACKED_BLOCKS];
+static int tracked_block_count = 0;
+
+void memory_inspector_clear_blocks(void)
+{
+    tracked_block_count = 0;
+    memset(tracked_blocks, 0, sizeof(tracked_blocks));
+}
+
+void* dsa_malloc(size_t size, const char* label)
+{
+    void* ptr = malloc(size);
+    if (ptr != NULL && tracked_block_count < MAX_TRACKED_BLOCKS)
+    {
+        tracked_blocks[tracked_block_count].address = ptr;
+        tracked_blocks[tracked_block_count].size = size;
+        tracked_blocks[tracked_block_count].label = label ? label : "Allocated Block";
+        tracked_blocks[tracked_block_count].state = BLOCK_STATE_ACTIVE;
+        tracked_block_count++;
+    }
+    return ptr;
+}
+
+void dsa_free(void* ptr)
+{
+    if (ptr == NULL)
+        return;
+
+    for (int i = 0; i < tracked_block_count; i++)
+    {
+        if (tracked_blocks[i].address == ptr)
+        {
+            tracked_blocks[i].state = BLOCK_STATE_FREE;
+            break;
+        }
+    }
+    free(ptr);
+}
+
+void* dsa_realloc(void* ptr, size_t size, const char* label)
+{
+    void* new_ptr = realloc(ptr, size);
+    if (new_ptr != NULL)
+    {
+        int found = 0;
+        for (int i = 0; i < tracked_block_count; i++)
+        {
+            if (tracked_blocks[i].address == ptr)
+            {
+                tracked_blocks[i].address = new_ptr;
+                tracked_blocks[i].size = size;
+                if (label)
+                    tracked_blocks[i].label = label;
+                tracked_blocks[i].state = BLOCK_STATE_ACTIVE;
+                found = 1;
+                break;
+            }
+        }
+        if (!found && tracked_block_count < MAX_TRACKED_BLOCKS)
+        {
+            tracked_blocks[tracked_block_count].address = new_ptr;
+            tracked_blocks[tracked_block_count].size = size;
+            tracked_blocks[tracked_block_count].label = label ? label : "Reallocated Block";
+            tracked_blocks[tracked_block_count].state = BLOCK_STATE_ACTIVE;
+            tracked_block_count++;
+        }
+    }
+    return new_ptr;
+}
+
+int memory_inspector_get_active_block_count(void)
+{
+    int active = 0;
+    for (int i = 0; i < tracked_block_count; i++)
+    {
+        if (tracked_blocks[i].state == BLOCK_STATE_ACTIVE)
+        {
+            active++;
+        }
+    }
+    return active;
+}
+
+size_t memory_inspector_get_total_allocated_bytes(void)
+{
+    size_t total = 0;
+    for (int i = 0; i < tracked_block_count; i++)
+    {
+        if (tracked_blocks[i].state == BLOCK_STATE_ACTIVE)
+        {
+            total += tracked_blocks[i].size;
+        }
+    }
+    return total;
+}
+
+void memory_inspector_draw_heap_map(void)
+{
+    printf("\n┌────────────────────────────────────────────────────────────────────────┐\n");
+    printf("│                      LIVE VISUAL HEAP MEMORY MAP                       │\n");
+    printf("├────────────────────────────────────────────────────────────────────────┤\n");
+    printf("│ Index  Status   Address            Size      Label                     │\n");
+    printf("├───────--------  ------------------  --------  -------------------------┤\n");
+
+    if (tracked_block_count == 0)
+    {
+        printf("│ (No active or tracked heap allocations)                                │\n");
+    }
+    else
+    {
+        for (int i = 0; i < tracked_block_count; i++)
+        {
+            const char* status_str = (tracked_blocks[i].state == BLOCK_STATE_ACTIVE)
+                                         ? "\033[1;32m[ACTIVE]\033[0m"
+                                         : "\033[1;31m[FREED]\033[0m ";
+            printf("│ [%02d]  %-8s %-18p %-8zu %-25s │\n", i + 1, status_str,
+                   tracked_blocks[i].address, tracked_blocks[i].size,
+                   tracked_blocks[i].label ? tracked_blocks[i].label : "Block");
+        }
+    }
+    printf("├────────────────────────────────────────────────────────────────────────┤\n");
+    printf("│ Total Active Blocks: %-3d | Total Active Bytes: %-15zu │\n",
+           memory_inspector_get_active_block_count(), memory_inspector_get_total_allocated_bytes());
+    printf("└────────────────────────────────────────────────────────────────────────┘\n");
 }

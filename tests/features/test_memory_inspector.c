@@ -95,11 +95,37 @@ void test_dsa_node_inspectors(void)
     printf("test_dsa_node_inspectors passed!\n");
 }
 
+void test_live_heap_memory_map(void)
+{
+    memory_inspector_clear_blocks();
+    assert(memory_inspector_get_active_block_count() == 0);
+
+    void* ptr1 = dsa_malloc(32, "SLL Node");
+    void* ptr2 = dsa_malloc(64, "BST Node");
+    assert(ptr1 != NULL);
+    assert(ptr2 != NULL);
+
+    assert(memory_inspector_get_active_block_count() == 2);
+    assert(memory_inspector_get_total_allocated_bytes() == 96);
+
+    memory_inspector_draw_heap_map();
+
+    dsa_free(ptr1);
+    assert(memory_inspector_get_active_block_count() == 1);
+    assert(memory_inspector_get_total_allocated_bytes() == 64);
+
+    dsa_free(ptr2);
+    assert(memory_inspector_get_active_block_count() == 0);
+
+    printf("test_live_heap_memory_map passed!\n");
+}
+
 int main(void)
 {
     test_hexdump_null_handling();
     test_hexdump_basic_formatting();
     test_struct_layout_analyzer();
     test_dsa_node_inspectors();
+    test_live_heap_memory_map();
     return 0;
 }
