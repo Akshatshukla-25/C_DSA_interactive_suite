@@ -68,10 +68,10 @@ void run_legacy_menu(void)
             "click 12 for string processing & compression algorithms demo\n"
             "click 13 for advanced heaps & priority queues suite demo\n"
             "click 14 for Bit Manipulation demo\n"
-            "click 15 for Developer Console & System Utilities\n"
-            "click 16 for Probabilistic Data Structures Module\n"
-            "click 17 for Spatial Indexing Module\n"
-            "click 18 for Interactive Algorithm Quick-Search Finder\n"
+            "click 15 for Probabilistic Data Structures Module\n"
+            "click 16 for Spatial Indexing Module\n"
+            "click 17 for Interactive Algorithm Quick-Search Finder\n"
+            "click 18 for Developer Console & System Utilities\n"
             "\nenter choice (\'-1\' to exit, or \'help\') : ",
             1, 18 /* limits */
         );
@@ -272,6 +272,17 @@ void run_legacy_menu(void)
                 bit_manipulation_demo();
                 break;
             case 15:
+                display_header("Probabilistic Data Structures Module");
+                probabilistic_ds_demo();
+                break;
+            case 16:
+                display_header("Spatial Indexing Module");
+                spatial_indexing_demo();
+                break;
+            case 17:
+                run_algorithm_search_menu();
+                break;
+            case 18:
                 while (1)
                 {
                     int dev_choice;
@@ -336,17 +347,6 @@ void run_legacy_menu(void)
                         serialization_demo();
                     }
                 }
-                break;
-            case 16:
-                display_header("Probabilistic Data Structures Module");
-                probabilistic_ds_demo();
-                break;
-            case 17:
-                display_header("Spatial Indexing Module");
-                spatial_indexing_demo();
-                break;
-            case 18:
-                run_algorithm_search_menu();
                 break;
         }
     }
