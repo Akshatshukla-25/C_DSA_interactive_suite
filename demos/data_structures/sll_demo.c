@@ -1,13 +1,16 @@
+#include "display_header.h"
+#include "file_exporter.h"
 #include "safe_input.h"
 #include "sll.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static void print_int(const void* data)
 {
     if (data != NULL)
     {
-        printf("%d", *(const int*)data);
+        printf("\033[1;32m[%d]\033[0m", *(const int*)data);
     }
 }
 
@@ -19,339 +22,178 @@ static int compare_ints(const void* a, const void* b)
 void sll_demo(void)
 {
     Node* head = NULL;
-    int sll_element_count;
-    int sll_length_status;
 
-start_sll:
-    sll_length_status = safe_input_int(
-        &sll_element_count,
-        "enter how many elements you want to insert, (between 1 and 100), enter '-1' to exit :- ",
-        1, 100);
-
-    if (sll_length_status == INPUT_EXIT_SIGNAL)
-    {
-        printf("\nExiting sll demo.\n");
-        delete_sll(head, free);
-        return;
-    }
-
-    if (sll_length_status == 0)
-    {
-        goto start_sll;
-    }
-
-    while (sll_element_count > 0)
-    {
-        int sll_position_choice;
-        int sll_position_status;
-
-    sll_position_selection:
-        sll_position_status = safe_input_int(&sll_position_choice,
-                                             "\nenter '0' for inserting at beginning"
-                                             "\nenter '1' for inserting at end"
-                                             "\nenter '2' for inserting at specific position"
-                                             "\nenter '-1' to exit :- ",
-                                             0, 2);
-
-        if (sll_position_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting sll demo.\n");
-            delete_sll(head, free);
-            return;
-        }
-
-        if (sll_position_status == 0)
-        {
-            goto sll_position_selection;
-        }
-
-        if (sll_position_choice == 1)
-        {
-            int sll_end_status;
-            int sll_end_value;
-        sll_enter_end_value:
-            sll_end_status = safe_input_int(&sll_end_value,
-                                            "enter the no. you want to insert at end, (between 1 "
-                                            "and 100), enter '-1' to exit :- ",
-                                            1, 100);
-
-            if (sll_end_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-
-            if (sll_end_status == 0)
-            {
-                goto sll_enter_end_value;
-            }
-
-            int* val = malloc(sizeof(int));
-            if (val == NULL)
-            {
-                printf("\nmalloc allocation failure. try again\n");
-                goto sll_enter_end_value;
-            }
-            *val = sll_end_value;
-            int status = sll_insertAtEnd(&head, val);
-            if (status == -1)
-            {
-                free(val);
-                printf("\nmalloc allocation failure. try again\n");
-                goto sll_enter_end_value;
-            }
-            printf("\n");
-            sll_printlist(head, print_int);
-        }
-        else if (sll_position_choice == 0)
-        {
-            int sll_start_status;
-            int sll_start_value;
-
-        dcll_enter_start_value:
-            sll_start_status = safe_input_int(&sll_start_value,
-                                              "enter the no. you want to insert at beginning, "
-                                              "(between 1 and 100), enter '-1' to exit :- ",
-                                              1, 100);
-
-            if (sll_start_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-
-            if (sll_start_status == 0)
-            {
-                goto dcll_enter_start_value;
-            }
-            int* val = malloc(sizeof(int));
-            if (val == NULL)
-            {
-                printf("\nmalloc allocation failure. try again\n");
-                goto dcll_enter_start_value;
-            }
-            *val = sll_start_value;
-            int status = sll_insertAtBeginning(&head, val);
-            if (status == -1)
-            {
-                free(val);
-                printf("\nmalloc allocation failure. try again\n");
-                goto dcll_enter_start_value;
-            }
-            printf("\n");
-            sll_printlist(head, print_int);
-        }
-        else if (sll_position_choice == 2)
-        {
-            int sll_pos_status;
-            int sll_pos_value;
-            int sll_pos_index;
-            char sll_pos_prompt[128];
-
-        sll_enter_pos_value:
-            sll_pos_status = safe_input_int(&sll_pos_value,
-                                            "enter the no. you want to insert, (between 1 "
-                                            "and 100), enter '-1' to exit :- ",
-                                            1, 100);
-
-            if (sll_pos_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-
-            if (sll_pos_status == 0)
-            {
-                goto sll_enter_pos_value;
-            }
-
-        sll_enter_pos_index:
-            snprintf(sll_pos_prompt, sizeof(sll_pos_prompt),
-                     "enter the position (0 to %d), enter '-1' to exit :- ", sll_getLength(head));
-            sll_pos_status = safe_input_int(&sll_pos_index, sll_pos_prompt, 0, sll_getLength(head));
-
-            if (sll_pos_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-
-            if (sll_pos_status == 0)
-            {
-                goto sll_enter_pos_index;
-            }
-
-            int* val = malloc(sizeof(int));
-            if (val == NULL)
-            {
-                printf("\nmalloc allocation failure. try again\n");
-                goto sll_enter_pos_value;
-            }
-            *val = sll_pos_value;
-            int status = sll_insertAtPosition(&head, val, sll_pos_index);
-            if (status == -1)
-            {
-                free(val);
-                printf("\nmalloc allocation failure. try again\n");
-                goto sll_enter_pos_value;
-            }
-            else if (status == -2)
-            {
-                free(val);
-                printf("\ninvalid position. try again\n");
-                goto sll_enter_pos_index;
-            }
-            printf("\n");
-            sll_printlist(head, print_int);
-        }
-
-        sll_element_count--;
-    }
-
-    int rev_sll_status = sll_reverseList(&head);
-
-    if (rev_sll_status == 1)
-    {
-        printf("\nReverse of the given list is :- ");
-        sll_printlist(head, print_int);
-
-        sll_reverseList(&head);
-
-        printf("\nRestored original list :- ");
-        sll_printlist(head, print_int);
-    }
-    else if (rev_sll_status == -1)
-    {
-        printf("\nSingle node list cannot be reversed.");
-    }
-    else if (rev_sll_status == -2)
-    {
-        printf("\nEmpty list cannot be reversed.");
-    }
-
-    // searching elements in sll
     while (1)
     {
-        int sll_search_status;
-        int sll_search_value;
-        sll_search_status = safe_input_int(
-            &sll_search_value,
-            "\nenter the element to be searched, (between 1 and 100), enter '-1' to exit :- ", 1,
-            100);
-        if (sll_search_status == INPUT_EXIT_SIGNAL)
+        display_header("Singly Linked List Visualizer");
+
+        // Live visual display inside unicode box
+        draw_unicode_box_header("LIVE LIST GRAPH representation");
+        printf("  List: ");
+        if (head == NULL)
+        {
+            printf("\033[1;31mEMPTY (NULL)\033[0m\n");
+        }
+        else
+        {
+            Node* curr = head;
+            while (curr)
+            {
+                print_int(curr->data);
+                if (curr->next)
+                {
+                    printf(" \033[1;90m──>\033[0m ");
+                }
+                curr = curr->next;
+            }
+            printf(" \033[1;90m──>\033[0m \033[1;31mNULL\033[0m\n");
+        }
+        printf("\n  Length: %d nodes\n", sll_getLength(head));
+        draw_unicode_box_footer();
+
+        printf("\nOptions:\n");
+        printf("1. Insert at Beginning\n");
+        printf("2. Insert at End\n");
+        printf("3. Insert at Position\n");
+        printf("4. Delete by Value\n");
+        printf("5. Delete at Position\n");
+        printf("6. Search for Value\n");
+        printf("7. Reverse List\n");
+        printf("8. Export List State (TXT, CSV, JSON)\n");
+        printf("-1. Exit SLL Demo\n");
+
+        int choice;
+        int status = safe_input_int(&choice, "\nEnter choice: ", -1, 8);
+        if (status == INPUT_EXIT_SIGNAL || choice == -1)
         {
             break;
         }
-        if (sll_search_status == 0)
-        {
-            continue;
-        }
 
-        int index = sll_search(head, &sll_search_value, compare_ints);
-        printf("\nelement found at index :- %d", index);
+        if (choice == 1)
+        {
+            int val;
+            if (safe_input_int(&val, "Enter value to insert at beginning: ", 1, 1000) > 0)
+            {
+                int* data = malloc(sizeof(int));
+                *data = val;
+                sll_insertAtBeginning(&head, data);
+            }
+        }
+        else if (choice == 2)
+        {
+            int val;
+            if (safe_input_int(&val, "Enter value to insert at end: ", 1, 1000) > 0)
+            {
+                int* data = malloc(sizeof(int));
+                *data = val;
+                sll_insertAtEnd(&head, data);
+            }
+        }
+        else if (choice == 3)
+        {
+            int val, pos;
+            if (safe_input_int(&val, "Enter value to insert: ", 1, 1000) > 0)
+            {
+                if (safe_input_int(&pos, "Enter position: ", 0, sll_getLength(head)) > 0)
+                {
+                    int* data = malloc(sizeof(int));
+                    *data = val;
+                    sll_insertAtPosition(&head, data, pos);
+                }
+            }
+        }
+        else if (choice == 4)
+        {
+            int val;
+            if (safe_input_int(&val, "Enter value to delete: ", 1, 1000) > 0)
+            {
+                sll_deleteByValue(&head, &val, compare_ints, free);
+            }
+        }
+        else if (choice == 5)
+        {
+            int pos;
+            if (safe_input_int(&pos, "Enter position to delete: ", 0, sll_getLength(head) - 1) > 0)
+            {
+                sll_deleteAtPosition(&head, pos, free);
+            }
+        }
+        else if (choice == 6)
+        {
+            int val;
+            if (safe_input_int(&val, "Enter value to search: ", 1, 1000) > 0)
+            {
+                int idx = sll_search(head, &val, compare_ints);
+                if (idx != -1)
+                {
+                    printf("Value found at index: \033[1;32m%d\033[0m\n", idx);
+                }
+                else
+                {
+                    printf("\033[1;31mValue not found in list.\033[0m\n");
+                }
+            }
+        }
+        else if (choice == 7)
+        {
+            sll_reverseList(&head);
+            printf("List reversed successfully!\n");
+        }
+        else if (choice == 8)
+        {
+            printf("\nChoose Export Format:\n1. TXT\n2. CSV\n3. JSON\n");
+            int format_choice;
+            if (safe_input_int(&format_choice, "Enter format choice (1-3): ", 1, 3) > 0)
+            {
+                const char* fmt = (format_choice == 1)   ? "txt"
+                                  : (format_choice == 2) ? "csv"
+                                                         : "json";
+                char details[4096] = {0};
+
+                if (format_choice == 1)
+                {
+                    char* ptr = details;
+                    ptr += sprintf(ptr, "Singly Linked List:\n");
+                    Node* curr = head;
+                    while (curr)
+                    {
+                        ptr += sprintf(ptr, "[%d] -> ", *(int*)curr->data);
+                        curr = curr->next;
+                    }
+                    ptr += sprintf(ptr, "NULL\n");
+                }
+                else if (format_choice == 2)
+                {
+                    char* ptr = details;
+                    ptr += sprintf(ptr, "index,value\n");
+                    Node* curr = head;
+                    int idx = 0;
+                    while (curr)
+                    {
+                        ptr += sprintf(ptr, "%d,%d\n", idx++, *(int*)curr->data);
+                        curr = curr->next;
+                    }
+                }
+                else
+                {
+                    char* ptr = details;
+                    ptr += sprintf(
+                        ptr, "{\n  \"data_structure\": \"SinglyLinkedList\",\n  \"nodes\": [");
+                    Node* curr = head;
+                    while (curr)
+                    {
+                        ptr += sprintf(ptr, "%d%s", *(int*)curr->data, curr->next ? ", " : "");
+                        curr = curr->next;
+                    }
+                    ptr += sprintf(ptr, "]\n}");
+                }
+
+                export_generic_state("SinglyLinkedList", fmt, details);
+            }
+        }
+        printf("\nPress Enter to continue...");
+        getchar();
     }
 
-    // deleting elements in sll
-    while (1)
-    {
-        int sll_delete_choice;
-        int sll_delete_status;
-
-    sll_delete_selection:
-        sll_delete_status = safe_input_int(&sll_delete_choice,
-                                           "\nenter '0' to delete by value"
-                                           "\nenter '1' to delete at position"
-                                           "\nenter '-1' to exit :- ",
-                                           0, 1);
-
-        if (sll_delete_status == INPUT_EXIT_SIGNAL)
-        {
-            printf("\nExiting sll demo.\n");
-            delete_sll(head, free);
-            return;
-        }
-        if (sll_delete_status == 0)
-        {
-            goto sll_delete_selection;
-        }
-
-        if (sll_delete_choice == 0)
-        {
-            int sll_delete_value;
-            sll_delete_status = safe_input_int(
-                &sll_delete_value,
-                "\nenter the element to be deleted, (between 1 and 100), enter '-1' to exit :- ", 1,
-                100);
-
-            if (sll_delete_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-            if (sll_delete_status == 0)
-            {
-                continue;
-            }
-
-            int status = sll_deleteByValue(&head, &sll_delete_value, compare_ints, free);
-            if (status == -2)
-            {
-                printf("\nList is empty.Nothing to delete.");
-            }
-            else if (status == -1)
-            {
-                printf("\nelement not found");
-            }
-            else
-            {
-                printf("\nsll after deletion - ");
-                sll_printlist(head, print_int);
-            }
-        }
-        else if (sll_delete_choice == 1)
-        {
-            int sll_pos_delete_status;
-            int sll_pos_delete_index;
-            char sll_pos_delete_prompt[128];
-
-        sll_delete_pos_input:
-            snprintf(sll_pos_delete_prompt, sizeof(sll_pos_delete_prompt),
-                     "enter the position to delete (0 to %d), enter '-1' to exit :- ",
-                     sll_getLength(head) - 1);
-            sll_pos_delete_status = safe_input_int(&sll_pos_delete_index, sll_pos_delete_prompt, 0,
-                                                   sll_getLength(head) - 1);
-
-            if (sll_pos_delete_status == INPUT_EXIT_SIGNAL)
-            {
-                printf("\nExiting sll demo.\n");
-                delete_sll(head, free);
-                return;
-            }
-
-            if (sll_pos_delete_status == 0)
-            {
-                goto sll_delete_pos_input;
-            }
-
-            int status = sll_deleteAtPosition(&head, sll_pos_delete_index, free);
-            if (status == -1)
-            {
-                printf("\nList is empty\n");
-            }
-            else if (status == -2)
-            {
-                printf("\nInvalid position\n");
-            }
-            else
-            {
-                printf("\nsll after deletion - ");
-                sll_printlist(head, print_int);
-            }
-        }
-    }
+    delete_sll(head, free);
 }
