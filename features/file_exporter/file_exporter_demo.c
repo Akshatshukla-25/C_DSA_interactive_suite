@@ -18,12 +18,15 @@ void file_exporter_demo(void)
         printf("click 5 for stack export\n");
         printf("click 6 for avl tree export\n");
         printf("click 7 for advanced heaps export\n");
+        printf("click 8 for bloom filter export\n");
+        printf("click 9 for count-min sketch export\n");
+        printf("click 10 for hyperloglog export\n");
         printf("-1. Return to Main Menu\n");
 
         int choice;
-        int status = safe_input_int(&choice, "\nEnter choice: ", 1, 7);
+        int status = safe_input_int(&choice, "\nEnter choice: ", 1, 10);
 
-        if (status == INPUT_EXIT_SIGNAL)
+        if (status == INPUT_EXIT_SIGNAL || choice == -1)
         {
             printf("\nExiting File Exporter Dashboard...\n");
             return;
@@ -79,6 +82,18 @@ void file_exporter_demo(void)
             case 7:
                 target_name = "Advanced Heaps (priority_queue.c / priority_queue.h)";
                 success = export_heaps(".", dest_dir);
+                break;
+            case 8:
+                target_name = "Bloom Filter (bloom_filter.c / bloom_filter.h)";
+                success = export_bloom_filter(".", dest_dir);
+                break;
+            case 9:
+                target_name = "Count-Min Sketch (count_min_sketch.c / count_min_sketch.h)";
+                success = export_count_min_sketch(".", dest_dir);
+                break;
+            case 10:
+                target_name = "HyperLogLog (hyperloglog.c / hyperloglog.h)";
+                success = export_hyperloglog(".", dest_dir);
                 break;
         }
 
