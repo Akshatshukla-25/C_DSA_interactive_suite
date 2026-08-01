@@ -103,7 +103,7 @@ void launch_help_page(void)
                 help_error_correction_menu();
                 break;
             case 11:
-                bit_manipulation_help();
+                help_bit_manipulation_menu();
                 break;
             case 12:
                 help_process_synchronization_menu();
@@ -112,7 +112,7 @@ void launch_help_page(void)
                 help_backtracking_menu();
                 break;
             case 14:
-                help_advanced_graphs_menu();
+                help_advanced_graph_algorithms_menu();
                 break;
             case 15:
                 help_system_utilities_menu();
