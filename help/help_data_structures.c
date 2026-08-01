@@ -23,14 +23,15 @@ void help_data_structures_menu(void)
     printf("    for seamless bi-directional traversal (forward and backward).\n\n");
     printf("HOW WE ACHIEVE GENERIC DESIGN (Storing any type of data):\n");
     printf("    In standard C, structures usually hold a specific type of data (like 'int').\n");
-    printf("    To make this DLL capable of holding anything (integers, strings, custom structs),\n");
-    printf("    we use:\n\n");
+    printf("    To make this DLL capable of holding anything (integers, strings, custom\n"
+           "    structs), we use:\n\n");
     printf("    1. Void Pointers (void* data):\n");
     printf("       A void pointer is a generic pointer. It acts as an envelope that can store\n");
     printf("       the memory address of any variable type.\n\n");
     printf("    2. Callback Functions:\n");
     printf("       Since the list doesn't know what data it is holding, the programmer must\n");
-    printf("       pass small helper functions (callbacks) to describe how to perform operations:\n");
+    printf("       pass small helper functions (callbacks) to describe how to perform\n"
+           "       operations:\n");
     printf("       • Printer Callback: Tells the list how to print the items on screen.\n");
     printf("       • Compare Callback: Tells the list how to check if two items are equal\n");
     printf("         when searching or deleting nodes.\n");
@@ -45,15 +46,19 @@ void help_data_structures_menu(void)
     printf("    In Circular Linked Lists, the last node links back to the first node\n");
     printf("    instead of pointing to NULL.\n");
     printf("    • Singly Circular (SCLL): Single link pointing forward, looping last to first.\n");
-    printf("    • Doubly Circular (DCLL): Predecessor and successor links form a full circular loop.\n\n");
+    printf("    • Doubly Circular (DCLL): Predecessor and successor links form a full\n"
+           "      circular loop.\n\n");
     printf("HOW WE ACHIEVE GENERIC DESIGN (Storing any type of data):\n");
-    printf("    Both our SCLL and DCLL implementations are fully generic using void pointers (void* data).\n");
-    printf("    This allows the circular lists to hold integers, strings, or custom structures.\n");
-    printf("    Just like the DLL, you pass helper callbacks for printing, searching, and freeing memory.\n\n");
+    printf("    Both our SCLL and DCLL implementations are fully generic using void pointers\n"
+           "    (void* data). This allows the circular lists to hold integers, strings, or\n"
+           "    custom structures.\n");
+    printf("    Just like the DLL, you pass helper callbacks for printing, searching, and\n"
+           "    freeing memory.\n\n");
 
     printf("--- STACKS & QUEUES ---\n\n");
     printf("STACK (LIFO - Last In First Out):\n");
-    printf("    Supports Push (insert) and Pop (remove) operations. Only the top is accessible.\n\n");
+    printf("    Supports Push (insert) and Pop (remove) operations. Only the top is\n"
+           "    accessible.\n\n");
     printf("QUEUE (FIFO - First In First Out):\n");
     printf("    Supports Enqueue (insert at rear) and Dequeue (remove from front) operations.\n\n");
     printf("CIRCULAR QUEUE:\n");
@@ -65,22 +70,29 @@ void help_data_structures_menu(void)
     printf("    both the front and rear ends.\n\n");
     printf("RELATIONSHIPS & COMPARISONS:\n");
     printf("    • Simple Queue vs. Circular Queue:\n");
-    printf("      - Simple Queue suffers from false overflow where unused front space is wasted.\n");
-    printf("      - Circular Queue wrapping prevents false overflow, allowing continuous reuse of empty slots.\n");
+    printf("      - Simple Queue suffers from false overflow where unused front space is\n"
+           "        wasted.\n");
+    printf("      - Circular Queue wrapping prevents false overflow, allowing continuous reuse\n"
+           "        of empty slots.\n");
     printf("    • Deque vs. Stack & Queue:\n");
-    printf("      - Deque acts as a double-ended generalization, enabling both LIFO (Stack) and FIFO (Queue)\n");
-    printf("        operations on either side depending on the restricted operations.\n\n");
+    printf("      - Deque acts as a double-ended generalization, enabling both LIFO (Stack)\n"
+           "        and FIFO (Queue) operations on either side depending on the restricted\n"
+           "        operations.\n\n");
     printf("WHEN TO USE WHAT & REAL-WORLD USE CASES:\n");
-    printf("    • Use Stacks for depth-first searches, compiler parsing/syntax checks, and recursion backtracking.\n");
-    printf("    • Use Circular Queues for streaming buffers (e.g. audio playback), network packet ring buffers,\n");
-    printf("      and scheduling processes.\n");
-    printf("    • Use Deques for undo/redo browser history trackers, and work-stealing job processor queues.\n\n");
+    printf("    • Use Stacks for depth-first searches, compiler parsing/syntax checks, and\n"
+           "      recursion backtracking.\n");
+    printf("    • Use Circular Queues for streaming buffers (e.g. audio playback), network\n"
+           "      packet ring buffers, and scheduling processes.\n");
+    printf("    • Use Deques for undo/redo browser history trackers, and work-stealing job\n"
+           "      processor queues.\n\n");
 
     printf("--- ARRAYS & PRIORITY QUEUES ---\n\n");
     printf("ARRAYS:\n");
-    printf("    Fixed-size sequential collections of elements. Operations include search, insertion, and deletion.\n\n");
+    printf("    Fixed-size sequential collections of elements. Operations include search,\n"
+           "    insertion, and deletion.\n\n");
     printf("PRIORITY QUEUE:\n");
-    printf("    A queue where each element has a priority. Implemented here using a Binary Heap structure.\n\n");
+    printf("    A queue where each element has a priority. Implemented here using a Binary\n"
+           "    Heap structure.\n\n");
 
     printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();

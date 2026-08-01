@@ -10,8 +10,8 @@ void help_advanced_graph_algorithms_menu(void)
     printf("--- NETWORK FLOW & BIPARTITE MATCHING ---\n\n");
     printf("1. FORD-FULKERSON & EDMONDS-KARP MAX FLOW\n");
     printf("CONCEPT:\n");
-    printf("   Computes maximum network flow from source node (s) to sink node (t) in a weighted\n");
-    printf("   directed graph with capacity constraints.\n\n");
+    printf("   Computes maximum network flow from source node (s) to sink node (t)\n"
+           "   in a weighted directed graph with capacity constraints.\n\n");
     printf("COMPLEXITY CHEAT TABLE:\n");
     printf("   +-----------------------+------------------------+-------------------+\n");
     printf("   | Algorithm             | Time Complexity        | Space Complexity  |\n");
@@ -22,16 +22,19 @@ void help_advanced_graph_algorithms_menu(void)
     printf("   +-----------------------+------------------------+-------------------+\n\n");
     printf("2. BIPARTITE MATCHING (Dinic & Hopcroft-Karp)\n");
     printf("CONCEPT:\n");
-    printf("   Finds maximum cardinality set of edges without common vertices in bipartite graphs.\n");
+    printf("   Finds maximum cardinality set of edges without common vertices in\n"
+           "   bipartite graphs.\n");
     printf("   - Hopcroft-Karp Time Complexity: O(E * sqrt(V))\n");
     printf("   - Dinic Bipartite Time Complexity: O(E * sqrt(V))\n\n");
 
     printf("--- BRIDGES, ARTICULATION POINTS & NETWORK VULNERABILITY ---\n\n");
     printf("1. ARTICULATION POINTS (Cut Vertices)\n");
     printf("CONCEPT:\n");
-    printf("   A vertex v is an articulation point if removing v increases the number of connected\n");
-    printf("   components in the graph. Identified using DFS discovery times and lowlink values.\n");
-    printf("   - Condition: tin[u] <= low[v] for non-root, or child_count >= 2 for root node.\n");
+    printf("   A vertex v is an articulation point if removing v increases the number\n"
+           "   of connected components in the graph. Identified using DFS discovery\n"
+           "   times and lowlink values.\n");
+    printf("   - Condition: tin[u] <= low[v] for non-root, or child_count >= 2 for\n"
+           "     root node.\n");
     printf("   - Time Complexity: O(V + E)\n");
     printf("   - Space Complexity: O(V)\n\n");
     printf("2. BRIDGES (Critical Edges)\n");

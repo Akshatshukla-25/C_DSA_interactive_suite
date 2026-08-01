@@ -28,8 +28,9 @@ void help_process_synchronization_menu(void)
     printf("    • Progress: If no process is in its critical section and some processes\n");
     printf("      wish to enter, only processes not in their remainder section can participate\n");
     printf("      in deciding who enters next (no indefinite postponement).\n");
-    printf("    • Bounded Waiting: A limit on the number of times other processes can enter\n");
-    printf("      their critical sections after a process requests entry, preventing starvation.\n\n");
+    printf("    • Bounded Waiting: A limit on the number of times other processes can enter\n"
+           "      their critical sections after a process requests entry, preventing\n"
+           "      starvation.\n\n");
 
     printf("--- PRODUCER-CONSUMER (BOUNDED BUFFER) ---\n\n");
     printf("PROBLEM STATEMENT:\n");
@@ -92,14 +93,16 @@ void help_process_synchronization_menu(void)
     printf("      - flag[2]: flag[i] = true indicates Process i wants to enter CS.\n");
     printf("      - turn: Specifies which process gets priority if both want to enter.\n");
     printf("    • Stepped Execution:\n");
-    printf("      - Process 0 steps: l1 (Non-CS) -> l2 (readyA=true) -> l3 (turn=B) ->\n");
-    printf("        l4 (await !readyB || turn==A) -> l5 (Critical Section) -> l6 (readyA=false).\n");
-    printf("      - Process 1 steps: m1 (Non-CS) -> m2 (readyB=true) -> m3 (turn=A) ->\n");
-    printf("        m4 (await !readyA || turn==B) -> m5 (Critical Section) -> m6 (readyB=false).\n\n");
+    printf("      - Process 0 steps: l1 (Non-CS) -> l2 (readyA=true) -> l3 (turn=B) ->\n"
+           "        l4 (await !readyB || turn==A) -> l5 (Critical Section) ->\n"
+           "        l6 (readyA=false).\n");
+    printf("      - Process 1 steps: m1 (Non-CS) -> m2 (readyB=true) -> m3 (turn=A) ->\n"
+           "        m4 (await !readyA || turn==B) -> m5 (Critical Section) ->\n"
+           "        m6 (readyB=false).\n\n");
     printf("WHAT TO OBSERVE IN THE DEMO:\n");
     printf("    • Mutual Exclusion: P0 and P1 can NEVER be in CS (l5 and m5) simultaneously.\n");
-    printf("    • Politeness Principle: When P0 wants to enter, it sets turn = B (yielding to P1).\n");
-    printf("      If P1 also wants to enter, turn determines the winner, avoiding collision.\n");
+    printf("    • Politeness Principle: When P0 wants to enter, it sets turn = B (yielding\n"
+           "      to P1). If P1 also wants to enter, turn determines the winner.\n");
     printf("    • Busy-Waiting Spinlock: Step l4/m4 shows busy-waiting until lock opens.\n\n");
 
     printf("--- DEADLOCK & STARVATION THEORY ---\n\n");
@@ -116,17 +119,17 @@ void help_process_synchronization_menu(void)
     printf("    4. Circular Wait: A closed chain of processes exists such that P0 waits for\n");
     printf("       a resource held by P1, P1 waits for P2, ..., and Pn waits for P0.\n\n");
     printf("STARVATION THEORY:\n");
-    printf("    Starvation (Indefinite Postponement) occurs when a runnable process is perpetually\n");
-    printf("    denied necessary resources by the scheduler or greedier competing processes,\n");
-    printf("    even though no deadlock exists in the system.\n\n");
+    printf("    Starvation (Indefinite Postponement) occurs when a runnable process is\n"
+           "    perpetually denied necessary resources by the scheduler or greedier processes,\n"
+           "    even though no deadlock exists in the system.\n\n");
     printf("HOW DEADLOCK AND STARVATION ARE AVOIDED:\n");
     printf("    • Deadlock Prevention: Eliminate at least one Coffman condition.\n");
     printf("      - Break Circular Wait: Resource ordering (e.g. asymmetric chopsticks).\n");
     printf("      - Eliminate Hold & Wait: Request all resources simultaneously upfront.\n");
     printf("    • Deadlock Avoidance: Dynamic state checking (e.g. Banker's Algorithm).\n");
     printf("      Allocates resources only if system remains in a SAFE state.\n");
-    printf("    • Starvation Avoidance: Aging (gradually increasing process priority as it waits)\n");
-    printf("      and Fair FIFO Request Queues for semaphores/locks.\n\n");
+    printf("    • Starvation Avoidance: Aging (gradually increasing process priority as it\n"
+           "      waits) and Fair FIFO Request Queues for semaphores/locks.\n\n");
 
     printf("\nPress [ENTER] to return...\n");
     press_enter_to_continue();

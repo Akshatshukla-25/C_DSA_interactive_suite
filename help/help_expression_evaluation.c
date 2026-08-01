@@ -14,8 +14,8 @@ void help_expression_evaluation_menu(void)
     printf("POSTFIX EVALUATION:\n");
     printf("    Uses a Stack to hold operands. When parsing:\n");
     printf("    • If operand is encountered, push it onto Stack.\n");
-    printf("    • If operator is encountered, pop the required operands (e.g., 2 for binary operators),\n");
-    printf("      evaluate the result, and push the result back onto Stack.\n");
+    printf("    • If operator is encountered, pop the required operands (e.g., 2 for binary\n"
+           "      operators), evaluate the result, and push the result back onto Stack.\n");
     printf("    • The final result will be the single value left on Stack.\n\n");
 
     printf("--- INFIX EXPRESSION EVALUATION ---\n\n");
@@ -27,10 +27,12 @@ void help_expression_evaluation_menu(void)
     printf("    • Operands are output immediately.\n");
     printf("    • Left parentheses '(' are pushed onto the Stack.\n");
     printf("    • Right parentheses ')' pop operators until '(' is encountered.\n");
-    printf("    • Operators pop higher or equal precedence operators from Stack, then push themselves.\n\n");
+    printf("    • Operators pop higher or equal precedence operators from Stack, then push\n"
+           "      themselves.\n\n");
     printf("INFIX TO PREFIX CONVERSION:\n");
-    printf("    Similar to infix to postfix, but operators end up before their operands (e.g., + A B).\n");
-    printf("    Achieved by reversing the infix expression, converting it, and reversing the result.\n\n");
+    printf("    Similar to infix to postfix, but operators end up before their operands\n"
+           "    (e.g., + A B). Achieved by reversing the infix expression, converting it,\n"
+           "    and reversing the result.\n\n");
 
     printf("--- PARENTHESES CHECKER ---\n\n");
     printf("PARENTHESES CHECKER:\n");

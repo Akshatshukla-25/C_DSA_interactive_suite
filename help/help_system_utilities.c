@@ -10,12 +10,15 @@ void help_system_utilities_menu(void)
     printf("--- TELEMETRY & MEMORY PROFILER ENGINE ---\n\n");
     printf("1. SORTING TELEMETRY DASHBOARD\n");
     printf("CONCEPT:\n");
-    printf("   Tracks real-time algorithmic operations, comparisons, swaps, and execution timers.\n");
-    printf("   - Features: Real-time swap counters, time-series metrics, comparative dashboards.\n\n");
+    printf("   Tracks real-time algorithmic operations, comparisons, swaps, and execution\n"
+           "   timers.\n");
+    printf("   - Features: Real-time swap counters, time-series metrics, comparative\n"
+           "     dashboards.\n\n");
     printf("2. MEMORY INSPECTOR & PROFILER\n");
     printf("CONCEPT:\n");
     printf("   Intercepts malloc/free allocations to audit heap usage and detect memory leaks.\n");
-    printf("   - Features: Active allocation tracking, byte leakage alerts, pointer inspection.\n\n");
+    printf("   - Features: Active allocation tracking, byte leakage alerts, pointer\n"
+           "     inspection.\n\n");
 
     printf("--- STATE SERIALIZATION & BINARY DISK PERSISTENCE ---\n\n");
     printf("STATE SERIALIZATION & DESERIALIZATION\n");
@@ -28,8 +31,8 @@ void help_system_utilities_menu(void)
     printf("--- DEVELOPER DIAGNOSTICS (FUZZING, BIG-O, EXPORTER) ---\n\n");
     printf("1. STOCHASTIC FUZZ TESTING ENGINE\n");
     printf("CONCEPT:\n");
-    printf("   Bombards algorithms with randomized, edge-case inputs to verify robust constraint\n");
-    printf("   handling and uncover unexpected segfaults.\n\n");
+    printf("   Bombards algorithms with randomized, edge-case inputs to verify robust\n"
+           "   constraint handling and uncover unexpected segfaults.\n\n");
     printf("2. EMPIRICAL BIG-O VERIFIER\n");
     printf("CONCEPT:\n");
     printf("   Runs algorithms against scaling dataset sizes (e.g., 10^2 to 10^6) and curves\n");

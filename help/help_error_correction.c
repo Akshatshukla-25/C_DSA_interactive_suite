@@ -78,7 +78,7 @@ void help_error_correction_menu(void)
     printf("    • The receiver performs modulo-2 division on the incoming data using the\n");
     printf("      same divisor. If the remainder is zero, no error occurred.\n\n");
     printf("ADVANTAGES:\n");
-    printf("    • Detects single-bit, double-bit, odd-numbered, and burst errors very reliably.\n\n");
+    printf("    • Detects single, double, odd-numbered, and burst errors very reliably.\n\n");
 
     printf("--- HAMMING CODE (ERROR CORRECTION) ---\n\n");
     printf("HAMMING CODE (ERROR CORRECTION):\n");
@@ -87,7 +87,8 @@ void help_error_correction_menu(void)
     printf("HOW IT WORKS:\n");
     printf("    • Redundant parity bits are inserted at positions that are powers of 2\n");
     printf("      (positions 1, 2, 4, 8, etc.).\n");
-    printf("    • Each parity bit checks specific data bits according to their binary positions.\n");
+    printf("    • Each parity bit checks specific data bits according to their binary\n"
+           "      positions.\n");
     printf("    • At the receiver, parity checks are verified. The sum of the positions of\n");
     printf("      failed parity checks yields the exact index of the corrupted bit (Syndrome).\n");
     printf("    • The corrupted bit is flipped back to correct the error.\n\n");
@@ -105,7 +106,8 @@ void help_error_correction_menu(void)
     printf("      error (at the intersection of the failed row and column).\n");
     printf("    • Checksum (Sum-based):\n");
     printf("      Lightweight addition operations. Good at catching random bit flips,\n");
-    printf("      but weak against balanced errors where values shift by equal/opposite amounts.\n");
+    printf("      but weak against balanced errors where values shift by equal/opposite\n"
+           "      amounts.\n");
     printf("    • CRC (Division-based polynomial):\n");
     printf("      Very strong mathematical guarantees. Treats data as a bitstream\n");
     printf("      divided by a generator polynomial. Excellent at catching burst errors.\n");

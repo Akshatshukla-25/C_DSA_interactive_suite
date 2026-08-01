@@ -159,12 +159,14 @@ void help_backtracking_menu(void)
     printf("    - On failure at v+1, resets colors[v] = 0 (BACKTRACK) and\n");
     printf("      tries the next color c+1.\n\n");
     printf("PRESET GRAPH TOPOLOGIES:\n");
-    printf("    1. Cycle Graph C5       - 5 vertices, ring structure. Chromatic number = 3.\n");
-    printf("    2. Bipartite Graph K3,3 - 6 vertices, two independent sets. Chromatic number = 2.\n");
-    printf("    3. Complete Graph K4    - 4 vertices, all pairs connected. Chromatic number = 4.\n");
-    printf("    4. Complete Graph K5    - 5 vertices, all pairs connected. Chromatic number = 5.\n");
-    printf("    5. Wheel Graph W5       - 4 rim + 1 hub, hub connects to all rim. Chromatic number = 4.\n");
-    printf("    6. Petersen Graph       - 10 vertices, famous non-planar graph. Chromatic number = 3.\n\n");
+    printf("    1. Cycle Graph C5       - 5 vertices, ring structure. Chromatic num = 3.\n");
+    printf("    2. Bipartite Graph K3,3 - 6 vertices, two independent sets. Chromatic num = 2.\n");
+    printf("    3. Complete Graph K4    - 4 vertices, all pairs connected. Chromatic num = 4.\n");
+    printf("    4. Complete Graph K5    - 5 vertices, all pairs connected. Chromatic num = 5.\n");
+    printf("    5. Wheel Graph W5       - 4 rim + 1 hub, connected to all rim. Chromatic\n"
+           "                              num = 4.\n");
+    printf("    6. Petersen Graph       - 10 vertices, famous non-planar graph. Chromatic\n"
+           "                              num = 3.\n\n");
     printf("VISUALIZER WALKTHROUGH:\n");
     printf("    - The adjacency matrix and vertex states are shown live.\n");
     printf("    - An ASCII art drawing of the selected topology is rendered\n");
