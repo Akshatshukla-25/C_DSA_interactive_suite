@@ -179,8 +179,26 @@ static void run_open_addressing_fuzz(FuzzerState* fuzzer, int ops, int type)
     }
 }
 
+static void test_linear_probing_null_and_bounds(void)
+{
+    int dummy[5] = {INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN};
+    assert(linear_probing_insert(NULL, 5, 10) == false);
+    assert(linear_probing_insert(dummy, 0, 10) == false);
+    assert(linear_probing_insert(dummy, -1, 10) == false);
+
+    assert(linear_probing_search(NULL, 5, 10) == -1);
+    assert(linear_probing_search(dummy, 0, 10) == -1);
+    assert(linear_probing_search(dummy, -1, 10) == -1);
+
+    int h1 = hash_function(INT_MAX, 10);
+    assert(h1 >= 0 && h1 < 10);
+    int h2 = hash_function(INT_MIN, 10);
+    assert(h2 >= 0 && h2 < 10);
+}
+
 int main(void)
 {
+    test_linear_probing_null_and_bounds();
     unsigned int seed = (unsigned int)time(NULL);
     FuzzerState fuzzer;
 

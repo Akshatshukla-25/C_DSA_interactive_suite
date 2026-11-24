@@ -42,16 +42,21 @@ int hash_function(int value, int length_of_array)
         return -1;
     }
     int next_prime_no = next_prime(length_of_array);
-    int hash = ((value + 1) * next_prime_no) % length_of_array;
+    long long hash = ((long long)value + 1) * next_prime_no % length_of_array;
     if (hash < 0)
     {
         hash += length_of_array;
     }
-    return hash;
+    return (int)hash;
 }
 
 bool linear_probing_insert(int arr[], int length_of_array, int value)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return false;
+    }
+
     int hash_location = hash_function(value, length_of_array);
     if (hash_location == -1)
     {
@@ -87,6 +92,11 @@ bool linear_probing_insert(int arr[], int length_of_array, int value)
 
 int linear_probing_search(int arr[], int length_of_array, int search_val)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return -1;
+    }
+
     int hash_location = hash_function(search_val, length_of_array);
     if (hash_location == -1)
     {

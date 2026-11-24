@@ -7,6 +7,11 @@ int binary_search(int arr[], int target, int length_of_array);
 
 int binary_search(int arr[], int target, int length_of_array)
 {
+    if (arr == NULL || length_of_array <= 0)
+    {
+        return -1;
+    }
+
     int low = 0;
     int high = length_of_array - 1;
     int mid = 0;

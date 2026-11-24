@@ -151,11 +151,32 @@ static void test_searching_fuzz(int iterations)
     printf("Searching algorithms fuzz tests passed\n");
 }
 
+static void test_null_and_invalid_bounds(void)
+{
+    int dummy[5] = {1, 2, 3, 4, 5};
+    assert(linear_search(NULL, 1, 5) == -1);
+    assert(linear_search(dummy, 1, 0) == -1);
+    assert(linear_search(dummy, 1, -1) == -1);
+
+    assert(binary_search(NULL, 1, 5) == -1);
+    assert(binary_search(dummy, 1, 0) == -1);
+    assert(binary_search(dummy, 1, -1) == -1);
+
+    assert(exponential_search(NULL, 1, 5) == -1);
+    assert(exponential_search(dummy, 1, 0) == -1);
+    assert(exponential_search(dummy, 1, -1) == -1);
+
+    assert(fibonacci_search(NULL, 1, 5) == -1);
+    assert(fibonacci_search(dummy, 1, 0) == -1);
+    assert(fibonacci_search(dummy, 1, -1) == -1);
+}
+
 int main(void)
 {
     srand((unsigned int)time(NULL));
     int iterations = fuzzer_get_iterations(300);
 
+    test_null_and_invalid_bounds();
     test_searching_fuzz(iterations);
 
     return 0;

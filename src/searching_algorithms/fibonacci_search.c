@@ -2,7 +2,7 @@
 
 int fibonacci_search(int arr[], int target, int length_of_array)
 {
-    if (length_of_array == 0)
+    if (arr == NULL || length_of_array <= 0)
     {
         return -1;
     }
